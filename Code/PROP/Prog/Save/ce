@@ -1,0 +1,22 @@
+define c1 = let x = 5 in class end
+define c2 = let y = 7 in class extends c1 end
+define c3 =
+  let
+    z = 7
+  in
+    .< class extends c1
+        static zz=nil
+        static zzset = proc(t) {set zz=t ; myclass}
+      end
+    >zzset(@)
+<<c3>zz>@@
+
+define c4 =
+  let
+    z = 7
+    c = class extends c1 static zz=nil end
+  in
+    {set <c>zz=@ ; c}
+
+<<c4>zz>@@
+<c4>@@

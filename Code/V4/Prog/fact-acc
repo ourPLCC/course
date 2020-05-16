@@ -1,0 +1,9 @@
+let
+  fact = proc(x)
+    let
+      faktt = proc(g, x, acc)
+        if zero?(x) then acc else .g(g, sub1(x), *(x,acc))
+    in
+      .faktt(faktt, x, 1)
+in
+  .fact(5)

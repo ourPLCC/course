@@ -1,0 +1,51 @@
+skip WHITESPACE '\s+'
+token SYMBOL '[A-Za-z]\w*'
+token NUM '\d+'
+token LPAREN '\('
+token RPAREN '\)'
+%
+# <start> ::= <tree>
+<tree>:Interior ::= LPAREN <SYMBOL> <tree>left <tree>right RPAREN
+<tree>:Leaf     ::= <NUM>
+%
+
+#Start
+#%%%
+#    public String toString() {
+#        return tree.toString();
+#    }
+#%%%
+
+Tree
+%%%
+    public abstract int countInterior();
+    public abstract int sumLeaves();
+
+    public String toString() {
+       return "this tree has " + sumLeaves() + " as the sum of its leaf nodes";
+    }
+%%%
+
+
+Interior
+%%%
+    public int countInterior() {
+        return 1 + left.countInterior() + right.countInterior();
+    }
+
+    public int sumLeaves() {
+        return left.sumLeaves() + right.sumLeaves();
+    }
+
+%%%
+
+Leaf
+%%%
+   public int countInterior() {
+       return 0;
+   }
+
+   public int sumLeaves() {
+       return Integer.parseInt(num.toString());
+   }
+%%%

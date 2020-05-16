@@ -1,0 +1,196 @@
+# Environment-related classes
+# The initial environment has bindings to a small collection
+#   of Roman Numerals
+# This version has some test code
+
+Env
+%%%
+import java.util.*;
+
+public abstract class Env {
+
+    public static final Env empty = new EnvNull();
+
+    public Val applyEnv(String sym) {
+	throw new RuntimeException("no binding for " + sym);
+    }
+
+    // same as above, except takes a Token parameter instead
+    public Val applyEnv(Token tok) {
+	return applyEnv(tok.toString());
+    }
+
+    public Env extendEnv(Bindings bindings) {
+	return new EnvNode(bindings, this);
+    }
+
+    public static Env initEnv() {
+	// Create bindings for some symbols
+	List<Binding> bindingList = Arrays.asList(
+	    new Binding("i", new IntVal(1)),
+	    new Binding("v", new IntVal(5)),
+	    new Binding("x", new IntVal(10)),
+	    new Binding("l", new IntVal(50)),
+	    new Binding("c", new IntVal(100)),
+	    new Binding("d", new IntVal(500)),
+	    new Binding("m", new IntVal(1000)));
+        return new EnvNode(new Bindings(bindingList), empty);
+    }
+
+    // test the environment methods
+    public static void main(String [] args) {
+	Env env0 = new EnvNull();
+	Env env1 = env0.extendEnv(
+	    new Bindings(Arrays.asList(
+		new Binding("a", new IntVal(1)),
+		new Binding("b", new IntVal(2)),
+		new Binding("c", new IntVal(3)))));
+	List<String> i2 = Arrays.asList("a", "p");
+	List<Val> v2 = Arrays.asList(new IntVal(4), new IntVal(5));
+        Env env2 = env1.extendEnv(new Bindings(i2, v2));
+
+	System.out.println("env2:\n" + env2.toString(0));
+	System.out.println("a(env2) => " + env2.applyEnv("a"));
+	System.out.println("a(env1) => " + env1.applyEnv("a"));
+	System.out.println("p(env2) => " + env2.applyEnv("p"));
+	System.out.println("a(env0) => " + env0.applyEnv("a"));
+    }
+
+    // used to print an environment in nested local bindings
+    public abstract String toString(int n);
+
+}
+%%%
+
+EnvNode
+%%%
+import java.util.*;
+
+public class EnvNode extends Env {
+
+    public Bindings bindings; // list of local bindings
+    public Env env;           // next set of bindings
+    
+    // create an environment 
+    public EnvNode(Bindings bindings, Env env) {
+	this.bindings = bindings;
+	this.env = env;
+    }
+    
+    public Val applyEnv(String sym) {
+        // first look in the local bindings
+	for (Binding b : bindings.bindingList) {
+	    if (sym.equals(b.id))
+                return b.val;
+        }
+	// if nothing left, we don't have a match in this list of bindings
+	return env.applyEnv(sym);
+    }
+
+    public String toString(int n) {
+	return n + ":" + bindings.toString() + "\n" + env.toString(n+1);
+    }
+
+    public String toString() {
+	return bindings.toString() + "\n" + env;
+    }
+
+}
+%%%
+
+EnvNull
+%%%
+import java.util.*;
+
+public class EnvNull extends Env {
+
+    // create an environment 
+    public EnvNull() {
+    }
+    
+    public String toString(int n) {
+	return n + ":\n";
+    }
+
+    public String toString() {
+	return "\n";
+    }
+}
+%%%
+
+Binding
+%%%
+public class Binding {
+
+    public String id;
+    public Val val;
+
+    public Binding(String id, Val val) {
+	this.id = id;
+	this.val = val;
+    }
+
+    public String toString() {
+	return "[" + id + "->" + val.toString() + "]";
+    }
+
+}
+%%%
+
+Bindings
+%%%
+import java.util.*;
+
+public class Bindings {
+
+    public List<Binding> bindingList;
+
+    // create an empty list of bindings
+    public Bindings() {
+	bindingList = new ArrayList<Binding>();
+    }
+
+    public Bindings(List<Binding> bindingList) {
+	this.bindingList = bindingList;
+    }
+
+    // idList is a list of Tokens/Strings (whatever has a toString())
+    // valList is a list of Vals
+    public Bindings(List<?> idList, List<Val> valList) {
+	if (idList.size() != valList.size())
+	    throw new RuntimeException("Bindings: List size mismatch");
+	bindingList = new ArrayList<Binding>();
+	Iterator<?> is = idList.iterator();
+	Iterator<Val> vs = valList.iterator();
+	while (is.hasNext())
+	    bindingList.add(new Binding(is.next().toString(), vs.next()));
+    }
+
+    public void add(Binding b) {
+	bindingList.add(b);
+    }
+
+    public void add(String s, Val v) {
+	add(new Binding(s, v));
+    }
+
+    public void addFirst(Binding b) {
+	bindingList.add(0,b);
+    }
+
+    public void addFirst(String s, Val v) {
+	addFirst(new Binding(s, v));
+    }
+
+    public int size() {
+	return bindingList.size();
+    }
+
+    public String toString() {
+	String s = "";
+	for (Binding b : bindingList)
+	    s += " " + b;
+	return s;
+    }
+}
+%%%

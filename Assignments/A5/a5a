@@ -1,0 +1,77 @@
+CSCI 344 - Programming Language Concepts
+Assignment A5A (50 points)
+Due Friday, Oct 12, 2018
+
+NOTE:
+You are to answer each of these questions by writing your corresponding
+answers ON PAPER, with your answers appearing in the same order as the
+questions on this assignment.  Number your answers clearly.
+
+This assignment is a hand-written assignment, not to be submitted
+electronically.  Be sure that you clearly identify the assignment number
+and your name at the top of your paper submission.
+
+Your diagrams should be carefully drawn and easy to read. DO YOUR WORK
+ON SCRATCH PAPER FIRST, and then copy your answer to your final paper
+version that you will submit.
+
+The defined language for all of these assignments is V4.
+
+##QUESTION 1 (10 pts):
+    Display a diagram of the all environments that are created during
+    the evaluation of the following expression.  You may assume that
+    the initial environment is empty.
+
+    let
+      x = 3
+      y = 5
+      z = 8
+    in
+      +(x,+(y,z))
+
+##QUESTION 2 (10 pts):
+    Repeat the above with the following expression:
+
+    let
+      x = 3
+    in
+      let
+        y = 5
+      in
+        let
+	  z = 8
+        in
+          +(x,+(y,z))
+
+##QUESTION 3 (10 pts):
+    Repeat the above with the following expression.
+
+    let
+      x = 3
+    in
+      let
+        p = proc(t) +(t,x)
+      in
+        .p(5)
+
+##QUESTION 4 (10 pts):
+    Repeat the above with the following expression:
+
+    let
+      p = proc(t) add1(t)
+      q = proc(f,x) .f(x)
+    in
+      .q(p,4)
+
+##QUESTION 5 (10 pts):
+    Repeat the above with the following expression:
+
+    let
+      t = 3 
+    in
+      let
+        f = let x=t in proc(t) +(t,x)
+      in
+        .f(5)
+
+##END

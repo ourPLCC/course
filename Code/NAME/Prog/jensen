@@ -1,0 +1,18 @@
+% use call-by-name semantics to carry out a loop construct
+define while = proc(test?, do, ans)
+  letrec
+    loop = proc()
+      if test? then {do ; .loop()} else ans
+  in
+    .loop()
+
+% example application: find the sum of all integers from 10 down to 1
+let
+  x = 10
+  sum = 0
+in
+    .while(
+      x,                                        % test?
+      { set sum = +(sum,x) ; set x = sub1(x) }, % do
+      sum                                       % ans
+    )

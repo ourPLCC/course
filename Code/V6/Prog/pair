@@ -1,0 +1,2 @@
+define pair = proc(x,y) proc(t) if t then y else x
+

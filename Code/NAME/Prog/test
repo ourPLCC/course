@@ -1,0 +1,9 @@
+let
+  x = 3
+  p = proc(t) {t;t;t;t;t;t;t}
+
+in
+  let
+    q = proc(u) .p(u)
+  in
+    .q(set x = add1(x))

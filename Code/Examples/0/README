@@ -1,0 +1,24 @@
+echo "Print the value of the expression 18/5"
+echo -n "     C: "
+cc div.c
+./a.out
+###################
+echo -n "   C++: "
+c++ div.cpp
+./a.out
+###################
+echo -n "  Java: "
+javac Div.java
+java Div
+###################
+echo -n "Python: "
+python3 < div.py
+###################
+echo -n "  Perl: "
+perl < div.pl
+###################
+echo -n "Scheme: "
+scm < div.scm
+###################
+echo -n "  Bash: "
+sh < div.sh

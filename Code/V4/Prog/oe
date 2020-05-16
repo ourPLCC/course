@@ -1,0 +1,5 @@
+let
+  even? = proc(x, even?, odd?) if zero?(x) then 1 else .odd?(sub1(x), even?, odd?)
+  odd? = proc(x, even?, odd?) if zero?(x) then 0 else .even?(sub1(x), even?, odd?)
+in
+  .even?(11000, even?, odd?)

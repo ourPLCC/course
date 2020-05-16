@@ -1,0 +1,16 @@
+define c =
+  class
+    field x
+    method init = proc(t) {set x=t ; self}
+    property y = prop x:set x=$
+    property z = prop x:nil
+  end
+
+define o = .<new c>init(6)
+<o>x
+<o>y
+<o>z
+<o>set y=4
+<o>x
+<o>set z=15
+<o>x

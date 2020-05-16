@@ -1,0 +1,19 @@
+let
+  count = 1
+in
+  letrec
+    d = proc(t)
+      if t
+      then
+        let
+          t1 = sub1(t)
+        in
+          let
+            _ = .d(t1)
+            _ = .d(t1)
+            _ = atomic set count=add1(count)
+          in
+            count
+      else count
+  in
+    .d(16)

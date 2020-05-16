@@ -1,0 +1,28 @@
+define shape =
+  class
+    % method area = proc() ...
+  end
+
+define rectangle =
+  class extends shape
+    field len % length
+    field wid % width
+    method init = proc(len,wid) {set <self>len=len ; set <self>wid=wid ; self}
+    method area = proc() *(len,wid)
+  end
+
+define circle =
+  class extends shape
+    field rad % radius
+    method init = proc(rad) {set <self>rad=rad ; self}
+    method area = proc() *(3,*(rad,rad)) % a bit of an underestimate
+  end
+
+define r = .<new rectangle>init(4,5) % a rectangle with length 4 and width 5
+define c = .<new circle>init(2)   % a circle with radius 2
+define s = new shape
+
+.<r>area() % => 20
+.<c>area() % => 12
+.<s>area() % error
+

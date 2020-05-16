@@ -1,0 +1,5 @@
+let
+  x = 1
+  p = proc(t,u) {set t=add1(t) ; u}
+in
+  .p(x, +(x,5))

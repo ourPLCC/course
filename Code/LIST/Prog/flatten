@@ -1,0 +1,11 @@
+define flatten = proc(xs)
+  if xs
+  then
+    let
+      f = first(xs)
+      r = rest(xs)
+    in
+      if list?(f)
+      then .append(.flatten(f), .flatten(r))
+      else addFirst(f, .flatten(r))
+  else xs

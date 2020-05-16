@@ -1,0 +1,9 @@
+define pair = proc(x,y)
+  proc(t) if t then y else x
+define first = proc(p) .p(0)
+define rest = proc(p) .p(1)
+define nth = proc(n,lst)
+  if n then .nth(sub1(n),.rest(lst)) else .first(lst)
+define fib = proc(m, n) .pair(m,.fib(n, +(m,n)))
+define fibonacci = .fib(0, 1)
+.nth(10,fibonacci) % => 55

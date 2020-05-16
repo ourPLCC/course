@@ -1,0 +1,462 @@
+CSCI 344 - Programming Language Concepts
+Assignment AC (65 points)
+Due Monday, Nov. 26, 2018
+
+NOTE:
+You are to answer each of these questions, indicated by a '##QUESTION:'
+line.  Submit your modified files as directed in the SUBMISSION
+REQUIREMENTS section below.
+
+This file can be found here:
+
+    /usr/local/pub/plcc/Assignments/AC/ac
+
+##QUESTION 1 (init, 10 pts):
+    Create a file named 'binTree' that has the following contents:
+
+define binTree =
+  class
+    static BTnode =
+      class extends myclass
+      method init = proc(left, val, right) nil %STUB%
+    end
+    static BTnull =
+      class extends myclass
+      end
+    static nullNode = new BTnull % singleton
+    static makeBT = proc(left, val, right) .<new BTnode>init(left,val,right)
+    static makeLeaf = proc(val) .makeBT(nullNode, val, nullNode)
+  end
+
+% define these top-level variables to simplify things
+define nullNode = <binTree>nullNode  % BTnull
+define makeBT = <binTree>makeBT      % [binTree, Val, binTree => BTNode]
+define makeLeaf = <binTree>makeLeaf  % [Val => BTNode]
+
+    This file contains code in the OBJ language that defines a class
+    binTree and two subclasses, BTnode and BTnull. In this assignment,
+    you will be editing this file by adding various methods to these
+    classes and testing them.
+
+    Modify the definition of binTree so that the 'BTnode' class has three
+    fields 'left', 'val', and 'right'. The 'init' method, given above as
+    a STUB, has three formal parameters, 'left', 'val', and 'right'. You
+    should modify the body of the 'init' method in the 'BTnode' class to
+    set the 'left', 'val', and 'right' fields of the object to the values
+    of the 'left', 'val', and 'right' actual parameters, respectively. The
+    'init' method should return the object itself (this).  [Hint: The
+    body of the 'init' method should be written as a sequence expression.]
+
+    The static 'makeBT' procedure in the binTree class creates an
+    instance of a 'BTnode' object with its 'left', 'val', and 'right'
+    fields initialized as described above. The static 'makeLeaf' procedure
+    creates an instance of a 'BTnode' with nullNode left and right fields.
+
+    Top-level variables 'nullNode', 'makeBT', and 'makeLeaf' are defined
+    so that you can refer to these without needing to modify these names
+    with <binTree>.
+
+    Observe that the values of the 'left' and 'right' actual parameters to
+    'makeBT' should be instances of binTree -- either a 'BTnode' created
+    by a call to makeBT or a 'nullNode', although your code should not
+    try to check for this. The value of the 'val' actual parameter can
+    be any Val (even a binTree!), but FOR THE REST OF THIS ASSIGNMENT
+    WE WILL RESTRICT THESE VALUES TO BEING INTEGERS.
+
+    A leaf node, created by the makeLeaf procedure, is a BTnode object
+    whose left and right fields are both nullNodes.
+
+    One can create a binTree from the bottom up, as shown in this example:
+    
+    define t5 = .makeLeaf(5)
+    define t3 = .makeBT(nullNode, 3, t5)
+    define t10 = .makeLeaf(10)
+    define t12 = .makeBT(t10, 12, nullNode)
+    define t8 = .makeLeaf(8)
+    define t9 = .makeBT(t8, 9, t12)
+    define t7 = .makeBT(t3, 7, t9)
+
+    To help you visualize the structure of a binTree object, you can draw
+    a picture of any 'BTnode' as a binary tree node: draw a circle with
+    the 'val' field inside, and then draw arrows to pictures of its left
+    and right subtrees, to the left and right respectively.  When the
+    left subtree is a 'nullNode', leave out the arrow; similarly for the
+    right subtree.  For this example, you will see that the tree t7 is
+    a BTnode with two BTnodes in its left subtree and four in its right.
+    It has three leaf nodes.
+
+    The remainder of this assignment will depend on your correct
+    implementation of the 'init' method, so make sure you are confident
+    that your implementation works as advertised.
+
+    Make your changes to the binTree class as described above. See the
+    SUBMISSION REQUIREMENTS below to see how to submit your work.
+
+##QUESTION 2 (sum, 5 pts)
+
+    Now define a 'sum' method in both the 'BTnode' and 'BTnull' classes
+    that has no parameters and that returns the sum of all of the 'val'
+    fields in the tree. For a 'BTnull' instance, 'sum' should simply
+    return zero. For a 'BTnode' instance, 'sum' should return the sum
+    of three values: the 'val' field (which is assumed to be an integer)
+    and the sums of the left and right subtrees, recursively. Modify
+    the definition of 'binTree' to add the method definitions for 'sum'
+    in both the 'BTnode' and 'BTnull' classes.
+
+    If you apply sum to t7, you should get 54:
+
+        .<t7>sum() % => 54
+
+    Try it!
+
+##QUESTION 3 (nodeCount, 5 pts)
+
+    Next define a 'nodeCount' method that has no parameters and that
+    returns the count of all of the BTnodes in the tree. A 'BTnull'
+    instance should return a nodeCount of zero. You will need to decide
+    how to implement nodeCount for the BTnode class. Modify the definition
+    of 'binTree' to add the method definitions for 'nodeCount' in both
+    the 'BTnode' and 'BTnull' classes (10 pts).
+
+    If you apply nodeCount to t7, you should get 7:
+
+        .<t7>nodeCount() % => 7
+
+    Try it!
+
+##QUESTION 4 (lt?+gt?+bst?, 10 pts)
+
+    Define a method 'lt?' on binTree 'BTnode' and 'BTnull' objects
+    that takes one integer argument.  We want this method to have the
+    following behavior: 'lt?(x)', applied to a binTree, should return
+    1 (true) if all of the values of the BTnodes in the tree are less
+    than the value of x, otherwise return 0 (false).  Specifically, if
+    the tree is 'BTnull', 'lt?(x)' returns 1 (vacuously true).  For a
+    'BTnode' object with fields 'left', 'val', and 'right', .lt?(x)
+    returns 1 (true) if val is less than x and if .lt?(x) is true when
+    applied to both left and right subtrees.
+
+    Similarly define a method 'gt?'.
+
+    For the examples given above, we have:
+
+    .<nullNode>lt?(5) % => 1
+    .<t3>lt?(0)   % => 0
+    .<t3>lt?(7)   % => 1
+    .<nullNode>gt?(5) % => 1
+    .<t9>gt?(4)   % => 1
+    .<t9>gt?(9)   % => 0
+
+    Next define a method 'bst?' on binTree 'BTnode' and 'BTnull' objects
+    that has no parameters and that returns 1 (true) if the tree is a
+    Binary Search Tree (BST), and 0 (false) otherwise. Recall that a
+    'BTnode' instance represents a BST if the all of the BTnodes in the
+    'left' subtree have values that are less than 'val', all of the nodes
+    in the 'right' subtree are greater than 'val', and that both the
+    'left' and 'right' subtrees are BST. A 'BTnull' instance is vacuously
+    a BST.
+
+    Specifically, to check if a BTnode instance with 'left', 'val',
+    and 'right' fields is a BST, '.<left>lt?(val)' should be true,
+    '.<right>gt?(val)' should be true, and both the 'left' and 'right'
+    subtrees should be BST trees (recursively). If all these conditions
+    hold, then 'bst?' should return 1 (true), otherwise 0 (false).
+
+    For the base case of a 'BTnull' instance, 'bst?' should return 1 (true).
+
+    It turns out that the binTree t7 is a BST, so you should get:
+
+        .<t7>bst?() % => 1 (true)
+
+    Other examples:
+
+        % empty BST
+        .<nullNode>bst?() % => 1 (true)
+        % naBST is a binTree, but not a BST
+        define naBST = .makeBT(.makeLeaf(5), 3, nullNode)
+        .<nabst>bst?() % => 0 (false)
+
+    Incorporate your method definitions for 'lt?', 'gt?', and 'bst?'
+    into your BTnode and BTnull classes.  Do *not* remove anything from
+    the definition of binTree, so your binTree class should still contain
+    your 'init', 'sum' and 'nodeCount' methods, for example. You may
+    include code outside of your binTree class that includes test cases
+    that exercise your procedures/methods. I should be able to load your
+    entire binTree file into the OBJ language read-eval-print loop
+    without any errors.
+
+    See the SUBMISSION REQUIREMENTS below to see how to submit your work.
+
+##QUESTION 5 (addBST, 5 pts):
+    
+    A Binary Search Tree (BST) is a binary tree (binTree) having the
+    property that it satisfies the 'bst?' predicate. In this question,
+    you are to show how to construct binary search trees.
+
+    First, 'nullNode' (a BTnull instance) is vacuously a BST.  Given any
+    BST, we want to construct a new BST that somehow incorporates the
+    value v into an existing BST. Intuitively, traverse the tree until you
+    find the location to put the new value as a leaf node, going right or
+    left depending on how the value v compares to the value in a BTnode.
+
+    Instead of adding a value into an existing BST by modifying any of
+    its fields, we will construct a new tree that incorporates nodes in
+    the old tree that do not need modification, and creating new nodes
+    for ones that do. Here's the idea. For a BTnode having left, val,
+    and right fields,
+
+      addBST(v)
+
+    will create a new BTnode.
+
+    If v is less than val, then this new node will have its left field
+    built recusively by adding v to the original node's left tree, the new
+    node value will be val, and the new node right field will be the same as
+    the original node's right field. If v is greater than val, then create
+    a new BTnode as above, with the roles of 'left' and 'right' reversed.
+    If v and val are equal, then the value is already present in the BST
+    (we don't allow duplicates!), so we simply return the original BTnode.
+
+    Specifically, if v is less than val, then the behavior of addBST(v)
+    for a BTnode should return
+
+        .makeBT(.<left>addBST(v), val, right)
+
+    and do the same sort of thing if v is greater than val. If no changes
+    are required, simply return 'this'.
+
+    Notice that this approach does not modify the existing binTree.
+    It creates new nodes as necessary; existing nodes stay in place
+    without change. This is in keeping with the nature of functional
+    programmming, where we avoid side-effects.
+
+    In the BTnull class, addBST must return a new (leaf) node with v as
+    its value field.
+
+        method addBST = proc(v) .makeLeaf(v)
+
+    Remember than an empty BST is just a nullNode, so to construct a
+    BST from scratch, start with a nullNode. Example:
+
+       define bb = !<nullNode>addBST(3)>addBST(1)>addBST(4)>addBST(2)!>
+
+    Any BST you construct must have the property that when you apply
+    the bst? predicate, you will get 1 (true). For example, given the
+    above definition, we would have
+
+       .<bb>bst?() % => 1
+
+    Add your definition of addBST to the BTnode and BTnull subclasses. See
+    the SUBMISSION REQUIREMENTS below about how to submit your work.
+
+##QUESTION 6 (traverse, 5 pts)
+
+    The OBJ language supports lists such as
+
+        [] % empty list
+        [3,1,5]
+
+    as you have worked with in assignment A9. The OBJ language defines
+    list primitives 'first', 'rest', and 'addFirst'. In this question,
+    you will create a binTree method 'traverse' that takes no parameters
+    and that, when applied to a binTree object, will return a list
+    consisting of the values of the nodes in the tree when these nodes
+    are visited by an *inorder traversal* of the tree.
+
+    Recall that an inorder traversal of a tree visits the nodes in
+    left-node-right order: first perform an inorder traversal of the left
+    subtree (recursively), then visit the value of the node, then perform
+    an inorder traversal of the right subtree. Here 'visit' means to carry
+    out some activity specific to the nature of the traversal. In our
+    case, the result of a traversal is a list consisting of the values
+    of the nodes as they are visited in left-node-right order. If the
+    tree is a BST, then the values in the list will appear in ascending
+    numerical order!
+
+    For example, with the tree 't7' as defined above, you should get the
+    list [3,5,7,8,9,10,12] when applying traverse:
+
+        .<t7>traverse() % => [3,5,7,8,9,10,12]
+
+    In the BTnull class, 'traverse' should simply return the empty list.
+    In the BTnode class, 'traverse' should return what you get when
+    you append the traversal of the left subtree with what you get when
+    you add val to the traversal of the right subtree (use addFirst).
+    The OBJ language does not have a built-in append primitive for lists,
+    so you will need to write this yourself. (You have done this before!).
+
+    Complete this question by implementing the 'traverse' methods in the
+    BTnode and BTnull classes and by including a top-level definition
+    of 'append' for lists.
+
+##QUESTION 7 (list2BST, 5 pts)
+
+    In this question, you are to define a static procedure 'list2BST'
+    in the binTree class that takes a list consisting of integer values
+    and that returns a BST whose BTnodes have values consisting of those
+    in the given list.
+
+    The implementation of 'list2BST' is easy. If the list is empty, just
+    return nullNode (which is an empty BST). If the list is not empty,
+    call list2BST recursively on the rest of the list, and then apply the
+    addBST method to this object with the parameter of the first of the
+    list.
+
+    Once your have defined 'traverse' and 'list2BST', you can define a
+    top-level 'sort' procedure that takes an unsorted list of integers
+    and returs a list of integers consisting of the original integers
+    in sorted order:
+
+        define sort = proc(lst) !<binTree>list2BST(lst)>traverse()!>
+
+    Try this on the following lists:
+
+        .sort([]) % => []
+        .sort([3,2,1]) % => [1,2,3]
+        .sort([1,5,1,4,1,3,1,2]) % => [1,2,3,4,5] (no duplicates)
+
+##QUESTION 8 (OBJ1, 10 pts):
+
+    The OBJ language uses predefined identifiers 'self', 'super',
+    'this', 'myclass', and 'superclass' for objects and classes, but
+    there is nothing to stop a program from redefining or modifying
+    these identifiers in a class or object.  For example:
+
+        define c = class
+            field myclass
+            method init = proc() {set myclass=3 ; set super=5 ; self}
+        end
+
+        define o = .<new c>init()
+        <o>myclass % => 3
+        <o>super   % => 5
+
+    What we want to do is to make these identifiers into language tokens,
+    so that (for example) the 'field myclass' would fail to parse
+    correctly since 'myclass' would be considered as a token separate
+    from a VAR identifier.
+
+    Create a working directory named OBJ1 and copy all of the files in
+    the OBJ directory into this working directory.  Do all of your work
+    in this directory.
+
+    First, add these five strings ('self', 'super', 'this', 'myclass',
+    and 'superclass') to the list of tokens in your grammar file, with
+    appropriate token names.  Next add a grammar rule for each one,
+    as an <exp>.  Here is an example for the token 'SELF':
+
+        <exp>:SelfExp   ::= SELF
+
+    Next, add semantic rules in your 'code' file that define the 'eval'
+    methods for each of these expressions.  Each 'eval' method will
+    look up the corresponding string in the given environment and return
+    its value.  Also define a 'toString()' method for each.  Here's an
+    example, for SELF:
+
+    SelfExp
+    %%%
+        public Val eval(Env env) {
+            return env.applyEnv("self");
+        }
+
+        public String toString() {
+            return "self";
+        }
+    %%%
+
+    Once you have made these changes and compiled your resulting language,
+    you should be able to run all of our OBJ examples without error,
+    but an attempt to run the above example (that attempts to define a
+    'myclass' field and modify the 'super' variable) will fail.
+
+    Make *copies* of your modified 'grammar' and 'code' files, named
+    as follows:
+
+        ac-obj1-grammar
+        ac-obj1-code
+
+    Your grammar file should *not* change any of its original 'include'
+    lines.
+
+    Submit your 'ac-obj1-grammar' and 'ac-obj1-code' files following the
+    instructions in the Submission requirements section.
+
+##QUESTION 9 (OBJRO, 10 pts):
+
+    Another alternative to "protect" the bindings of 'self', 'super',
+    'this', 'myclass', and 'superclass' from being modified is to bind
+    them to read-only references.  By doing so, any attempt to modify
+    their values will result in a run-time error:
+
+        <class end> set myclass = 3 % error
+
+    Create a working directory OBJRO in which you will do your work.
+    Copy all of the files in the OBJ directory (*not* your OBJ1 directory)
+    into this working directory. The 'RO' letters should suggest the words
+    'Read-Only'. Do all of your work in your OBJRO directory.
+
+    The 'ref' file defines a 'ValRORef' class that is exactly the same
+    as the 'ValRef' class except that instead of a 'setRef' method, it
+    defines a 'setRORef' method that behaves the same as the 'setRef'
+    method for a ValRef. The 'setRef' method for an instance of the
+    ValRORef class defaults to its definition in the Ref class that
+    throws a runtime exception.
+
+    In your 'class' file, change the bindings of the four identifiers
+    'myclass', 'superclass', 'super', and 'this' listed above from
+    instances of ValRef to instances of ValRORef.
+
+    In your 'code' file, you must change the behavior of 'eval' in the
+    'NewExp' class so that (1) an 'objRef' gets bound to a ValRORef
+    instance, and (2) the 'setRORef' method is called on the 'objRef'
+    instance instead of the 'setRef' method.
+
+    ==== START NOTE
+    Such changes do not prevent the *redefinition* of the identifiers,
+    so even with an initial ValRORef binding for the identifier 'myclass',
+    it would still be possible to do something like this:
+
+        <class static myclass=3 end>myclass % => 3
+
+    In this case, a new 'myclass' identifier is created as a static
+    variable in the class, adding it to the static class environment.
+    This is not the same as attempting to modify the value of an existing
+    'myclass' using a 'set' expression.
+    ==== END NOTE
+
+    Make sure your 'class' and 'code' files have been modified by making the
+    changes described above. Also be sure to test your implementation.
+
+    Make *copies* of your modified 'class' and 'code' files named as follows:
+
+        ac-objro-class
+        ac-objro-code
+  
+    Submit your 'ac-objro-class' and 'ac-objro-code' files following the
+    instructions in the Submission requirements section.
+
+##SUBMISSION REQUIREMENTS
+
+    Create a flat zip file named AC.zip containing ONLY the following
+    plain text files. Your AC.zip file should not contain any other
+    files or directories.
+
+        binTree 
+	ac-obj1-grammar
+	ac-obj1-code
+	ac-objro-class
+	ac-objro-code
+
+    IMPORTANT!!!!: Your binTree file should contain all of the
+    implementations of the binTree class and associated top-level
+    procedures, with modifications you implement as described in QUESTIONS
+    1 through 7.
+
+    I should be able to load the contents of your entire binTree file
+    into the read-eval-print loop in the OBJ language without any errors.
+    If attempting to load this file results in ANY errors, I WILL GIVE
+    YOU ZERO POINTS FOR ALL QUESTIONS 1 THROUGH 7. If you have syntax
+    errors in any of your methods that you can't fix, LEAVE THEM OUT,
+    so that your file will otherwise load without errors.
+
+    Submit your AC.zip file in your AC Dropbox in MyCourses.

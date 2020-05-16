@@ -1,0 +1,8 @@
+define compose =
+   proc(f:[int=>int], g:[int=>int]):[int=>int] proc(x:int):int .f(.g(x))
+
+define square = proc(x:int):int *(x,x)
+define add3 = proc(x:int):int +(x,3)
+define twice = proc(x:int):int +(x,x)
+
+..compose(twice,.compose(add3,square))(5)

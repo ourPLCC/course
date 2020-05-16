@@ -1,0 +1,2 @@
+define v = proc(x) if x then +(1,.v(sub1(x))) else 0
+.v(10)

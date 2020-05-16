@@ -1,0 +1,16 @@
+define while = proc(test?, do, result)
+  letrec loop = proc()
+    if test? then { do ; .loop() } else result
+  in .loop()
+
+let
+  x = 0
+  sum = 0
+in
+  letprop
+    test? = prop <=?(x,10)
+    do = prop {set sum = +(sum,*(x,x)) ; set x = add1(x)}
+    result = prop sum
+  in
+    .while(test?, do, result)
+

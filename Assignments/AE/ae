@@ -1,0 +1,259 @@
+CSCI 344 - Programming Language Concepts
+Assignment AE (50 points)
+Due Monday, Dec. 10 
+
+NOTE:
+You are to answer each of these questions, indicated by a '##QUESTION:'
+line.  Submit your modified files as directed in the Submission
+requirements section below.
+
+This file can be found here:
+
+    /usr/local/pub/plcc/Assignments/AE/ae
+
+##QUESTION 1 (FOREACH, 20 pts):
+
+    The ARRAY language adds one-dimensional arrays to the OBJ language.
+    In this problem, you will implement the syntax and semantics of a
+    'foreach' expression that will iterate through elements of an array
+    and will carry out an action for each of these elements.
+
+    Create a FOREACH directory in which you will do your work, and copy
+    all of the files in the ARRAY directory into this working directory.
+    In the 'grammar' file, add a FOREACH token with string 'foreach'.
+    Also in the 'grammar' file, add the following new grammar rule:
+
+        <exp>ForeachExp ::= FOREACH <VAR> IN <exp>arrayExp DO <exp>doExp
+
+    The semantics of a 'foreach' expression can be summarized as follows.
+    For an expression like this,
+
+        foreach x in ary do set x = 3 
+
+    the result is exactly the same as in the Java-like code
+ 
+        for (x : ary)
+            set x = 3;
+        return ary;
+
+    You will need to define the semantics of a ForeachExp in your 'code'
+    file, as follows:
+
+        ForeachExp
+        %%%
+            public Val eval(Env env) {
+                /* FIXME */
+            }
+
+            public String toString() {
+                return " ...ForeachExp... "
+            }
+        %%%
+
+    Fill in the '/* FIXME */' part to implement the semantics described
+    as follows.
+
+    Observe that a ForeachExp object has three fields:
+
+        Token var;
+        Exp arrayExp;
+        Exp doExp;
+
+    You will need to evaluate the 'arrayExp' expression to get the Val
+    object that you will iterate over.  This evaluation should use the
+    environment 'env'.  Apply the 'arrayVal()' method to the resulting
+    Val object to return its ArrayVal instance.
+
+    An ArrayVal object has an instance variable that is a Java array
+    of ValRefs.  The trick is to extend the 'env' environment by binding
+    the 'var' token to each of the ValRefs, and evaluating the 'doExp'
+    in this extended environment.  You should do this separately for
+    each of the VarRefs in the ArrayVal array, starting with array index
+    zero and continuing through the array in increasing index order.
+    Notice that the Java "enhanced for" statement already iterates
+    through a Java List in increasing index order, so you can simply
+    use the "enhanced for" to do your work.
+
+    Once all of the ValRef elements have been visited as described above,
+    your 'eval' method should return the original ArrayVal instance.
+
+    Here are some examples that should work with your modifications:
+
+        foreach x in array[5] do set x=3
+        % => (3,3,3,3,3)
+
+        let
+          i = 0
+        in
+          foreach item in array[10] do set item = set i = add1(i)
+          % => (1,2,3,4,5,6,7,8,9,10)
+        
+        foreach z in 3 do 5
+        % => run-time error: 3 cannot be cast to an ArrayVal
+
+        define arraySum = proc(ary)
+          let
+            sum = 0
+          in
+            { foreach w in ary do set sum = +(sum,w)
+            ; sum
+            }
+
+        let
+          i = 0
+        in
+          .arraySum(foreach x in array[10] do set x = set i = add1(i))
+          % => 55
+
+    Make copies of your modified 'grammar' and 'code' files into new
+    files, named as follows:
+
+        ae-foreach-grammar
+        ae-foreach-code
+
+    Submit your 'ae-foreach-grammar' and 'ae-foreach-code' files following the
+    instructions in the Submission requirements section.
+
+##QUESTION 2 (FOREACH1, 20 pts):
+
+    Your FOREACH language is based on the ARRAY language, which also has
+    built-in lists.  Make the 'foreach' operator behave the same way
+    for a list as it does for an array.
+
+    First, create a FOREACH1 working directory and copy all of the
+    files in *your* FOREACH directory into this working directory.
+    Do all of your work in this directory. You must have completed the
+    previous question to do this.
+
+    To make the 'foreach' operator behave as described, define a void
+    'iterate' method in the Val class that defaults to throwing a
+    RuntimeException except that, in the ArrayVal and ListVal classes,
+    implements an appropriate 'foreach' behavior.  You will need to pass
+    the 'var', 'doExp', and 'env' parameters to the 'iterate' method.
+
+    In the grammar file where you define the ForeachExp grammar rule,
+    change the name of the first <exp> to iterableExp rather than
+    arrayExp.  This is because the grammar rule can apply to either
+    arrays or lists, both of which now will have 'iterate' behavior.
+    In the ForeachExp eval method in your 'code' file, evaluate the
+    'iterableExp' expression in the current environment, and then apply
+    the 'iterate' method on this value, passing it the 'var', 'doExp',
+    and 'env' parameters.  Return the 'iterableExp' value as the value
+    of the ForeachExp.
+
+    In the ArrayVal class, the 'iterate' method will simply march through
+    the elements of the underlying ValRef array, exactly as described
+    in problem 4 above.  However, in the ListNode class, you will need
+    to evaluate the 'doExp' expression in an environment that extends
+    'env' by binding the 'var' to (a reference to) the first element in
+    the list, and then by calling 'iterate' recursively on the rest of
+    the list, passing it the exact same parameters.  You need to create
+    a reference when visiting the first element in the list because list
+    elements are Vals, not ValRefs.  In the case of an empty 'ListNull'
+    list, 'iterate' does nothing.
+
+    Notice that the elements of an array are references, whereas the
+    elements of a list are values.  This means that the contents of an
+    array can be modified, whereas the elements of a list cannot.  The
+    following program illustrates this:
+
+        define lst = [1,3,5]
+        lst
+        % => [1,3,5]
+        
+        foreach x in lst do set x = add1(x) 
+        % => [1,3,5]
+
+        let
+          sum = 0
+        in
+          { foreach x in lst do set sum = +(sum,x) ; sum }
+        % => 9
+
+        define ary = array[3]
+        set \ary[0] = 1
+        set \ary[1] = 3
+        set \ary[2] = 5
+        ary
+        % => (1,3,5)
+
+        foreach x in ary do set x = add1(x)
+        % => (2,4,6)
+
+    Make copies of your modified 'grammar', 'code', 'list', and 'val'
+    files, named as follows:
+
+        ae-foreach1-grammar
+        ae-foreach1-code
+        ae-foreach1-list
+        ae-foreach1-val
+
+    Submit your 'ae-foreach1-grammar', 'ae-foreach1-code',
+    'ae-foreach1-list', and 'ae-foreach1-val' files following the
+    instructions in the Submission requirements section.
+    
+##QUESTION 3 (FOREACH-INIT, 10 pts):
+
+    In the ARRAY and FOREACH languages, arrays are created with all of
+    its values initialized to nil.  In this assignment, you are to modify
+    your FOREACH1 language so that an array can be created simply by
+    listing its values, much like you can do in Java.  Here is an example:
+
+        define ary = (1,3,5)
+	ary % => (1,3,5)
+        len(ary) % => 3
+
+    Create a working directory FOREACH-INIT, and copy all of the files
+    in *your* FOREACH1 directory into this working directory. Do all of your
+    work in this directory.
+
+    Modify the 'grammar' and 'code' files to accommodate the syntax and
+    semantics described here.  Since an initialized array starts with a
+    LPAREN token, you will need to add a grammar rule that knows about
+    this:
+
+        <exp>:ArrayInitExp ::= LPAREN <rands> RPAREN
+
+    The 'eval' method for such an expression evaluates the
+    individual operands and builds an array of the appropriate size to
+    hold references to the resulting values.  A 'Rands' object already
+    knows how to get these values; you will only need to turn them into
+    references so you can build the resulting 'ArrayVal' object.
+
+    Keep the original semantics for creating an array of nil values
+    using the 'array' operator.
+
+    Here is an example REP interaction in the FOREACH-INIT language:
+
+        foreach x in (1,3,5) do set x = add1(x)
+        % => (2,4,6)
+
+        foreach x in [1,3,5] do set x = add1(x)
+        % => [1,3,5] (lists are immutable)
+
+    Make copies of your modified 'grammar' and 'code' files into new
+    files, named as follows:
+
+        ae-foreach-init-grammar
+        ae-foreach-init-code
+
+    Submit your 'ae-foreach-init-grammar' and 'ae-foreach-init-code' files
+    following the instructions in the Submission requirements section.
+
+Submission requirements
+-----------------------
+
+    Create a flat zip file named AE.zip containing ONLY the following
+    plain text files. Your AE.zip file should not contain any other
+    files or directories.
+
+	ae-foreach-grammar
+	ae-foreach-code
+	ae-foreach1-grammar
+	ae-foreach1-code
+	ae-foreach1-list
+	ae-foreach1-val
+	ae-foreach-init-grammar
+	ae-foreach-init-code
+
+    Submit your AE.zip file in your AE Dropbox in MyCourses.

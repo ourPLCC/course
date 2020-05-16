@@ -1,0 +1,10 @@
+define p = proc(y)
+    catch
+        % no handlers defined here!
+    in
+        throw h(y)
+
+catch
+    h = handler(x) 42
+in
+    .p(5)

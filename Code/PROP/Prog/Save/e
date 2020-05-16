@@ -1,0 +1,6 @@
+define c1 = let z=3 in class static x=@ end
+define c2 = let w=5 in class extends c1 static y=@ end
+<c1>@@
+<<c1>x>@@
+<c2>@@
+<<c2>y>@@

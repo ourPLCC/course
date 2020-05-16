@@ -1,0 +1,52 @@
+define while = proc(obj)
+  <obj> % obj must have property bindings for test?, do, and result
+    letrec loop = proc()
+      if test? then { do ; .loop() } else result
+    in .loop()
+
+%% use letprop
+let
+  x = 0
+  sum = 0
+  limit = 10
+in
+  letprop
+    test? = prop <=?(x,limit)
+    do = prop {set sum = +(sum,*(x,x)) ; set x = add1(x)}
+    result = prop sum
+  in
+    .while(@)
+
+%% use class-defined props
+let
+  c = 
+    class
+      field x
+      field sum
+      field limit
+      method init = proc(limit) {set x=0 ; set sum=0 ; set <self>limit=limit ; self}
+      property test? = prop <=?(x,limit)
+      property do = prop {set sum = +(sum,*(x,x)) ; set x = add1(x)}
+      property result = prop sum
+    end
+in
+  let
+    o1 = .<new c>init(10)
+    o2 = .<new c>init(20)
+  in
+    {display .while(o1) ; display .while(o2)}
+
+%% use class-defined props (again, but without giving names to classes or objects)
+.while(
+  <new 
+    class
+      field x
+      field sum
+      field limit
+      method init = proc(limit) {set x=0 ; set sum=0 ; set <self>limit=limit ; self}
+      property test? = prop <=?(x,limit)
+      property do = prop {set sum = +(sum,*(x,x)) ; set x = add1(x)}
+      property result = prop sum
+    end
+  >.init(10)
+)

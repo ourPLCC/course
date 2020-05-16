@@ -1,0 +1,1 @@
+define du = proc(d, u) if d then .du(sub1(d), add1(u)) else u

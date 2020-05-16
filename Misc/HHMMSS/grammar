@@ -1,0 +1,5 @@
+TWOD '\d\d'
+COLON ':'
+NL '\n'
+%
+<time> ::= <TWOD>hours COLON <TWOD>minutes COLON <TWOD>seconds NL

@@ -1,0 +1,267 @@
+CSCI 344 - Programming Language Concepts
+Assignment A2 (40 points)
+Due Monday, Sep 17, 2018
+
+##QUESTION 1 (LONN, 10 pts):
+    Consider the language for a nonempty-list-of-numbers, which is in the
+    directory
+
+        /usr/local/pub/plcc/Code/LONN
+
+    You are to implement the minimum-value semantics for this language.
+    In other words, the LONN semantics of a list-of-numbers should be
+    the minimum value of all of the numbers in the list. (The list must
+    be nonempty, since an empty set of numbers has no minimum.)
+
+    First, create a directory LONN in which you will do your work. Copy
+    the files from /usr/local/pub/plcc/Code/LONN into this directory.
+
+    Most of the semantic code has already been written for you.  You are
+    to complete the definition of the min method in the NumsNode and
+    NumsNull classes.  Remember that the value passed to the min method
+    is the minimum value found so far.  You will need to use the 'num'
+    and 'nums' fields in this class to complete your method definition in
+    the NumsNode class.  Essentially, if the value of num (you'll have to
+    do a parseInt to get this value) is less than the minSoFar, replace
+    minSoFar with the value of num; otherwise, leave minSoFar unchanged.
+    Then apply the min method on the nums object, passing it the value
+    of minSoFar, and return the resulting value. The min method in the
+    NumsNull class is a trivial one-liner.
+
+    Make a *copy* of your modified 'grammar' file with the name
+    'a2-lonn-grammar' and submit this copy according to the submission
+    requirements at the end of this document. Do not make any changes
+    to this file.
+
+    Grading:
+    10 pts for correct implementation of semantic code
+
+    You should test your implementation by running the Rep program
+    with example input.  A sample interaction looks like this:
+
+    --> (    3 )
+    3
+    --> (3 5    2 4)
+    2
+    --> ()
+    ERROR (your actual error message will be different from this)
+
+##QUESTION 2 (BINARY, 10 pts):
+    Write a plcc lexical specification, grammar, and semantics for
+    unsigned binary numbers.  When you run the resulting Rep file,
+    you should be able to enter unsigned binary numbers from the
+    keyboard, with output that is the decimal equivalent of the number.
+    For example:
+
+    --> 0
+    0
+    --> 101
+    5
+    --> 000000011
+    3
+    --> 10000
+    16
+    --> 11111
+    31
+    --> 012
+    ERROR
+
+    Create a directory BINARY in which you will do your work.  Create a
+    'grammar' file in this directory containing the specifications for
+    the tokens, BNF grammar, and semantics as described as follows.
+
+    Your lexical specification should have exactly three tokens: NL
+    (a newline) defined as '\n', and  binary digits ZERO and ONE.
+
+    I'll give you a start for the grammar.
+
+    <start> ::= <bits> NL
+    <bits>  **= <bit>
+
+    You will need to add two grammar rules for the <bit> nonterminal,
+    with RHS entries ZERO and ONE, respectively, along with names of
+    the subclasses of the Bit class to accommodate the fact that there
+    are two grammar rules with <bit> on their left-hand sides.  You
+    will need to choose those subclass names.
+
+    At this point, you can compile (using plccmk) your grammar and
+    run the Rep program to see that it parses binary numbers correctly.
+
+    To add semantics to your grammar file, your Start class should
+    define a toString method that returns the String representation of
+    the decimal value of the binary number, as determined by calling
+    the eval() method on the Bits object bits.
+
+    Your Bit abstract class should declare a single method
+
+        public abstract int eval();
+
+    Each of the the (non-abstract) subclasses of the Bit class should
+    define the eval() method by returning 0 or 1, depending on whether
+    the RHS token is ZERO or ONE.  (Note that neither of these subclasses
+    has any instance variables, but you should still be able to have
+    their eval() methods return the proper values.)
+
+    Your Bits class should define a single method
+
+        public int eval()
+ 
+    which should loop through the individual Bit objects in the bitList
+    and should accumulate the integer value of the binary number.  In the
+    loop, just multiply the running sum (initialized to 0) by 2 and add
+    the value of the current bit, which will become the new running sum.
+    You may *not* use any other method to convert from binary to decimal.
+
+    Here's how to think about it, step-by-step, for the binary number
+    1011011:
+
+        running sum     =         0 (initial value)
+                                 /
+                           _____/
+                          /
+	1       base 10 = 0*2+1 = 1
+        ^                     ^  /
+                           _____/
+                          /
+        10      base 10 = 1*2+0 = 2
+         ^                    ^  /
+                           _____/
+                          /
+        101     base 10 = 2*2+1 = 5
+          ^                   ^  /
+                           _____/
+                          /
+        1011    base 10 = 5*2+1 = 11
+           ^                  ^  /
+                           _____/
+                          /
+        10110   base 10 =11*2+0 = 22
+            ^                 ^  /
+                           _____/
+                          /
+        101101  base 10 =22*2+1 = 45
+             ^                ^  /
+                           _____/
+                          /
+        1011011 base 10 =45*2+1 = 91
+              ^               ^
+
+    Again, you may *not* use any other method to convert from binary
+    to decimal.
+
+    If the bitList is empty (check its size), the eval() method should
+    throw a RuntimeException with a message indicating that there are
+    no digits.
+
+    Once you have created and tested a 'grammar' file with your lexical
+    specification, grammar rules, and semantics, make a *copy* of this file
+    with the name 'a2-binary-grammar' and submit this copy according to
+    the submission requirements at the end of this document. Do not make
+    any changes to the contents of this file.
+
+    Grading:
+    10 pts for correct implementation of semantic code
+
+##QUESTION 3 (YYYYMMDD, 10 pts):
+
+    Write a complete language that recognizes dates in yyyy/mm/dd format
+    and whose semantics is the day of the week for that date.  Create a
+    directory named YYYYMMDD in which you should do your work.
+
+    Here's a start of your 'grammar' file:
+   
+    NL '\n'
+    DIGIT4 '\d\d\d\d'
+    DIGIT2 '\d\d'
+    SEP '/'
+    %
+    <ymd>  ::= <DIGIT4>yyyy SEP <DIGIT2>mm SEP <DIGIT2>dd NL
+    %
+    # semantics go here
+
+    You only need to define the 'toString()' method in the Ymd class to
+    do your work.  Use Zeller's Congruence for the Gregorian Calendar to
+    compute the day of the week, and then use this to have the toString()
+    method return the name of the day.
+
+    Use the Integer.parseInt method to convert the yyyy, mm, and dd
+    token strings into their respective integer values. In Java, remember
+    that the quotient of two integers is an integer.
+
+    Here's a sample interaction, running the Java Rep loop:
+
+        --> 2015/01/18
+        Sunday
+        --> 2000/01/01
+        Saturday
+        --> 1900/01/01
+        Monday
+
+    Make a *copy* of your 'grammar' file with the name 'a2-yyyymmdd-grammar'
+    and submit this copy according to the submission requirements at
+    the end of this document. Do not make any changes to the contents of
+    this file.
+
+    Grading:
+    10 pts for correct implementation of semantic code
+
+##QUESTION 4 (EXTRA, 10 pts):
+
+    The grammar for binary numbers (problem 1) permits multi-digit
+    binary input that can start with a zero, such as '00101'. Suppose we
+    want to disallow entry of leading zeros, except for the case when
+    the binary number is just zero alone.  Here are grammar rules that
+    accomplish this:
+
+    <start> ::= ZERO NL
+    <start> ::= ONE <bits> NL
+
+    The grammar rules for <bits> and <bit> are unchanged.  This grammar
+    will accept inputs of 0 and 110100, but not 0101, and not the
+    empty string.
+
+    Create a directory EXTRA in which you will do your work. Copy the
+    'grammar' file from your BINARY directory into this directory, and
+    make the changes to the grammar rules as described above. Your
+    EXTRA semantics should be the same as for your BINARY implementation,
+    except that leading zeros will be disallowed.
+
+    You will need to take care of three things:
+
+    a.  Give class names to the two <start> rules, since <start> now
+        appears on two LHS entries.  The toString() method for the
+        first one is trivial (why?), but the toString() method for the
+        second one will need to use the eval() method applied to the
+        bits field as in problem 2.
+
+    b.  Modify the eval() method in the Bits class to accommodate the
+        fact that you got there with a leading ONE bit.  This will be
+        a trivial change.        
+
+    c.  The eval() method in the Bits class should no longer throw
+        an exception when the bitList is empty.  (why?)
+
+    Once you have implemented your changes and tested them, make a *copy*
+    of your 'grammar' file with the name 'a2-extra-grammar' and
+    submit this file according the the submission requirements at the
+    end of this document.
+
+    Grading:
+    10 pts for correct implementation of semantic code.
+
+##SUBMISSION REQUIREMENTS
+-------------------------
+
+Create a 'flat' zip file named A2.zip containing ONLY the following
+plain text files:
+
+    a2-lonn-grammar
+    a2-binary-grammar
+    a2-yyyymmdd-grammar
+    a2-extra-grammar
+
+Your zip file should NOT have any directories -- not even one named
+A2. None of the files in your zip file should have any extensions
+(such as .txt).
+
+Submit your A2.zip file to your A2 Assignment Dropbox in MyCourses.

@@ -1,0 +1,26 @@
+# Language LON (list of numbers)
+#   The Rep loop prints the integers in the list
+
+# Lexical specification
+skip WHITESPACE '\s+'
+NUM '\d+'
+LPAREN '\('
+RPAREN '\)'
+%
+# Grammar
+<lon>  ::= LPAREN <nums> RPAREN
+<nums> **= <NUM>
+%
+
+Lon
+%%%
+
+    public String toString() {
+        String ret = "( ";
+        for (Token tok: nums.numList) {
+            ret += tok + " ";
+        }
+        return ret + ")";
+    }
+
+%%%

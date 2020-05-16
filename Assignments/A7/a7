@@ -1,0 +1,343 @@
+CSCI 344 - Programming Language Concepts
+Assignment A7 (35 pts)
+Due Monday, Oct 22, 2018
+
+In this assignment, you will see how environments can be treated as
+values.  Building on the DISPLAY language that you created in assignment
+A6, make a new working directory called ENV and copy all of your DISPLAY
+files into this directory. If you need a to start with a reference version
+of DISPLAY instead of using your own, please contact me.
+
+##QUESTION 1 (ENV1, 5 pts):
+
+    At this point, if you evaluate a proc (not to be confused with
+    applying the proc), you get a ProcVal, and the REP loop prints it
+    like this:
+
+        proc
+
+    You are to define a toString behavior for a ProcVal that prints
+    something a bit more informative.  In particular, the following
+    proc expression
+
+        proc(t,u) -(+(t,t),u) 
+
+    should print as
+ 
+        proc(t,u)
+
+    Specifically, the toString() method for a ProcVal should return
+    the string "proc" followed by a comma-separated list of its formal
+    parameters, enclosed in parentheses.  This toString() method should
+    ignore the procedure body and its captured environment.
+
+    After making this change, when you enter the following expression
+    in the REP loop
+
+        let
+          x = 3
+        in
+          proc(t) +(t,x)
+
+    you should get
+
+        proc(t)
+
+    printed as the value of this expression.
+
+    Make this change and test it to be sure it behaves appropriately.
+    Take care to test procedures of arity zero, one, and two.
+
+##GRADING:
+    5 points for correct toString() modification to ProcVal
+
+##QUESTION 2 (ENV2, 5 pts):
+
+    Next, add a new Val type: an EnvVal (for Environment Value).
+    An EnvVal will have one Env field, an appropriate constructor,
+    and a simple toString() behavior:
+
+        public class EnvVal extends Val {
+
+            public Env val;
+
+            public EnvVal(Env val) {
+                this.val = val;
+            }
+
+            public EnvVal envVal() {
+                return this;
+            }
+
+            public Env getEnv() {
+                //**FIXME**
+            }
+
+            public String toString() {
+                return "env";
+            }
+
+        }
+    
+    Because an EnvVal is a Val, it inherits the default isTrue() method
+    from the Val class, which returns true for everything (except for
+    a zero IntVal).  The toString() method of an EnvVal just returns
+    a string "env" that indicates that the value is an environment,
+    without further details. The 'envVal' method should throw an exception
+    in the Val abstract class.
+
+    Next modify the 'getEnv' stub in this EnvVal class so that it returns
+    its Env field, val. Just replace the 'FIXME' comment with the proper
+    code. Add a default behavior for the 'getEnv' method in the abstract
+    Val class that throws an exception.
+
+    Make these changes to the 'val' file in your ENV language.
+
+##GRADING:
+    10 pts for correct modifications to the val file.
+
+##QUESTION 3 (ENV3, 5 pts):
+    Next, create an expression that evaluates to an EnvVal.  An "at
+    expression" looks like this:
+
+        @
+
+    Create a token named AT whose pattern is '@', and add this to your
+    grammar.  Also, define an "at expression" grammar rule as follows:
+
+        <exp>:AtExp    ::= AT
+
+    In order for your language to compile, you will need to define the
+    eval behavior of an AtExp.  But here's where an EnvVal comes in:
+    the value of an AtExp is simply the EnvVal constructed from the
+    environment passed as a parameter to eval!  Add this method to the
+    AtExp class in your code file.
+
+    After you have made this modification to your code file, run some
+    sample tests.  In particular, the following program will evaluate
+    to an EnvVal:
+
+        let
+          x = 3
+          y = 5
+        in
+          @ % => env
+
+    Make these changes to the 'grammar' and 'code' files in the ENV
+    language.
+
+##GRADING:
+    5 points for correct syntax and semantics of an AtExp
+
+##QUESTION 4 (ENV4, 10 pts):
+    Now that we can create an EnvVal, we want to be able to *use* it to
+    retrieve the value of any of its bindings and to use these bindings
+    to evaluate an expression. This is similar to the difference between
+    defining a proc and applying it.
+
+    To do so, we define a new expression called an "environment
+    expression" that takes an environment and an expression and that
+    evaluates the expression in the given environment.  Here's an example:
+
+        define xenv = let x = 3 in @  % xenv is an EnvVal
+        xenv % => env
+        <xenv>x % => 3
+
+    The idea is that an environment expression of the form
+
+        <exp1>exp2
+
+    will evaluate the expression exp2 in the environment defined by the
+    environment obtained from the value of exp1 -- which must be an EnvVal.
+    [Note to the reader: the angle brackets in the above expression are
+    character literals and are part of the lexical definition of our
+    language; they are not part of a BNF grammar specification.]
+
+    Add the following tokens and grammar rule to your grammar file:
+
+    Tokens:
+        LANGLE '<'
+        RANGLE '>'
+    Gramar rule:
+        <exp>:EnvExp   ::= LANGLE <exp>exp1 RANGLE <exp>exp2
+
+    You will now need to define the 'eval' semantics of an EnvExp.
+    But this is straight-forward:
+
+        public Val eval(env) {
+            // first evaluate exp1 in the passed environment
+            Val val1 = exp1.eval(env); // evaluate exp1 in the given env
+            // then evaluate exp2 in the environment captured by val1
+            Val val2 = exp2.eval(val1.getEnv());
+            // return the result
+            return val2;
+        }
+
+    Make these changes to your 'code' and try out the above xenv example.
+
+    Also, observe that if the expression in the <...> part does not evaluate
+    to something that knows about getEnv(), you will get a runtime error:
+
+        <3>3 % throws an exception
+
+##GRADING:
+    5 points for correct syntax and semantics of an 'EnvExp'
+
+##QUESTION 5 (ENV5, 5 pts):
+    Finally, observe that a ProcVal has an Env field that captures the
+    environment in which the proc is evaluated.  This is how pairs work,
+    as you saw in the assignment a6.  Since a ProcVal has an Env field,
+    you can now define the getEnv() method on a ProcVal as well, by
+    simply returning its captured environment.  This means that a proc
+    can appear inside the <...> of an EnvExp!  Consider pairs, as we
+    defined in a6:
+
+        define pair = proc(x,y) proc(t) if t then y else x
+        define fst = proc(p) .p(0)   % our original definition of fst
+        define snd = proc(p) .p(1)   % our original definition of snd
+
+
+    Observe that if 'p' is the value returned by applying the 'pair'
+    procedure (it's a ProcVal!), then '<p>x' and '<p>y' are the values
+    of 'x' and 'y' captured by the pair. Examine carefully the following
+    example:
+
+        % p53 captures the environment that binds x and y to 5 and 3
+        define p53 = .pair(5,3)
+        p53       % => proc(t)
+        .fst(p53) % => 5
+        .snd(p53) % => 3
+        <p53>x    % => 5, same as .fst(p53)!
+        <p53>y    % => 3, same as .snd(p53)!
+
+    Armed with our behavior of '@' and '<...>', we can now modify the
+    definition of the 'pair' procedure as follows:
+
+        define pair = proc(fst,snd) @
+        define fst = proc(p) <p>fst
+        define snd = proc(p) <p>snd
+
+        define p53 = .pair(5,3) % evaluates to an EnvVal, not a ProcVal
+        p53       % => env
+        .fst(p53) % => 5
+        .snd(p53) % => 3
+
+##GRADING:
+    5 pts for the correct implementation of 'getEnv' for a ProcVal.
+
+##QUESTION 6 (ENV6, 5 pts):
+    Finally, we want a way to display an environment in a human-
+    readable way.  To do this, create a new token
+
+        ATAT '@@'
+
+    and an "at-at" expression
+
+        <exp>:AtAtExp ::= ATAT
+
+    The eval semantics of an AtAtExp should behave just like an AtExp --
+    it should still evalulate to an EnvVal -- except that when evaluating
+    an AtAtExp, the current environment will be printed to standard output
+    before its corresponding EnvVal is returned.  Here's an example of
+    a REP interaction, with comments added:
+
+        let
+          x=3
+          y=5
+        in
+          @@ % display the environment
+
+        [x:3]
+        [y:5]
+        ----
+        ----
+
+        env        % => the "value" of the let expression
+
+    For the following let expression,
+
+        let
+          x = 3
+        in
+          let
+            y = 5
+          in
+            @@
+
+    we would get
+
+        [y:5]
+        ----
+        [x:3]
+        ----
+        ----
+
+        env
+
+    The idea is that the eval method of an AtAtExp will print the
+    captured environment in a human-readable way, with the most recent
+    bindings appearing at the top, and with enclosing environments
+    separated by lines of '----'.
+
+    (Note that you may see two consecutive lines of dashes if the
+    top-level environment is empty.)
+
+    Here's the code:
+ 
+        public Val eval(Env env) {
+            System.out.println(env.toString());
+            return new EnvVal(env);
+        }
+
+    This obviously means that you will need to employ the toString()
+    behavior of Env objects.  But, LUCKY FOR YOU, this behavior is
+    already defined in the V6 language!
+
+    Test your modified program with several examples.  Note that
+    you can evaluate '@@' expressions to display environments anywhere
+    in your program.  Consider the following:
+
+        let
+          x = 3
+        in
+          let
+            p = proc(t) { @@ ; +(t,x) } 
+          in
+            .p(5)
+
+    When the application .p(5) is evaluated, the body of p evaluates the
+    '@@' expression first, displaying the environment.  The value of
+    the '@@' expression is discarded (it's in an {...} expression), and
+    the result of the application -- 8 -- is returned.  Notice that the
+    environment in effect during the evaluation of the body of p knows
+    about bindings to t and x, but not to p itself.  Try it.  You
+    should see the following output:
+
+        [t:5]
+        ----
+        [x:3]
+        ----
+        ----
+
+        8
+
+##GRADING
+    5 pts for correct syntax and semantics of an AtAtExp
+
+##SUBMISSION REQUIREMENTS
+-------------------------
+
+At this point, you should have made several changes to your 'grammar',
+'code', and 'val' files. Be sure that you have made *all* of the above
+changes to these three files and that you have tested them thoroughly.
+
+Then make copies of your modified 'grammar', 'code', and 'val' files
+into plain text files with the following names:
+
+    a7-env-grammar
+    a7-env-code
+    a7-env-val
+
+Create a zip file A7.zip containing ONLY these files. Your zip
+file should not contain any additional files or directories. Submit
+your A7.zip file into your A7 MyCourses dropbox.

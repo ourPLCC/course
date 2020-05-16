@@ -1,0 +1,10 @@
+% abelian group of order 3
+g(e,e,e).
+g(e,a,a).
+g(e,b,b).
+g(a,e,a).
+g(a,a,b).
+g(a,b,e).
+g(b,e,b).
+g(b,a,e).
+g(b,b,a).

@@ -1,0 +1,2 @@
+skip NONWORD '\W*'
+token WORD '\w*'

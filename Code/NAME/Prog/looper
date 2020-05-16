@@ -1,0 +1,6 @@
+% g evaluates properly to +(t,u) using call-by-name
+% but loops infinitely using call-by-value
+
+define p = proc(x,y,z) if x then z else y
+define g = proc(t,u) .p(t,u,.g(sub1(t),add1(u)))
+.g(5,3)

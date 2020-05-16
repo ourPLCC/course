@@ -1,0 +1,6 @@
+# every charcter is a token
+# Do not produce Parser.java or Rep.java files
+!Parser=
+!Rep=
+skip WHITESPACE '\s+' # except for whitespace
+CHAR '.'

@@ -1,0 +1,13 @@
+let
+  p = proc() throw h()
+in
+  let
+    q = proc() .p()
+  in
+    let
+      r = proc() .q()
+    in
+      catch
+        h = handler() 42
+      in
+        .r()

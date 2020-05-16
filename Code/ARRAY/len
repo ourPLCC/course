@@ -1,0 +1,12 @@
+LenVal
+%%%
+
+// Interface used by values that implement the len() function
+
+public interface LenVal {
+
+    public int len();
+
+}
+
+%%%

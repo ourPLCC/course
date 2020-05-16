@@ -1,0 +1,4 @@
+let
+  times4 = proc(f) {.f() ; .f() ; .f() ; .f()}
+in
+  .times4(let count=0 in proc() set count=add1(count))

@@ -1,0 +1,12 @@
+define pair = proc(x,y)
+  proc(t) if t then y else x
+define first = proc(p) .p(0)
+define rest = proc(p) .p(1)
+define nth = proc(n,lst)
+  if n then .nth(sub1(n),.rest(lst)) else .first(lst)
+define seq = proc(n) .pair(n,.seq(add1(n)))
+define natno = .seq(0)
+.first(natno) % => 0
+.first(.rest(natno)) % => 1
+.first(.rest(.rest(natno))) % => 2
+.nth(100,natno) % => 100

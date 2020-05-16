@@ -1,0 +1,3 @@
+skip WHITESPACE '\s+'
+NUM '\d+'
+ID '[A-Za-z]\w*'

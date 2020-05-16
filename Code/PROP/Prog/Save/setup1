@@ -1,0 +1,28 @@
+define a = class
+    field i field j
+    method setup = proc() {set i=15; set j=20; 50}
+    method f = proc() .<self>g()
+    method g = proc() +(i,j)
+  end
+define b = class extends a
+    field j field k
+    method setup =
+      proc() {set j=100; set k=200; .<super>setup(); .<self>h()}
+    method g = proc() [i,j,k]
+    method h = proc() .<super>g()
+  end
+define c = class extends b
+    method g = proc() .<super>h()
+    method h = proc() +(j,k)
+  end
+let
+   p = proc(o)
+     let
+       u = .<o>setup()
+     in
+       [u, .<o>g(), .<o>f()]
+in 
+  [.p(new a), .p(new b), .p(new c)]
+
+% returns [[50,35,35],[35,[15,100,200],[15,100,200]],[300,35,35]]
+

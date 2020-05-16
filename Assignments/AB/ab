@@ -1,0 +1,144 @@
+CSCI 344 - Programming Language Concepts
+Assignment AB (30 points)
+Due Monday, Nov 12, 2018
+
+Answer each of the questions indicated by a '##QUESTION:' line
+by entering your corresponding answer in the space following each
+'##ANSWER:' line.
+
+This file can be found here:
+
+  /usr/local/pub/plcc/Assignments/AB/ab
+
+See the Submission Requirements at the end of this document.
+
+##QUESTION 1 (5 pts):
+    Consider the following program fragment in the C language that
+    determines the sum of the squares of the first ten positive integers:
+
+        int sum = 0;
+        for (int i=10 ; i>0 ; i--)
+            sum += *(i,i);
+
+    In general, a C language 'for' statement has the following structure:
+
+        for (init ; test ; incr)
+            body
+
+    The semantics of this statement is:
+
+        a.  Execute the 'init' code.
+        b.  Evaluate the 'test' expression. If this expression evaluates
+            to true, execute the 'body', then execute the 'incr' expression,
+            and repeat this step. Otherwise, return.
+
+    You are to create a 'for' procedure in the NAME language that has
+    the following format:
+
+        define for = proc(test, body, incr, ans)
+            %% procedure code goes here %%
+
+    There is no 'init' code, since we will assume that all variables and
+    such have been initialized before the 'for' procedure is applied.
+    The semantics of the 'for' procedure is identical to step (b) above,
+    except that if the 'test' expression evaluates to false, the 'ans'
+    expression is evaluated, and this value becomes the value returned by
+    the 'for' expression. (Remember that every expression in the NAME
+    language must evaluate to something.)
+
+    For example, given the procedure definition of 'for', the following
+    expression returns the sum of the squares of the first ten positive
+    integers:
+
+    let
+      sum = 0
+      i = 10
+    in
+      .for(i, set sum=+(sum,*(i,i)), set i=sub1(i), sum)
+
+    In the ANSWER section below, complete the definition of 'for'.
+    Hint: use the idea shown in class notes for defining a 'while'
+    procedure. Check your answer by evaluating the above example
+    expression and other expressions of your choosing.
+
+##ANSWER
+
+    define for = proc(test, body, incr, ans)
+      %% your answer goes here %%%
+
+##QUESTION 2 (5 pts):
+    Will the same definition work in the NEED language? If so, just
+    indicate this by answering "The same definition works in the NEED
+    language". Otherwise give an example of a specific *application* of
+    the 'for' procedure that behaves differently in NEED than in NAME.
+
+##ANSWER
+
+    
+##QUESTION 3 (5 pts):
+    Consider the following definition of 'compose', which takes
+    two functions, each taking one integer argument and returning
+    an integer result, and returns the function (taking one integer
+    argument and returning an integer result) that is the composition
+    of these two functions:
+
+        define compose = proc(f,g) proc(x) .f(.g(x))
+        define inc = proc(x) add1(x)
+        define sqr = proc(x) *(x,x)
+
+        ..compose(inc,sqr)(5) % => 26
+        ..compose(sqr,inc)(5) % => 36
+        ..compose(inc,inc)(5) % => 7
+        ..compose(sqr,sqr)(5) % => 625
+        ..compose(sqr,.compose(inc,inc))(5) % => 49
+
+    Add type annotations to the three 'define's above so that they will
+    pass the TYPE1 language type checker.  Complete your answer below.
+
+##ANSWER:
+
+        define compose = ...
+        define inc = ...
+        define sqr = ...
+
+##QUESTION 4 (5 pts):
+    What is the type of the following expression?
+
+        let
+          p = proc(f:[int=>int]):[int=>int] proc(x:int):int .f(.f(x))
+          q = proc(t:int):int *(t,t)
+        in
+          .p(q)
+
+    Give your answer as a type expression.
+
+##ANSWER
+
+##QUESTION 5 (5 pts):
+    Show how you can modify the above expression by ADDING just four
+    printable characters so that the resulting expression evaluates
+    to 2401. Your answer should include the entire expression above,
+    along with your four additional characters.
+
+##ANSWER
+
+##QUESTION 6 (5 pts):
+    In the TYPE1 language, does the expression
+
+        if add1(0) then +(4,5) else .let p=proc():int 9 in p()
+
+    have any syntax or type errors?  If so, identify the errors (but don't
+    try to correct them).  If not, give the value of the expression.
+
+##ANSWER
+
+
+Submission Requirements
+=======================
+Modify this file (ab) by filling in the ##ANSWER sections with your
+solutions to the questions given in the corresponding ##QUESTION sections.
+Do not make any other changes to this file, including its name.
+
+Create a zip file AB.zip containing ONLY your edited ab file. Your zip
+file should NOT contain any other files or directories. Submit your
+AB.zip file into your AB dropbox in MyCourses.

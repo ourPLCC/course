@@ -1,0 +1,31 @@
+define c =
+  proc(t, count)
+    if t
+    then {set count=add1(count) ; .c(sub1(t), count)}
+    else 0
+
+define a =
+  proc(t, count)
+    if t
+    then {atomic set count=add1(count) ; .a(sub1(t), count)}
+    else 0
+
+let
+  count = 0
+in 
+  let
+    _ = .c(1000, count)
+    _ = .c(100, count)
+    _ = .c(10000, count)
+  in
+    count
+
+let
+  count = 0
+in
+  let
+    _ = .a(1000, count)
+    _ = .a(100, count)
+    _ = .a(10000, count)
+  in
+    count

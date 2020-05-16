@@ -1,0 +1,11 @@
+define pos? = proc(x)
+  letrec
+    updown = proc(u, d)
+      if u
+      then
+        if d
+        then .updown(add1(u), sub1(d))
+        else 1
+      else 0
+  in
+    .updown(x,x)

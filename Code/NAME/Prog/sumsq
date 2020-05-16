@@ -1,0 +1,11 @@
+    define while = proc(test?, do, ans)
+       letrec loop = proc()
+          if test? then {do ; .loop()} else ans
+       in .loop()
+
+    let x = 0 sum = 0 in
+       .while(
+          -(11,x),                                     % test
+          { set sum=+(sum,*(x,x)) ; set x = add1(x) }, % do
+          sum                                          % ans
+       )

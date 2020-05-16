@@ -1,0 +1,403 @@
+CSCI 344 - Programming Language Concepts
+Assignment A8 (95 points)
+Due Friday, Oct 26, 2018
+
+NOTE:
+You are to answer each of these questions, starting with a '##QUESTION:'
+line,  by entering your corresponding answer in the area following each
+'##ANSWER:' line.
+
+This file can be found here:
+
+   /usr/local/pub/plcc/Assignments/A8/a8
+
+SUBMIT YOUR EDITED FILE WITH THE NAME 'a8'. See the SUBMISSION
+REQUIREMENTS section at the end of this assignment description for
+details.
+
+For those questions that require you to submit PLCC code, follow the
+SUBMISSION REQUIREMNTS carefully
+
+##QUESTION 1 (10 pts):
+    The V6 language does not have any built-in comparison operators for
+    integers.  However, an integer value of zero is considered false when
+    used as a test expression in an 'if' expression, and a nonzero value
+    is  considered true.  You are to define a procedure 'pos?' in the V6
+    language that returns 1 if its argument is positive and 0 otherwise,
+    following the ideas described here.
+
+    Here are some example applications of the procedure and their
+    corresponding values:
+
+        .pos?(5) % => 1
+        .pos?(0) % => 0
+        .pos?(-(0,11)) % => 0
+
+    Theoretically, if you count up (add1) from a positive, it stays
+    positive.  If you count down (sub1) from a positive, it will
+    eventually become 0.  If you count up from a negative, it will
+    eventually become 0.  If you count down from a negative, it will stay
+    negative.  The trick is to create an auxiliary procedure 'updown'
+    that takes two parameters, u (for up) and d (for down), where
+    these are both initialized to x (the original value to be tested).
+    If neither u nor d is zero, then use updown to count up u and count
+    down d (recursively).  Otherwise, which one ends up being zero will
+    give you the answer you want.
+
+    Your auxiliary procedure 'updown' must be given in a 'letrec' in
+    the body of your 'pos?' procedure.  Your 'pos?' procedure should
+    use 'updown' to get your answer, as described above.
+
+    Write your solution in the '##ANSWER' section below in the form
+
+        define pos? = proc(x) %%your procedure definition goes here%%
+
+##ANSWER:
+
+##QUESTION 2 (10 pts):
+    As an alternative to the "count-up/count-down" strategy described
+    in the previous problem, observe that for any integer x, whether
+    positive or negative, the values
+
+        x, x/2, x/2/2, ...
+
+    (integer division here) eventually become zero.  If x is a positive
+    integer, then one of these values will be 1 before it becomes zero.
+    If x is a negative integer or zero, then none of these values will
+    be 1.  This means that in the above sequence, if you see a 1, 'x'
+    must be positive, otherwise if you see a zero (and no 1), 'x' must
+    be non-positive.
+
+    So define your 'pos?' procedure so that it checks its parameter
+    'x' for 1 (how do you do this???).  If it is, return 1 (for true).
+    Otherwise check 'x' for 0, and if it is, return 0 (for false).
+    Otherwise return the value of the 'pos?' procedure applied to 'x/2'
+    recursively.
+
+    One of the disadvantages of the "count-up/count-down" strategy is that
+    for large values of 'x', you will get a stack overflow.  The "divide
+    by 2" strategy described here does not suffer from that -- in fact,
+    it's very efficient.  Try it and the pos? given in question 1 for
+    large values of 'x' (e.g., 1000000), and notice the differences.
+
+    Write you solution to this "divide by 2" approach in the '##ANSWER'
+    section below in the form
+
+        define pos? = proc(x) %%your procedure definition goes here%%
+
+##ANSWER:
+
+##QUESTION 3 (10 pts):
+    Yet another way to determine if an integer is positive is to
+    exploit how integer division works. If you divide x by y using
+    integer division -- in Java (and C), we would write x/y, but in V6
+    we would write '/(x,y)' -- the result is always rounded toward zero.
+    This means that the integer division x/y is the integer between 0
+    and x/y that is nearest (or equal) to x/y.
+
+    So consider the integer division (x+1)/x where x is an integer. If x
+    is greater than zero, then (x+1)/x is greater than 1, so its integer
+    division result is greater than or equal to 1. If x is less than
+    zero, then (x+1)/x is between zero and 1 but never equal to 1,
+    so its integer division result is zero.
+
+    So we can define the pos? procedure as follows:
+
+        define pos? = proc(x)
+            if zero?(x)
+            then 0 % zero is not positive
+            else
+              if /(add1(x), x)
+              then %% FIXME
+              else %% FIXME
+
+    The advantage of this approach is that it is not recursive, and
+    so there is minimal overhead in evaluating the procedure, even for
+    large values of x.
+
+    Complete the definition of pos? by replacing the '%% FIXME' parts,
+    and write your completed solution in the '##ANSWER' section below.
+
+##ANSWER:
+
+##QUESTION 4 (5 pts):
+    Once you have the 'pos?' procedure, you can define the
+    'neg?' procedure so that '.neg?(x)' returns 1 (true) if 'x'
+    is negative, and 0 (false) otherwse.  You are to define 'neg?'
+    using only 'pos?', 'if', and numeric literals. Do NOT use any
+    primitives, including 'zero?'.
+
+    Here are some examples:
+
+        .neg?(0)      % => 0
+        .neg?(1)      % => 0
+        .neg?(-(0,1)) % => 1
+
+    Write your solution in the '##ANSWER' section below in the form
+
+        define neg? = proc(x) %%your procedure definition goes here%%
+
+##ANSWER:
+
+##QUESTION 5 (POSPRIM, 20 pts):
+    Starting with the V6 language, define a 'pos?' *primitive* that takes
+    a single integer parameter and that returns 1 if the value is positive,
+    0 otherwise.  You will need to change the grammar and prim files.
+    In your prim file, you can use Java expressions to check for something
+    being positive, so the implementation there will be a simple
+    'return' statement.  (Remember that 'pos?' will be a primitive,
+    not a procedure, so that when you test your 'pos?' primtive, don't
+    use a dot before it.)  Your lexical specifications should include
+    a POSP token definition that is similar to ZEROP, and your grammar
+    rules should similarly include a PospPrim class defined as one of
+    the <prim> grammar rules.
+
+    Create a working directory called POSPRIM, copy the files in the
+    V6 directory into this working directory, and make the appropriate
+    changes there.  Be sure to test your modifications.
+
+    Make *copies* of your modified 'grammar' and 'prim' files into new
+    files using the following names:
+
+        a8-posprim-grammar
+        a8-posprim-prim
+
+    See the SUBMISSION REQUIREMENTS below for details.
+
+##QUESTION 6 (PRIMPROC, 30 pts):
+    You will have observed that all the V? languages define primitives
+    (such as +, -, add1, zero?, etc.) that in some ways behave like
+    procedures -- you can apply them and get a return value -- but
+    they are not considered as values, and the syntax for applying
+    them differs from the syntax (using a DOT) for applying procedures.
+    In this problem, you will rectify this by making all of the primitives
+    behave just like procedures.  In particular, to apply a 'primitive'
+    in this modified language you will use a DOT.  More generally, a
+    'primitive' will evaluate to a value (a PrimVal) that can be passed
+    as an actual parameter to a procedure and can be bound to a variable
+    just like any other value.  Here are some examples:
+
+        let
+          x = 3
+          y = 5
+        in
+          .+(x,y) % => 8
+
+        let
+          x = 3
+        in
+          .add1(x) % => 4
+
+        let
+          p = proc(f, x, y) .f(x, y)
+        in
+          .p(+, 3, 4) % => 7
+
+        let
+          add = +
+        in
+          .add(5,8) % => 13
+
+    Start with the V6 language, and copy the files from this language
+    into a working directory that you should call PRIMPROC (for PRIMitives
+    are PROCedures).
+
+    The grammar for this language will be the same as the grammar for V6,
+    except that you will have a new expression rule:
+
+        <exp>:PrimExp ::= <prim>
+
+    In other words, a <prim> will now be an expression instead of a
+    special operation. Since primitives will now act like procedures,
+    we will not have a PrimappExp grammar rule, so remove that rule from
+    your grammar.
+
+    The value of a PrimExp -- as determined by the eval method that all
+    Exps must implement -- will now be returned by asking the prim object
+    to return its value.  In the code file, the PrimExp semantics should
+    now be:
+
+        PrimExp
+        %%%
+            public Val eval(Env env) {
+                return prim.eval();
+            }
+
+            public String toString() {
+                return prim.toString();
+            }
+        %%%
+
+    The prim.eval() method doesn't require the env parameter, because a
+    primitive behaves the same way in all environments -- there is no
+    environment it needs to capture.
+
+    Each Prim class given in the 'prim' file will define an eval()
+    method that will return a Val object of type PrimVal -- a new class
+    you will need to define in the val file (see below).  The prim file
+    now should look like this:
+
+        Prim
+        %%%
+            public abstract Val eval();
+        %%%
+
+        AddPrim
+        %%%
+            public Val eval() {
+                return PrimVal.addPrim;
+            }
+
+            public String toString() {
+                return PrimVal.addPrim.toString();
+            }
+        %%%
+
+        ## SubPrim, MulPrim, DivPrim, Add1Prim, Sub1Prim, and ZeropPrim
+        ## are defined similarly
+
+    In the val file, create a new abstract PrimVal class as follows,
+    along with its derived classes AddPrimVal, SubPrimVal, etc.:
+
+        PrimVal
+        %%%
+        import java.util.*;
+        
+        public abstract class PrimVal extends Val {
+        
+            // singletons
+            public static Val addPrim = new AddPrimVal();
+            public static Val subPrim = new SubPrimVal();
+            public static Val mulPrim = new MulPrimVal();
+            public static Val divPrim = new DivPrimVal();
+            public static Val add1Prim = new Add1PrimVal();
+            public static Val sub1Prim = new Sub1PrimVal();
+            public static Val zeropPrim = new ZeropPrimVal();
+        
+            public abstract Val apply(List<Val> args, Env e);
+        
+        }
+        %%%
+        
+        AddPrimVal
+        %%%
+        import java.util.*;
+        
+        public class AddPrimVal extends PrimVal {
+        
+            public Val apply(List<Val> args, Env e) {
+                Val [] va = Val.toArray(args);
+                int v0 = va[0].intVal().val;
+                int v1 = va[1].intVal().val;
+                return new IntVal(v0+v1);
+            }
+
+            public String toString() {
+                return "+";
+            }
+        }
+        %%%
+
+        // the rest of the PrimVal derived classes go here
+        
+    Once you have made these changes, you should be able to compile
+    and run your interpreter so that primitives now behave just like
+    other procedures: you can apply them (with a DOT) and you can
+    pass them as parameters.
+
+    [NOTE: add1 is still a reserved token in our grammar, so you can't
+    bind add1 to a value, as in
+
+        let
+          add1 = 3 % syntax error
+        in
+          add1
+
+    BUT, see the next question about how to rectify this as well.]
+
+    Make copies of your modified grammar, code, prim, and val files into
+    new files, named respectively as follows:
+
+        a8-primproc-grammar
+        a8-primproc-code
+        a8-primproc-prim
+        a8-primproc-val
+
+    See the SUBMISSION REQUIREMENTS below for details.
+
+##QUESTION 7 (PRIMPROC1, 10 pts):
+    In the previous problem, 'add1', 'sub1', and 'zero?' are defined
+    as predefined tokens in the lexical specification of your PRIMPROC
+    language.  In this problem you will treat them like ordinary
+    identifiers, but you will bind them in the intial environment to
+    their appropriate PrimVal values.
+
+    Create a new working directory named PRIMPROC1 by copying all of
+    the files in your PRIMPROC language into this directory.
+
+    Modify the lexical part of the grammar file by removing the
+    token specifications for ADD1OP, SUB1OP, and ZEROP.
+    Also in the grammar file, remove the grammar rules for the following
+    <prim> lines:
+
+        <prim>:Add1Prim
+        <prim>:Sub1Prim
+        <prim>:ZeropPrim
+
+    In the prim file, remove everything relating to the
+    Add1Prim, Sub1Prim, and ZeropPrim classes.
+
+    The val file remains the same.
+
+    All you need to do now is to put bindings to the symbols 'add1',
+    'sub1', and 'zero?' into your initial environment, which is
+    defined in the env file:
+
+        public static Env initEnv() {
+            Bindings bindings = new Bindings();
+	    bindings.add("add1", PrimVal.add1Prim);
+            /*FIXME: do the same for sub1 and zero? here as well*/
+            return new EnvNode(bindings, new EnvNull());
+        }
+
+    Once you have made these changes, your language should behave exactly
+    as before, except that now you can use 'add1' as an identifier:
+
+        let
+          add1 = 3 % no longer a syntax error
+        in
+          add1 % => 3
+
+        let
+          add1 = 3
+          p = add1 % note that this is the top-level add1, NOT 3
+        in
+          .p(add1) % => 4 (add1 is bound to 3 here)
+
+    Make copies of your modified grammar, prim, and env files into new
+    files, named respectively as follows:
+
+        a8-primproc1-grammar
+        a8-primproc1-prim
+        a8-primproc1-env
+
+    See the SUBMISSION REQUIREMENTS section below for details.
+
+##SUBMISSION REQUIREMENTS
+-------------------------
+
+Create a flat zip file A8.zip containing ONLY the following files. Your
+zip file should NOT contain any other files or directories.
+
+        a8 (this file, edited with you answers as appropriate)
+        a8-posprim-grammar
+        a8-posprim-prim
+        a8-primproc-grammar
+        a8-primproc-code
+        a8-primproc-prim
+        a8-primproc-val
+        a8-primproc1-grammar
+        a8-primproc1-prim
+        a8-primproc1-env
+
+Submit your A8.zip file into your MyCourses A8 dropbox.

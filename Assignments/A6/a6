@@ -1,0 +1,534 @@
+CSCI 344 - Programming Language Concepts
+Assignment A6 (55 points)
+Due Wednesday, October 17, 2018
+
+##QUESTION 1 (DISPLAY, 10 pts):
+
+    In V6, we can only print the value of an expression using the
+    Read-Eval-Print (REP) loop.  We have no way to show intermediate
+    expression values, for example.  We want to add a feature that will
+    allow us to display the value of a sub-expression -- or a character
+    (!) -- to standard output (System.out) during the evaluation of an
+    expression.
+
+    To do this, we introduce expressions that, when evaluated, will
+    send output to standard output as well as evaluate to something
+    (because they are expressions).
+
+    Create a working directory in which you will do your work, called
+    DISPLAY.  Copy all of the top-level V6 files into this directory.
+
+    First, in your grammar file, define two new tokens, as follows:
+
+        DISPLAY 'display'
+        NEWLINE 'newline'
+
+    Each of these tokens will start the RHS of new grammar rules for
+    expressions, as follows:
+
+    <exp>:DisplayExp  ::= DISPLAY <exp>
+    <exp>:NewlineExp  ::= NEWLINE
+
+    We must define the eval behavior of each of these new expressions
+    in the code file.  Let's start with DisplayExp:
+
+        DisplayExp
+        %%%
+	    public Val eval(Env env) {
+                Val val = exp.eval(env);
+                System.out.print(val.toString());
+                return Val.zero; // must return something
+            }
+        %%%
+
+    Evaluating the expression
+
+        display 7
+
+    will result in printing 7 to standard output (System.out) and will
+    also return a zero to the Read-Eval-Print loop.  The output will
+    look like this:
+
+	70
+
+    The "7" comes from 'display 7' sending the string "7" to standard
+    output, and the "0" comes from the value of the expression 'display
+    7', which by definition is zero (Val.zero).
+
+    The NewlineExp expression will simply send a newline to standard
+    output and return a zero to the REP loop:
+
+        NewlineExp
+        %%%
+            public Val eval(Env env) {
+                System.out.println();
+                return Val.zero;
+            }
+        %%%
+
+    Now evaluating the expression
+
+        { display 7 ; newline ; 86}
+
+    will display 
+
+	7
+	86
+
+    The "7" comes from the 'display 7' expression, the 'newline'
+    expression sends a newline to the console, and the '86' expression
+    evaluates to 86, which is displayed as the value of the entire
+    expression.
+
+    Make these changes to your grammar and code files, and see that
+    things work as described.
+
+    You can now so some tracing of your programs as they execute.
+    For example, here's a procedure that will return the double of
+    its non-negative integer argument, albeit somewhat obscurely (and
+    recursively):
+
+        define double = proc(x) if x then +(2,.double(sub1(x))) else 0
+
+    Evaluating .double(5) will return the value 10.
+
+    Suppose we want to trace the behavior of this procedure by displaying
+    the value of x each time the procedure is called.  Using display and
+    newline, we can do so quite simply:
+
+        define double =
+            proc(x)
+                { display x
+                ; newline
+                ; if x then +(2,.double(sub1(x))) else 0
+                }
+    
+    Evaluating .double(5) will now produce the following output, the
+    last of which is the expression value 10:
+
+        5
+        4
+        3
+        2
+        1
+        0
+        10
+
+    The reason for having the 'display' and 'newline' expressions evaluate
+    to zero is that they do not serve a useful purpose except to print
+    to standard output, but every expression *must* evaluate to something.
+    Remember, too, that the sequence expression discards all but the
+    last value of the list of its expressions.  (We could make 'display'
+    evaluate to 38 and 'newline' evaluate to -99, but there would be no
+    point in that.)
+
+    Finally, we want to be able to display character output to standard
+    output, so we can display things such as commas ',' or brackets '['.
+    Rather than trying to display arbitrary strings, we will print
+    single characters, one at a time.  Define the following token in
+    your grammar file
+
+        DISPLAYCHAR 'displayChar'
+
+    and an expression
+
+        <exp>:DisplayCharExp ::= DISPLAYCHAR <exp>
+
+   The purpose of this expression is to evaluate the expression as an
+   IntVal, and to display the character to standard output whose ASCII
+   code is the given IntVal.  Thus
+
+        displayChar 65
+   
+   would show up as 'A' on standard output (no quotes), since 65 is the
+   ASCII code for 'A'.  You should familiarize yourself with the ASCII
+   codes of various characters.  You can do this by running the 'ascii'
+   command in the Linux shell.
+
+   The DisplayCharExp eval method in your code file will now look almost
+   the same as that of DisplayExp, except that eval will
+
+   (a)  evaluate exp in the current environment;
+   (b)  grab the IntVal of the expression value (a Val object) using
+        the intVal() method;  (This will throw an exception if the Val
+        object is not an instance of IntVal, which is appropriate.)
+   (c)  get the val field of the IntVal object obtained in (b), cast
+        that int to a char, and send the result to System.out.print;
+   (d)  return an IntVal of zero.
+
+   Make these changes, and see what happens if you run the following:
+
+       define alphabet =
+          proc(x)
+             if x
+             then {.alphabet(sub1(x)) ; displayChar +(x,64)}
+             else newline
+   
+       .alphabet(2)
+       .alphabet(26)
+
+    Note: displayChar 10 works exactly the same as newline, since the
+    newline character has ASCII value 10.
+
+    Copy your modified grammar and code files into new files with the
+    following names:
+
+        a6-display-grammar
+        a6-display-code
+
+    Follow the Submission Requirements at the end of this assignment for
+    instructions about submitting these files.
+
+##GRADING:
+    10 pts for correct semantics of display, newline, and displayChar
+
+##QUESTION 2 (5 pts):
+    Procs are sufficiently powerful to implement many data structures,
+    including pairs and linked lists, as we show here.  All of the
+    following code uses the language DISPLAY you defined above.
+
+    First we want to create a structure that embodies the notion of a
+    'pair'.  Here's the trick:
+
+        define pair = proc(x, y) proc(t) if t then y else x
+
+    Applying .pair(3,5) returns a proc:
+
+        define p35 = .pair(3,5)
+
+    but we can retrieve the '3' and '5' components of this proc object
+    by applying it to the values 0 and 1 respectively:
+
+        .p35(0) % -> 3
+        .p35(1) % -> 5
+
+    Try it!
+
+    We can define two procedures 'fst' and 'snd' on a pair that makes this
+    a bit more user-friendly (fst means 'first' and snd means 'second'):
+
+        define fst = proc(p) .p(0) % p is assumed to be a pair
+        define snd = proc(p) .p(1) % p is assumed to be a pair
+
+    Then we would get, using the above definition of p35, the following:
+
+        .fst(p35) % -> 3
+        .snd(p35) % -> 5
+
+    Now let's define a procedure that displays the contents of a pair in
+    a human-readable format.  What we want is a displayPair procedure that
+    produces the (literal) output
+
+        (3,5)
+
+    when applied to the pair p35 defined above.  Here's the start:
+    
+        define displayPair =
+            proc(p)
+               { displayChar 40  % an open paren
+               ; display .fst(p) % display the first element of the pair
+               ; **FIXME**       % display a comma
+               ; **FIXME**       % display the second element of the pair
+               ; **FIXME**       % display a close paren
+               }
+
+    Notice that 40 is the ASCII value of a open paren '('.  You will
+    need the ASCII values of a comma ',' and a close paren ')' as well.
+
+    Finish this definition and test it with your p35 pair.  Note that
+    you will have a final zero at the end, since the REP loop prints
+    the value of the {...} expression, and that expression evaluates
+    to zero (why?).
+
+    Create a plain text file (*not* a word processing file) named a6-pair
+    that contains your top-level definition of 'displayPair', including
+    the definitions given above for 'pair', 'fst', and 'snd'. Include
+    in this file a few examples of its use and output, with comments
+    (beginning with the '%' character) indicating the correct output.
+    Follow the Submission Requirements at the end of this assignment for
+    instructions about submitting this file.
+
+    You should be able to run your a6-pair file successfully (no errors)
+    using the DISPLAY language you created in QUESTION 1. Do not include
+    any other text in this file except for comments ('%...').
+
+    To test your implementation, I will run a reference version of
+    DISPLAY with your a6-pair implementation to test your code.
+
+##GRADING
+    5 pts for correct implementation of displayPair
+
+##QUESTION 3 (10 pts):
+    To implement lists, we will implement the empty list as a zero IntVal
+    (the only Val that is considered as false in conditional expressions).
+    A non-empty list will consist of a pair (defined above) whose fst
+    element is the value at the head of the list and whose snd element
+    is another list.  This definition is recursive:
+
+         A list is either
+         (a) 0, or
+         (b) .pair(x, xs), where x is a Val and xs is a list.
+
+    We can define procedures to create lists:
+
+         define empty = 0         % give the "empty list" a name
+         define list = proc(x, xs) .pair(x, xs) % creates a nonempty list
+
+    In the definition of list, we assume that xs is either empty or a
+    properly constructed nonempty list.
+
+    To create a list, we start with the empty list (0) and successively
+    add items to the list, with the last (leftmost) item being considered
+    at the head of the list.  For example, a list consisting of 7, 5,
+    and 2 could be constructed as follows:
+
+        define lst752 = .list(7, .list(5, .list(2,empty)))
+
+    Of course, a nonempty list such as lst752 is just a pair, so we can
+    access the elements of the list using procedures that act on pairs.
+    Here are some useful procedures:
+
+        isEmpty = proc(xs) if xs then 0 else 1
+        first = proc(xs) .fst(xs) % the first element of the list
+        rest  = proc(xs) .snd(xs) % the (list of the) rest of the list
+
+    Notice that 'first' and 'rest' behave just the same as 'fst'
+    and 'snd'.  The reason for using these names is that their names
+    more appropriately match the behaviors for lists than pairs.
+
+    Using these definitions, we would get
+
+        .first(lst752) % -> 7
+        .rest(lst752)  % -> "proc" (it's a pair)
+        .first(.rest(lst752)) % -> 5
+        .isEmpty(lst752) % -> 0
+        .isEmpty(.rest(.rest(.rest(lst752)))) % -> 1
+
+    We want to be able to display the elements of a list in a way
+    similar to how we displayed the elements of a pair.  A pair always
+    has two elements, but a list may consist of zero or more elements.
+    So we want the list lst752 to be displayed as follows:
+
+        [7,5,2]
+
+    You are to write a displayList procedure that takes a list parameter
+    (constructed as described above) and that produces the elements of
+    the list in brackets, separated by commas.  The procedure itself
+    should return zero.
+
+    We start by displaying the left bracket, then the comma-separated
+    items, and finally the right bracket.
+
+        define lbrack = 91         % the ASCII value of a left bracket
+        define rbrack = **FIXME**  % the ASCII value of a right bracket
+        % this procedure displays the outside brackets and calls
+        % displayListAux to print the inside comma-separated list of items
+        define displayList = proc(xs) % xs is a list
+            { displayChar lbrack
+            ; .displayListAux(xs,0)
+            ; displayChar rbrack
+            }
+
+        % this procedure displays the items in a list separated
+        % by commas.  If the list is empty, display nothing.  The second
+        % argument named comma? will be 1 if a comma should be displayed
+        % prior to the next value to be displayed, otherwise it will be a
+        % zero (which it is initially).
+        define comma = **FIXME**   % the ASCII value of a comma
+        define displayListAux = proc(xs, comma?)
+            if xs
+            then **FIXME**
+            else 0 % don't display anything
+
+    In the **FIXME** part immediately above, if comma?  is true (nonzero),
+    display a comma, otherwise display nothing.  Then display the first
+    value of the list.  Then call displayListAux recursively, passing it
+    the rest of the list as the first (xs) parameter and 1 as the second
+    (comma?) parameter.
+
+    Complete this definition of displayListAux.
+
+    Create a plain text file a6-list containing the top-level definitions
+    of 'list', 'first', 'rest', and 'isEmpty', along with your definitions
+    for 'displayList', and 'displayListAux'. Include any other definitions
+    (including 'pair', 'fst', and 'snd') that are required to implement
+    these procedures.  Include in this file some test expressions that
+    show how your displayList procedure works on lists of size zero
+    (empty), size 1, size 2, and size 5.  For each test, precede the
+    test expression with a comment of the form "%% ..."  describing the
+    test you are performing. Then, show the expression you are testing,
+    followed by a comment (of the form "% -> ...") showing the displayed
+    result and the expression value. Do not include any other text in this
+    file other than comments.
+
+    You should be able to run your 'a6-list' file successfully (no errors)
+    using the DISPLAY language you created in QUESTION 1.
+
+    Follow the Submission Requirements at the end of this assignment for
+    instructions about how to submit this file.
+
+    For example, using the definition of lst752 given above, we would
+    have
+
+        %% test displayList on a list of size 3
+        .displayList(lst752) % -> displays [7,5,2], evaluates to 0
+
+##GRADING:
+    10 pts for correct implementation of displayList using dislayListAux
+
+##QUESTION 4 (10 pts):
+    Speaking of the sizes of a list, it is convenient to have a procedure
+    named 'size' that takes a list argument and returns the number of
+    items in the list.  An empty list has size zero.  The list lst752
+    defined above has size 3.  Define this procedure as follows
+
+        define size = proc(xs) **FIXME**
+
+    It is also convenient to have a procedure named 'append' that takes two
+    lists and that appends the first list to the second.  For example,
+    if we define
+
+        define lst38 = .list(3, .list(8,empty))
+
+    then .append(lst38, lst752) would produce the list whose displayList
+    would appear as follows:
+
+        [3,8,7,5,2]
+
+    Define this append procedure as follows:
+
+        define append = proc(xs, ys) **FIXME**
+
+    Follow this algorithm: if xs is empty, just return ys, otherwise
+    return a list whose fst element is the first of xs, and whose snd
+    element is the result of appending (recursively) the rest of xs to ys.
+
+    Create a plain text file named a6-size-append containing only your
+    definitions of 'size' and 'append'.  Include in this file some
+    tests that show that they work as advertised. Document your tests
+    as described in the previous problem. Make sure that your tests
+    include lists that are both empty and nonempty.  Also, be sure that
+    they demonstrate that a displayList on examples of appended lists
+    produces the results that you would expect. 
+
+    You can test your definitions of 'size' and 'append' by first loading
+    your definitions of 'pair', 'fst', 'snd', and so forth that you
+    created in QUESTION 3.
+
+    Note: I will test *your* definitions of size and append using *my*
+    top-level definitions of pair, fst, snd, empty, isEmpty, list, first,
+    rest, and displayList.
+
+##GRADING:
+    10 pts for correct implementations of size and append
+
+##QUESTION 5 (STRING, 20 pts):
+    A "string" can be considered as a list of characters.  If we adopt
+    the notion that a character is represented by its integer ASCII
+    value, then a string is just a list of integers, as we have shown
+    above.
+
+    Create a directory STRING in which you will do your work. Copy all of
+    the files in your DISPLAY directory into this new directory.
+
+    For example, the list [65,66,67] would represent the string "ABC".
+    Define a displayString procedure that acts just like displayList,
+    but instead of displaying the list contents as a comma-separated
+    list of integers in square brackets, display them as a sequence of
+    characters SURROUNDED BY DOUBLE QUOTES.  Thus, if we define lstABC by
+
+        define lstABC = .list(65, .list(66, .list(67, empty)))
+
+    then displayString would output the string "ABC" followed by a
+    value of zero.
+
+        .displayString(lstABC) % -> display "ABC", value zero
+
+    The only drawback to this is that we still need to construct our
+    lists using integer values.  To make it simpler to get the ASCII
+    values of characters from the characters themselves, we can define
+    a new CHR token whose definition looks like this:
+
+        CHR '\'\p{Print}'
+        
+    This regular expression matches any single printable character
+    that is preceded by a single quotation mark (').
+
+    We want something like a LitExp expression that will turn a
+    CHR literal into its corresponding ASCII value as an IntVal.
+    To accomplish this, we define a CharExp expression as follows:
+
+        <exp>:CharExp ::= <CHR>
+
+    The eval semantics of a CharExp is to return the IntVal of the
+    character. In Java, you can do this using the charAt() method
+    to retrieve the second character of the 'chr' token string. (You
+    need to skip over the first character, which will always be a
+    single quote mark (').)
+
+    We can use CharExps to construct strings, as in the following example
+    using the list procedure :
+
+        define lstABC = .list('A, .list('B, .list('C, empty)))
+
+    Now if we apply displayString to this we get
+
+        .displayString(lstABC) % -> displays "ABC", evaluates to 0
+
+    Here's a sample Rep interaction using the STRING language and the
+    displayString procedure. This interaction assumes that all of the
+    procedures pertaining to lists have been defined.
+
+    --> 'A
+    65
+    --> displayChar 'A
+    A
+    --> define lstABC = .list('A, .list('B, .list('C, empty)))
+    lstABC
+    --> .displayString(lstABC)
+    "ABC"0
+
+    Note the double quotes in the last example!
+
+    [Quick question, not to hand in: how would you represent the single
+    quote character using this notation?  Try
+
+        define qqq = .list('', .list('', .list('', empty)))
+
+    and do a
+
+        .displayString(qqq)
+
+    to see what you get.]
+    
+    Once you have tested your STRING language, copy your grammar and
+    code files into new files named
+
+        a6-string-grammar
+        a6-string-code
+
+    and create a file a6-display-string containing your definition
+    your displayString procedure.
+
+    Submit these files following the Submission requirements below.
+
+##GRADING:
+    10 pts for correct semantics of CharExp
+    10 pts for a correct implementation of displayString
+
+##SUBMISSION REQUIREMENTS
+-------------------------
+
+Create a flat zip file A6.zip containing ONLY the following plain text files:
+
+    a6-display-grammar
+    a6-display-code
+    a6-pair
+    a6-list
+    a6-size-append
+    a6-string-grammar
+    a6-string-code
+    a6-display-string
+
+This zip file should not contain any other files or directories. Submit
+your A6.zip file in your A6 MyCourses dropbox.

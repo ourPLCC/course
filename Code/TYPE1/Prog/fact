@@ -1,0 +1,3 @@
+declare fact : [int=>int]
+define fact = proc(x:int):int if zero?(x) then 1 else *(x, .fact(sub1(x)))
+.fact(5)

@@ -1,0 +1,21 @@
+let
+  x = 5
+  xgets = 0
+  xsets = 0
+in
+  letprop
+    x = prop
+          { set xgets = add1(xgets) ; x } :
+	  { set xsets = add1(xsets) ; set x = $ }
+  in
+    { set x = add1(x)
+    ; set x = +(x,x)
+    ; display x       % => 12
+    ; display x       % => 12
+    ; display x       % => 12
+    ; display x       % => 12
+    ; display xgets   % => 7
+    ; display xsets   % => 2
+    ; newline
+    }
+

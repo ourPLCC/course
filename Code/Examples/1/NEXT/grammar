@@ -1,0 +1,5 @@
+# Tokens in the file consist of one or more non-whitespace
+# characters, skipping all whitespace.
+# Gives the same output as Java’s ’next()’ Scanner method.
+skip WHITESPACE '\s+' # skip whitespace characters
+token NEXT '\S+' # keep one or more non-space characters

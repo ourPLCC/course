@@ -1,0 +1,237 @@
+CSCI 344 - Programming Language Concepts
+Assignment A1 (75 points)
+Due Wednesday, Sep 12, 2018
+
+NOTE:
+You are to answer each of these questions, indicated by lines following
+each '##QUESTION:' line, by entering your corresponding answer lines
+following each '##ANSWER:' line.  Please leave whitespace around your
+answers so they are easy to read. DO NOT ADD ANY TEXT TO THE '##ANSWER:'
+LINE.
+
+Your submission must include this TEXT file, with your answers added as
+described above.  Copy this file into a suitable working directory and
+edit this file using a text editor (NOT a word processor) by adding your
+answers.
+
+In some cases, your answers may be Java methods or PLCC grammar
+file entries.  In other cases, your answers may be a short paragraph
+or other text that meets the problem specifications.
+
+DO NOT MAKE ANY CHANGES TO THE QUESTIONS OR OTHER TEXT CONTAINED IN
+THIS FILE except for adding your answers to the questions or replacing
+obvious directives such as "<replace this ...>" or "**FIXME**".  Be sure
+your answers are on lines that *follow* each '##ANSWER:' line.  Add more
+whitespace in your answer lines if you need to do so, but LEAVE THE
+ORIGINAL FILE CONTENTS AS-IS.
+
+This file (a1) can be found on the CS lab server here:
+
+   /usr/local/pub/plcc/Assignments/A1/a1
+
+As described in the ##SUBMISSION REQUIREMENTS section at the end of this
+assignment description, your edited file 'a1' will become part of your
+myCourses submission.
+
+##QUESTION 1 (10 pts):
+    Write a lexical specification acceptable to PLCC that skips over
+    whitespace and skips all characters from a '#' character to the end
+    of the line.  The lexical specification should accept the following
+    strings as specific tokens:
+
+        this
+        that
+        the
+        other
+        thing
+
+    All other strings consisting of letters, digits, and underscores
+    should be returned as a single ID token.  You should use appropriate
+    token class names for the other tokens. If you encounter anything
+    that does not conform to these specifications, it's an error.
+
+    Consider the following input to the scanner (Scan):
+
+        # example input
+        this that # the other thing
+        otherwise the thing
+        that is another thing
+        other#other#other#other
+        thisthat the end99 12345xxx _!
+
+    The scanner output should look like this:
+
+	THIS: 'this'
+	THAT: 'that'
+        ID: 'otherwise'
+	THE: 'the'
+	THING: 'thing'
+	THAT: 'that'
+	ID: 'is'
+	ID: 'another'
+	THING: 'thing'
+        OTHER: 'other'
+	ID: 'thisthat'
+	THE: 'the'
+	ID: 'end99'
+	ID: '12345xxx'
+	ID: '_'
+	Exception in thread "main" ...
+
+    You can test your lexical specification by making a directory
+    in which you will do your work: create a 'grammar' file in this
+    directory with the specified contents, run the plccmk tool, and
+    execute the resulting Scan class in the Java subdirectory.
+
+##ANSWER:
+
+<replace this with the contents of your lexical specification>
+
+##QUESTION 2 (10 pts):
+    Consider the following grammar rule in a PLCC file:
+
+        <blah>:Goo ::= THIS <VAR> IS <silly>
+
+    What (non-abstract) Java class does this grammar rule define,
+    and what are its instance variables (a.k.a. fields) and types?
+    Write your answer in the form of a Java signature for the constructor
+    for the class:
+
+        XXX(AAA aaa, BBB bbb, ...)
+
+    Here XXX is the class name, and the instance variables are aaa
+    of type AAA, bbb of type BBB, and so forth.
+
+##ANSWER:
+
+<replace this with your answer>
+
+##QUESTION 3 (10 pts):
+    Repeat the question above, except use the following grammar rule:
+
+        <many> **= THIS <rule> HAS MULTIPLE OCCURRENCES <OF> <stuff>
+
+##ANSWER:
+
+##QUESTION 4 (10 pts):
+    Repeat the question above, except use the following grammar rule:
+
+        <classes> ::= I AM TAKING <CSCI>c1 <CSCI>c2 AND <CSCI>c3
+
+##ANSWER:
+
+##QUESTION 5 (5 pts):
+    Consider what is wrong with the following grammar rule in a PLCC file.
+    You can assume that this is part of a larger PLCC grammar file
+    in which other token specifications and grammar rules may appear.
+    Your answer should be a grammar rule that fixes all of the obvious
+    errors on this line and that will be acceptable to PLCC. Your answer
+    should keep the essential nature of the original grammar rule.
+
+    Do *not* add or remove any of the '<' or '>' characters. Do *not* try
+    to explain your answer -- just give the corrected grammar rule.
+
+        <VAR>  := tok <foo>
+
+##ANSWER:
+
+##QUESTION 6 (10 pts):
+    Write a BNF grammar that accepts any string consisting of balanced
+    parentheses followed by an at-sign (@). For example,
+    the following strings
+
+                  @
+                  ()@
+                  ()(()(()))@
+
+    are legal, but
+
+                  ())@
+                  (@
+                  )(@
+                  (()@
+                  ()
+
+    are not.
+
+    Your BNF grammar should use the token names LPAREN, RPAREN, and
+    ATSIGN, and should *not* use any repeating rules.  Use <balanced>
+    as the first nonterminal (and hence the start symbol).  You should
+    be able to define your grammar in just three BNF lines using two
+    nonterminals.  (It is *not* necessary to try to make your grammar
+    rules conform to PLCC.  In particular, you do not need to provide
+    a token specification section, and you do not need to add any Java
+    class names to your specification.)
+
+    Your answer should be just in terms of BNF grammar rules as described
+    in slide set 1.
+
+    If you feel so inclined, you can create a grammar file acceptable
+    to PLCC, so you can check your grammar with actual input strings. If
+    you choose to do this, you will need to have a lexical specification
+    section as well that defines the LPAREN, RPAREN, and ATSIGN tokens. It
+    is unnecessary for you to do this in your ANSWER below.
+
+##ANSWER:
+
+
+##QUESTION 7 (20 pts):
+    As we have shown in our class notes slide 1.40 and in the LON2
+    code directory, we can have the Read-eval-print loop print the
+    list of numbers in human-readable form by defining an appropriate
+    toString() method in the Lon class. The LON2 grammar uses a
+    repeating rule to collect the NUM Token values in a list, which
+    we traversed in the toString() method to print the values.
+
+    The grammar in the LON code directory also recognizes a list of
+    numbers, but it does so using a recursive grammar rule (<nums>)
+    instead of a repeating rule as in LON2. We want to produce output
+    identical to the output of LON2, but using the LON grammar.
+
+    Start with the original list-of-numbers grammar in the code directory
+    LON. Create a working directory named LON1.5 and copy the grammar
+    file from the LON directory into your working directory.
+
+    Add semantics routines to this grammar file -- in the section
+    following the grammar rules -- to print the NUM Token values in
+    exactly the same way that we accomplished in LON2. To do this,
+    add a toString() method in the Lon class to return a string using
+    a one-liner, as follows:
+
+        return "( " + nums.toString() + ")";
+
+    Then add a toString() method in each of the Nums subclasses to 
+    print the numbers as we have described. You will need separate
+    toString() methods in the NumsNode class and the NumsNull class.
+    [Hint: these are one-liners, too!]
+
+##SUBMISSION
+    Do *not* put your grammar file contents here. Instead, see the
+    ##SUBMISSION REQUIREMENTS below.
+
+##SUBMISSION REQUIREMENTS
+    Create a flat zip file A1.zip (note the capital 'A') containing
+    ONLY the following files:
+
+    a1 (this file, with your answers in each ##ANSWER section)
+    grammar (the one you created in Question 7 above)
+
+##SUBMISSION NOTES:
+
+    Copy this file (a1) to a suitable directory and make changes to this
+    file before submitting it. Do *not* make any changes to the file
+    EXCEPT BY ADDING YOUR ANSWERS FOLLOWING EACH OF THE ##ANSWER lines.
+
+    A 'flat' zip file contains only files, no directories (or "folders").
+    When I unzip your A1.zip submission, I should see *only* the files
+    'a1' and 'grammar', and nothing else. In particular, there should not
+    be a directory named 'A1'.
+
+    Do *not* submit files with extensions such as 'a1.txt' or
+    'grammar.txt'. The Windows operating system often silently adds the
+    '.txt' extension to text files, so be sure that these extensions are
+    removed when adding them to your zip file. The best way to ensure
+    this is to do your work on the CS lab Ubuntu systems and to create
+    your zip file there.
+
+    Submit your A1.zip file to your A1 dropbox in MyCourses.

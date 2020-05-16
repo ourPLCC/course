@@ -1,0 +1,17 @@
+{
+  def fib = proc(x)
+    {
+      def s1 = sub1(x);
+      def s0 = sub1(s1);
+      if zero?(x)
+      then 0
+      else
+        if zero?(s1)
+        then 1
+        else .fib(s0)+.fib(s1) 
+        endif
+      endif
+    };
+
+  .fib(10)
+} ;

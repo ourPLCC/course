@@ -1,0 +1,34 @@
+% A program that computes the transitive, symmetric, and reflexive
+% closure of a given binary relation 'rel'. The resulting relation
+% is an equivalence relation.
+
+% The 'rel' predicate is an EDB. That is, it represents facts known before
+% evaluation. Predicates and constants begin with lowercase letters.
+% This is just an example!
+rel(a,b).
+rel(b,c).
+rel(c,c).
+rel(c,d).
+rel(e,f).
+
+% identify the nodes
+node(X) :- rel(X,_).
+node(Y) :- rel(_,Y).
+
+% the following rules define the eqv predicate, which is the transitive,
+% symmetric, and reflexive closure of the rel predicate. The eqv predicate
+% is an IDB. That is, it represents facts derived from the facts in the
+% rel predicate.
+
+% Generate the transitive closure
+eqv(X,Y) :- rel(X,Y).
+eqv(X,Y) :- eqv(X,Z), eqv(Z,Y).
+
+% add relations to the closure to make it symmetric and reflexive
+eqv(X,Y) :- eqv(Y,X). % symmetric
+eqv(X,Y) :- node(X), node(Y), X=Y. % reflexive
+
+% After we have loaded this program, we can query the existence of
+% certain facts. For instance, to see the entire equivalence relation,
+% we would query "eqv(X,Y)?", and to see the equivalence class of "a"
+% we would query "eqv(a,X)?".

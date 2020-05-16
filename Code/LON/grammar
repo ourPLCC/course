@@ -1,0 +1,13 @@
+# Language LON (list of numbers)
+
+# Lexical specification
+skip WHITESPACE '\s+'
+NUM '\d+'
+LPAREN '\('
+RPAREN '\)'
+%
+# Grammar
+<lon>           ::= LPAREN <nums> RPAREN
+<nums>:NumsNode ::= <NUM> <nums>
+<nums>:NumsNull ::=
+%

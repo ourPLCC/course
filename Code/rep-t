@@ -1,0 +1,3 @@
+#!/bin/bash
+
+cat "$@" - | (cd Java ; java Rep -t)

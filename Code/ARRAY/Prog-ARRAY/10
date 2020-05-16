@@ -1,0 +1,51 @@
+% for moderate values of m and n,
+% this program will result in integer overflow
+define m = 10
+define n = 10
+define a = array[m]
+
+% build the initial interior and edge values in pascal's triangle
+let i=0 in
+  while <?(i,m) do
+     { set \a[i] = array[n]
+     ; let j=0 in
+         while <?(j,n) do
+           { if *(i,j) % true if i != 0 && j != 0
+             then 1 % do nothing (it's an interior node)
+             else set \\a[i][j] = 1 % edge
+           ; set j=add1(j)
+           }
+         else
+           nil
+     ; set i=add1(i)
+     }
+  else
+    nil
+
+99 % this value will appear when the above loops have terminated
+
+% build the interior values
+let i=1 in
+  while <?(i,m) do
+    { let j=1 in
+        while <?(j,n) do
+          { set \\a[i][j] = +(\\a[i][sub1(j)], \\a[sub1(i)][j])
+          ; set j=add1(j)
+          } 
+        else
+          nil
+    ; set i=add1(i)
+    }
+  else
+    nil
+
+% print the results
+let i=0 in
+  while <?(i,m) do
+    { if zero?(i) then newline else nil
+    ; display \a[i] % displays the entire ith row
+    ; newline
+    ; set i=add1(i)
+    }
+  else
+    nil

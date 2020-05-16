@@ -1,0 +1,337 @@
+CSCI 344 - Programming Language Concepts
+Assignment A9 (85 points)
+Due Wednesday, Oct 31, 2018
+
+Make changes to this text file by putting your answers to each of the
+questions following their respective ## ANSWER lines.  Do not make any
+other changes to this file.
+
+This file can be found here:
+
+    /usr/local/pub/plcc/Assignments/A9/a9
+
+Follow the Submission Requirements at the end of this document.
+
+##NARRATIVE
+
+In the following, you are to implement several procedures in the LIST
+language (it's in the Code directory). 
+
+The LIST language is based on language V6 (no side-effects).  The only
+difference is that it has a 'list' value (see the ListVal class in the
+'val' file) and grammar rules that allow you to:
+
+    (1) create a list of things:
+        [1,3,5]        % => [1,3,5]
+        [1,2,[3,4],5]  % => [1,2,[3,4],5]
+        []             % => [], the empty list
+
+    (2) take the 'first' and 'rest' of a list (these are primitives):
+        first([1,3,5]) % => 1
+        rest([1,3,5])  % => [3,5]
+        first([])      % => error (can't take the first of an empty list)
+        first(42)      % => error (can't take the first of a non-list)
+
+    (3) create a new list by adding an element to the beginning of another
+        list (this is a primitive):
+        addFirst(9, [1,3,5])       % => [9,1,3,5]
+        addFirst([42,11], [1,3,5]) % => [[42,11],1,3,5]
+        addFirst(16, 17)           % => error (can't add to a non-list)
+
+    (4) determine if a thing is a list or not (this is a primitive):
+        list?(9)               % => 0
+        list?(proc(x) add1(x)) % => 0
+        list?([])              % => 1
+	list?([9])             % => 1
+        list?([1,3,5])         % => 1
+
+    (5) use a list in a conditional statement:
+        if [1,3,5] then 11 else 42  % => 11 (a nonempty list is "true")
+        if [] then 11 else 42       % => 42 (an empty list is "false")
+
+Create a LIST working directory and copy the LIST language files into
+this working directory.  Run plccmk and try out the above examples.
+
+The list data structure is key to many functional programming
+languages such as Scheme and Haskell.  In the remainder of this
+problem you will write and test some interesting procedures, most of
+which act in some way on lists.  PUT THESE PROCEDURES IN A FILE NAMED
+'list-stuff' IN YOUR WORKING DIRECTORY.  You can then run your
+Rep program with the 'list-stuff' name on the command line to test
+things out.  Here's how to do this:
+
+        cat list-stuff - | (cd Java ; java Rep) # don't forget the '-'!
+        --> % run your tests here
+
+First, consider the following procedure that counts the number of elements
+in a list. You already defined this procedure in assignment A6, so we
+are just duplicating it here.
+
+    % procedure to determine the size of a list
+    define size = proc(xs) % xs is a list
+      if xs
+      then add1(.size(rest(xs))) % xs is a nonempty list
+      else 0                     % xs is an empty list
+
+Here are some applications:
+
+    .size([1,3,5]) % => 3
+    .size([])      % => 0
+
+Add this procedure to your 'list-stuff' file.  This example serves
+as a model for defining the remaining procedures in this assignment.
+ALL OF YOUR PROCEDUES SHOULD BE CODED TO WORK IN THE 'LIST' LANGUAGE.
+Do not make any changes to the language.
+
+##QUESTION 1 (10 pts):
+
+    You are to define a procedure 'sum' that takes a list of numbers and
+    returns the sum of the elements in the list (assuming that they are
+    all ints):
+
+        .sum([])      % => 0
+        .sum([1,3,5]) % => 9
+
+    Give you answer by replacing the '%% Your definition goes here %%'
+    with code that correctly implements the 'sum' procedure.
+
+##ANSWER:
+
+        % procedure to sum the elements in a list
+        %   the sum of an empty list is zero
+        define sum = proc(xs) % xs is a list
+          %% Your defintion goes here %%
+
+##QUESTION 2 (10 pts):
+
+    You are to define a procedure 'summ' that takes a list and returns
+    the sum of the elements in the list.  In this case, the elements of
+    the list may be a mixture of ints and lists.  If the first element
+    of the list is itself a list -- you can check this by using the
+    'list?' primitive -- find its sum recursively using 'summ', and
+    add this value to the summ of the rest of the list.  If the first
+    element of the list is not a list, you can assume it's an integer
+    and simply add it to the summ of the rest of the list.
+
+        % examples:
+        .summ([])            % => 0
+        .summ([1,3,5])       % => 9
+        .summ([[1],[3,5]])   % => 9
+        .summ([1,[3,[5]]])   % => 9
+        .summ([[[[1,3,5]]]]) % => 9
+
+    Hint: avoid calling 'first' and 'rest' twice on a nonempty list by
+    using a 'let' to hold the values of the first and rest of the list.
+
+    Complete your answer below as in ##QUESTION 1a.
+
+##ANSWER:
+
+        % procedure to sum the elements in a list recursively
+        define summ = proc(xs) % xs is a list
+          %% Your defintion goes here %%
+
+
+##NARRATIVE
+In Assignment A6, you defined a procedure 'append' that takes
+two lists and creates a new list that appends the first list
+to the second. Here is the definition for the LIST language.
+
+    define append = proc(xs, ys) % xs and ys are lists
+        if xs
+        then addFirst(first(xs), .append(rest(xs), ys))
+        else ys
+
+    % examples:
+        .append([1,3,5], [2,8]) % => [1,3,5,2,8]
+        .append([], [2,8])      % => [2,8]
+        .append([1,3,5], [])    % => [1,3,5]
+        .append(97,43)          % => error (can't append non-lists)
+
+Add this definition to your list-stuff file.
+
+##QUESTION 3 (10 pts):
+
+    You are to define a procedure 'flatten' that takes a list consisting
+    of a mixture of ints and lists (as shown above) and that returns a new
+    list that consists only of the ints in the original list, in the same
+    order as they appear.  For example:
+
+        % examples:
+        .flatten([])            % => []
+        .flatten([1,3,5])       % => [1,3,5]
+        .flatten([[1],[3,5]])   % => [1,3,5]
+        .flatten([1,[3,[5]]])   % => [1,3,5]
+        .flatten([[[[1,3,5]]]]) % => [1,3,5]
+
+    Hint: The summ procedure you defined above should serve as a prototype
+    for defining flatten. Your answer should use the 'addFirst' primitive
+    and your 'append' procedure, as well as to call 'flatten' recursively.
+
+    Complete your answer below as in ##QUESTION 1a.
+    
+##ANSWER:
+
+        % procedure to flatten a list
+        define flatten = proc(xs) % xs is a list
+            %% Your defintion goes here %%
+
+##QUESTION 4 (5 pts):
+
+    Show how to define the 'summ' procedure in QUESTION 2 by composing
+    the 'sum' procedure in QUESTION 1 with the 'flatten' procedure in
+    QUESTION 3.
+
+    Complete your answer below as in ##QUESTION 1a.
+
+##ANSWER:
+
+        % procedure to summ a list directly using only flatten and sum
+        % this is a one-liner!
+        define summ = proc(xs) % xs is a list
+            %% Your defintion goes here %%
+
+##QUESTION 5 (10 pts):
+
+    You are to define a procedure 'reverse' that takes a list and returns a
+    list that is the reverse of the original list:
+
+        % examples:
+        .reverse([1,3,5])       % => [5,3,1]
+        .reverse([])            % => []
+
+    Hint: Consider the following procedure 'shuttle':
+
+        define shuttle = proc(xs, ys) % xs and ys are lists
+           if xs
+           then .shuttle(rest(xs), addFirst(first(xs), ys))
+           else ys
+
+    Examine what this procedure does for various lists 'xs' and 'ys'. Add
+    the 'shuttle' procedure to your 'list-stuff' file. Then use this
+    procedure to define 'reverse'.  Do *not* use the 'append' procedure.
+
+##ANSWER:
+
+        % procedure to reverse a list, using *only* shuttle --
+        % this is a one-liner!
+        define reverse = proc(xs) % xs is a list
+            %% Your definition goes here %%
+
+##QUESTION 6 (10 pts):
+
+    You are to define a procedure 'map' that takes a procedure of arity
+    1 and a list and returns a new list that consists of applying the
+    procedure to all of the elements of the list.
+
+	% examples:
+        .map(proc(t) add1(t), [1,3,5])     % => [2,4,6]
+        .map(proc(t) *(t,t),  [1,2,3,4,5]) % => [1,4,9,16,25]
+
+    Define the map procedure recursively.  Do not use the 'append'
+    procedure in your solution.
+
+##ANSWER:
+
+        % procedure to map a procedure on the elements of a list
+        define map = proc(f, xs) % f is a procedure, xs is a list
+            %% Your definition goes here %%
+
+##QUESTION 7 (10 pts):
+
+    You are to define a procedure 'zip' that takes a procedure of arity 2
+    and two lists of the same size and returns a new list that consists
+    of applying the procedure to each pair of elements of the first list
+    and the second list.
+
+	% examples:
+        .zip(proc(t,u) +(t,u), [1,3,5], [4,11,42]) % => [5,14,47]
+
+    Define your zip procedure recursively.  Do not use the 'append'
+    procedure in your solution. You do *not* need to check that the
+    two lists have the same size.
+
+##ANSWER:
+
+        % procedure to zip two lists using a procedure
+        define zip = proc(g, xs, ys) % g is a procedure, xs and ys are lists
+            %% Your definition goes here %%
+
+##QUESTION 8 (10 pts):
+
+    You are to define a procedure 'compose' that takes two procedures
+    (both of arity 1) and returns a procedure of arity 1 that is the
+    composition of these two procedures.  E.g., if f(x) = x+3 and g(x)
+    = x*x then the composition is h(x) = f(g(x)) = x*x+3.
+
+        % example: note the two dots in the following!!
+        define f = proc(x) +(x,3)
+        define g = proc(x) *(x,x)
+        ..compose(f,g) (5) % => 28
+
+    This definition does not involve lists.
+
+    Hint: remember that when you apply the 'compose' procedure, the
+    result is a procedure!
+
+##ANSWER:
+
+        % procedure to compose two procedures --
+        % this is a one-liner!
+        define compose = proc(f, g)
+            proc(x) %% The rest of your definition goes here %%
+
+##QUESTION 9 (5 pts):
+    Consider the following two functions, 'foldr' and 'foldl'.  You can look
+    these up in Wikipedia:
+
+        % f is a function of arity 2, z is some value, and xs is a list
+        define foldr = proc(f, z, xs)
+          if xs
+          then .f(first(xs), .foldr(f, z, rest(xs)))
+          else z
+
+        % f is a function of arity 2, z is some value, and xs is a list
+        define foldl = proc(f, z, xs)
+          if xs
+          then .foldl(f, .f(z, first(xs)), rest(xs))
+          else z
+
+    What does the following procedure do?  Describe the result IN TERMS
+    OF ONE OF THE PROCEDURES YOU HAVE DEFINED IN EARLIER PARTS OF THIS
+    ASSIGNMENT.
+
+        define mystery = proc(xs)
+            .foldl(proc(ys, y) addFirst(y, ys),
+                   [],
+                   xs)
+
+    Give your answer below by replacing the '%% your answer goes here'
+    with the correct answer.
+
+##ANSWER:
+
+        %% .mystery(xs) is the same as %% your answer goes here
+
+##QUESTION 10 (5 pts):
+    Consider the procedure 'shuttle' described earlier.  What does the
+    following procedure do?  Describe the result in terms of one of the
+    procedures you have defined in earlier parts of this assignment.
+
+        define mystery1 = proc(xs, ys)
+            .shuttle(.shuttle(xs,[]), ys)
+
+##ANSWER:
+
+        %% .mystery1(xs, ys) is the same as %% your answer goes here
+
+##SUBMISSION REQUIREMENTS
+-------------------------
+
+Modify this file (a9) by filling in the ##ANSWER sections with your
+solutions to the questions given in the corresponding ##QUESTION sections.
+Do not make any other changes to this file, including its name.
+
+Create a zip file A9.zip containing ONLY your edited a9 file. Your zip
+file should NOT contain any other files or directories. Submit your
+A9.zip file into your A9 dropbox in MyCourses.

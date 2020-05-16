@@ -1,0 +1,70 @@
+CSCI 344 - Programming Language Concepts
+Assignment A3 (20 points)
+Due Wednesday, Sep 26, 2018
+
+This file can found on the CS lab server here:
+
+    /usr/local/pub/plcc/Assignments/A3/a3
+
+##QUESTION 1 (NEG, 20 pts):
+    Consider language V1, with expressions consisting of literals,
+    variables, and primitive applications.  You are to add a
+    'neg' primitive that takes a single argument and returns the
+    value of its arithmetic negative.  For example, the expression
+
+        neg(add1(3))
+
+    evaluates to -4, and
+
+        neg(neg(42))
+
+    evaluates to 42.
+
+    Create a directory NEG in which you will do your work, and copy the
+    contents of the Code/V1 directory into this working directory.
+
+    You will need to modify the 'grammar' file by adding a NEGOP token
+    and creating a grammar rule for the NegPrim primitive.  You will
+    also need to modify the 'prim' file so that it will handle the 'apply'
+    semantics in the 'NegPrim' class.  Observe that this primitive takes
+    a single argument.
+
+    Also, modify the specification of the LIT token in your NEG grammar
+    so that a literal can begin with an optional minus sign, with
+    the obvious interpretation.  For example, both of the following
+    expressions evaluate to 11:
+
+        neg(-11)
+        add1(10)
+
+    Do *not* make changes to the 'prim' file other than adding the
+    semantics for 'NegPrim', and do *not* make any changes at all to the
+    'code', 'env', and 'val' files.
+
+    Make sure you have tested your modifications by running plccmk
+    in your NEG directory and evaluating several expressions using
+    your neg primitive and negative literals.
+
+    Grading:
+    5 pts for correct modification of the token specification to
+        accommodate the NEG and LIT tokens
+    5 pts for correct modification of the BNF rules to accommodate
+        the NegPrim grammar rule
+    10 pts for correct implementation of the NegPrim evaluation semantics
+
+    Once you have implemented and tested your changes, copy your modified
+    'grammar' and 'prim' files into new files with the following names:
+
+        a3-neg-grammar
+        a3-neg-prim
+
+##SUBMISSION REQUIREMENTS
+-------------------------
+
+Create a FLAT zip file named A3.zip containing ONLY the following files:
+
+    a3-neg-grammar
+    a3-neg-prim
+
+Your zip file should NOT contain any other files or directories -- not
+even one named A3. Submit your A3.zip file to your A3 assignment dropbox.

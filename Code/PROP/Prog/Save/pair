@@ -1,0 +1,47 @@
+define pair = 
+  class
+    static mkPair = proc(a,b) .<new pair>init(a,b)
+    field fst
+    field snd
+    method init = proc(x,y) {set fst = x ; set snd = y ; self}
+  end
+
+define lst =
+  class
+    field pr
+    method init = proc() {set pr = nil ; self}
+    method add = proc(x) {set pr = .<pair>mkPair(x, pr) ; self }
+    method remove = proc() {set pr = <pr>snd; self}
+    method show = proc()
+      letrec
+        show = proc(p)
+          if p then {display# <p>fst ; .show(<p>snd) } else nil
+      in 
+        { .show(pr) ; newline ; self }
+  end
+
+newline
+let
+  t = .<new lst>init()
+in
+{ newline
+; :<t>add(3)>show():>
+; :<t>add(5)>show():>
+; :<t>add(11)>show():>
+; :<t>remove()>show():>
+; nil
+}
+
+{ newline
+; :<new lst>init()
+  > add(3)
+  > show()
+  > add(5)
+  > show()
+  > add(11)
+  > show()
+  > remove()
+  > show()
+  :>
+; nil
+}

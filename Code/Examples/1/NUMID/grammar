@@ -1,0 +1,4 @@
+# Tokens are numbers or identifiers -- skip whitespace
+skip WHITESPACE '\s+'
+NUM '\d+' # one or more decimal digits
+ID '[A-Za-z]\w*' # a letter followed by zero or more "word" chars

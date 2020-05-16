@@ -1,0 +1,370 @@
+CSCI 344 - Programming Language Concepts
+Assignment A4 (40 points)
+Due Friday, Oct 5, 2018
+
+##QUESTION 1 (LETINORDER, 20 pts):
+    Language V4 (/usr/local/pub/plcc/Code/V4) implements the 'let ... in ...'
+    expression.  As we have seen, the following expression evaluates to 4:
+
+    % outer let
+    let
+      p = 4
+    in
+      % inner let
+      let
+        p = 42
+        x = p
+      in
+        x
+
+    This is because the RHS expressions in the inner let are evaluated
+    in the environment that has p bound to 4, and these values are bound
+    to their respective LHS variables *after* the expressions are
+    evaluated.
+
+    Suppose we *want* the sort of behavior that binds p to 42 *before*
+    x gets bound to the value of p, and so that the RHS of the binding
+    'x = p' will use this new binding for p (instead of using the binding
+    in the enclosing environment). We can do this explicitly by rewriting
+    the inner let expression as nested lets:
+
+    % outer let
+    let
+      p = 4
+    in
+      % inner let, now nested
+      let
+        p = 42
+      in
+        let
+          x = p
+        in
+          x
+
+    This evaluates to 42, since the variable p in the innermost let
+    is bound to 42.
+
+    Instead of using nested lets to achieve this behavior, we would like
+    to have a grammar construct similar to 'let' that essentially creates
+    the bindings in the order in which they appear (top to bottom), and
+    where an RHS expression can use the bindings of LHS variables that
+    appear earlier in evaluating these expressions.  Since we don't want
+    to change the semantics of our original let construct, we create a
+    new construct called 'letinorder' that is syntactically the same as
+    'let' but that behaves semantically like a sequence of nested lets.
+
+    Here is an example of a 'letinorder' expression that illustrates
+    its behavior:
+
+    let
+      p = 4
+    in
+      letinorder
+        p = 42
+        x = p
+      in
+        x
+
+    This expression evaluates to 42.
+
+    You are to modify the V4 language to implement letinorder
+    expressions.  Here are the steps:
+
+    a.  Copy the contents of the V4 directory into an appropriate
+        working directory -- I suggest you name it LI (for LetInorder).
+
+    b.  Add a LETINORDER token to your lexical specification (in the
+        grammar file) that has 'letinorder' as its pattern.
+ 
+    c.  Add a grammar rule that is identical to the LetExp grammar
+        rule except that it uses LETINORDER instead of LET
+        and that its class name is LetinorderExp.
+
+    d.  Add a LetinorderExp section in your code file, with a stub
+        for its eval method:
+
+        LetinorderExp
+        %%%
+            public Val eval(Env env) {
+	        return new IntVal(0);
+            }
+        %%%
+
+        At this point, you should be able to use the plccmk tool
+        to create appropriate Java files.  When you run your Rep
+        program, you should be able to enter expressions (such as
+        the ones above), but any letinorder expression will evaluate
+        to zero.
+
+    e.  Replace the eval stub with the appropriate semantics.  Here
+        is the strategy, again in the LetinorderExp class eval method:
+
+        i.   Pass the environment env (passed to the eval method) to a
+             method called addSequentially in the LetDecls class (this
+             method will be discussed in a moment) that returns an
+             environment called nenv.
+        ii.  Evaluate the body of the letinorder expression using nenv
+             and return this value as the result of eval.
+
+	This behavior is defined in exactly the same way as in the LetExp
+	class, except that the addSequentially method is called instead
+	of addBindings.
+
+        The addSequentially method will create a new environment as we
+        now describe.  Create an Env nenv variable and initialize it to
+        env, the parameter passed to addSequentially.
+
+	We will describe what steps you will need to take to complete this
+        problem before we get into the details of how this should be coded.
+	READ THIS FIRST (do not write any code) until you get to the part
+        that says "READY TO CODE"!
+        
+        Suppose your letinorder expression looks like this:
+
+        letinorder
+          p = 42
+          x = p
+        in
+          ...
+
+        The LetDecls object has two lists:
+
+            List<Token> varList
+            List<Exp> expList
+
+        The varList is a list of LHS tokens and the expList is a list
+        of RHS expressions.
+
+        We look at the first LHS = RHS pair:
+        
+            p = 42
+
+	First create an empty Bindings object.	Then evaluate the RHS
+	in the environment nenv; since it's a literal, it evaluates
+	to 42.	Then add the binding of p to 42 to this Bindings object,
+	and extend nenv with these Bindings, setting nenv to this new
+	environment.  The nenv environment now looks like this:
+
+        nenv:
+        ---------
+        | . |  -|--> original nenv
+        --|------
+          |
+          v
+        ---------
+        | p | 42|
+        ---------
+
+        It would help you to consider this code fragment that creates
+        the nenv object as described above:
+
+            Bindings bindings = new Bindings();
+	    String s = <the String value of the LHS>;
+            Val v = <the value of the RHS using nenv>;
+            bindings.add(s, v);
+            nenv = nenv.extendEnv(bindings);
+	
+	Notice that nenv now recognizes a binding of p to 42.  We move
+	on to the next LHS = RHS pair:
+
+          x = p
+
+	We evaluate p in the environment nenv; since p is a variable,
+	it evalutes to its current binding, which is 42, so we extend
+	nenv again with a binding of x to 42 (as before), setting nenv
+	to this new environment:
+
+        nenv:
+        ---------    ---------
+        | . |  -|--> | . |  -|--> original nenv
+        --|------    --|------
+          |            |
+          v            v
+        ---------    ---------
+        | x | 42|    | p | 42|
+        ---------    --------
+
+        Observe that nenv now refers to an environment that has bindings
+        for both x and p.
+
+        Once we have processed all of the LHS = RHS pairs, we return nenv
+        to the LetinorderExp eval method, with the bindings appropriately
+        added sequentially.  The body of the LetinorderExp can now be
+        evaluated in the nenv environment, and its value is returned as
+        the value of the LetinorderExp expression.  In the above example,
+        the value of the expression is 42.
+
+    f.  You should now be READY TO CODE!  Write the addSequentially method
+        in the LetDecls class that implements the above strategy.  Here is
+        the method signature:
+
+            public Env addSequentially(Env env)
+
+	First you will need to define an Env variable named nenv and
+	initialize it to env.  Then you will need to march through the
+	varList and expList lists together.  The easy way to do this
+	systematically is to create two iterators, one for each list.
+
+	Create a loop that is controlled by the hasNext() boolean for one
+	of these iterators (either one will do). In the body of the loop,
+	use the next() method to get the individual Token and Exp items
+	from each list, evaluating the Exp object in the current nenv
+	environment and creating a Bindings object that has a SINGLE
+	binding of the Token's String to this value.  As we described
+	above, you should create an empty Bindings object and then use
+	one of the add methods in the Bindings class to add this binding.
+	The last thing to do in the loop is to extend nenv with this
+	Bindings object, and set nenv to this result.
+
+        To see how to run two iterators simultaneously, look at the
+        Bindings constructor in the file env, where two iterators are
+        used to march through the individual elements of a varList and a
+        valList.  Follow this idea as you implement the addSequentially
+        method.  (Note: the varList and expList lists MUST have the same
+        size, since they are constructed from grammar rules that always
+        pair an LHS with an RHS, so you don't need to check their sizes,
+        and you can use either iterator's hasNext() method.)
+
+        After finishing the loop, simply return the new environment nenv.
+
+    You should test some examples of programs in this language that
+    show how let and letinorder give different results.  Of course the
+    above examples do so, but you should try a few of your own as well.
+
+    ##COMMENT-START
+    In a 'let' expression, we would normally want to disallow a variable
+    to appear more than once on the LHS, so that
+
+        let
+          x = 3
+          x = +(x,4)
+        in
+          x
+
+    should not be permitted.  In our current semantics, we don't actually
+    check for this, but we could. We will see how to do this when we
+    discuss the TYPE language.
+
+    In a 'letinorder' expression, we don't have a problem with a variable
+    appearing more than once on the LHS, because we think of 'letinorder'
+    as a sequence of nested lets, as described above.  This means that
+    the following would be permitted:
+
+        letinorder
+          x = 3
+          x = +(x,4)
+        in
+          x
+   
+    This evaluates to 7.  Notice that the new environments that are
+    created by this expression would have two bindings for the variable x,
+    but only the most recent binding (of x to 7) would be visible in the
+    'letinorder' body.  Since we are adding each of these bindings to the
+    environment in order -- first to last, the last binding will appear
+    at the head of the linked list of bindings in the nenv environment,
+    so when the applyEnv method is called to get the value bound to the
+    variable x in the body, the value 7 will be returned.
+    ##COMMENT-END
+
+    Since you are modifying only the grammar and code files, make copies
+    of these files with the following names
+
+        a4-letinorder-grammar
+        a4-letinorder-code
+
+    and submit them following the Submission Requirements below.
+
+    Grading:
+    20 pts for correct implementation and semantics.
+    
+##QUESTION 2 (BIGINT, 20 pts):
+    Consider language V4 (/usr/local/pub/plcc/Code/V4) that includes
+    procedures.  Modify the implementation of IntVal in the file val so
+    that its val field is a BigInteger instead of an int.  You will need
+    to modify/add constructors so that they work properly for a String
+    parameter and for a BigInteger parameter.  Look at the Java BigInteger
+    documentation to see what needs to be done for a String parameter.
+    Your implementation should behave exactly as V4, except that there
+    should not be a limitation on the size of integers supported.
+
+    To do your work, create a BIGINT directory and copy all of the files
+    from V4 into this directory.
+
+    In the IntVal class, create methods called 'add', 'subtract',
+    'multiply', 'divide', 'add1', 'sub1', and 'zerop'.  I will show how
+    to implement 'add' and 'add1'.  You will need to implement the others.
+    Primitive operations such as '+', '-', and so forth are defined for
+    Java ints, but they don't work natively for BigIntegers, so we need
+    to define these operations in the IntVal class.
+
+    IntVal
+    %%%
+        ...
+        public IntVal add(IntVal v) {
+	    return new IntVal(val.add(v.val));
+        }
+        ...
+        public IntVal add1() {
+            return new IntVal(val.add(BigInteger.ONE));
+        }
+        ...
+    %%%
+
+    You will also need to figure out how to implement the isTrue method.
+    We still consider zero to be false and any other BigInteger to be
+    true.  (Hint: use the signum() method in the BigInteger class. The
+    signum() method can be used to implement the 'zerop' method, too.)
+
+    If you detect an attempt to divide by zero in the 'divide' method
+    in the IntVal class, you must throw a RuntimeException with an
+    appropriate error message.
+
+    In your prim file, change all of the primitives so that their apply
+    methods call IntVal methods instead of doing the operations on
+    actual ints in the Prim classes themselves.  For example:
+
+    AddPrim
+    %%%
+        public Val apply(Val [] va) {
+            if (va.length != 2)
+                throw new RuntimeException("two arguments expected");
+            IntVal i0 = va[0].intVal(); // no .val here!
+            IntVal i1 = va[1].intVal();
+            return i0.add(i1); // delegate to IntVal's add method
+        }
+    %%%
+
+    You will need to make similar changes to the other primitives in
+    the prim file.
+
+    Once you have made these changes, you should be able to define a
+    factorial procedure in Rep that takes large arguments (such as 100)
+    and that properly computes the factorial as a very large number not
+    subject to integer overflow.  See the slides to see how to define
+    a factorial in language V4 -- the same method should work in your
+    BIGINT language.
+
+    Since you will only have changed your prim and val files, copy these
+    files into new files with the following names:
+
+        a4-bigint-prim
+        a4-bigint-val
+
+    and submit them following the Submission Requirements below.
+
+    Grading:
+    20 pts for correct implementation and semantics.
+
+##SUBMISSION REQUIREMENTS:
+--------------------------
+
+Create a FLAT zip file A4.zip containing ONLY the following files:
+
+    a4-letinorder-grammar
+    a4-letinorder-code
+    a4-bigint-prim
+    a4-bigint-val
+
+This file should not contain any other files or directories -- not even
+one called A4. Submit your A4.zip file into the A4 assignment dropbox
+in MyCourses.

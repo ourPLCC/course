@@ -1,0 +1,28 @@
+define lst = 
+  class
+    static show = proc() newline
+    method add = proc(v) .<new <myclass>lstNode>init(v, self)
+  end
+
+define lstNode =
+  class extends lst
+    field val
+    field next
+    method init = proc(v,n) {set val=v ; set next=n ; self}
+    method remove = proc() next
+    method show = proc() {display# val ; .<next>show() ; self}
+  end
+
+{ newline
+; :<new lst
+  > add(3)
+  > show()
+  > add(5)
+  > show()
+  > add(11)
+  > show()
+  > remove()
+  > show()
+  :>
+; nil
+}

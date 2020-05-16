@@ -1,0 +1,39 @@
+%% produces n consecutive rows of Pascal's triangle
+
+define pascal = proc(n)
+  % produce n+1 rows of Pascal's triangle, starting at row 0
+  let
+    pas = array[add1(n)] 
+    r = 0               % the current row number
+    c = 0               % the current column number
+  in
+    { newline
+    %% start with row 0
+    ; set \pas[0] = array[1]
+    ; set \\pas[0][0] = 1
+    ; display 1
+    ; newline
+    %% do the remaining rows
+    ; set r = 1
+    ; while <=?(r, n) do
+        { set \pas[r] = array[add1(r)]
+        ; set \\pas[r][0] = 1
+        ; display# 1
+        ; set c = 1
+        ; while <?(c,r) do
+            { set \\pas[r][c] = +(\\pas[sub1(r)][sub1(c)], \\pas[sub1(r)][c])
+            ; display# \\pas[r][c]
+            ; set c = add1(c)
+            }
+          else
+            { set \\pas[r][c] = 1
+            ; display 1
+            ; newline
+            }
+        ; set r = add1(r)
+        }
+      else
+        pas
+    }
+  
+define p = .pascal(16)

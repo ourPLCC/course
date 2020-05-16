@@ -1,0 +1,4 @@
+# The tokens in the file are 'words' consisting of one or more
+# letters, digits or underscores -- skip everything else
+skip NONWORD '\W+' # skip non-word characters
+token WORD '\w+' # keep one or more word characters

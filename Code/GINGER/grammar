@@ -1,0 +1,45 @@
+GINGER '(?i)ginger'
+BLAH '[A-Za-z]+'
+NL '\n'
+skip SKIP '.'
+%
+<whatwesay>   ::= <words> NL
+<words>       **= <word>
+<word>:Blah   ::= BLAH 
+<word>:Ginger ::= GINGER
+%
+
+Whatwesay
+%%%
+    public String toString() {
+        return words.toString();
+    }
+%%%
+
+Words
+%%%
+    public String toString() {
+        String ret = "";
+        String sep = "";
+        for (Word w : wordList) {
+            ret += sep + w.toString();
+            sep = " ";
+        }
+        return ret;
+    }
+%%%
+
+Blah
+%%%
+    public String toString() {
+        return "blah";
+    }
+%%%
+
+Ginger
+%%%
+    public String toString() {
+        return "Ginger";
+    }
+%%%
+

@@ -1,0 +1,46 @@
+# Language Lambda
+#   The Rep loop prints the expression in canonical form
+
+# Lexical specification
+skip WHITESPACE '\s+'
+LPAREN '\('
+RPAREN '\)'
+LBRACE '\{'
+RBRACE '\}'
+DOT '\.'
+PROC 'proc'
+SYM '[A-Za-z]\w*'
+%
+# Grammar
+<exp>:Var  ::= <SYM>
+<exp>:Proc ::= PROC LPAREN <SYM> RPAREN LBRACE <exp> RBRACE
+<exp>:App  ::= DOT <exp>rator LPAREN <exp>rand RPAREN
+%
+
+Var
+%%%
+
+public String toString() {
+    return sym.toString();
+}
+
+%%%
+
+Proc
+%%%
+
+public String toString() {
+    return "proc(" + sym + "){" + exp + "}";
+}
+
+%%%
+
+App
+%%%
+
+public String toString() {
+    return "." + rator + "(" + rand + ")";
+}
+
+%%%
+

@@ -1,0 +1,142 @@
+CSCI 344 - Programming Language Concepts
+Assignment AD (30 points)
+Due Wednesday, Dec. 5, 2018
+
+NOTE:
+You are to answer each of these questions, indicated by a '##QUESTION:'
+line.  Submit your modified files as directed in the Submission
+requirements section below.
+
+This file can be found here:
+
+    /usr/local/pub/plcc/Assignments/AD/ad
+
+##QUESTION 1 (ENFIX, 30 pts):
+
+    The INFIX language uses infix notation for expressions, as shown
+    in our class notes.  Running an INFIX program, however, simply
+    re-displays the original expressions without evaluating them.
+    In this assignment you will add evaluation semantics.
+
+    The skeleton for evaluation semantics is already present in the INFIX
+    language files, particularly in 'prim'.  Create a working directory
+    called ENFIX (the 'E' is for 'Evaluate') and copy all of the files
+    from the INFIX directory into your working directory.  Do all of
+    your work in your ENFIX directory. You will only need to edit the
+    'code' file to implement evaluation semantics.
+
+    First, change your toString() method in your Eval class so
+    that it returns the String representation of the expression's
+    value (as determined by 'eval') instead of just its toString().
+    Simply uncomment the line with the eval method and comment out the
+    other line.
+
+    Next you will need to add evaluation semantics to your Exp, Term,
+    Terms, Factor, and Factors classes.  The idea is that evaluating
+    an expression that comes from a grammar rule such as
+
+        <exp> ::= <term> <terms>
+
+    can be accomplished first by evaluating the term, and then passing
+    this value on to terms, in the case that terms will contribute more
+    terms to the value.  (Think of an expression as consisting of a
+    "term" followed by zero or more "terms" that contribute to the
+    expression value through addition or subtraction.)
+
+    For example, consider the expression
+
+        1 + 2 + 3
+
+    This expression has an initial term value of 1, followed by terms
+    of the form '+ 2' and '+ 3'.  If you pass the value 1 to '+ 2',
+    it will take this value and add 2 to it, resulting in the value 3.
+    Next if you pass the value 3 to '+ 3', it will take this value and
+    add 3 to it, resulting in the value 6.
+
+    In the Exp class, evaluate the term and pass this value on to the
+    terms object which will then perform additional operations based
+    on how many additional terms there are.  You will need to pass along
+    the current environment as well. Here's the code:
+
+        Exp
+        %%%
+            public Val eval(Env env) {
+                Val val = term.eval(env);
+                return terms.eval(val, env);
+            }
+        %%%
+
+        Terms
+        %%%
+            // apply the next prim0 operator to val and the next term,
+            // and repeat until all Prim0 operators have been applied
+            public Val eval(Val val, Env env) {
+                Iterator<Prim0> prim0Iterator = prim0List.iterator();
+                Iterator<Term> termIterator = termList.iterator();
+                while (prim0Iterator.hasNext()) {
+	            Prim0 prim0 = prim0Iterator.next();
+                    Term term = termIterator.next();
+                    val = prim0.apply(val, term.eval(env));
+                }
+                return val;
+            }
+        %%%
+
+        Term
+        %%%
+            public Val eval(Env env) {
+                Val val = factor.eval(env);
+                return factors.eval(val, env);
+            }
+        %%%
+
+    The implementation of 'eval' method in the Factors class is similar
+    to the 'eval' method in the Terms class.
+
+    The Factor class has several subclasses, so you will need an abstract
+    method declaration:
+
+        public abstract Val eval(Env env);
+
+    The evaluation semantics of most of the Factor subclasses is
+    straight-forward.  You can use the evaluation code from the V4
+    language for 'if' factors. The code for block factors is essentially
+    given to you: it's based on the semantics of 'let' expressions from
+    V4 and top-level defines from V6. You will need to figure out
+    the rest.  Note that the Prim2 primitive (there is only one for now)
+    takes only one argument.  Since a Prim2 primitive occurs syntactically
+    before the argument it applies to, you will need to evaluate its
+    'factor' argument first, and then pass this value to the primitive.
+
+    The ProcVal class already has an 'apply' method that should work
+    as-is. You will need to make changes to the AppFactor class to pass
+    the proper parameters to this ProcVal apply method. See the AppExp
+    class in language V4 for how to do this. (The 'apply' method in
+    INFIX takes just one parameter, not two.)
+
+    If you wish, you can add semantics for top-level defines. The
+    INFIX grammar rules support this, but the code file does not
+    implement it. You can examine the V6 implementation of top-level
+    defines to see what to do here. This feature is optional -- I will
+    *not* grade it. But make sure that if you do implement it, your
+    implementation will not break the other semantics of the language. If
+    in doubt, leave it out.
+
+    When you have completed and tested your implementation, make a copy
+    of your revised 'code' file with the following name:
+
+        ad-enfix-code
+
+    Submit your 'ad-enfix-code' file following the instructions in the
+    Submission requirements section.
+
+Submission requirements
+-----------------------
+
+    Create a flat zip file named AD.zip containing ONLY the following
+    plain text files. Your AD.zip file should not contain any other
+    files or directories.
+
+	ad-enfix-code
+
+    Submit your AD.zip file in your AD Dropbox in MyCourses.

@@ -1,0 +1,29 @@
+define c =
+  class
+    field x
+    field xset
+    field xget
+    method init = proc() {set xset=0 ; set xget=0 ; set x=0 ; self}
+    property x=prop {set xget=add1(xget);x} : {set xset=add1(xset);@@;set x=$}
+  end
+
+define o = .<new c>init()
+
+define d =
+  class
+    field x
+    method init = proc() {set x=10 ; self}
+    property x = prop add1(x) : set x = *($,$)
+  end
+
+define p = .<new d>init()
+
+define e =
+  class
+    field x
+    method init = proc() {set x= 0 ; self}
+    method xset = proc(t) set x=t
+    property x = prop x : nil
+  end
+
+define q = .<new e>init()

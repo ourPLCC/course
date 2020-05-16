@@ -1,0 +1,9 @@
+define while = proc(test?, do, ans)
+   letrec loop = proc()
+      if test? then {do ; .loop()} else ans
+   in .loop()
+
+let
+  count = 100
+in
+  .while(count, set count = sub1(count), 42)

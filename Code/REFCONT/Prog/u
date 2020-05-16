@@ -1,0 +1,2 @@
+define u = proc(x,y) if x then .u(sub1(x), add1(y)) else y
+.u(1000,0)

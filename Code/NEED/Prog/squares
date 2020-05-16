@@ -1,0 +1,9 @@
+define pair = proc(x,y)
+  proc(t) if t then y else x
+define first = proc(p) .p(0)
+define rest = proc(p) .p(1)
+define nth = proc(n,lst)
+  if n then .nth(sub1(n),.rest(lst)) else .first(lst)
+define sseq = proc(n) .pair(*(n,n),.sseq(add1(n)))
+define squares = .sseq(0)
+.nth(100,squares) % => 10000

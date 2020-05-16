@@ -1,0 +1,32 @@
+define cons = proc(x,y)
+    proc(t) if t then y else x
+define car = proc(xs) % xs is a list
+    if xs
+    then .xs(0)
+    else throw empty()
+define cdr = proc(xs) % xs is a list
+    if xs
+    then .xs(1)
+    else throw empty()
+define null = 0
+define isEmpty = proc(x) if x then 0 else 1
+define append = proc(xs, ys)
+    if .isEmpty(xs) then ys else .cons(.car(xs), .append(.cdr(xs), ys))
+define makeSeq = proc(n, i)
+    if n then .cons(i, .makeSeq(sub1(n), add1(i))) else null
+define nth = proc(seq, n)
+    if n then .nth(.cdr(seq), sub1(n)) else .car(seq)
+define c = .makeSeq(100, 0)
+define locate =
+    let
+        badval = sub1(0)
+    in
+        proc(seq, x) 
+            catch
+                empty = handler() badval
+            in
+                .locateAux(seq, x, 0)
+define locateAux = proc(seq, x, n)
+    if -(x,.car(seq))
+    then .locateAux(.cdr(seq), x, add1(n)) % not in pos n -- try pos n+1
+    else n

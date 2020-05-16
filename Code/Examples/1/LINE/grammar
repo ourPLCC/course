@@ -1,0 +1,2 @@
+# Every line in the file is a token
+token LINE '.*'

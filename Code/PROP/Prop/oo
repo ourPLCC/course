@@ -1,0 +1,11 @@
+define o =
+  new
+    class
+      static x = 3
+      static p = proc(t) set t = add1(t)
+      property x = prop x : set x = $
+      property y = prop x : set x = +($,$)
+    end
+<o>{.p(x) ; x} % evaluates to 4
+<o>{.p(y) ; x} % evaluates to 10
+
