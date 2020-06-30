@@ -1,0 +1,32 @@
+cross(s033,c,s132).
+cross(s033,cc,s131).
+cross(s033,mc,s122).
+cross(s032,m,s122).
+cross(s032,c,s131).
+cross(s032,cc,s130).
+cross(s031,mm,s111).
+cross(s031,c,s130).
+cross(s022,mm,s102).
+cross(s022,mc,s111).
+cross(s011,m,s101).
+cross(s011,mc,s100).
+cross(s003,c,s102).
+cross(s003,cc,s101).
+cross(s002,c,s101).
+cross(s002,cc,s100).
+cross(s001,c,s100).
+cross(X,P,Y) :- cross(Y,P,X).
+path(X,Y) :- cross(X,_,Y).
+path(X,Z) :- path(X, Y), cross(Y,_,Z).
+m1(X,P1,Z) :- cross(X,P1,Z).
+m2(X,P1,P2,Z) :- m1(X,P1,Y), cross(Y,P2,Z).
+m3(X,P1,P2,P3,Z) :- m2(X,P1,P2,Y), cross(Y,P3,Z).
+m4(X,P1,P2,P3,P4,Z) :- m3(X,P1,P2,P3,Y), cross(Y,P4,Z).
+m5(X,P1,P2,P3,P4,P5,Z) :- m4(X,P1,P2,P3,P4,Y), cross(Y,P5,Z).
+m6(X,P1,P2,P3,P4,P5,P6,Z) :- m5(X,P1,P2,P3,P4,P5,Y), cross(Y,P6,Z).
+m7(X,P1,P2,P3,P4,P5,P6,P7,Z) :- m6(X,P1,P2,P3,P4,P5,P6,Y), cross(Y,P7,Z).
+m8(X,P1,P2,P3,P4,P5,P6,P7,P8,Z) :- m7(X,P1,P2,P3,P4,P5,P6,P7,Y), cross(Y,P8,Z).
+m9(X,P1,P2,P3,P4,P5,P6,P7,P8,P9,Z) :- m8(X,P1,P2,P3,P4,P5,P6,P7,P8,Y), cross(Y,P9,Z).
+m10(X,P1,P2,P3,P4,P5,P6,P7,P8,P9,P10,Z) :- m9(X,P1,P2,P3,P4,P5,P6,P7,P8,P9,Y), cross(Y,P10,Z).
+m11(X,P1,P2,P3,P4,P5,P6,P7,P8,P9,P10,P11,Z) :- m10(X,P1,P2,P3,P4,P5,P6,P7,P8,P9,P10,Y), cross(Y,P11,Z).
+m11(s033,P,Q,R,S,T,U,V,W,X,Y,Z,s100)?

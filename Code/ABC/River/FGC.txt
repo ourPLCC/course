@@ -1,0 +1,44 @@
+The FGC.java program generates an abcdatalog file that solves the
+Fox/Goose/Corn logic problem (a.k.a. wolf/goat/cabbage). It establishes
+all the facts for transporting the Fox, Goose, and bag of Corn by a
+farmer in a boat from one side of a river to the other.
+
+States start with the letter s. They are of the form sbfgc,
+where each of b, f, g, and c are digits 0 or 1. Their meanings are:
+
+   b: 0=boat is on left side, 1=boat is on right side
+   f: 0=fox is on left side, 1=fox is on right side
+   g: 0=goose is on left side, 1=goose is on right side
+   c: 0=corn is on left side, 1=corn is on right side
+
+A 'cross' fact is of the form
+
+   cross(X,I,Y).
+
+where X and Y are states and I is one of 'f', 'g', 'c', or 'x'. This
+fact means that the item I ('x' means no item) can be transported
+from safe state X to safe state Y by one crossing. 
+
+The problem is to transport the fox, goose, and corn from the left side
+to the right side in a boat that can hold only the farmer and at most
+one of the fox, goose, or corn at a time, with the caveat that the fox
+and goose cannot be left alone on either side, and that the goose and
+corn canot be left alone on either side. The initial state is s0000,
+and the desired goal state is s1111.
+
+The query path(s0000,s1111)? will succeed if there is a way to
+transport the Fox, Goose, and Corn from one side to the other while
+maintaining the constraints described above.
+
+It can be shown that at most 7 crossings are necessary to solve the
+problem. The 'm7' predicate can show the exact steps necessary to
+get from the initial state to the goal state:
+
+    m7(s0000,P,Q,R,S,T,U V,s1111)?
+
+The values unified with the A, B, ... variables are:
+
+    f if the boat carries the fox
+    g if the boat carries the goose
+    c if the boat carries the corn
+    x if the farmer takes the boat across without any passenger

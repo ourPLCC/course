@@ -6,14 +6,15 @@ a subset of Prolog that implements first-order logic. See
 for more information. ABCDatalog is NOT turing complete.
 
 The PLCC lexical and grammar structure of this language follows that
-of ABCDatalog.  The semantics uses Java classes drawn directly from the
-ABCDatalog implementation to drive the ABCDatalog logic engine. These
-classes are in a Jar file named abcdatalog.jar, which is included in
-the Java directory. To compile the interpreter and to run programs in
-the ABC language, be sure to import this Jar file by defining the CLASSPATH
-environment variable as follows:
+of ABCDatalog.  The semantics uses Java classes drawn directly from
+the Harvard ABCDatalog implementation to drive the ABCDatalog logic
+engine. These classes are in a Jar file named abcdatalog.jar, which
+is included in this directory.  To compile the interpreter and to run
+programs in the ABC language, be sure to make this jar file visible to
+the Java compiler and runtime system by defining the CLASSPATH environment
+variable as follows:
 
-    export CLASSPATH=".:abcdatalog.jar"
+    export CLASSPATH=".:../abcdatalog.jar"
 
 Here is a program that you can run using the Rep loop:
 
@@ -27,17 +28,17 @@ The "~" operator removes facts from the database. For example,
 
 would remove this fact.
 
-ABC-specific details
---------------------
+ABC language-specific details
+-----------------------------
 
-This implementation allows for removing all of the facts obtained from
-a query. For example,
+A) This implementation allows for removing all of the facts obtained
+from a query. For example,
 
     bear(X)~
 
 would remove all facts arising from the query "bear(X)?".
 
-This implementation requires that the first term of the relational
+B) This implementation requires that the first term of the relational
 operators "=" and "!=" must be a variable. So instead of
 
     a=X
@@ -46,22 +47,23 @@ you would need to write
 
     X=a
 
-The Print command will report on all of the facts and rules currently
+C) The Print command will report on all of the facts and rules currently
 known by the engine. Its syntax is just
 
     Print
 
-Similarly the Clear command will clear all facts and rules, starting with
-a clean slate.
+D) Similarly the Clear command will clear all facts and rules, starting
+with a clean slate.
 
 Examples
 --------
 
-The Prog directory has examples from the ABCDatalog implementation. It
-includes an example 'eqv' that shows how to derive an equivalence relation
-as the reflexive, symmetric, and transitive closure of a given relation.
+1) The Prog directory has examples copied from the Harvard ABCDatalog
+implementation. It includes an example 'eqv' that shows how to derive an
+equivalence relation as the reflexive, symmetric, and transitive closure
+of a given relation.
 
-The Test directory has some additional examples. In particular, the
+2) The Prog directory has some additional examples. In particular, the
 group.dtlg file contains some rules for processing the elements of a
 finite group g whose multiplication table is given by facts of the form
 
@@ -79,14 +81,14 @@ reports on all of the elements in the center of g. The group-chk.dtlg
 rules check to make sure that g represents a group (well-defined binary
 operation, associativity, identity, inverses).
 
-Some examples of groups g are given in the Test directory:
+Some examples of groups g are given in the Prog directory:
 
     S3.dtlg is the symmetric group of order 6
     S4.dtlg is the symmetric group of order 24
     A5.dtlg is the alternating group of order 60
     Z3.dtlg is the (additive) group of integers modulo 3
 
-The Python program make-sn.py in the Test directory can be used to create
+The Python program make-sn.py in the Prog directory can be used to create
 the full symmetric group g on n elements. Be aware that for a given n,
 the number of facts defined by g is (n!)*(n!).
     
@@ -103,7 +105,7 @@ g(b,e,b).
 g(b,a,e).
 g(b,b,a).
 
-To find the center of Z3, for example, enter the Test directory and run
+To find the center of Z3, for example, enter the Prog directory and run
 the Rep loop with the following input:
 
     cat group.dtlg Z3.dtlg - | (cd ../Java ; java Rep)
@@ -126,5 +128,14 @@ will result in
 
     ident(e)
 
-All of the examples must be run with the CLASSPATH environment variable
-set as described above.
+3) The River directory contains ABCDatalog files for solving the river
+crossing problems fox/goose/corn (FGC) and missionaries and cannibals
+(MC). The java files in this directory are used to create these files,
+specifically so that only the legal states are built and the legal
+river crossings between states are identified.
+
+NOTE
+----
+
+All of the examples described above must be run with the CLASSPATH
+environment variable set as described above.
