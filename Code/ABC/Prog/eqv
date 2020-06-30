@@ -28,7 +28,7 @@ eqv(X,Y) :- eqv(X,Z), eqv(Z,Y).
 eqv(X,Y) :- eqv(Y,X). % symmetric
 eqv(X,Y) :- node(X), node(Y), X=Y. % reflexive
 
-% After we have loaded this program, we can query the existence of
+% After we have loaded the program, we can query the existence of
 % certain facts. For instance, to see the entire equivalence relation,
 % we would query "eqv(X,Y)?", and to see the equivalence class of "a"
 % we would query "eqv(a,X)?".

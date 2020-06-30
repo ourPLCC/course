@@ -1,0 +1,19 @@
+Missionaries and cannibals learn logic programming
+
+Pipe the output of this to the ABC language read-eval-print loop. The
+output will be a list of boat trips ("m" means a missionary, "mm"
+means two missionaries, etc.) to get the three missionaries and three
+cannibals across the river without "incident".
+
+A "state" in this solution is a string of the form
+
+    sbmc
+
+where 's' is just the letter 's', 'b' is the boat side (0=left, 1=right),
+'m' is the number of missionaries on the left side, and 'c' is the
+number of cannibals on the left side.
+
+The minimal solution takes 11 steps. The start state is s033 (boat is
+on left side of river, with three missionaries and 3 cannibals on the
+left side). The goal state is s100 (boat is in right side of river,
+with no missionaries or cannibals on the left side).

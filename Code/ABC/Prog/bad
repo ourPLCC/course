@@ -1,0 +1,5 @@
+% noident
+% badfnwd
+% badfn
+g(a,b,c).
+g(a,b,d).
