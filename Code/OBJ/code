@@ -210,7 +210,7 @@ ClassDecl
 %%%
     public Val eval(Env env) {
         ClassVal superClass = ext.toClassVal(env);
-        return new StdClass(superClass, statics, fields, methods);
+        return new StdClass(env, superClass, statics, fields, methods);
     }
 %%%
 
@@ -324,6 +324,13 @@ EenvExp
     }
 %%%
 
+BangAtExp
+%%%
+    public Val eval(Env env) {
+        return env.applyEnv("!@");
+    }
+%%%
+
 Mangle
 %%%
     public Val eval(Val v, Env env) {
@@ -434,6 +441,16 @@ ErrorExp
     }
 %%%
 
+PerrorExp
+%%%
+    public Val eval(Env env) {
+        String str = strng.toString();
+        int len = str.length();
+        str = str.substring(1,len-1);
+        throw new RuntimeException("error: " + str);
+    }
+%%%
+
 Ext
 %%%
     public abstract ClassVal toClassVal(Env env);
@@ -443,7 +460,7 @@ Ext0
 %%%
 
     public ClassVal toClassVal(Env env) {
-        return new EnvClass(env);
+        return new EnvClass(Program.initEnv);
     }
 
 %%%

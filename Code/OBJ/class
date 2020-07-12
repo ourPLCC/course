@@ -17,7 +17,7 @@ public abstract class ClassVal extends Val {
 %%%
 
 # a "parentless" class whose static environment is the environment
-# in which the class is created
+# passed to its constructor
 EnvClass
 %%%
 import java.util.*;
@@ -27,33 +27,25 @@ public class EnvClass extends ClassVal {
     public Env staticEnv;
 
     public EnvClass(Env env) {
-        // the static environment of this class extends the current environment
-        Bindings staticBindings = new Bindings();
-        staticEnv = env.extendEnvRef(staticBindings);
-        // create bindings for these static symbols ...
-        staticBindings.add("myclass", new ValRef(this));
-        staticBindings.add("superclass", new ValRef(Val.nil));
+        staticEnv = env; // the environment inherited by all subclasses
     }
 
     public Env env() {
         return staticEnv;
     }
 
-    // Observe that objects created with 'new ...' always end up
-    // extending the static environment of this class
-    // The env parameter is the environment in which the object is created
+    // Observe that the environment of objects created with 'new ...'
+    // always end up extending the static environment of this class.
+    // The 'objRef' reference will eventually be set to the object
+    // being created.
     public ObjectVal makeObject(Ref objRef) {
-        // System.err.println("...makeObject (in EnvClass)...");
         // start with the static environment of this class
-        Env e = staticEnv;
+        Env env = staticEnv;
         // add the field binding 'self' to refer to the base object (deep)
-        // and 'this' to this object (shallow)
         Bindings fieldBindings = new Bindings();
-        e = e.extendEnvRef(fieldBindings);
-        ObjectVal objectVal = new ObjectVal(e);
-        fieldBindings.add("self", objRef); // deep
-        fieldBindings.add("this", new ValRef(objectVal)); // shallow
-        return objectVal;
+        env = env.extendEnvRef(fieldBindings); // this object's environment
+        fieldBindings.add("self", objRef);                // deep
+        return new ObjectVal(env);
     }
 
     public String toString() {
@@ -70,17 +62,18 @@ import java.util.*;
 
 public class StdClass extends ClassVal {
 
-    public ClassVal superClass;
+    public ClassVal superClass;  // an EnvClass (top-level) or a StdClass
     public Bindings staticBindings; 
     public Fields fields;
     public Methods methods;
     public Env staticEnv;
 
     public StdClass(
+            Env env,             // the environment where this class is created
             ClassVal superClass, // evaluated by ClassExp
-            Statics statics,
-            Fields fields,
-            Methods methods) {
+            Statics statics,     // static variable definitions
+            Fields fields,       // field declarations
+            Methods methods) {   // method definitions
         this.superClass = superClass;
         this.fields = fields;
         this.methods = methods;
@@ -90,6 +83,7 @@ public class StdClass extends ClassVal {
         staticBindings = new Bindings();
         staticEnv = staticEnv.extendEnvRef(staticBindings);
         // initially create bindings for these static symbols ...
+        staticBindings.add("!@", new ValRef(new ObjectVal(env))); // not a var
         staticBindings.add("myclass", new ValRef(this));
         staticBindings.add("superclass", new ValRef(superClass));
         // The static RHS expressions are evaluated in the modified
@@ -109,44 +103,36 @@ public class StdClass extends ClassVal {
         ObjectVal parent = superClass.makeObject(objRef);
 
         // this object's environment extends the parent object's environment
-        Env e = parent.objectEnv;
+        Env env = parent.objectEnv;
 
         // add this class's static bindings (including those for myclass, etc)
-        e = e.extendEnvRef(staticBindings);
+        env = env.extendEnvRef(staticBindings);
 
         // the fields come next
-        // three fields are pre-defined: 'super', 'self', and 'this'
-        // bind 'super' to the parent object
-        // bind 'self' to the base object (an instance of a derived class?)
-        // bind 'this' to this object
-        // 'self' is unnecessary here, except that it speeds up lookups
         Bindings fieldBindings = new Bindings();
-        e = e.extendEnvRef(fieldBindings);
-        // bind 'super' field to the parent object
-        fieldBindings.add("super", new ValRef(parent)); // parent object
+        env = env.extendEnvRef(fieldBindings);
         // bind all of this object's instance fields to nil
         for (Token t : fields.varList) {
               String s = t.toString();
               fieldBindings.add(s, new ValRef(Val.nil));
         }
-
-
         // bind all this object's methods as in letrec
         // don't add any bindings if there are no method declarations
         if (methods.varList.size() > 0) {
             LetrecDecls methodDecls =
                 new LetrecDecls(methods.varList, methods.procList);
-            e = methodDecls.addBindings(e);
+            env = methodDecls.addBindings(env);
         }
-        ObjectVal objectVal = new ObjectVal(e);
+
+        // create the object and return it
+        // bind 'super' field to the parent object
+        fieldBindings.add("super", new ValRef(parent)); // parent object
         // bind 'self' field to the base object being created
         // (to speed up lookups)
         fieldBindings.add("self", objRef); // deep
         // bind 'this' field to this object environment
+        ObjectVal objectVal = new ObjectVal(env);
         fieldBindings.add("this", new ValRef(objectVal)); // shallow
-
-        // create the object and return it
-        // System.err.println("...exiting makeObject...");
         return objectVal;
     }
 

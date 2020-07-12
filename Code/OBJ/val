@@ -112,16 +112,20 @@ import java.util.*;
 public class ProcVal extends Val {
 
     public Formals formals;
+    public int nargs;
     public Exp body;
     public Env env;
 
     public ProcVal(Formals formals, Exp body, Env env) {
         this.formals = formals;
+        this.nargs = formals.varList.size();
         this.body = body;
         this.env = env;
     }
 
     public Val apply(List<Val> valList) {
+        if (valList.size() != nargs)
+            throw new RuntimeException("formals/arguments number mismatch");
         List<Ref> refList = Ref.valsToRefs(valList);
         Bindings bindings = new Bindings(formals.varList, refList);
         Env nenv = env.extendEnvRef(bindings);

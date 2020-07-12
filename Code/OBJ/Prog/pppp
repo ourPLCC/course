@@ -9,6 +9,7 @@ in
   { display# .<c>p(c)
   ; display# .<c>p(@)
   ; display# .<c>p(c)
+  ; display# .<c>p(@)
   ; newline
   }
 

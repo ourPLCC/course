@@ -59,6 +59,7 @@ DISPLAY1 'display#'
 NEWLINE 'newline'
 PUTC 'putc'
 ERROR 'error'
+PERROR 'perror'
 AT '@'
 ATAT '@@'
 DOT '\.'
@@ -70,6 +71,7 @@ LANGLE '<'
 RANGLE '>'
 LLANGLE '!<'
 RRANGLE '!>'
+BANGAT '!@'
 SEMI ';'
 CHR "'."
 STRNG '\"(\\.|[^\"\\])*\"'
@@ -96,6 +98,7 @@ VAR '[A-Za-z\&\?\$][\w\?\&\$]*'
 <exp>:NilExp     ::= NIL
 <exp>:NewExp     ::= NEW <exp>
 <exp>:EnvExp     ::= LANGLE <exp>vExp RANGLE <exp>eExp
+<exp>:BangAtExp  ::= BANGAT
 # send obj msg(rands) is the same as .<obj>msg(rands)
 <exp>:SendExp    ::= SEND <exp>objExp <exp>procExp LPAREN <rands> RPAREN
 # with obj eval exp is the same as <obj>exp
@@ -110,6 +113,7 @@ VAR '[A-Za-z\&\?\$][\w\?\&\$]*'
 # is the same as .<.<.<obj>msg1(rands1)>msg2(rands2)>msg3(rands3) ...
 <exp>:EenvExp    ::= LLANGLE <exp> <mangle> RRANGLE
 <exp>:ErrorExp   ::= ERROR <exp>
+<exp>:PerrorExp  ::= PERROR <STRNG>
 <classDecl>      ::= CLASS <ext> <statics> <fields> <methods> END
 <mangle>         **= RANGLE <exp> LPAREN <rands> RPAREN
 <ext>:Ext1       ::= EXTENDS <exp>

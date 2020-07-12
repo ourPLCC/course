@@ -1,6 +1,6 @@
 define shape =
   class
-    method area = proc() error % shapeless
+    method area = proc() perror "no shape"  % shapeless
   end
 
 define rectangle =
