@@ -1,0 +1,28 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Concurrency} (continued)\exx
+Of course, threads can start other threads,
+limited only by the memory limits of the underlying machine.
+\Large
+\begin{qv}
+let
+  count = 1
+in
+  letrec
+    par = proc(f, g) atomic set count=add1(count)
+    d = proc(t)
+      if t
+      then
+        let
+          t1 = sub1(t)
+        in
+          .par(.d(t1), .d(t1)) % evaluate actuals in parallel
+      else count
+  in
+    .d(16) %% => 65536
+\end{qv}
+\LARGE
+See what happens if you omit the \verb'atomic' modifier
+in the definition of \verb'par'.
+\end{minipage}

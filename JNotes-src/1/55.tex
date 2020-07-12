@@ -1,0 +1,31 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Static Properties of Variables} (continued)\exx
+A {\em block} is a region of code
+introduced by one or more variable declarations
+and continuing to the end of the code
+where this declaration is active.
+In C, C++, and Java, blocks are delimited by matching pairs
+of braces `\verb'{...}''.\\[2ex]
+In some languages, blocks may be {\em nested}, in which case
+variable bindings at outer blocks may be {\em shadowed}
+by bindings in inner blocks.
+Consider, for example the following C++ code fragment:
+\begin{qv}
+{ int x = 3;
+   { int x = 5;
+     cout << x << endl;
+   }
+   cout << x << endl;
+}
+\end{qv}
+This code prints 5 and then 3.\exx
+In block structured languages,
+a variable in an expression is bound
+to the variable with the same name
+in the {\em innermost} block that defines the variable.
+(Note that Java does not allow the same variable to be defined
+both in an outer block and in an inner block.)
+\end{minipage}
+\clearpage

@@ -1,0 +1,24 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf PLCC -- Semantics}\exx
+If PLCC encounters an entry of the form
+\begin{qv}
+ClassName
+%%%
+...
+%%%
+\end{qv}
+where \verb'ClassName' is not one
+of the automatically generated classes,
+then PLCC generates a file \verb'ClassName.java'
+containing the enclosing code.
+This makes it possible for PLCC to generate Java source files
+that can be used to augment the semantics of the language.
+For example, we will use this to implement {\em environments},
+which we describe later.\exx
+In this situation, there is no automatically generated stub file,
+so the Java code between the `\verb'%%%'' lines
+must be a complete Java program, not just a method.
+\end{minipage}
+\clearpage

@@ -1,0 +1,22 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language TYPE1} (continued)\exx
+In order to determine the defined type of a procedure,
+we need to give semantic meaning to the type expressions
+used to declare the types of a procedure's formal parameters
+and return type.
+Specifically, we need to take a type expression
+given by the \verb'<typeExp>' grammar rules
+and evaluate its \verb'Type':
+in other words, the semantics of a type expression is its \verb'Type'.
+This is parallel to taking a value expression
+give by \verb'<exp>' grammar rules
+and evaluating its \verb'Val'.
+Both of these evaluations are examples of semantics.\exx
+For each type expression, we implement a \verb'toType' method
+that returns the corresponding instance of \verb'Type'.
+One thing to observe is that a type expression
+does not involve any variables,
+so there is no need to keep track of a type environment.
+\end{minipage}

@@ -1,0 +1,89 @@
+\documentclass[12pt]{article}
+
+\special{! TeXDict begin /landplus90{true}store end }
+
+\pagestyle{empty}
+%\oddsidemargin -0in       %   Left margin on odd-numbered pages.
+%\evensidemargin -0in        %   Left margin on even-numbered pages.
+\oddsidemargin -0.5in       %   Left margin on odd-numbered pages.
+\evensidemargin -0.5in        %   Left margin on even-numbered pages.
+\textwidth 11in
+\textheight 8.5in
+%\topmargin -.9in
+\topmargin -.75in
+\headheight 0in
+\headsep 0in
+
+
+\usepackage{bm}
+\usepackage{epsfig}
+%%\usepackage[dvips]{graphicx}
+\usepackage{color}
+\usepackage{verbatim}
+\usepackage{verbatimbox}
+\usepackage{framed}
+\usepackage{fancybox}
+\usepackage{environ}
+\usepackage{varwidth}
+\usepackage{t1enc}
+\usepackage{newlfont}
+\usepackage{times}
+
+\newsavebox{\OUTLINE}%
+\savebox{\OUTLINE}[\textwidth]{%
+\psfig{figure=outline.eps}%
+}
+
+\newenvironment{qv}%
+  {\quote
+   \verbatim}%
+  {\endverbatim
+   \endquote}
+
+\newcommand{\LightBox}[1]{%
+\colorbox{light}{\begin{varwidth}{\textwidth}%
+\UseVerbatim{#1}
+\end{varwidth}}%
+}
+
+\newcommand{\NormalBox}[1]{%
+\begin{varwidth}{\textwidth}%
+\UseVerbatim{#1}
+\end{varwidth}%
+}
+ 
+%\pagestyle{headings}%
+%\renewcommand{\rightmark}%
+%{%
+%\hspace*{-0.6in}\raisebox{-.5\textheight}{%
+%\usebox{\OUTLINE}}%
+%}%
+\newcounter{SLIDE}
+\setcounter{SLIDE}{0}
+
+\definecolor{light}{gray}{0.80}
+
+\newcommand{\cfig}[1]{{\center\ \psfig{figure=#1}\ \\}}
+\newcommand{\cfigw}[2]{{\center\ \psfig{figure=#1,width=#2}\ \\}}
+
+\newcommand{\emm}{\hspace*{1.5em}}
+\newcommand{\vb}{$\mid$\ }
+\newcommand{\ks}{$^*$}
+\newcommand{\kp}{$^+$}
+\newcommand{\slidenumber}{%
+	\addtocounter{SLIDE}{1}
+	\hfill\raisebox{-4ex}{%
+	{\theSLIDESET}.{\theSLIDE}%
+	}\vspace{-2ex}\\%
+}
+\newcommand{\exx}{\\[2ex]}
+\newcommand{\vxx}{\vspace{2ex}}
+
+\newlength{\sw}
+\setlength{\sw}{9.5in}
+
+\newenvironment{fminipage}[1]%
+  {\begin{Sbox}\begin{minipage}[t]{#1}}%
+  {\end{minipage}\end{Sbox}\setlength{\fboxsep}{6pt}\fbox{\TheSbox}}
+
+\renewcommand{\thefootnote}{\arabic{footnote}}

@@ -1,0 +1,24 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language TYPE0} (continued)\exx
+A procedure definition in our \verb'TYPE0' language now looks like this,
+for example:
+\Large
+\begin{qv}
+define add2 = proc(x:int):int add1(add1(x))
+\end{qv}
+\LARGE
+This says that the {\em declared type}
+of the formal parameter \verb'x' is \verb'int'
+and that the {\em declared return type} of \verb'add2' is \verb'int',
+so that the {\em defined type} of \verb'add2' is \verb'[int=>int]'.\exx
+Since we have made changes to our syntax,
+our expression parse trees have additional structure,
+but because our \verb'eval' methods are not affected by the type information,
+the \verb'eval' methods in the \verb'code' file for the \verb'SET' language
+are entirely unchanged in the \verb'code' file for \verb'TYPE0'.\exx
+Notice, however,
+that we have not implemented any of our type rules,
+so no type checking is taking place.
+\end{minipage}

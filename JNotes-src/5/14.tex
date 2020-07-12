@@ -1,0 +1,21 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language OBJ} (continued)\exx
+The \verb'makeObject' method is defined
+for both a \verb'StdClass' and an \verb'EnvClass'.
+(For all other \verb'Val' objects,
+\verb'makeObject' throws an exception.)\exx
+In \verb'StdClass',
+\verb'makeObject' first creates an instance of the superclass,
+and then stitches together an environment
+that includes the static bindings,
+the fields, and the methods.
+Three fields are created and initialized automatically:
+\verb'self' is bound to the base object (a deep binding),
+\verb'super' is bound to the instance of the superclass,
+and \verb'this' is bound to this object (a shallow binding).
+The remaining named fields are bound to nil,
+and the methods are bound to closures as in \verb'letrec'.
+The code for \verb'makeObject' is given on the next two slides.
+\end{minipage}

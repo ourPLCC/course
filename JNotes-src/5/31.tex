@@ -1,0 +1,35 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language OBJ} (continued)\exx
+Consider the following \verb'OBJ' program:
+\Large
+\begin{qv}
+define summer =
+  class
+    field sum
+    method init = proc() {set sum = 0 ; self}
+    method add = proc(t) {set sum = +(sum,t) ; self}
+    method show = proc() {display sum ; newline ; self}
+  end
+\end{qv}
+\LARGE
+Here's an example of how this class might be used
+to find and display the sum of the integers 1, 3, 5, and 7:
+\Large
+\begin{qv}
+define o = .<new summer>init()
+.<o>add(1)
+.<o>add(3)
+.<o>add(5)
+.<o>add(7)
+.<o>show()
+\end{qv}
+\LARGE
+Since \verb'init' and \verb'add' both return \verb'self',
+the following ``one-liner'' would accomplish the same thing:
+\Large
+\begin{qv}
+.<.<.<.<.<.<new summer>init()>add(1)>add(3)>add(5)>add(7)>show()
+\end{qv}
+\end{minipage}

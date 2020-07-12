@@ -1,0 +1,22 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Continuations} (continued)\exx
+The code for this \verb'apply' method is in the \verb'ProcVal' class:
+\Large
+\begin{qv}
+    public ACont apply(List<Ref> refList, VCont vcont) {
+        Env env = this.env; // local copy of the captured env
+        List<Token> varList = formals.varList;
+        if (refList.size() != varList.size())
+            throw new RuntimeException(
+                "formal/actual parameter mismatch"
+            );
+        if (varList.size() > 0) {
+            Bindings bindings = new Bindings(varList, refList);
+            env = env.extendEnvRef(bindings);
+        }
+        return new EvalCont(body, env, vcont);
+    }
+\end{qv}
+\end{minipage}

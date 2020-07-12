@@ -1,0 +1,26 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language REF}\exx
+A parameter passing semantics that evaluates actual parameters
+and that binds the formal parameters
+to these actual parameter values
+is called {\em call-by-value}.
+This is what is used in languages \verb'V1' to \verb'V6'.
+In the language \verb'SET',
+where bindings are to references instead of values,
+the actual parameter values are turned
+into {\em new} references,
+and these references are bound to the formal parameters.\exx
+Suppose we {\em want} the behavior illustrated
+by the dashed line in the previous slide.
+That is, if a variable that is passed
+as an actual parameter to procedure,
+the corresponding formal parameter is bound
+to the {\em same} reference as the actual parameter variable,
+not a new reference with a copied value.\exx
+Such a parameter passing semantics is called
+{\em call-by-reference}.
+We explore call-by-reference next,
+along with variants on this theme.
+\end{minipage}

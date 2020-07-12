@@ -1,0 +1,30 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Types}\exx
+Our approach to types is to create a language that is
+{\em strongly static typed}.
+We add syntax to provide type information for values,
+and every program is checked
+for proper type matching prior
+to evaluating the program.
+A {\em static typed} language is one in which type information 
+can be determined at ``compile time'' rather than at runtime.
+In this way, any type errors are found
+before the program is evaluated.\exx
+Our typed language is based on the \verb'SET' language.
+In the \verb'SET' language,
+only the integer value \verb'0' is considered false,
+and all other values -- including \verb'ProcVal's -- are true
+when used in conditional expressions.
+The Java programming language, which is staticaly typed,
+requires that the test expression
+in an \verb'if' statement evaluate to a boolean.
+We follow this example in our typed language
+by introducing {\em primitive types}, \verb'int' and \verb'bool',
+corresponding to integer and boolean expressed values, respectively.
+To implement this, we add a new \verb'BoolVal' subclass
+of the \verb'Val' class.
+With this addition, we can require that the test expression
+in an \verb'if' expression be a boolean.\exx
+\end{minipage}

@@ -1,0 +1,31 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language TYPE1} (continued)\exx
+The code on the previous slide
+implements a top-level definition,
+binding a value to an identifier
+in the initial environment.
+According to our type rules,
+if a value binding already exists,
+it is flagged as an error.
+If a declared type binding exists without a value binding,
+the expression type is checked for conformance
+with the declared type.
+If a declared type binding does not exist,
+the top-level type environment is extended
+to include the type binding.
+In case there are no errors,
+the top-level value environment is extended
+to include the value binding.\exx
+Armed with both \verb'declare' and \verb'define',
+we can now implement our \verb'odd?' and \verb'even?' procedures:
+\Large
+\begin{qv}
+declare odd? : [int=>bool]
+define even? =
+    proc(t:int):bool if zero?(t) then true else .odd?(sub1(t))
+define odd? =
+    proc(t:int):bool if zero?(t) then false else .even?(sub1(t))
+\end{qv}
+\end{minipage}

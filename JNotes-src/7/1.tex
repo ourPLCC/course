@@ -1,0 +1,19 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Continuations}\exx
+All of our non-side-effecting languages (\verb'V1' through \verb'V6')
+have relied on recursion to implement iterative behavior.
+See, for example, the procedure \verb'updown'
+used to define the \verb'pos?' procedure in one of our assignments.
+In our Java language implementations,
+any \verb'eval' call requires setting up a Java stack frame
+to hold the arguments to \verb'eval'.
+If evaluating the arguments requires additional calls to \verb'eval',
+additional stack frames are required.
+So if a procedure calls itself recursively,
+its underlying Java \verb'eval' methods call themselves recursively, 
+and it is possible that stack frames can build up
+to exhaust available stack memory.
+Even relatively small programs can result in stack overflow.\exx
+\end{minipage}

@@ -1,0 +1,19 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Continuations} (continued)\exx
+In the \verb'apply(Val val)' method in the AppCont class,
+\verb'val' must evaluate to a \verb'ProcVal'.
+Notice that the \verb'evalRandsRef' method
+produces a list of references, not values.
+Once the list of references to actual parameters is built,
+it is passed to the \verb'apply' method
+of the \verb'procVal' object,
+along with the \verb'vcont' continution.
+This \verb'apply' method binds the references
+to the procedure's formal parameters,
+evaluates the procedure body
+in the appropriate extended environment,
+and passes this value to the \verb'vcont' continuation
+for further disposition.\exx
+\end{minipage}

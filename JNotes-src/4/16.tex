@@ -1,0 +1,40 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language TYPE1} (continued)\exx
+\Large
+The definitions of the classes relating to type environments
+is given in the \verb'tenv' file.\exx
+Since most of our type checking rules relate to type equality,
+we must define what it means for two types to be equal.
+There are only three basic types,
+and for each of them we define a \verb'checkEquals' method.
+This \verb'void' method silently returns
+if the types are the same,
+otherwise it calls the static \verb'typeMismatch' method
+in the \verb'Type' class;
+this method throws a runtime exception
+with an appropriate message.\exx
+The two primitive types are simple.  For the \verb'BoolType' class,
+the \verb'checkEquals' method is defined as follows:
+\large
+\begin{qv}
+public void checkEquals(Type t) {
+    t.checkBoolType(this);
+}
+
+public void checkBoolType(BoolType t) {
+    // if we get here, this must be a BoolType
+}
+\end{qv}
+\Large
+The default \verb'checkBoolType' method in the \verb'Type' class --
+defined for all other types except for \verb'BoolType' --
+throws a type mismatch exception.\exx
+A similar definition works for the \verb'IntType'.\exx
+We are left to define \verb'checkEquals' for the \verb'ProcType' class.
+This is easy: two \verb'ProcType' objects are equal
+if they both have the same number of formal parameter types
+and these formal parameter types are pairwise equal (in the proper order),
+and if they both have the same return type.
+\end{minipage}

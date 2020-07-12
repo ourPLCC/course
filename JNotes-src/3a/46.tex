@@ -1,0 +1,23 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Aliasing}\exx
+Side-effecting languages that use call-by-reference
+suffer from another danger.
+Consider, for example, the following program using the REF language semantics:
+\begin{qv}
+let
+  addplus1 = proc(x,y) {set x = add1(x) ; +(x,y)}
+in
+  .addplus1(3,3)
+\end{qv}
+It's clear that this program returns 7.
+But what about the following program?
+\begin{qv}
+let
+  a = 3
+  addplus1 = proc(x,y) {set x = add1(x) ; +(x,y)}
+in
+  .addplus1(a,a)
+\end{qv}
+\end{minipage}

@@ -1,0 +1,27 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Parsing (continued):}\exx
+\emm{\LightBox{\MYlon}}\exx
+Next we attempt a parse
+of `\verb'( 14 ( 6 )'' using this grammar.
+As before, we start with the first nonterminal {\tt <lon>}
+as the sentential form:\exx
+\emm%
+\begin{tabular}{@{$\Rightarrow$\ }l@{\hspace{2em}}l}
+\multicolumn{1}{l}{\bf sentential form} & {\bf unmatched sentence} \\
+\multicolumn{1}{l}{\tt {\bf <lon>}} & {\tt ( 14 ( 6 )}\\
+{\tt {\bf LPAREN} <nums> RPAREN} & {\tt ( 14 ( 6 )}\\
+{\tt ( {\bf <nums>} RPAREN} & {\tt 14 ( 6 )}\\
+{\tt ( {\bf NUM} <nums> RPAREN} &  {\tt 14 ( 6 )}\\
+{\tt ( 14 {\bf <nums>} RPAREN} &  {\tt ( 6 )} {\em -- try first <nums> rule ...}\\
+{\tt ( 14 {\bf NUM} <nums> RPAREN} & ?? {\tt NUM} doesn't match {\tt "("}\\
+{\tt ( 14 {\bf <nums>} RPAREN} &  {\tt ( 6 )} {\em -- try second <nums> rule ...}\\
+{\tt ( 14 {\bf RPAREN}} & ?? {\tt RPAREN} doesn't match {\tt "("}\\
+{\em failure!} & \\
+\end{tabular}\exx
+We can conclude that the string `\verb'( 14 ( 6 )'' does not conform
+to the grammar specifications, so it is {\em not} a ``list of numbers''.
+
+\end{minipage}
+\clearpage

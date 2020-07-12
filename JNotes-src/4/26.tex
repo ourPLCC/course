@@ -1,0 +1,33 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language TYPE1} (continued)\exx
+\Large
+For example, a type expression of the form \verb'[int=>bool]'
+would evaluate to a \verb'ProcType',
+and a type expression of the form \verb'int' would evaluate
+to a \verb'IntType'.\exx
+Here's the definition of \verb'toType' for the \verb'PrimTypeExp' class
+(representing either an \verb'int' or a \verb'bool') in the code file:
+\begin{qv}
+PrimTypeExp
+%%%
+    public Type toType() {
+        return primType.toType(); // intType or boolType
+    }
+%%%
+\end{qv}
+For the \verb'BoolPrimType' class,
+which corresponds to grammar rules
+for the \verb'true' and \verb'false' tokens,
+we simply return \verb'boolType'.
+\begin{qv}
+BoolPrimType
+%%%
+    public Type toType() {
+        return Type.boolType; // a singleton in the Type class
+    }
+%%%
+\end{qv}
+Simlar remarks apply to \verb'IntPrimType'.
+\end{minipage}

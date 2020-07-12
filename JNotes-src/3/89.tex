@@ -1,0 +1,23 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language V5} (continued)\exx
+The \verb'letrec' construct allows us
+to define {\em mutually recursive procedures} --
+two or more procedures that call each other in a recursive fashion.
+Here's a classic example:
+\begin{qv}
+letrec
+  even? = proc(x) if zero?(x) then 1 else .odd?(sub1(x))
+  odd? = proc(x) if zero?(x) then 0 else .even?(sub1(x))
+in
+  .even?(11) % => 0 (false)
+\end{qv}
+[{\bf Exercise} (not to hand in): See if you can do this in language V4
+without \verb'letrec'.]\exx
+Notice that we have used \verb'?'
+in the variable names for the \verb'even?' and \verb'odd?' procedures.
+This is an additional feature we have added
+to languages \verb'V5' and beyond.
+
+\end{minipage}

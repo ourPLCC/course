@@ -1,0 +1,39 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Continuations} (continued)\exx
+A \verb'letrec' simply creates a new environment
+with bindings of identifiers to \verb'ProcVal's.
+Moreover, evaluating a \verb'proc'
+(don't confuse this with {\em applying} a \verb'proc')
+requires no more than gathering together
+the formal parameter list, the procedure body expression,
+and the captured environment.
+Thus the environment in which we evaluate the \verb'letrec' body
+is obtained by calling the \verb'addBindings' method
+in the \verb'LetrecDecls' class,
+unchanged from the \verb'REF' language.
+Recall that \verb'addBindings' returns an environment
+that extends the given environment
+by binding the LHS variables
+to (references to) their corresponding RHS \verb'ProcVal's.
+The \verb'eval' method then returns a \verb'EvalCont' continuation
+that evaluates the body of the \verb'letrec'
+in this extended environment
+and passes its value to the \verb'vcont' continuation.
+Here is the code for \verb'eval' in the \verb'LetrecExp' class:
+\Large
+\begin{qv}
+LetrecExp
+%%%
+    public ACont eval(Env env, VCont vcont) {
+        Env nenv = letrecDecls.addBindings(env);
+        return new EvalCont(exp, nenv, vcont);
+    }
+%%%
+\end{qv}
+\LARGE
+Notice that we don't call the \verb'vcont' \verb'apply' method directly here,
+since we expect that the \verb'EvalCont' continuation will ultimately do so
+when it jumps onto the trampoline.
+\end{minipage}

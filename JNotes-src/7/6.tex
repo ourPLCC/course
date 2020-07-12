@@ -1,0 +1,19 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Continuations} (continued)\exx
+It may appear that we have simply added recursive calls to \verb'apply'
+to the already recursive calls to \verb'eval'.
+The difference is that once we call \verb'apply',
+we do not need to preserve the current execution context.
+Languages that implement tail call elimination (look this up!)
+do this explicitly: see Lisp, Scheme, Haskell, and Scala.\exx
+If our implementation (defining) language supported tail call elimination,
+we wouldn't need to worry about this.
+In Java it's not as simple,
+since Java does not do tail call elimination --
+but we can accomplish essentially the same thing
+through a technique called {\em trampolining}.
+This technique de-couples the recursive calls to \verb'apply'
+by looping instead.  The next slide shows how this works:
+\end{minipage}

@@ -1,0 +1,29 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language TYPE1} (continued)\exx
+For a \verb'ProcTypeExp', we\
+\begin{enumerate}
+\item determine the types (using the \verb'toType' method)
+of the (formal parameter) type expressions
+that appear to the left of the `\verb'=>'' token
+and insert them into a \verb'List<Type>' object,
+\item determine the the type of the (return) type expresion that appears
+to the right of the `\verb'=>'' token, and then
+\item
+construct the appropriate \verb'ProcType' object.
+\end{enumerate}
+\Large
+\begin{qv}
+ProcTypeExp
+%%%
+    public Type toType() {
+        List<Type> paramTypeList = new ArrayList<Type>();
+        for (TypeExp e : typeExps.typeExpList)
+            paramTypeList.add(e.toType());
+        Type returnType = typeExp.toType();
+        return new ProcType(paramTypeList, returnType);
+    }
+%%%
+\end{qv}
+\end{minipage}

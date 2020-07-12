@@ -1,0 +1,27 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf PLCC -- Miscellanea}\exx
+Names bound to a boolean value can be set to True
+on the command line as in the following example:
+\begin{qv}
+... --nowrite ...
+\end{qv}
+or at the beginning of the specification file:
+\begin{qv}
+!nowrite
+\end{qv}
+Names bound to a boolean value can be set to False
+on the command line as in the following example:
+\begin{qv}
+... --LL1= ...
+\end{qv}
+or at the top of the specification file:
+\begin{qv}
+!LL1=
+\end{qv}
+Bindings given in the specification file always override
+bindings given on the command line.\exx
+See the \verb'plcc.py' program for details.
+\end{minipage}
+\clearpage

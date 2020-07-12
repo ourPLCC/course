@@ -1,0 +1,42 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Continuations} (continued)\exx
+As noted before,
+the continuation-based \verb'eval' method in the \verb'Exp' class
+has the following signature:
+\Large
+\begin{qv}
+public abstract ACont eval(Env env, VCont vcont);
+\end{qv}
+\LARGE
+Let's consider the easiest subclasses of \verb'Exp',
+namely \verb'LitExp' and \verb'VarExp'.
+The \verb'eval' code for the \verb'LitExp' class is simple:
+convert the literal to an \verb'IntVal' value
+and return a \verb'ValCont' continuation
+that passes the value to the \verb'vcont' continuation.
+Similarly, for the \verb'VarExp' class,
+look up the variable in the given environment
+to get the value it is bound to,
+and return a \verb'ValCont' continuation
+that passes this value to the \verb'vcont' continuation.
+Here is the code for both:
+\Large
+\begin{qv}
+LitExp
+%%%
+    public ACont eval(Env env, VCont vcont) {
+        return new ValCont(new IntVal(lit.toString()), vcont);
+    }
+%%%
+
+VarExp
+%%%
+    public ACont eval(Env env, VCont vcont) {
+        return new ValCont(env.applyEnv(var.toString()), vcont);
+    }
+%%%
+\end{qv}
+\Large
+\end{minipage}

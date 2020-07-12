@@ -1,0 +1,39 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Tokens} (continued)\exx
+When running \verb'plcc', you need to give the name
+of the language specification file on the command line.
+For example:
+\begin{qv}
+plcc grammar
+\end{qv}
+The \verb'grammar' file is a text file
+that defines the tokens of the language
+using skip specifications and token specifications
+as we have illustrated earlier.
+The filename \verb'grammar' is typically used,
+but you can name your file anything you wish,
+so that both of the following examples are acceptable:
+\begin{qv}
+plcc mygrammar
+plcc foo
+\end{qv}
+The language specification file can contain
+comments starting with a '\#' character
+and continuing to the end of the line.
+These comments are ignored by \verb'plcc'.\exx
+The \verb'plccmk' script runs \verb'plcc'
+on a language specification file
+whose name must be \verb'grammar'.
+In addition to creating a \verb'Java' subdirectory
+and depositing the \verb'Scan.java' program in that directory
+(along with a few other necessary Java support files),
+\verb'plccmk' compiles the Java programs in that directory.
+Initially, our language specification file contains only
+token specification rules (as we are doing here).
+Later, we will use this file to define language syntax and semantics.
+For now, we concentrate only on token specifications.
+
+\end{minipage}
+\clearpage

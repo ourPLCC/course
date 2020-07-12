@@ -1,0 +1,40 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language TYPE0} (continued)\exx
+\Large
+We can add a number of new primitives applied to integer arguments
+that return \verb'BoolVal' values,
+such as the following, with obvious meanings:
+\large
+\begin{qv}
+<?
+<=?
+>?
+>=?
+=?
+<>?
+\end{qv}
+\Large
+The purpose of the \verb'?' at the end of these
+is to remind you that they are testing something
+and that they return boolean values
+(they are {\em predicates}).
+We also change the value returned by the \verb'zero?' primitive
+to a \verb'BoolVal'.\exx
+The following expressions evaluate as indicated:
+\large
+\begin{qv}
+<?(3,3)
+  % => false (actually, a false BoolVal)
+<=?(3,3)
+  % => true
+<>?(x,y)
+  % => depends on the current bindings of x and y
+=?(proc(t) t, proc(u) u)
+  % => exception -- can't apply to procedures
+if 1 then 2 else 3
+  % => exception -- 1 is not a boolean
+\end{qv}
+\Large
+\end{minipage}

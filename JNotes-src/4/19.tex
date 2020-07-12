@@ -1,0 +1,43 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language TYPE1} (continued)\exx
+\Large
+Although primitives are not procedures
+(you can't bind a variable to \verb'add1', for example),
+they do have specific type behaviors
+that can be described in terms of procedure types.
+The \verb'+' primitive behaves like a \verb'[int,int=>int]',
+and the \verb'add1' primitive behaves like a \verb'[int=>int]'.
+Each of the primitives are associated with a \verb'ProcType'
+that is used for type checking.
+We define these types in the \verb'Type' class
+as static instance variables.\exx
+Rather than building each of these types by hand with constructors,
+we define and use a special static method \verb'compile'
+in the \verb'Type' class that takes a compact string representation
+of a procedure type such as \verb'[int,int=>int]'
+(in this case, the string is \verb'"ii>i"')
+and returns a \verb'ProcType' object
+with the proper formal parameter types and result type.
+You can see how the \verb'compile' method is used
+in the following example definitions
+and their corresponding interpretations:
+\begin{qv}
+public static Type ii_i = compile("ii>i"); // [int,int=>int]
+public static Type i_i  = compile("i>i");  // [int=>int]
+public static Type ii_b = compile("ii>b"); // [int,int=>bool]
+public static Type bb_b = compile("bb>b"); // [bool,bool=>bool]
+\end{qv}
+The \verb'evalType' method for the \verb'PrimappExp' class
+asks the primitive object what its type is,
+and the object returns the appropriate type
+from among the ones compiled in the \verb'Type' class.
+For example, in the \verb'AddPrim' class,
+we define:
+\begin{qv}
+    public Type toType() {
+        return Type.ii_i;
+    }
+\end{qv}
+\end{minipage}

@@ -1,0 +1,25 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language TYPE1} (continued)\exx
+We are now ready to define \verb'evalType' in the \verb'Proc' class.
+\Large
+\begin{qv}
+public Type evalType(TypeEnv tenv) {
+    // retrieve the declared return type of the proc
+    Type declaredReturnType = typeExp.toType();
+    // bind the formal parameters to their declared types
+    TypeBindings typeBindings = formals.declaredTypeBindings();
+    // extend the tenv by the formal param type bindings
+    TypeEnv ntenv = tenv.extendTypeEnv(typeBindings);
+    // evaluate the type of the body using this extended
+    // type environment
+    Type expType = exp.evalType(ntenv);
+    // and check that the declared return type matches the body type
+    Type.checkEquals(declaredReturnType, expType);
+    // finally build the ProcType
+    List<Type> formalTypeList = formals.formalTypeList();
+    return new ProcType(formalTypeList, declaredReturnType);
+}
+\end{qv}
+\end{minipage}

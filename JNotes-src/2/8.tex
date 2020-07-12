@@ -1,0 +1,25 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Environments} (continued)\exx
+A nonempty environment is an instance of the class \verb'EnvNode'.
+An \verb'EnvNode' object has two fields:
+a \verb'Bindings' object named \verb'bindings' that holds the local bindings
+and an \verb'Env' object named \verb'env'
+that is the next (enclosing, in the sense of static scope rules)
+environment in the list.
+\begin{qv}
+public class EnvNode extends Env {
+
+    public Bindings bindings; // list of local bindings
+    public Env env;           // enclosing scope
+    
+    // create an environment 
+    public EnvNode(Bindings bindings, Env env) {
+        this.bindings = bindings;
+        this.env = env;
+    }
+
+}
+\end{qv}
+\end{minipage}

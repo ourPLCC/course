@@ -1,0 +1,25 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language SET} (continued)
+\begin{qv}
+let
+  x = 3
+  p = proc(t) set t = add1(t)
+in
+  { .p(x) ; x }
+\end{qv}
+The following illustration shows
+\begin{itemize}
+\item
+the environment immediately before
+the procedure application \verb'.p(x)' --
+in particular, the binding of \verb'x' to a reference to the value 3,
+\item
+and the environment during the procedure application \verb'.p(x)',
+binding the formal parameter \verb't'
+to a {\em new} reference to the value 3,
+not to \verb'x''s reference (which would be the dashed line).
+\end{itemize}
+\cfigw{set.eps}{7in}
+\end{minipage}

@@ -1,0 +1,22 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Types} (continued)\exx
+A {\em type} is one of the two primitive types
+or a procedure type.
+A {\em type expression} is a syntactic category
+in our typed language that describes a type:\exx
+\Large
+\begin{tabular}{l@{}l}
+\verb'<typeExp>:PrimTypeExp' & \verb'::= <primType>'\\
+    & \VerbBox{\fbox}{\verb'PrimTypeExp(PrimType primType)'}\\
+\verb'<typeExp>:ProcTypeExp' & \verb'::= LBRACK <typeExps> RARROW <typeExp> RBRACK' \\
+    & \VerbBox{\fbox}{\verb'ProcTypeExp(TypeExps typeExps, TypeExp typeExp)'}\\
+\verb'<primType>:IntPrimType' & \verb'::= INT'\\
+    & \VerbBox{\fbox}{\verb'IntPrimType()'}\\
+\verb'<primType>:BoolPrimType' & \verb'::= BOOL'\\
+    & \VerbBox{\fbox}{\verb'BoolPrimType()'}\\
+\verb'<typeExps>' & \verb'**= <typeExp> +COMMA'\\
+    & \VerbBox{\fbox}{\verb'TypeExps(List<TypeExp> typeExpList)'}\\
+\end{tabular}\exx
+\end{minipage}

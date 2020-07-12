@@ -1,0 +1,38 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Exception Handling} (continued)\exx
+Consider the following example:
+\Large
+\begin{qv}
+define p = proc() throw eee(5)
+.p() % no binding for eee
+catch
+    eee = handler(x) add1(x)
+in
+    .p() % evaluates to 6
+.p() % still no binding for eee
+\end{qv}
+\LARGE
+When \verb'.p()' is evaluated just after the definition of \verb'p',
+there is no exception binding for the identifier \verb'eee'.
+This because the procedure \verb'p' captures
+the top-level exception environment
+(which is empty)
+and there is no binding for \verb'eee' in this exception environment.\exx
+The \verb'catch' expression, on the other hand, evaluates to 6.
+Within the \verb'catch' expression,
+the exception handler identifier \verb'eee' is bound
+to a handler that returns one plus its actual parameter value.
+This handler is added to the exception environment
+of the \verb'catch' expression,
+so when the \verb'p' procedure is called
+in this \verb'catch' expression,
+the \verb'throw eee(5)' can see the binding
+for the identifier \verb'eee'
+and can thus apply the handler with an actual parameter value of 5.
+A \verb'throw' identifier is looked up
+using dyanmic scope rules instead of static scope rules;
+this behavior is almost identical
+to macro invocation as compared to procedure invocation.
+\end{minipage}

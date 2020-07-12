@@ -1,0 +1,27 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language PROP} (continued)\exx
+If a variable \verb'z' [for example] is bound to a property
+whose \verb'set' expression has no side-effects [such as \verb'nil'],
+an expression such as \verb'set z = ...' does not modify anything --
+including \verb'z'.
+\Large
+\begin{qv}
+define c =
+  class
+    field x
+    method init = proc(x) {set <this>x = x ; self}
+    property y = prop x:set x=$
+    property z = prop x:nil
+  end
+define o = .<new c>init(3)
+<o>[x,y,z]   % [3,3,3]
+<o>set x = 5
+<o>[x,y,z]   % [5,5,5]
+<o>set y = 11
+<o>[x,y,z]   % [11,11,11]
+<o>set z = 42
+<o>[x,y,z]   % [11,11,11]
+\end{qv}
+\end{minipage}

@@ -1,0 +1,29 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language OBJ} (continued)\exx
+\Large
+\emm\begin{tabular}{ll}
+\verb'<exp>:EenvExp' & \verb'::= LLANGLE <exp> <mangle> RRANGLE'\\
+    & \VerbBox{\fbox}{\verb'EenvExp(Exp exp, Mangle mangle)'}\\
+\verb'<mangle>:Mangle' & \verb'**= RANGLE <exp> LPAREN <rands> RPAREN' \\
+    & \VerbBox{\fbox}{\verb'Mangle(List<Exp> expList, List<Rands> randsList)'}\\
+\end{tabular}\exx
+\LARGE
+Here is the implementation of how to evaluate an \verb'EenvExp' expression.
+\Large
+\begin{qv}
+EenvExp
+%%%
+    public Val eval(Env env) {
+        Val v = exp.eval(env);      // the environment object
+        return mangle.eval(v, env);
+    }
+%%%
+\end{qv}
+\LARGE
+The expression \verb'exp' is evaluated in the current environment.
+Its value \verb'v', along with the current environment,
+is passed to the \verb'mangle' object,
+which then evaluates the subsequent procedure applications.\exx
+\end{minipage}

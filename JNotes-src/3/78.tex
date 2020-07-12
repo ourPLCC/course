@@ -1,0 +1,41 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language V4} (continued)\exx
+In general, a \verb'let' construct in the form
+\Large
+\begin{qv}
+let
+  v1 = e1
+  v2 = e2
+  ...
+in
+  e
+\end{qv}
+\LARGE
+can be re-written in the form
+\Large
+\begin{qv}
+.proc(v1, v2, ...) e (e1, e2, ...)
+\end{qv}
+\LARGE
+So why not ditch the \verb'let' construct?
+The reason is simple:
+it's easier to think about a program with a \verb'let' in it
+than one without.
+The \verb'let' construct aligns
+the LHS variables \verb'v1', \verb'v2', {\em etc.}
+physically close to their corresponding RHS expressions
+\verb'e1', \verb'e2', {\em etc.},
+so it's cognitively easy for the reader
+to see how these LHS variables become bound
+to the values of their RHS expressions.
+In the equivalent procedure application,
+the formal parameters \verb'v1', \verb'v2', {\em etc.}
+are physically distant from their corresponding RHS expressions,
+making it difficult to visualize these bindings.\exx
+This is an example of {\em syntactic sugar}:
+a syntactic and semantic construct
+that has another way of expressing it in the language
+but that programmers find easier to read, understand, and use.
+\end{minipage}

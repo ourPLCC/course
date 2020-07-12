@@ -1,0 +1,37 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language V3} (continued)\exx
+The languages we have discussed do not allow mutation of variables,
+although you might be tempted to think that this \verb'V3' program
+is doing something akin to mutation:
+\Large
+\begin{qv}
+let
+  x = 3
+in
+  let
+    x = add1(x)
+  in
+    +(x, x)
+\end{qv}
+\LARGE
+This program evaluates to \verb'8' (which is not surprising),
+but in the scope of the outer \verb'let',
+the variable \verb'x' is still bound to \verb'3'.
+To see this, consider the following variant of this program:
+\Large
+\begin{qv}
+let
+  x = 3
+in
+  +(let x = add1(x) in x, x)
+\end{qv}
+\LARGE
+The last occurrence of \verb'x' in this expression evaluates to \verb'3'.
+This is because the variable \verb'x' in the inner \verb'let'
+has scope only through the inner \verb'let' expression body.
+Outside of the inner \verb'let' expression body,
+the binding of \verb'x' to \verb'3' is unchanged.
+Thus the entire expression evaluates to \verb'7'.
+\end{minipage}

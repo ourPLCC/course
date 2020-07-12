@@ -1,0 +1,21 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language TYPE1} (continued)\exx
+We take the second approach, with some restrictions.\exx
+First, we create a new top-level operator \verb'declare'
+that has a syntax similar to how we declare
+the type of a formal parameter in a procedure.
+This allows us to bind a type to an identifier
+without actually creating a value binding for the identifier.\exx
+Pascal provides such a mechanism with {\em forward} declarations,
+as does C/C++ with procedure declarations.
+Java does not suffer from this problem,
+in part because the order of declaration of fields and methods
+is not significant.\exx
+A declaration has the following concrete and abstract syntax:\exx
+\emm\Large\begin{tabular}{ll}
+\verb'<program>:Declare' & \verb'::= DECLARE <VAR> COLON <typeExp>'\\
+    & \VerbBox{\fbox}{\verb'Declare(Token var, TypeExp typeExp)'}\\
+\end{tabular}\exx
+\end{minipage}

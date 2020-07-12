@@ -1,0 +1,20 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language ARRAY}\exx
+Here's a recursive version of \verb'array2list':
+\begin{qv}
+% turn an array into a list
+define array2list = proc(a)
+  let
+    alen = len(a)
+  in
+    letrec
+      loop = proc(i)
+        if <?(i, alen)
+        then addFirst(\a[i], .loop(add1(i)))
+        else []
+    in
+      .loop(0)
+\end{qv}
+\end{minipage}

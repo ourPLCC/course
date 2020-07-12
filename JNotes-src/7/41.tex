@@ -1,0 +1,27 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Concurrency}\exx
+Up to now, we have evaluated the expressions
+in a \verb'Rands' object in the order
+in which they appear in the expression list,
+and we have built the corresponding list of values (or references)
+to appear in the same order.\exx
+In the presence of concurrency,
+the order in which the expression evaluations complete
+is almost certainly not the same
+as the order in which the expressions appear in the expression list.\exx
+To maintain the value order,
+we create an array of value slots,
+with one slot per expression.
+For each expression in the expression list,
+we create a continuation that knows about the expression,
+its evaluation environment,
+and the slot where the expression value should go.
+We can then dispatch all of these continuations
+to a mechanism that evaluates them in parallel
+(or at least simulate parallel evaluation);
+once each expression evaluation completes,
+its continuation deposits the resulting value
+in the corresponding value slot.\exx
+\end{minipage}

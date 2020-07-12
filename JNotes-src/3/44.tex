@@ -1,0 +1,24 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language V3} (continued)\exx
+In the first example, a new environment is created
+binding \verb'x' to 3 and \verb'y' to 8,
+so that the \verb'+(x,y)' expression evaluates to 11.
+Notice that this binding shadows the initial environment's binding
+of \verb'x' to 10.
+\begin{qv}
+let x = 3 y = 8
+in +(x,y)
+  % => 11
+\end{qv}
+In the second example, a new environment is created
+binding \verb'z' to 3 and \verb'y' to 8.
+The initial environment has \verb'x' bound to 10,
+so that the \verb'+(x,y)' expression evaluates to 18.
+\begin{qv}
+let z = 3 y = 8
+in +(x,y)
+  % => 18
+\end{qv}
+\end{minipage}

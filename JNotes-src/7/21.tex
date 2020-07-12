@@ -1,0 +1,31 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Continuations} (continued)\exx
+To evaluate a primitive application in the \verb'PrimappExp' class,
+we must evaluate the operand expressions
+and then send the arguments to the primitive to evaluate,
+passing the resulting value to the saved continuation.\exx
+We can use the \verb'evalRands' method defined
+in the \verb'Rands' class to do the work
+of evaluating each of the operand expressions.
+This method returns a \verb'List' of values.
+Since the \verb'apply' method
+for each primitive takes an array of values,
+we need to convert the \verb'List' into an array
+before calling \verb'apply'.
+\Large
+\begin{qv}
+PrimappExp
+%%%
+    public ACont eval(Env env, VCont vcont) {
+        List<Val> valList = rands.evalRands(env); 
+        int size = valList.size();
+        Val [] valArray = valList.toArray(new Val[size]);
+        Val val = prim.apply(valArray);
+        return new ValCont(val, vcont);
+    }
+%%%
+\end{qv}
+
+\end{minipage}

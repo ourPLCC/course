@@ -1,0 +1,34 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf BNF: (continued)}\exx
+\emm{\Large\LightBox{\MYlon}}\exx
+
+Every BNF formula has the form
+
+\vspace{1ex}
+\emm%
+\begin{tabular}{@{}l@{\tt ~::=~}l}
+{\em LHS} & {\em RHS} \\
+\end{tabular}
+
+\vspace{1ex}
+The {\em LHS} (Left-Hand Side) of a BNF formula always has the form
+\verb'<nonterm-symbol>' where \verb'nonterm-symbol' is an identifier,
+normally written in lowercase.
+A \verb'<nonterm-symbol>' expression is called a {\em nonterminal}.
+In the example above,
+the nonterminals are \verb'<lon>' and \verb'<nums>'.\exx
+The {\em RHS} (Right-Hand Side) of a BNF formula
+is a (possibly empty) ordered list
+of token names and nonterminals.\exx
+{\bf Notes:} The term {\em syntactic category} is sometimes used instead
+of the term {\em nonterminal},
+and the term {\em terminal} is sometimes used instead of {\em token name}.
+Instead of using a token name such as \verb'LPAREN',
+some BNF formulas just use
+the corresponding actual character string such as `\verb'(''.
+In the examples on page 1.2,
+you can see that we have also ignored whitespace.
+\end{minipage}
+\clearpage

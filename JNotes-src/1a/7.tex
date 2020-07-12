@@ -1,0 +1,34 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf PLCC -- Grammar}\exx
+The second section of a PLCC language specification
+consists of grammar rules in the style of Backus-Naur Form (BNF),
+as described in Slide Set 1.
+Recall that a BNF grammar rule has the following form:
+\begin{qv}
+LHS ::= RHS
+\end{qv}
+where LHS (the {\em Left Hand Side}) is a nonterminal
+and the RHS (the {\em Right Hand Side}) is a sequence
+of nonterminals and terminals.
+The individual parts of a PLCC grammar rule,
+including the `\verb'::='' part,
+are separated by whitespace.\exx
+Nonterminals in PLCC are identifiers enclosed
+between angle brackets `\verb'<'' and `\verb'>''.
+The identifier must begin with a lowercase letter
+and can consist of zero or more additional letters, digits, or underscores.
+Identifiers that match Java reserved words should be avoided.\exx
+Terminals in PLCC must begin with an uppercase letter
+and can consist of zero or more additional uppercase letters, digits,
+or underscores.
+A terminal must appear as the name of a token
+in the lexical specification section.\exx
+{\bf Every grammar rule is associated
+with a unique Java class with a class name derived
+from the LHS of the grammar rule by converting its first character
+to uppercase.}
+Class names that match standard Java class names should be avoided.
+\end{minipage}
+\clearpage

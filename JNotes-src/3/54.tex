@@ -1,0 +1,38 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language V4} (continued)\exx
+Now consider the following examples, all of which evaluate to 5:
+\large
+\begin{qv}
+let
+  app = proc(f,x) .f(x)
+  add2 = proc(y) add1(add1(y))
+in
+  .app(add2,3)
+
+let
+  app = proc(f,x) .f(x)
+in
+  .app(proc(y) add1(add1(y)), 3)
+
+.proc(f,x) .f(x) (proc(y) add1(add1(y)), 3)
+\end{qv}
+\LARGE
+In the first example,
+observe that we can pass a procedure (in this case \verb'add2')
+as a parameter to another procedure.
+This \verb'app' procedure takes two parameters
+and returns the result of applying the first actual parameter
+to the second.
+Of course, the first parameter had better be bound to a procedure
+for this to work.
+(If it isn't, an attempt to apply it throws an exception.)\exx
+In the second example,
+we have eliminated the identifier \verb'add2'
+and instead simply replaced \verb'add2' in the application \verb'.app(add2,3)'
+with the nameless procedure \verb'proc(y) add1(add1(y))'
+that used to be called \verb'add2'.\exx
+In the third example,
+we have even eliminated the identifier \verb'app'.
+\end{minipage}

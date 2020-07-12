@@ -1,0 +1,39 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language V0} (continued)\exx
+Each of the \verb'<prim>' rules
+has an RHS that corresponds to a \verb'Token'
+that is eaten by the parser.
+Just as we re-inserted the \verb'LPAREN' and \verb'RPAREN' tokens
+when we defined the \verb'toString' method
+in the \verb'PrimappExp' class,
+each of the \verb'<prim>' classes simply returns
+the corresponding string token:
+
+\large
+\begin{qv}
+AddPrim
+%%%
+    public String toString() {
+        return "+";
+    }
+%%%
+
+SubPrim
+%%%
+    public String toString() {
+        return "-";
+    }
+%%%
+
+Add1Prim
+%%%
+    public String toString() {
+        return "add1";
+    }
+%%%
+\end{qv}
+\LARGE
+The \verb'Sub1Prim' code is similar and has been omitted.
+\end{minipage}

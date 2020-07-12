@@ -1,0 +1,29 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Types} (continued)\exx
+Our static type checking implementation also detects errors
+where an identifier is referred to in a particular expression
+without appearing on the LHS of an enclosing \verb'let' or \verb'letrec'
+or in a top-level \verb'define' --
+{\em i.e.}, if the identifier occurs free in the expresion.
+It also detects errors where the same identifier appears twice
+on the LHS of a \verb'let' or \verb'letrec'
+or if the same identifier appears twice
+in the formal parameter list of a \verb'proc'.\exx
+A variable is in {\em declaration position} if it occurs
+on the LHS of a \verb'define', \verb'let', or \verb'letrec' definition,
+or if it appears as a formal parameter in a procedure definition.
+These occurrences determine the {\em defined type} of the variable
+according to the following rules:
+\begin{itemize}
+\item The defined type of a variable appearing in declaration position
+      in a \verb'define', \verb'let', or \verb'letrec'
+      is the type of its RHS expression.
+\item The defined type of a variable appearing in a formal parameter list
+      is its declared type in the procedure definition.
+\end{itemize}
+When a variable appears in an expression,
+the type of the variable
+is its defined type using static scope rules.
+\end{minipage}

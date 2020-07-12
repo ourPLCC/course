@@ -1,0 +1,34 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Parsers} (continued)\exx
+\Large
+\emm\LightBox{\MYlonGrammarOnly}\exx
+The parse tree for a program in this language
+will accurately represent the length
+of the list of numbers given as input -- 
+count the number of instances of \verb'NUM'
+in the parse trace given on slide 1.27 above --
+but the actual values of the \verb'NUM' tokens
+are not preserved in the parse tree.
+The problem is that the parse tree instances of \verb'NumsNode' objects
+do not have fields corresponding to their token values.\exx
+To remedy this,
+PLCC can capture the actual values of the tokens
+and to include them in object instances appearing in the parse tree.
+To do so, simply put angle brackets around the token name
+in the grammar rule lines that you want to capture.
+For example, consider the following modification
+of the above grammar rules:\exx
+\emm\NormalBox{\MYlonGrammarTOK}\exx
+This will create a field named \verb'num' in the \verb'NumsNode' class,
+of type \verb'Token'.
+The field name is derived from the token name (\verb'NUM')
+by converting all the letters to lowercase.
+(All fields generated from token names by PLCC are of type \verb'Token'.)
+The corresponding constructor signature
+for the \verb'NumsNode' class now looks like this:\exx
+\emm\VerbBox{\fbox}{\verb'NumsNode(Token num, Nums nums)'}
+
+\end{minipage}
+\clearpage

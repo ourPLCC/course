@@ -1,0 +1,32 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Continuations} (continued)\exx
+To get around this, we define a special \verb'ValCont' continuation
+that side-steps the direct call to \verb'apply' with a value parameter
+and that passes the responsibility
+to the non-parameter \verb'apply' method int the \verb'ValCont' class:
+\Large
+\begin{qv}
+public class ValCont extends ACont {
+
+    public Val val;
+    public VCont vcont;
+
+    public ValCont(Val val, VCont vcont) {
+        this.val = val;
+        this.vcont = vcont;
+    }
+    public ACont apply() {
+        return vcont.apply(val);
+    }
+}
+\end{qv}
+\LARGE
+It may appear that this \verb'apply' method just postpones
+the recursive call to \verb'vcont.apply(val)',
+but since the \verb'apply' method in the \verb'ValCont' instance
+is being handled by the trampoline,
+this de-couples the direct recursion,
+replacing it with iteration.
+\end{minipage}

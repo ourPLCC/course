@@ -1,0 +1,13 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language OBJ} (continued)\exx
+Notice that an object can see all
+of the \verb'static' bindings up the superclass chain,
+but that if a \verb'static' variable is bound to a procedure
+(or some other value that captures an environment),
+the procedure captures only the static environment of the class
+and cannot ``see'' any of the fields or methods --
+including the \verb'self' and \verb'this' identifiers --
+in its environment.
+\end{minipage}

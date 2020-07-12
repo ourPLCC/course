@@ -1,0 +1,65 @@
+#!/bin/bash
+
+BASE=Base
+CMD=$(basename $0)
+PREAMBLE=preamble.tex
+
+[ $# = 1 ] || {
+	echo "usage: $CMD <dir>"
+	exit 1
+}
+SSET=$(basename $1)
+
+[ -d "$SSET" ] || {
+	echo "$SSET: no such directory"
+	exit 1
+}
+
+[ -d "$BASE" ] || {
+	echo "$CMD: cannot find Base directory"
+	exit 1
+}
+
+BP="$BASE/$PREAMBLE"
+
+[ -f "$BP" ] || {
+	echo "$CMD: cannot find $PREAMBLE"
+	exit 1
+}
+
+SLIDES="slides-$SSET"
+SFILE="$SLIDES.tex"
+
+cat "$BP" > $SFILE
+
+cat << EOF >> $SFILE
+\newcommand{\theSLIDESET}{$SSET}
+
+%\fancypage{}{\fbox}
+\fancyput(4.5in, -3.25in){%
+  \setlength{\unitlength}{1in}\fancyoval(10.5,8)}
+%\fancypage{%
+%  \setlength{\fboxsep}{8pt}%
+%  \setlength{\shadowsize}{8pt}%
+%  \shadowbox}{}
+
+
+\begin{document}
+
+\special{! TeXDict begin /landplus90{true}store end }
+
+\raggedright
+EOF
+
+cat copyright.tex >> $SFILE
+
+$BASE/ListTexFiles $SSET | \
+sed \
+	-e 's/^'$SSET'\///' \
+	-e 's/\.tex$//' \
+	-e 's/.*/\\input{&}\\clearpage/' \
+	>> $SFILE
+
+echo '\end{document}' >> $SFILE
+
+exit 0

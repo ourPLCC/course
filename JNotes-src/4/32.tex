@@ -1,0 +1,28 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language TYPE1} (continued)\exx
+What is the type of a \verb'{ ... }' expression?
+Since the purpose of this statement is normally
+to perform side-effects and
+to return only the value of the last sub-expression,
+we assume that the type of `\verb'{ ... }''
+is the type of the last sub-expression.
+The types of the previous sub-expressions are ignored
+except that they
+must not have type errors.\exx
+Thus the expression
+\Large
+\begin{qv}
+let
+  x = 1
+  double = proc(t:int):int set t = *(2,t)
+in
+  { if zero?(x) then 0 else set x = add1(x)
+  ; .double(x)
+  ; proc():int x
+  }
+\end{qv}
+\LARGE
+has type \verb'[=>int ]'.
+\end{minipage}

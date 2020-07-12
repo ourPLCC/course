@@ -1,0 +1,34 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language OBJ} (continued)\exx
+Unlike the \verb'new' operator in Java,
+Our \verb'new' operator does not take any arguments,
+and all of the fields are initialized to \verb'nil'.
+We can, of course, initialize fields by calling a method.
+Here's an example:
+\Large
+\begin{qv}
+let
+  c = class
+        field x
+        field y
+        method init = proc(a,b) { set x=a ; set y=b ; self }
+      end
+  in
+    let
+      o = .<new c>init(3,4)
+    in
+      <o>+(x,y) % => 7
+\end{qv}
+\LARGE
+Since the \verb'init' method returns \verb'self',
+the value of the expression \verb'.<new c>init(3,4)'
+is the {\em same} object as the one created by the expression \verb'new c',
+except that its fields \verb'x' and \verb'y' are set
+to values 3 and 4, respectively.\exx
+You might be inclined to think that \verb'.<new c>init(a,b)'
+is the same as \verb'<new c>{ set x=a ; set y=b ; self}',
+but the bindings for a and b may be different in these two expresions.
+
+\end{minipage}

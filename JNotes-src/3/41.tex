@@ -1,0 +1,34 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language V2} (continued)
+\Large
+\begin{qv}
+if 1 then 3 else 4
+  % => 3
+
+if 0 then 3 else 4
+  % => 4
+
+if
+  if 1 then 0 else 11
+then
+  42
+else
+  15
+  % => 15
+
++(3, if -(x,x) then 5 else 8)
+  % => 11
+\end{qv}
+\LARGE
+You must understand that
+{\em an \verb'if' expression is an expression
+and therefore it evaluates to a value.}
+It is entirely unlike \verb'if' statements
+in imperative languages such as Java and C++,
+where the purpose of an \verb'if' statement
+is to {\em do} one thing or another, not to return a value.
+Also observe that an \verb'if' expression in language \verb'V2'
+must have both a \verb'then' part and an \verb'else' part
+\end{minipage}

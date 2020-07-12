@@ -1,0 +1,20 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language REF} (continued)\exx
+Using call-by-reference semantics,
+the program
+\begin{qv}
+let
+  x = 3
+  p = proc(t) set t = add1(t)
+in
+  { .p(x) ; x }
+\end{qv}
+returns the value 4, since \verb't' refers
+to the same cell as the one \verb'x' refers to.
+The environments created by the \verb'let' declarations
+and then during evaluation of the expression \verb'.p(x)'
+are illustrated in the following figure:
+\cfigw{ref.eps}{9in}
+\end{minipage}

@@ -1,0 +1,32 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language V4} (continued)\exx
+\Large
+\emm\VerbBox{\colorbox{light}}{\begin{tabular}{@{}ll}
+\verb'<exp>:AppExp' & \verb'::= DOT <exp> LPAREN <rands> RPAREN'\\
+  & \VerbBox{\fbox}{\verb'AppExp(Exp exp, Rands rands)'}\\
+\end{tabular}}
+\Large
+\begin{qv}
+AppExp
+%%%
+    public Val eval(Env env) {
+        // evaluate exp in the current environment (step 0)
+        Val v = exp.eval(env); // should be a ProcVal
+        // evaluate rands in the current environment
+        // to get the arguments (step 1)
+        List<Val> args = rands.evalRands(env);
+        // let v (step 0) determine what to do next (steps 2 and 3)
+        v.apply(args, env);
+    }
+%%%
+\end{qv}
+\LARGE
+Notice that {\em the operand expressions (the \verb'rands')
+are evaluated in the environment in which the expression is applied}.
+Also, the current environment \verb'env' is passed as the second parameter
+to the \verb'apply' method in the \verb'Val' class, 
+even though you can see that the \verb'apply' method
+in the \verb'ProcVal' class does not acually use this value.\exx
+\end{minipage}

@@ -1,0 +1,36 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Environments}\exx
+In virtually all programming languages,
+programmers create symbols (variables) and associate values with them.
+We discussed bindings earlier.
+What we want to show now is how to implement bindings.
+Our implementation allows us to implement {\em static scope rules},
+since this is the most common binding method in programming languages today.\exx
+An {\em environment} is a data structure that associates a value
+with each element of a finite set of symbols --
+that is, it represents a set of bindings.
+We could think of an environment as a set of pairs
+\Large
+\[\{(s_1,v_1),\cdots,(s_n,v_n)\}\]
+\LARGE
+that encode the binding of symbol $s_1$ to value $v_1$,
+$s_2$ to value $v_2$, {\em etc.}
+The problem with this simple approach is that
+the same symbol may have different bindings
+in different parts of the program,
+and this approach doesn't make it clear
+how to determine which binding is the {\em current} binding.\exx
+Instead, we specify an environment as a Java object
+having a method called \verb'applyEnv' that,
+when passed a symbol (a \verb'String') as a parameter,
+returns the current value bound to that symbol.
+So if \verb'env' is an environment and \verb'"x"' is a symbol,
+\Large
+\begin{qv}
+env.applyEnv("x")
+\end{qv}
+\LARGE
+would return the value currently bound to the symbol \verb'"x"'.\exx
+\end{minipage}

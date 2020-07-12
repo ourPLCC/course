@@ -1,0 +1,28 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language TYPE1} (continued)\exx
+We are now in a position to determine the {\em defined type}
+of a \verb'proc' expression.
+By defined type, we mean the type
+of the procedure (a \verb'ProcType') as determined by the declared types
+of each of the formal parameters and the declared return type.
+For example,
+\begin{qv}
+proc(x:int):bool ...
+\end{qv}
+has a formal parameter of declared type \verb'int'
+and a declared return type of \verb'bool',
+so the defined type of this procedure is \verb'[int=>bool]'
+{\em The defined type of a procedure is not dependent on
+the type environment in which the procedure expression appears,
+nor on the names of the formal parameters}.\exx
+However, the type of the procedure {\em body} is dependent on
+the type environment in which the procedure is evaluated,
+since the procedure body may have variables that are free
+with respect to the procedure's formal parameters
+but that are bound to types defined in an enclosing environment.
+One of our type checks is to ensure
+that the procedure's declared return type is the same
+as the type of the procedure body.\exx
+\end{minipage}

@@ -1,0 +1,28 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language TYPE1} (continued)\exx
+We are left to handle top-level \verb'define's.
+While this seems to be straight-forward,
+we are faced with problems of unbound variables.
+For example,
+suppose we attempt to make the follwing definitions:
+\Large
+\begin{qv}
+define odd? =
+  proc(x:int):bool if zero?(x) then false else .even?(sub1(x))
+define even? =
+  proc(x:int):bool if zero?(x) then true else .odd?(sub1(x))
+\end{qv}
+\LARGE
+When the procedure body of \verb'odd?' is first encountered,
+the variable \verb'even?' is unbound,
+so the type of the body of the procedure cannot be evaluated.
+Any attempt to type-check \verb'odd?' fails with a type error.\exx
+We can remedy this situation in two ways:
+\begin{itemize}
+\item forbid top-level \verb'define's altogether; or
+\item create a mechanism to deal with unbound variables
+      that makes top-level \verb'define's work.
+\end{itemize}
+\end{minipage}

@@ -1,0 +1,39 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language INFIX} (continued)\exx
+We borrow the syntax of \verb'let' expressions in language \verb'V4'
+to create a new syntactic category called a \verb'block',
+with the following grammar rules:
+\Large
+\begin{qv}
+<factor>:BlockFactor ::= <block>
+<block>              ::= LBRACE <blockDecls> <exp> RBRACE
+<blockDecls>         **= DEF <VAR> EQUALS <exp> SEMI
+\end{qv}
+\LARGE
+As shown in the \verb'INFIX' code file,
+the evaluation semantics of a \verb'<blockDecls>' rule is
+to create bindings of the LHS variables (\verb'<VAR>')
+to the values of their RHS values (\verb'<exp>'),
+adding the bindings one-by-one as in top-level defines.
+Here is an example that evaluates to 8, once full evaluation
+semantics for the language has been implemented.
+\Large
+\begin{qv}
+{
+  def x=3;
+  def y=5;
+  x+y
+}
+\end{qv}
+\LARGE
+We use semicolons to terminate
+each of the block's variable definitions (using \verb'def').
+As shown on the next slide,
+\verb'block' is also used to define the body of a procedure.\exx
+The evaluation semantics of a \verb'block' is
+to add the \verb'def' bindings to a new environment
+and to evaluate the body of the block in this extended environment.
+This is similar to what a \verb'let' expression does in language \verb'V4'.
+\end{minipage}

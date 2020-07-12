@@ -1,0 +1,29 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language TYPE1} (continued)\exx
+As a final example, consider
+\Large
+\begin{qv}
+declare f : [=>int]
+declare y : int
+define f = proc():int y
+.f() % error - no binding for y
+\end{qv}
+\LARGE
+The definition for \verb'f' is type valid,
+but \verb'y' has no defined value binding,
+so the procedure application \verb'.f()'
+results in a run-time error.\exx
+If we subsequently give a value definition for \verb'y',
+the procedure application succeeds,
+as the following shows:
+\Large
+\begin{qv}
+declare f : [=>int]
+declare y : int
+define f = proc():int y
+define y = 3
+.f() % ok - returns 3
+\end{qv}
+\end{minipage}

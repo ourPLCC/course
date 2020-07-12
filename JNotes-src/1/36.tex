@@ -1,0 +1,26 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Parsers} (continued)\exx
+This sort of looping occurs frequently
+in programming language specifications,
+and PLCC has a way to encode this.
+Instead of having two \verb'<nums>' rules,
+with the first being right-recursive and the second having an empty RHS,
+we can re-write these rules using a special `\verb'**='' notation:\exx
+\emm\begin{tabular}{ll}
+\verb'<nums>' & \verb' **= <NUM>' \\
+              & \VerbBox{\fbox}{\verb'Nums(List<Token> numList)'} \\
+\end{tabular}\exx
+The parser accumulates all of the \verb'NUM' tokens
+into a single \verb'numList' field.
+The \verb'numList' field name is obtained from the \verb'NUM' token name
+by converting all of its characters to lowercase
+and appending the string \verb'List'.\exx
+{\bf Note:} The use of `\verb'**'' in the notation we have just introduced
+should suggest the {\em Kleene star} repetition notation
+used in EBNF as well as in regular expressions.\exx
+The modified list-of-numbers grammar is as follows:\exx
+\emm\LightBox{\MYlonGrammarKleene}\exx
+\end{minipage}
+\clearpage

@@ -1,0 +1,24 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language V0} (continued)\exx
+We have seen that
+the RHS of a grammar rule determines
+what instance variables belong to the class defined by its LHS.
+Only those entries on the RHS that have angle brackets \verb'<...>'
+appear as instance variables;
+{\em any other RHS entries must be token names
+that are used in the parse but that are abstracted away
+when generating the objects in the parse tree.}\exx
+For example, consider the following grammar rule in our \verb'V0' grammar:
+\begin{qv}
+<exp>:PrimappExp ::= <prim> LPAREN <rands> RPAREN
+\end{qv}
+This rule says that \verb'PrimappExp' is a class
+that extends the \verb'Exp' class
+and that the instance variables in this class are
+\begin{qv}
+Prim prim;
+Rands rands;
+\end{qv}
+\end{minipage}

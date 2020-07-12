@@ -1,0 +1,20 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Continuations} (continued)\exx
+We start with language \verb'REF',
+a language with \verb'set'
+and call-by-reference parameter passing.
+In this language,
+the \verb'eval' method for expressions has a single \verb'env' parameter
+that gives the environment in which the expression is evaluated.
+In the \verb'REFCONT' language,
+adding explicit execution context requires passing another parameter
+to the \verb'eval' method,
+namely a continuation.
+The purpose of the continuation is to receive
+the value of the expression and to determine what to do next.\exx
+We implement continuations as members
+of the \verb'Cont' class, with three subclasses:
+\verb'ACont', \verb'VCont', and \verb'RCont'.
+\end{minipage}

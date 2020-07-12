@@ -1,0 +1,35 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Static Properties of Variables} (continued)\exx
+For a given variable, the {\em scope} of the variable is
+the region of code in which that variable's binding can be determined.
+Consider the following Java program:
+\Large
+\begin{qv}
+public class Foo {
+   public static int y;
+   public int z;
+   public static void main(String [] args) {
+     // args is local to main
+     Foo f = new Foo(); // f is local to main
+     int x = 1; // x is local in main
+     Foo.y = 2; // y is static throughout in Foo
+     f.z = 3; // z is known only within instances of Foo
+   }
+}
+\end{qv}
+\LARGE
+In the above code,
+the scope of \verb'y' is {\em global},
+from its declaration
+as a \verb'public static' variable to the end of the class.
+The scope of \verb'z' is {\em instance-global},
+known only within (and throughout) instances of the class Foo.
+The scopes of \verb'f' and \verb'x' are {\em local},
+from their declarations to the end of the \verb'main' method body.
+The scope of \verb'args' is also local,
+from the beginning of the method body to the end.
+
+\end{minipage}
+\clearpage

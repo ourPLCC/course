@@ -1,0 +1,41 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Static Properties of Variables} (continued)\exx
+Let's return to our C++ example.
+The following picture shows the blocks
+of the C++ program fragment given on the previous slide:\exx
+{\tt
+\verb'{ int x = 3;'\\
+  \hspace*{2em}%
+  \begin{fminipage}{4.5in}
+  \verb'{ int x = 5;'\\
+    \hspace*{2em}%
+    \begin{fminipage}{3.5in}
+    \verb'cout << x << endl;'
+    \end{fminipage}\\
+  \verb'}'\\
+  \verb'cout << x << endl;'
+  \end{fminipage}\\
+\verb'}'\exx
+} %% end of \tt
+To determine the binding of a variable in an expression,
+cross the boxes textually outwards (up)
+until a variable declaration with the same variable name
+is found.\\[2ex]
+When defining procedures in block structured languages,
+the formal parameter declarations are considered
+to be at the same lexical level
+as local variable declarations
+in the outermost block of the procedure.
+In the following C++ example,
+the formal parameter \verb'x' is at the same lexical level
+as the local variable \verb'y':
+\begin{qv}
+int foo(int x) {
+    int y;
+    ...
+}
+\end{qv}
+\end{minipage}
+\clearpage

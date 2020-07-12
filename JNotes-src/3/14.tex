@@ -1,0 +1,25 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language V0} (continued)\exx
+Recall that repeating grammar rules
+have fields that are Java lists.
+For example, our \verb'V0' grammar has the following repeating rule:
+\begin{qv}
+<rands> **= <exp> +COMMA
+\end{qv}
+This rule says that the \verb'<rands>' nonterminal
+can derive zero or more \verb'<exp>' entries,
+separated by commas.
+The following sentences would match the \verb'<rands>' nonterminal:
+\begin{qv}
+a,b,c     <-- <exp> COMMA <exp> COMMA <exp>
+1, +(2,3) <-- <exp> COMMA <exp>
+add1(x)   <-- <exp>
+          <-- empty string
+\end{qv}
+The class defined by this rule is named \verb'Rands'.
+Its RHS shows only one nonterminal \verb'<exp>',
+so its corresponding Java class \verb'Rands'
+has a field \verb'expList' of type \verb'List<Exp>'.\exx
+\end{minipage}

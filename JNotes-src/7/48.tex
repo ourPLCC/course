@@ -1,0 +1,27 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Concurrency} (continued)\exx
+The race condition in the previous example can now be solved
+by making the modification of \verb'count' atomic:
+\Large
+\begin{qv}
+let
+  count = 0
+in 
+  letrec
+    d = proc(t)
+      if t
+      then {atomic set count=add1(count) ; .d(sub1(t))}
+      else 0
+  in
+    let
+      _ = .d(1000)
+      _ = .d(10000)
+      _ = .d(100)
+    in
+      count
+\end{qv}
+\LARGE
+This expression evaluates to 11100, as expected.
+\end{minipage}

@@ -1,0 +1,32 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language TYPE1} (continued)\exx
+\large
+\begin{qv}
+abstract class TypeEnv
+    public static TypeEnv emptyTypeEnv() // returns an empty environment
+    public abstract Type applyTypeEnv(String sym)
+    public abstract TypeEnv extendTypeEnv(TypeBindings typeBindings)
+    public abstract TypeEnv extendTypeEnv(List<String> idList, List<Type> typeList)
+
+class TypeEnvNull extends TypeEnv  // empty type environment class
+
+class TypeEnvNode extends TypeEnv
+    public TypeBindings typeBindings // local bindings
+    public TypeEnv typeEnv     // next environment
+
+class TypeBindings
+    public List<TypeBinding> typeBindingList
+
+class TypeBinding
+    public String sym
+    public Type type
+
+abstract class Type
+
+class IntType extends Type
+class BoolType extends Type
+class ProcType extends Type
+\end{qv}
+\end{minipage}

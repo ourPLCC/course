@@ -1,0 +1,15 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language OBJ} (continued)\exx
+\Large
+\emm\begin{tabular}{ll}
+\verb'<exp>:EenvExp' & \verb'::= LLANGLE <exp> <mangle> RRANGLE'\\
+    & \VerbBox{\fbox}{\verb'EenvExp(Exp exp, Mangle mangle)'}\\
+\verb'<mangle>:Mangle' & \verb'**= RANGLE <exp> LPAREN <rands> RPAREN' \\
+    & \VerbBox{\fbox}{\verb'Mangle(List<Exp> expList, List<Rands> randsList)'}\\
+\end{tabular}\exx
+\LARGE
+A \verb'mangle' object consists
+of a list of \verb'Exp' objects and a list of \verb'Rands' objects.
+\end{minipage}

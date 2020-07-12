@@ -1,0 +1,25 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language TYPE1} (continued)\exx
+\Large
+At this point we can also add primitives operations
+for \verb'and', \verb'or', and \verb'not'.\exx
+\emm\begin{tabular}{ll}
+\verb'<prim>AndPrim' & \verb'::= AND'\\
+\verb'<prim>OrPrim' & \verb'::= OR'\\
+\verb'<prim>NotPrim' & \verb'::= NOT'\\
+\end{tabular}\exx
+Here is the \verb'apply' code for an \verb'AndPrim' object:
+\begin{qv}
+public Val apply(Val [] va) {
+    if (va.length != 2)
+        throw new RuntimeException("two arguments expected");
+    boolean b0 = va[0].boolVal();
+    boolean b1 = va[1].boolVal();
+    return new BoolVal(b0 && b1);
+}
+\end{qv}
+It's easy to see how the \verb'apply' code should be implemented
+for the other two primitives.
+\end{minipage}

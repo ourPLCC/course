@@ -1,0 +1,33 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Continuations} (continued)\exx
+The \verb'addBindings' method in the \verb'LetDecls' class
+evaluates the RHS expressions using the \verb'evalRands' method
+in a suitably constructed \verb'Rands' object.
+This method returns a \verb'List' of \verb'Val's.
+Since our environments bind strings to references,
+we must convert this list of values to a list of references
+using the \verb'valsToRefs' method in the \verb'Ref' class.
+These values are then bound to the variables in \verb'varList',
+obtaining the environment
+in which the body of the \verb'let' is to be evaluated.
+As an optimization, if there are no variable bindings in the \verb'let',
+\verb'addBindings' simply returns the original environment.
+\Large
+\begin{qv}
+LetDecls
+%%%
+    public Env addBindings(Env env) {
+        if (varList.size() > 0) {
+            Rands rands = new Rands(expList);
+            List<Val> valList = rands.evalRands(env);
+            Bindings bindings =
+                new Bindings(varList, Ref.valsToRefs(valList));
+            env = env.extendEnvRef(bindings);
+        }
+        return env;
+    }
+%%%
+\end{qv}
+\end{minipage}

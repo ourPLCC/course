@@ -1,0 +1,28 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language V5} (continued)\exx
+\large
+This picture illustrates the three steps
+for creating the environment \verb'nenv'
+used to evaluate the body of the following \verb'letrec' example:
+\begin{qv}
+letrec
+    f = proc(x) ...
+    g = proc(y) ...
+in
+    ...
+\end{qv}
+\begin{enumerate}
+\item Create a new environment \verb'nenv'
+      by extending the old environment with \verb'null' bindings;
+\item Create a \verb'Bindings' object that binds
+      the LHS identifiers (\verb'f' and \verb'g' in this example)
+      to closures of the RHS procedures,
+      where these closures capture the extended environment \verb'nenv'
+      created in Step 1;
+\item Replace the \verb'null' bindings of \verb'nenv'
+      with the bindings created in Step 2.
+\end{enumerate}
+{\center\ \psfig{figure=letrec-steps.eps,width=.7\textwidth}\ \\}
+\end{minipage}

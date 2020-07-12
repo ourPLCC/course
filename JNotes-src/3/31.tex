@@ -1,0 +1,22 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language V1} (continued)\exx
+Since we are using the \verb'apply' method with a \verb'Prim' object,
+we need to add a declaration for this method
+to the (abstract) \verb'Prim' class.
+Here is how we do this:
+\begin{qv}
+Prim
+%%%
+    // apply the primitive to the passed values
+    public abstract Val apply(Val [] va);
+%%%
+\end{qv}
+A \verb'Prim' object (there are four instances of this class)
+has no instance variables.
+However, we can endow these objects with behavior,
+so that a \verb'AddPrim' object knows how to add things,
+a \verb'SubPrim' object knows how to subtract things,
+and so forth.\exx
+\end{minipage}

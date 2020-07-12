@@ -1,0 +1,18 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Continuations} (continued)\exx
+For certain expressions (such as \verb'LitExp' and \verb'VarExp'),
+the expression value could be determined with little additional work,
+so this value could be sent directly
+to its \verb'VCont' continuation, like this:
+\Large
+\begin{qv}
+return vcont.apply(...)
+\end{qv}
+\LARGE
+However, this results in building a stack frame
+to call the \verb'apply' method,
+contrary to our objective of using continuations
+to avoid building stack frames.
+\end{minipage}

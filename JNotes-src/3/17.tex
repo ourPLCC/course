@@ -1,0 +1,28 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language V0} (continued)\exx
+The \verb'Rep' program prints the \verb'Program' object as a \verb'String'.
+If the \verb'Program' class does not redefine its \verb'toString()' method,
+its default \verb'toString()' method is used.
+As we have seen, this returns a string that looks like this:
+\begin{qv}
+Program@....
+\end{qv}
+So our next step is to show how we can define the \verb'toString()' method
+in the \verb'Program' class
+so that the printed \verb'toString()' value of a \verb'Program' object
+is essentially the same string as the input
+with extra whitespace removed!\exx
+This means that we should see the following when interacting
+with the \verb'Rep' program from grammar \verb'V0':
+\begin{qv}
+--> add1( +(2,3))
+add1(+(2,3))
+--> x
+x
+--> +  ( p  ,  - ( q,r)  )
++(p,-(q,r))
+--> ...
+\end{qv}
+\end{minipage}

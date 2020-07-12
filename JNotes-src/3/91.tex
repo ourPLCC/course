@@ -1,0 +1,19 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language V6} (continued)\exx
+Since a ``program'' can now have two forms --
+a top-level ``define'' or an expression evaluation,
+we need to have two grammar rules
+for the \verb'<program>' nonterminal.
+Here are their grammar rules and corresponding abstract syntax classes:\exx
+\emm%
+\begin{tabular}{@{}ll}
+\verb'<program>:Define' & \verb'::= DEFINE <VAR> EQUALS <exp>'\\
+  & \VerbBox{\fbox}{\verb'Define(Token var, Exp exp)'}\\
+\verb'<program>:Eval' & \verb'::= <exp>'\\
+  & \VerbBox{\fbox}{\verb'Eval(Exp exp)'}\\
+\end{tabular}%
+\exx
+\Large
+\end{minipage}

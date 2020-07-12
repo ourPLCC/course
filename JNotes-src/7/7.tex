@@ -1,0 +1,20 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Continuations} (continued)
+\begin{qv}
+public abstract class ACont {
+
+    public Val trampoline() {
+        ACont acont = this;
+        while(true)
+            try {
+                acont = acont.apply();
+            } catch (ContException e) {
+                return e.val;
+            }
+    }
+
+}
+\end{qv}
+\end{minipage}

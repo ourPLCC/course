@@ -1,0 +1,29 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Order of evaluation} (continued)\exx
+Unless the language specification clearly addresses the issue
+of order of evaluation, the language implementor can choose
+any evaluation order.
+The C language specification, for example, explicitly states
+that the order in which actual parameter expressions are evaluated
+is undefined.
+{\em If the order of evaluation matters and is not specified,
+it is up to the programmer to
+avoid actual parameter expressions that have side-effects}.
+For example, none of our languages specifies
+the order of evaluation of expressions.
+To ensure that the program on slide 39 evaluates to 4,
+it could be re-written as follows:
+\begin{qv}
+let
+  x = 3
+  p = proc(t,u) t
+in
+  let a = {set x = add1(x)}
+  in
+    let b = {set x = add1(x)}
+    in 
+      .p(a,b)
+\end{qv}
+\end{minipage}

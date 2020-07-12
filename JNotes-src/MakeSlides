@@ -1,0 +1,17 @@
+#!/bin/bash
+
+CMD=$(basename $0)
+[ $# = 1 ] || {
+	echo "usage: $CMD <dir>"
+	exit 1
+}
+
+SSET=$1
+
+[ -d "$SSET" ] || {
+	echo "$CMD: $SSET: no such directory"
+	exit 1
+}
+
+make SET=$SSET
+make SET=$SSET somewhatclean

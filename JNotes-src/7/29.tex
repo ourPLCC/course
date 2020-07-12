@@ -1,0 +1,14 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Continuations} (continued)\exx
+The \verb'eval' method in the \verb'SetExp' class follows:
+\Large
+\begin{qv}
+    public ACont eval(Env env, VCont vcont) {
+        // don't actually modify the binding yet
+        Ref ref = env.applyEnvRef(var.toString());
+        return new EvalCont(exp, env, new SetCont(ref, vcont));
+    }
+\end{qv}
+\end{minipage}

@@ -1,0 +1,36 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language V5} (continued)\exx
+\emm\large\VerbBox{\colorbox{light}}{%
+\begin{tabular}{@{}ll}
+\verb'<exp>:LetrecExp' & \verb'::= LETREC <letrecDecls> IN <exp>'\\
+  & \VerbBox{\fbox}{\verb'LetrecExp(LetrecDecls letrecDecls, Exp exp)'}\\
+\verb'<letrecDecls>' & \verb'**= <VAR> EQUALS <proc>'\\
+  & \VerbBox{\fbox}{\verb'LetrecDecls(List<Token> varList, List<Proc> procList)'}\\
+\end{tabular}%
+}\exx
+\LARGE
+Similar to the \verb'LetDecls' class,
+the \verb'LetrecDecls' class takes care
+of adding the appropriate bindings to the previous environment
+by following the steps described in the previous slide.
+\Large
+\begin{qv}
+LetrecDecls
+%%%
+    public Env addBindings(Env env) {
+        // Step 1
+        Env nenv = env.extendEnv(null); // place-holder
+        // Step 2
+        List<Val> valList = new ArrayList<Val>();
+        for (Proc p: procList)
+            valList.add(p.makeClosure(nenv));
+        Bindings bindings = new Bindings(varList, valList);
+        // Step 3
+        nenv.replaceBindings(bindings);
+        return nenv;
+    }
+%%%
+\end{qv}
+\end{minipage}

@@ -1,0 +1,31 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Exception Handling} (continued)
+\Large
+\begin{qv}
+%% throwing an exception while evaluating
+%% a handler's actual parameter expressions
+catch
+    h = handler(x) add1(x) 
+    k = handler(x) *(x,x)
+in
+    throw h(throw k(3)) % evaluates to 9 ; h is not actually thrown
+
+%% throwing an exception in a handler's body expression
+catch
+    h = handler() 5
+in
+    catch
+        h = handler(x) {throw h() ; x}
+    in
+        throw h(21) % evaluates to 5
+
+%% throwing an unbound exception in the handler's body
+catch
+    h = handler () throw h()
+in
+    throw h() % no binding for h (in the handler's 'throw')
+\end{qv}
+
+\end{minipage}

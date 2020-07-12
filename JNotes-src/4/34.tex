@@ -1,0 +1,45 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language TYPE1} (continued)\exx
+\Large
+A \verb'letrec' expression is treated similar
+to a \verb'let' expression,
+except that the types of the RHS procedures
+must be evaluated in an environment
+that has type bindings for the LHS variables.
+Since the defined type of a RHS procedure can be determined
+solely by declared types of its parameters and return type,
+the types of the LHS variables can be determined
+independent of any environment.
+So we can use these LHS variables to extend
+the type environment
+and then evalute the types of the RHS procedure {\em bodies}
+using this extended environment,
+for the purpose of type checking with their declared return types.
+The \verb'addTypeBindings' method in the \verb'LetrecDecls' class
+does all the work.
+\large
+\begin{qv}
+public TypeEnv addTypeBindings(TypeEnv tenv) {
+    // first check for duplicate LHS identifiers
+    List<String> stringVarList = new ArrayList<String>();
+    for(Token t : varList)
+        stringVarList.add(t.toString());
+    TypeEnv.checkDuplicates(stringVarList);
+    // next get the defined procedure types in the letrec,
+    // ignoring the procedure bodies for now
+    List<Type> definedTypeList = new ArrayList<Type>();
+    for (Proc p : procList)
+        definedTypeList.add(p.definedType()); // just the defined type
+    // extend tenv with bindings of the LHS vars to the RHS defined types
+    TypeBindings typeBindings =
+        new TypeBindings(stringVarList, definedTypeList);
+    TypeEnv ntenv = tenv.extendTypeEnv(typeBindings);
+    // finally check that the proc bodies are OK in the ntenv environment
+    for (Proc p : procList)
+         p.evalType(ntenv);
+    return ntenv;
+}
+\end{qv}
+\end{minipage}

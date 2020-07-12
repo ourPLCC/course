@@ -1,0 +1,29 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Concurrency} (continued)\exx
+In general, we want to define a mechanism
+that can carry out a simulation of parallel execution
+of multiple continuations.
+First, we build a queue that holds all of the continuations
+to be executed in parallel.
+Then we create a ``wrapper'' continuation
+that takes a single continuation from the queue,
+calls the dequeued continuation's \verb'apply()' method,
+and puts the result back on the end of the queue.
+Once all of the continuations have completed,
+the wrapper continuation returns
+the next continuation step in the evaluation
+(such as primitive application, procedure application,
+or \verb'let' body evaluation).
+The wrapper continuation uses the trampoline
+to carry out each of its dequque steps.
+A \verb'ConcurrentCont' class,
+shown on the next slide, serves this purpose.\exx
+This approach does not achieve true parallelism,
+since we are still applying the continuation steps
+one at a time (using the trampoline),
+but in the presence of suitable hardware,
+it would not be difficult to dispatch the application
+of the queued continuations to separate threads.
+\end{minipage}

@@ -1,0 +1,26 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Environments} (continued)\exx
+The \verb'applyEnv' procedure in the \verb'EnvNode' class is now easy.
+Simply march through the current \verb'Bindings'
+to see if there is a binding with the given variable name.
+If so, return the corresponding value;
+if not, search the next environment in the list.\exx
+Here is the code for \verb'applyEnv' in the \verb'EnvNode' class:
+\begin{qv}
+public Val applyEnv(String sym) {
+    // look first in the local bindings
+    for (Binding b : bindings.bindingList) {
+        if (sym.equals(b.id))
+            return b.val;
+    }
+    // not found in the local bindings,
+    // so look in the next (enclosing) environment
+    return env.applyEnv(sym);
+}
+\end{qv}
+The \verb'applyEnv' method in the \verb'EnvNull' class
+defaults to the \verb'applyEnv' method in the \verb'Env' class,
+which throws an exception.
+\end{minipage}

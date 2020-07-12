@@ -1,0 +1,32 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language V4} (continued)\exx
+The only thing we have left is to implement
+the behavior of the \verb'apply' method in the \verb'Val' class.
+Since we want \verb'apply' only to be meaningful for a \verb'ProcVal' object,
+we define a default behavior in the (abstract) \verb'Val' class
+to throw an exception for anything but a \verb'ProcVal':
+\Large
+\begin{qv}
+public Val apply(List<Val> args, Env e) {
+    throw new RuntimeException("Cannot apply " + this): 
+}
+\end{qv}
+\LARGE
+For a \verb'ProcVal', here's the implementation of \verb'apply'.
+Notice that this implementation carries out steps 2a, 2b, and 3
+in the semantics for evaluating a procedure application
+(slide 3.39):
+\Large
+\begin{qv}
+public Val apply(List<Val> args, Env e) {
+    // bind the formals to the arguments (step 2a)
+    Bindings bindings = new Bindings(formals.varList, args);
+    // extend the captured environment with these bindings (step 2b)
+    Env nenv = env.extendEnv(bindings);
+    // and evaluate the body in this new environment (step 3)
+    return body.eval(nenv);
+}
+\end{qv}
+\end{minipage}

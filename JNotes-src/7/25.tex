@@ -1,0 +1,31 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Continuations} (continued)
+\large
+\begin{qv}
+public class AppCont extends VCont {
+
+    public Rands rands; // the actual parameter expressions
+    public Env env;     // evaluate the params in this env
+    public VCont vcont; // who gets the result
+
+    public AppCont(Rands rands, Env env, VCont vcont) {
+        this.rands = rands;
+        this.env = env;
+        this.vcont = vcont;
+    }
+
+    public ACont apply(Val val) {
+        ProcVal procVal = val.procVal();
+        List<Ref> refList = rands.evalRandsRef(env);
+        return procVal.apply(refList, vcont);
+    }
+
+    public String toString() {
+        return "AppCont";
+    }
+
+}
+\end{qv}
+\end{minipage}

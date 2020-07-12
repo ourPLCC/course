@@ -1,0 +1,37 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Parsers} (continued)\exx
+\Large
+\emm\LightBox{\MYlonGrammarOnly}\exx
+PLCC also generates an interactive parser
+called \verb'Rep' that resides in the \verb'Java' subdirectory
+along with the \verb'Parser' program.
+\verb'Rep' executes a loop
+that prints a prompt,
+{\em Reads} program input from the keyboard,
+{\em Evaluates} (parses) the program,
+and {\em Prints} the result:
+a human-readable representation
+of the root of the program's parse tree.
+Recall that for the language given above,
+the root of the parse tree is
+an instance of the \verb'Lon' class.\exx
+Here is a sample interaction with the \verb'Rep' program
+using this grammar:
+\begin{qv}
+$ java Rep
+--> (14 6)
+Lon@15db9742
+--> (14 (6)
+java.lang.RuntimeException: Nums cannot begin with LPAREN
+--> (42)
+Lon@6d06d69c
+--> ()
+Lon@7852e922
+--> 
+\end{qv}
+Observe that the output is similar to that produced
+by the \verb'Parser' program
+\end{minipage}
+\clearpage

@@ -1,0 +1,31 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language INFIX} (continued)\exx
+Here is a set of grammar rules
+for arithmetic expressions that does the trick.
+The \verb'INFIX' language is based on the V4 language with procedures.
+For the sake of simplicity, we only give grammar rules
+for the primitive operations,
+avoiding \verb'let'-like expressions, \verb'proc' definitions,
+and \verb'proc' applications for now.
+A full grammar and skeleton semantics are provided
+in the \verb'INFIX' directory.
+Note that the \verb'LitExp' and \verb'VarExp' rules
+have been replaced by \verb'LitFactor' and \verb'VarFactor'.
+\begin{qv}
+<exp>                ::= <term> <terms>
+<terms>              **= <prim0> <term>
+<term>               ::= <factor> <factors>
+<factors>            **= <prim1> <factor>
+<factor>:LitFactor   ::= <LIT>
+<factor>:VarFactor   ::= <VAR>
+<factor>:ParenFactor ::= LPAREN <exp> RPAREN
+<factor>:Prim2Factor ::= <prim2> <factor>
+<prim0>:AddPrim      ::= ADDOP
+<prim0>:SubPrim      ::= SUBOP
+<prim1>:MulPrim      ::= MULOP
+<prim1>:DivPrim      ::= DIVOP
+<prim2>:UminusPrim   ::= SUBOP
+\end{qv}
+\end{minipage}

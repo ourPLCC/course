@@ -1,0 +1,36 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Parsers} (continued)\exx
+To remedy this situation, we need to have a field
+in the \verb'NumsNode' class that captures the value
+of the \verb'NUM' token.
+We use angle brackets for all nonterminals on the RHS of grammar rules,
+and these nonterminals automatically become fields in the Java class.
+To capture values of the tokens on the RHS,
+we use angle brackets for these token names as well.
+This means that the \verb'NumsNode' line now looks like this:
+\begin{qv}
+<nums>:NumsNode  ::= <NUM> <nums>
+\end{qv}
+The `\verb'<NUM>'' entry creates a field named \verb'num'
+(which is the name `\verb'NUM'' converted to lowercase)
+of type \verb'Token' (since \verb'NUM' is the name of a token 
+in the \verb'grammar' file).\exx
+Observe that it's unnecessary
+to capture tokens that always have the same string representation,
+like \verb'LPAREN'.
+Every instance of the \verb'LPAREN' token
+looks like every other instance,
+so there's no need to distinguish among them.
+This is not so with tokens that can take on multiple string values,
+such as \verb'NUM'.
+Indeed, for a list of numbers,
+knowing exactly {\em what} numbers are in the list
+can be essential --
+for example, if you want to find the sum of the numbers in the list.
+If these items do not appear as fields in the PLCC-generated classes,
+their values do not appear in the parse tree,
+and so their values are not retrievable after the parse.
+\end{minipage}
+\clearpage

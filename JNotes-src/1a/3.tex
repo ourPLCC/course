@@ -1,0 +1,38 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf PLCC -- Tokens}\\
+\Large
+A skip specification is used
+to identify things in a program
+that are otherwise not meaningful
+to the behavioral structure of the program.
+We generally skip whitespace (spaces, tabs, and newlines) and comments.
+The format of a comment is language-dependent,
+but in our languages, a comment starts with a `\verb'%'' character
+and continues to the end of the line.
+Here is an example of skip specifications for whitespace and comments:
+\begin{qv}
+skip WHITESPACE '\s+'
+skip COMMENT '%.*'
+\end{qv}
+A token specification is used to identify things in a program
+that are meaningful to the behavioral structure of the program.
+Examples are a language reserved word (such as \verb'if'),
+a punctuation mark (such as a left bracket `\verb'[''),
+a numeric literal (such as \verb'346'),
+or a variable symbol (such as \verb'xyz').
+Here are specifications that match these tokens.
+\begin{qv}
+token IF 'if'
+token LBRACK '\['
+token LIT '\d+'
+token VAR '[A-Za-z]\w*'
+\end{qv}
+For token specifications, the initial `\verb'token'' can be omitted.
+Notice that regular expression meta-characters such as `\verb'[''
+must be quoted with a backslash `\verb'\''
+if they are to be treated as ordinary characters.
+
+\end{minipage}
+\clearpage

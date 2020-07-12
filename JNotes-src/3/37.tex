@@ -1,0 +1,19 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language V2}\exx
+To evaluate an \verb'if' expression with a given environment,
+we first evaluate the \verb'testExp' expression.
+If this evaluates to true,
+we evaluate the \verb'trueExp' expression
+and return its result as the value of the entire expression.
+If this evaluates to false,
+we evaluate the \verb'falseExp' expression
+and return its result.
+Each of these expressions is evaluated
+in the given environment.\exx
+Since all instances of \verb'Val' are really \verb'IntVal's
+(for the time being),
+we regard the \verb'IntVal' object corresponding to \verb'0'
+to be false and all others to be true.
+\end{minipage}

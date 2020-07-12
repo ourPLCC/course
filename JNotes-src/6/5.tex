@@ -1,0 +1,26 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language INFIX} (continued)\exx
+Here is a parse trace of the arithmetic expression '1-2+3':
+\begin{qv}
+<exp>
+| <term>
+| | <factor>:LitFactor
+| | | LIT "1"
+| | <factors>
+| <terms>
+| | <prim0>:SubPrim0
+| | | SUBOP "-"
+| | <term>
+| | | <factor>:LitFactor
+| | | | LIT "2"
+| | | <factors>
+| | <prim0>:AddPrim0
+| | | ADDOP "+"
+| | <term>
+| | | <factor>:LitFactor
+| | | | LIT "3"
+| | | <factors>
+\end{qv}
+\end{minipage}

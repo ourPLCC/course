@@ -1,0 +1,24 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language V1} (continued)\exx
+The final step is to have the \verb'toString' method
+of a \verb'Program' object return the string representation
+of the {\em value} of its expression.\exx
+An empty environment would only allow for integer expressions
+with no variables, since every variable would be unbound.
+To test language \verb'V1', we create an initial environment \verb'initEnv'
+that has some variable bindings:
+\begin{qv}
+i => 1
+v => 5
+x => 10
+l => 50
+c => 100
+d => 500
+m => 1000
+\end{qv}
+This environment can be obtained by a call to \verb'Env.initEnv()'.
+These bindings give us some variables to play with,
+though, as you will see, we will dispense with them later.\exx
+\end{minipage}

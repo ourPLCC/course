@@ -1,0 +1,29 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language TYPE1} (continued)\exx
+The following method implements type checking in the \verb'SeqExp' class:
+\Large
+\begin{qv}
+    public Type evalType(TypeEnv tenv) {
+        Type t = exp.evalType(tenv);
+        for (Exp e : seqExps.expList)
+            t = e.evalType(tenv);
+        return t;
+    }
+\end{qv}
+\LARGE
+In a \verb'set' expression,
+we look up the type of the LHS variable
+and make sure that it matches the type of the RHS expression.
+The following method is defined in the \verb'SetExp' class:
+\Large
+\begin{qv}
+    public Type evalType(TypeEnv tenv) {
+        Type varType = tenv.applyTypeEnv(var);
+        Type expType = exp.evalType(tenv);
+        Type.checkEquals(varType, expType);
+        return varType;
+    }
+\end{qv}
+\end{minipage}

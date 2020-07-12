@@ -1,0 +1,29 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language SET} (continued)\exx
+What happens if you try to mutate the value
+of an identifier that is one of the formal parameters
+to a procedure?
+For example, what value is returned by the following program?
+\begin{qv}
+let
+  x = 3
+  p = proc(t) set t = add1(t)
+in
+  { .p(x) ; x }
+\end{qv}
+In our procedure application semantics
+(see the \verb'AppExp' code),
+the formal parameters are bound
+to (references to) the {\em values} of the actual parameters.
+Since the value of the actual parameter \verb'x'
+in the expression \verb'.p(x)' is 3,
+this means that the variable \verb't' in the body of the procedure
+is bound to (a reference to) the value 3,
+and evaluating the body of the procedure
+modifies this binding to the value 4,
+but it's the variable \verb't', not the variable \verb'x',
+that gets modified.
+Thus the value of this entire expression is 3.
+\end{minipage}

@@ -1,0 +1,23 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf BNF (continued)}\\[2ex]
+\emm{\Large\LightBox{\MYlon}}\exx
+BNF has some shortcuts {\bf that we do not use}
+but that you may run into in your reading.
+These shortcuts are usually called Extended BNF, or simply EBNF.
+For example, instead of writing two different formulas
+with \verb'<nums>' on the LHS,
+one can use {\em alternation} notation ``\verb'|''':
+\begin{quote}
+\verb'<nums> ::= NUM <nums> | ' $\epsilon$
+\end{quote}
+{\em Note:} `$\epsilon$' means the empty string.\exx
+One could also use the {\em Kleene star} notation
+to define \verb'<nums>':
+\begin{qv}
+<nums> ::= { NUM }*
+\end{qv}
+{\bf Note:} We use a variant of the Kleene star notation later.
+\end{minipage}
+\clearpage

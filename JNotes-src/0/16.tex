@@ -1,0 +1,26 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Tokens} (continued)\exx
+To test these, create a separate directory for each test,
+and create a \verb'grammar' file in this directory
+with the given contents.
+Then, in this directory, run the following commands:
+\begin{qv}
+plccmk
+cd Java
+java Scan
+\end{qv}
+The \verb'Scan' program expects input from standard input
+(your keyboard)
+and produces output lines that list the tokens as they are scanned,
+in the form
+\begin{qv}
+NAME: string
+\end{qv}
+where \verb'NAME' is replaced by the token name
+and \verb'string' is replaced by the token's corresponding lexeme
+from the input file
+that produced this token.
+\end{minipage}
+\clearpage

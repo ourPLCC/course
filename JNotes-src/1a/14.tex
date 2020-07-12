@@ -1,0 +1,32 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf PLCC -- Parsing}\exx
+Here's a simple example grammar:
+{\Large
+\begin{qv}
+<tree>:Leaf     ::= <NUMBER>
+<tree>:Interior ::= LPAREN <SYMBOL> <tree>left <tree>right RPAREN
+\end{qv}
+}
+The abstract \verb'Tree' class looks like this:
+{\Large
+\begin{qv}
+public abstract class Tree {
+
+    public Tree parse(Scan scn) {
+        Token t = scan.cur();
+        switch (t.val) {
+        case NUMBER:
+            return Leaf.parse(scn);
+        case LPAREN:
+            return Interior.parse(scn);
+        default:
+            throw new RuntimeException("parse error");
+        }
+    }
+}
+\end{qv}
+}
+\end{minipage}
+\clearpage

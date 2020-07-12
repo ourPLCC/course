@@ -1,0 +1,32 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language OBJ} (continued)\exx
+The special operator \verb'@'
+returns an object
+that captures the {\em current} environment,
+whatever that may be.
+(Recall your homework assignment that introduced this notation.)
+This operator may be used
+to pass a captured environment as an argument
+to a procedure application or
+to assign it to a variable for later reference.
+\begin{qv}
+AtExp
+%%%
+    public Val eval(Env env) {
+        return new ObjectVal(env);
+    }
+
+%%%
+\end{qv}
+The special operator \verb'@@' does the same thing,
+except that it also displays the current environment
+in a human-readable way.\exx
+Notice that \verb'@' is meaningful in {\em any} expression context --
+because every expression is evaluated in {\em some} environment --
+but that \verb'!@' is only meaningful
+in an expression that appears in the context of a class,
+and its value represents an environment entirely separate
+from the static environment of the class.
+\end{minipage}

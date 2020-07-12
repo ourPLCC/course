@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<shape xmlns="http://www.daa.com.au/~james/dia-shape-ns" xmlns:svg="http://www.w3.org/2000/svg">
+  <name>2 - node1</name>
+  <icon>node1.png</icon>
+  <connections>
+    <point x="5" y="2"/>
+    <point x="7" y="4"/>
+    <point x="5" y="4"/>
+    <point x="5" y="3"/>
+    <point x="7" y="2"/>
+    <point x="7" y="3"/>
+    <point x="6" y="4"/>
+    <point x="6" y="2"/>
+  </connections>
+  <aspectratio type="fixed"/>
+  <svg:svg>
+    <svg:rect style="fill: #ffffff" x="5" y="2" width="2" height="2"/>
+    <svg:rect style="fill: none; fill-opacity:0; stroke-width: 0.1; stroke: #000000" x="5" y="2" width="2" height="2"/>
+    <svg:ellipse style="fill: #000000" cx="6" cy="3" rx="0.1" ry="0.1"/>
+  </svg:svg>
+</shape>

@@ -1,0 +1,4 @@
+#!/bin/bash
+
+(cd .. ; ./MakeSlides 3a)
+

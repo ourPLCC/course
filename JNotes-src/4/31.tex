@@ -1,0 +1,21 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language TYPE1} (continued)\exx
+Type checking for an \verb'if' expression involves
+making sure that the test expression has type \verb'bool'
+and that the true part and the false part have the same types.
+Thus, for a \verb'IfExp', we have:
+\Large
+\begin{qv}
+public Type evalType(TypeEnv tenv) {
+    Type testType = testExp.evalType(tenv);
+    testType.checkBoolType(Type.boolType);
+    Type trueExpType = trueExp.evalType(tenv);
+    Type falseExpType = falseExp.evalType(tenv);
+    Type.checkEquals(trueExpType, falseExpType);
+    return trueExpType;
+}
+\end{qv}
+
+\end{minipage}

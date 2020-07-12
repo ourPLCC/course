@@ -1,0 +1,35 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Parsers} (continued)\exx
+\Large
+%\emm\LightBox{\MYlonGrammarOnly}\exx
+In order to make the connection clear
+between a grammar rule and its PLCC-generated Java class,
+we often display the grammar rules in the following way:\exx
+\emm\begin{tabular}{ll}
+\verb'<lon>' & \verb'::= LPAREN <nums> RPAREN'\\
+    & \VerbBox{\fbox}{\verb'Lon(Nums nums)'}\\
+\verb'<nums>:NumsNode' & \verb'::= NUM <nums>'\\
+    & \VerbBox{\fbox}{\verb'NumsNode(Nums nums)'}\\
+\verb'<nums>:NumsNull' & \verb'::= '\\
+    & \VerbBox{\fbox}{\verb'NumsNull()'}\\
+\end{tabular}\exx
+The item in the box following a grammar rule
+is the {\em Java signature of the Java class constructor}
+corresponding to the class PLCC generates from the grammar rule.
+So the box\exx
+\emm\VerbBox{\fbox}{\verb'Lon(Nums nums)'}\exx
+means that the constructor for the PLCC-generated class \verb'Lon'
+has a single parameter \verb'nums' of type \verb'Nums'.\exx
+{\em There is a one-to-one correspondence
+between the types and formal parameters in the constructor
+and the types and field names in the class.}
+More specifically, when the constructor is invoked,
+the constructor body simply copies the values of its parameters
+into the corresponding field names of the instance being constructed.\exx
+As you can see from above,
+the \verb'NumsNull' constructor takes no parameters,
+and the \verb'NumsNull' class has no fields.
+\end{minipage}
+\clearpage

@@ -1,0 +1,25 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Concurrency}\exx
+Using trampolining, we repeatedly apply continuations
+until a value is returned to the \verb'HaltCont' continuation,
+which stops the trampolining and returns a value.
+Since each continuation contains {\em complete information}
+about how the expression evaluation is to proceed,
+it is possible to have multiple threads of concurrent expression evaluation
+by associating each thread with a continuation
+that represents the thread's current execution context.\exx
+Observe that we have used a \verb'Rands' object
+to evaluate a collection of expressions,
+returning a list of values or references.
+Such lists are used to pass arguments
+to primitive operators or procedures
+or to bind values to the LHS variables in \verb'let' expressions.\exx
+Assuming that the order of evaluation
+of expressions in a \verb'Rands' object does not matter,
+we can carry out these evaluations {\em concurrently}
+(or {\em in parallel}).
+With suitable hardware to support real concurrency,
+this can result in run-time improvement.
+\end{minipage}

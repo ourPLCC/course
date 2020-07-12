@@ -1,0 +1,17 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language PROP} (continued)\exx
+We implement properties in the same way we implement call-by-name:
+a property evalutes to a thunk-like object
+called a \verb'PropRef' (which extends the \verb'Ref' class);
+this object captures the environment in which the property is defined,
+along with the property's \verb'get' and \verb'set' expressions.\exx
+The expressed value of a variable bound to a property
+is the value obtained by evaluating the property's \verb'get' expression
+in the captured environment by calling the thunk's \verb'deRef' method.\exx
+Similarly, when assigning a value to a variable bound to a property,
+the thunk's \verb'setRef' method is called,
+with the assigned value bound to the special variable `\verb'$''
+and returning the value of the property's \verb'set' expression.\exx
+\end{minipage}

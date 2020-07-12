@@ -1,0 +1,24 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language TYPE1} (continued)\exx
+The rules for top-level \verb'define's and \verb'declare's are:
+\begin{enumerate}
+\item A top-level identifier definition serves as a declaration
+      for the purpose of determining the type of the identifier.
+\item It is an error for a top-level identifier
+      to be declared (hence defined) more than once.
+\item If an identifier declaration precedes its definition,
+      it is an error
+      if the declared and defined types are not identical.
+\item It is an error for a declaration
+      not to have a subsequent definition,
+      although this error need not be checked.
+\end{enumerate}
+Although you cannot \verb'define' a top-level variable more than once,
+you can {\em redefine} a top-level variable
+using \verb'set' if the variable has been previously \verb'define'd.
+The type rule for variable assignment still
+requires that the RHS type of the \verb'set'
+must agree with the declared type of the variable.
+\end{minipage}

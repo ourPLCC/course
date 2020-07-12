@@ -1,0 +1,31 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language V5} (continued)\exx
+\emm\large\VerbBox{\colorbox{light}}{%
+\begin{tabular}{@{}ll}
+\verb'<exp>:LetrecExp' & \verb'::= LETREC <letrecDecls> IN <exp>'\\
+  & \VerbBox{\fbox}{\verb'LetrecExp(LetrecDecls letrecDecls, Exp exp)'}\\
+\verb'<letrecDecls>' & \verb'**= <VAR> EQUALS <proc>'\\
+  & \VerbBox{\fbox}{\verb'LetrecDecls(List<Token> varList, List<Proc> procList)'}\\
+\end{tabular}%
+}\exx
+\LARGE
+We can now evaluate a \verb'LetrecExp' object
+in exactly the same way as a \verb'LetExp' object:
+\Large
+\begin{qv}
+LetrecExp
+%%%
+    public Val eval(Env env) {
+        Env nenv = letrecDecls.addBindings(env);
+        return exp.eval(nenv);
+    }
+%%%
+\end{qv}
+\LARGE
+The principal idea, then,
+is to create the RHS closures of a \verb'letrec'
+in an environment that (self-referentially) includes all of the bindings
+in the \verb'letrec'.
+\end{minipage}

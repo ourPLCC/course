@@ -1,0 +1,34 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language SET} (continued)\exx
+For our purposes, we want a reference to be
+a Java object whose contents can be mutated.
+When we bind a variable to a reference (its denoted value),
+this binding does not change,
+but the contents of the reference itself --
+the thing it refers to -- can change.\exx
+The \verb'Ref' abstract class embodies our notion of a reference --
+the thing that a variable can be bound to.
+For now, the only subclass of the \verb'Ref' class is
+the \verb'ValRef' class.\exx
+\emm\VerbBox{\fbox}{\verb'ValRef(Val val)'}\exx
+The contents of a \verb'ValRef' object
+is a \verb'Val',
+and we say that such an object is a {\em reference to a value}.
+(Recall that a \verb'Val' object is either
+an \verb'IntVal' or a \verb'ProcVal' --
+the only two \verb'Val' types that we currently have.)\exx
+A \verb'Ref' object has two methods:
+\begin{qv}
+public abstract Val deRef();
+public abstract Val setRef(Val v);
+\end{qv}
+In the \verb'ValRef' class,
+The \verb'deRef' (dereference) method simply returns
+the \verb'Val' object stored in the object's \verb'val' field,
+and the \verb'setRef' (set reference) method
+modifies the \verb'val' field
+by changing it to the \verb'Val' parameter \verb'v'
+(and returning the new \verb'Val' object as well).
+\end{minipage}

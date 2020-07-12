@@ -1,0 +1,24 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language V5} (continued)\exx
+Here are the grammar rules and associated abstract syntax classes:\exx
+\Large
+\begin{tabular}{@{}ll}
+\verb'<exp>:LetrecExp' & \verb'::= LETREC <letrecDecls> IN <exp>'\\
+  & \VerbBox{\fbox}{\verb'LetrecExp(LetrecDecls letrecDecls, Exp exp)'}\\
+\verb'<letrecDecls>' & \verb'**= <VAR> EQUALS <proc>'\\
+  & \VerbBox{\fbox}{\verb'LetrecDecls(List<Token> varList, List<Proc> procList)'}\\
+\end{tabular}\exx
+\LARGE
+The environment in which each \verb'proc' of a \verb'letrec' is evaluated
+should include bindings of each of the variables in the \verb'letrec'
+to their corresponding closures.
+This is unlike a normal \verb'let',
+in which the values to which the variables are bound
+are evaluated in the {\em enclosing} environment.\exx
+The big question is,
+how can a closure (the value of a \verb'Proc' object)
+capture an environment that hasn't been created yet?\exx
+The steps are shown on the next slide:
+\end{minipage}

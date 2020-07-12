@@ -1,0 +1,5 @@
+#!/bin/bash
+
+DIR=$(basename $PWD)
+(cd .. ; ./MakeSlides $DIR)
+

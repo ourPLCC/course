@@ -1,0 +1,26 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language TYPE1} (continued)\exx
+\Large
+The type of a \verb'LitExp' is easy:
+\begin{qv}
+public Type evalType(TypeEnv tenv) {
+    return Type.intType; // a singleton in the Type class
+}
+\end{qv}
+So are the types of a \verb'TrueExp' and a \verb'FalseExp'.
+For both the \verb'TrueExp' and \verb'FalseExp' classes, we have
+\begin{qv}
+public Type evalType(TypeEnv tenv) {
+    return Type.boolType;
+}
+\end{qv}
+The type of a \verb'VarExp' looks up the type of the variable
+in the type environment and returns the result:
+\begin{qv}
+public Type evalType(TypeEnv tenv) {
+    return tenv.applyTypeEnv(var);
+}
+\end{qv}
+\end{minipage}

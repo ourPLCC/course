@@ -1,0 +1,38 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language OBJ} (continued)\exx
+\Large
+Here are examples
+of how to use \verb'display', \verb'display#', and \verb'newline':
+\begin{qv}
+let
+  x = 3
+  y = 5
+  z = 8
+in
+  { display x ; newline
+  ; display y ; newline
+  ; display z ; newline
+  ; nil
+  }
+\end{qv}
+Evaluating this expression results
+in displaying the following
+to standard output (omitting the final \verb'nil'):
+\begin{qv}
+3
+5
+8
+\end{qv}
+If the \verb'newline' expressions are removed,
+the output appears as follows (omitting the final \verb'nil'):
+\begin{qv}
+358
+\end{qv}
+If \verb'display' is then replaced by \verb'display#',
+the output appears as follows:
+\begin{qv}
+3 5 8
+\end{qv}
+\end{minipage}

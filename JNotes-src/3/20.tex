@@ -1,0 +1,32 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language V0} (continued)\exx
+Examine the rule for a \verb'PrimappExp':\exx
+\emm\begin{tabular}{@{}ll}
+\verb'<exp>:PrimappExp' & \verb'::= <prim> LPAREN <rands> RPAREN'\\
+  & \VerbBox{\fbox}{\verb'PrimappExp(Prim prim, Rands rands')}\\
+\end{tabular}\exx
+A \verb'PrimappExp' object has just two instance variables:
+\begin{qv}
+Prim prim;
+Rands rands;
+\end{qv}
+\LARGE
+There aren't any instance variables corresponding
+to \verb'LPAREN' and \verb'RPAREN',
+because the \verb'PrimappExp' class abstracts away these tokens.
+The only thing we need to do, then,
+is to re-insert them back into the \verb'toString' result,
+in the same order as they appear on the RHS of the grammar rule.
+The \verb'toString()' methods for \verb'prim' and \verb'rands'
+are called implicitly.
+\begin{qv}
+PrimappExp
+%%%
+    public String toString() {
+        return prim + "(" + rands + ")";
+    }
+%%%
+\end{qv}
+\end{minipage}

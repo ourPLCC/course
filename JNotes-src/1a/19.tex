@@ -1,0 +1,27 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf PLCC -- Semantics}\exx
+For example, the \verb'toString' semantics of an \verb'Interior' class
+can be given as follows:
+{\Large
+\begin{qv}
+Interior
+%%%
+    public String toString() {
+         return "("+symbol.toString()+" "+left+" "+right+")";
+    }
+%%%
+\end{qv}
+}
+Similar remarks apply to the semantics of a \verb'Leaf' class.\exx
+PLCC initially generates a {\em stub} for each of the classes --
+both abstract and non-abstract --
+that are specified by the grammar rules.
+The code for PLCC semantic actions are simply added
+to these Java class files.
+In the above example, the code for the \verb'toString' method
+becomes part of the \verb'Interior.java' file
+whose stub is generated automatically by the grammar rules.
+\end{minipage}
+\clearpage

@@ -1,0 +1,30 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language OBJ} (continued)
+\Large
+\begin{qv}
+define c1 = class
+  field x field y
+  method init1 = proc(v,w) {set x=v ; set y=w}
+  method getx1 = proc() x
+  method gety1 = proc() y
+end
+
+define c2 = class extends c1
+  field y
+  method init2 = proc(w) set y=w
+  method getx2 = proc() x
+  method gety2 = proc() y
+end
+
+define o2 = new c2
+
+send o2 init1(1,2) % same as .<o2>init1(1,2)
+send o2 init2(9)   % same as .<o2>init2(9)
+send o2 getx1()    % same as .<o2>getx1() => 1
+send o2 gety1()    % same as .<o2>gety1() => 2
+send o2 getx2()    % same as .<o2>getx2() => 1
+send o2 gety2()    % same as .<o2>gety2() => 9
+\end{qv}
+\end{minipage}

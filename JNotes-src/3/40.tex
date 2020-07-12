@@ -1,0 +1,22 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language V2} (continued)\exx
+\Large
+\VerbBox{\colorbox{light}}{\begin{tabular}{@{}ll}
+\verb'<exp>:IfExp' & \verb'::= IF <exp>testExp THEN <exp>trueExp ELSE <exp>falseExp' \\
+  & \VerbBox{\fbox}{\verb'IfExp(Exp testExp, Exp trueExp, Exp falseExp)'}\\
+\end{tabular}}\exx
+\LARGE
+In the code for \verb'IfExp',
+observe that {\em only one}
+of the \verb'trueExp' or \verb'falseExp' expressions
+gets evaluated, not both.
+This is a semantic feature -- not a syntax feature --
+of the definition of \verb'eval' for this object.
+The term {\em special form} refers
+to semantic structures that look like expressions
+but that, when evaluated, don't evaluate all of their constituent parts.
+An \verb'if' expression is an example of a special form.\exx
+Some examples of \verb'if' expressions are on the next slide.
+\end{minipage}

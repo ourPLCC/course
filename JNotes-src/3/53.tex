@@ -1,0 +1,34 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language V4} (continued)\exx
+Here are some examples of \verb'V4' programs using procedures:
+\large
+\begin{qv}
+let
+  f = proc(x,y) +(x,y)
+in
+  .f(3,8)
+  % => 11
+
+let
+  f = proc(z,y) +(10,y)
+in
+  .f(3,8)
+  % => 18
+
+let x = 10
+in
+  let
+    x = 7
+    f = proc(y) +(x,y)
+  in
+    .f(8)
+  % => 18
+\end{qv}
+\LARGE
+In the third example, the \verb'x' in the \verb'proc' definition
+refers to the enclosing \verb'x' (which is bound to \verb'10'),
+not to the inner \verb'x' (which is bound to \verb'7').
+Remember the rules for evaluating the \verb'letDecls'!
+\end{minipage}

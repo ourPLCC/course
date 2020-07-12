@@ -1,0 +1,22 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Parsers} (continued)\exx
+\Large
+\emm\LightBox{\MYlonGrammar}\exx
+\LARGE
+To summarize,
+the top lines of the file, up to the first percent (\verb'%') line,
+constitute the {\em lexical specification} of the language.
+For this language, these lines say that whitespace
+(including spaces, tabs, and newlines) should be skipped,
+that a \verb'NUM' is a string of one or more decimal digits,
+and that \verb'LPAREN' and \verb'RPAREN' match
+the characters `\verb'('' and `\verb')'', respectively.\exx
+The remaining lines of the file constitute the {\em syntax specification}
+of the language, given in BNF form.
+PLCC takes this file as input and generates a collection
+of Java source files in a \verb'Java' subdirectory
+that implement a scanner and parser for the language.
+\end{minipage}
+\clearpage

@@ -1,0 +1,26 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language ARRAY}\exx
+The \verb'ARRAY' language extends the \verb'OBJ' language
+by adding support for arrays.
+This language also defines the \verb'while' primitive.
+An array of a given size is created using the \verb'array' operator
+followed by the size of the array in square brackets.
+Here's an example:
+\begin{qv}
+define a = array[10]
+\end{qv}
+When an array is created, its elements are initialized to \verb'nil'.
+Array elements are references (in the sense of a \verb'ValRef')
+so they can appear on the LHS of \verb'set' expressions,
+and they can refer to any \verb'OBJ' value, including other arrays.
+In this way, a two-dimensional array can be constructed
+as an array of (one-dimensional) arrays.\exx
+Array indices are integers that range from zero to the array size minus one.
+For an array \verb'a' and index \verb'i',
+the expression \verb'\a[i]' refers to the value
+of the array at the given index.
+If \verb'\a[i]' itself refers to an array,
+the value at its index position \verb'j' is \verb'\\a[i][j]'.\exx
+\end{minipage}

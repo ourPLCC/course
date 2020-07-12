@@ -1,0 +1,16 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Continuations} (continued)\exx
+The \verb'eval' method in the \verb'ProcExp' class is even simpler,
+since creating a closure does not require any further evaluation.
+\Large
+\begin{qv}
+ProcExp
+%%%
+    public ACont eval(Env env, VCont vcont) {
+        return new ValCont(proc.makeClosure(env), vcont);
+    }
+%%%
+\end{qv}
+\end{minipage}

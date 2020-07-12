@@ -1,0 +1,24 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Static Properties of Variables} (continued)\\[2ex]
+{\bf Lexical and Grammar specification for the Lambda Calculus:}
+\begin{verbatim}
+# Lexical specification
+skip WHITESPACE '\s+'
+LPAREN '\('
+RPAREN '\)'
+LBRACE '\{'
+RBRACE '\}'
+DOT '\.'
+PROC 'proc'
+SYM '\w+'
+%
+# Grammar
+<exp>:Var  ::= <SYM>
+<exp>:Proc ::= PROC LPAREN <SYM> RPAREN LBRACE <exp> RBRACE
+<exp>:App  ::= DOT <exp>rator LPAREN <exp>rand RPAREN
+%
+\end{verbatim}
+\end{minipage}
+\clearpage

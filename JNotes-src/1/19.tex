@@ -1,0 +1,28 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Parsers} (continued)\exx
+%\Large
+%\emm\LightBox{\MYlon}\exx
+Here is a complete text file representation of the language,
+including its lexical specification and grammar rules,
+suitable for processing by \verb'plccmk'.
+Notice that we have included the annotations
+for the two \verb'<nums>' rules as described on the previous slide:\exx
+\begin{SaveVerbatim}{\MYlonGrammar}
+# Language specification for a list of numbers
+# Lexical spec
+skip WHITESPACE '\s+'
+NUM '\d+'
+LPAREN '\('
+RPAREN '\)'
+%
+# BNF rules
+<lon>           ::= LPAREN <nums> RPAREN
+<nums>:NumsNode ::= NUM <nums>
+<nums>:NumsNull ::= 
+%
+\end{SaveVerbatim}
+\emm\NormalBox{\MYlonGrammar}\exx
+\end{minipage}
+\clearpage

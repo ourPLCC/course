@@ -1,0 +1,41 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf PLCC -- Grammar}\exx
+A BNF grammar rule may have the same nonterminal name appearing
+more than once on its RHS, as in
+{\Large
+\begin{qv}
+<tree>:Interior ::= LPAREN <SYMBOL> <tree> <tree> RPAREN
+\end{qv}
+}
+PLCC requies that there are no duplicates of class field names
+associated with the RHS of a given grammar rule.
+The above grammar rule would therefore not be acceptable to PLCC.
+We can annotate the duplicate field entries
+by appending an alternate field name
+(any name will do, but the convention is to have it start
+with a lowercase letter)
+which becomes the name of the corresponding field.
+The following annotations fix the above example:
+{\Large
+\begin{qv}
+<tree>:Interior ::= LPAREN <SYMBOL> <tree>left <tree>right RPAREN
+\end{qv}
+}
+The same requirement that there be no duplicate field entries
+applies to fields associated with tokens instead of nonterminals --
+those of the form \verb'<TOKEN>'. So for a BNF rule such as
+{\Large
+\begin{qv}
+<hhmmss> ::= <TWOD> COLON <TWOD> COLON <TWOD> NL
+\end{qv}
+}
+we would annotate the three \verb'<TWOD>' token fields with different names:
+{\Large
+\begin{qv}
+<hhmmss> ::= <TWOD>hh COLON <TWOD>mm COLON <TWOD>ss NL
+\end{qv}
+}
+\end{minipage}
+\clearpage

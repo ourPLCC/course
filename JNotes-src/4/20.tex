@@ -1,0 +1,32 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language TYPE1} (continued)\exx
+When processing declaring the formal parameter types of procedures
+and processing \verb'let' and \verb'letrec' expressions,
+we want to ensure that there are no duplicate variable names.
+This amounts to checking the \verb'varList' instance variables
+in the \verb'Formals', \verb'LetDecls', and \verb'LetrecDecls' classes.
+This must be done after parsing,
+since the parser only uses the grammar rules
+and these rules do not have any way to check for duplicates.
+We check for duplicates during type checking
+and before expression evaluation.\exx
+One way to check for duplicates is to use a Java \verb'Map' object:
+for each variable in the list of variables,
+if it's already in the map, return an error,
+otherwise add it to the map.
+Here is the code:
+\Large
+\begin{qv}
+public void checkDuplicates(List<String> varList) {
+    Map<String,String> map = new HashMap<String,String>();
+    for (String id : varList) {
+        String s = map.get(id);
+        if (s != null)
+            throw new RuntimeException("duplicate identifier: "+id);
+        map.put(id, id);
+    }
+}
+\end{qv}
+\end{minipage}

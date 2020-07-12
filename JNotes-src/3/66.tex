@@ -1,0 +1,21 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Drawing Envinronments} (continued)\exx
+There are exactly two ways in which programs
+in language \verb'V4' create new environments
+using the \verb'extendEnv' method:
+\begin{itemize}
+\itemsep 0in
+\item evaluating a \verb'let' expression
+\item evaluating a procedure application
+\end{itemize}
+For a \verb'let' expression,
+a list of local bindings is created.
+Each binding uses the LHS string as its \verb'id' field
+and the value of the RHS expression as its \verb'val' field.
+Remember that the RHS expressions are evaluated
+{\em in the enclosing environment},
+not in the environment being created.
+An example expression is given on the next page
+\end{minipage}

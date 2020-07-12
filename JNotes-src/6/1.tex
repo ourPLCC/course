@@ -1,0 +1,26 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language INFIX}\exx
+In all of our languages so far, the following primitive operations --
+addition (\verb'+'),
+subtraction (\verb'-'),
+multiplication (\verb'*'),
+and division (\verb'/') --
+have grammar rules that apply these primitives in {\em prefix} form,
+where the operator occurs before the operands.
+However, most programming languages use {\em infix} mathematical notation
+for these operations,
+so that instead of writing (as we would in \verb'V6', for example)
+\begin{qv}
++(x, *(4,y))
+\end{qv}
+one would write
+\begin{qv}
+x+4*y
+\end{qv}
+It turns out that grammar rules that support infix notation
+are slightly more complicated than the prefix notation we have been using,
+but not enormously more so.
+We proceed to illustrate this in our language \verb'INFIX'.\exx
+\end{minipage}

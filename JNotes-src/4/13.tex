@@ -1,0 +1,38 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language TYPE1}\exx
+\Large
+Now that we have built the syntax for type expressions
+and incorporated it into our grammar,
+we begin to implement type checking.
+Our strategy is to determine the type of any expression,
+making type checks along the way.\exx
+Our first step is to define \verb'Type'
+as a {\em semantic} entity in our implementation.
+We implement \verb'Type' as an abstract class
+with three subclasses:
+\begin{qv}
+IntType
+BoolType
+ProcType
+\end{qv}
+These correspond to the three classes
+that extend the \verb'Val' class.
+Observe that \verb'Val' objects are used to evaluate expressions,
+whereas \verb'Type' objects are used for type checking.
+They serve similar purposes but are used in different ways.\exx
+Neither \verb'BoolType' nor \verb'IntType' has any instance variables.
+A \verb'ProcType' object has two instance variables,
+as described here:\exx
+\emm\VerbBox{\fbox}{%
+\verb'ProcType(List<Type> paramTypeList, Type returnType)'}\exx
+An expression is of type \verb'IntType'
+if it evaluates to an integer.
+Similarly for a \verb'BoolType'.\exx
+When we evaluate an expression,
+we use an environment to determine its expressed value.
+When we are doing type checking,
+we don't care what the expressed value actually is:
+only its type matters.
+\end{minipage}

@@ -1,0 +1,30 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language V5} (continued)\exx
+Here are the steps:
+\begin{enumerate}
+\item
+  Extend the enclosing environment with \verb'null' bindings.
+  This simply serves as a place-holder.
+  Call this new environment \verb'nenv'.
+\item
+  Create a \verb'Val' list (actually a \verb'ProcVal' list)
+  consisting of the closures of each \verb'proc' in \verb'procList'
+  (\verb'procList' is a field in the \verb'letrecDecls' object),
+  where these closures capture the environment \verb'nenv'.
+  Use this list to create a \verb'Bindings' object
+  that binds each of the values in this list
+  to its corresponding identifier in \verb'varList'
+  (\verb'varList' is a field in the \verb'letrecDecls' object).
+\item
+  Replace the \verb'null' place-holder in the \verb'nenv' object
+  with the bindings created in the previous step.
+\end{enumerate}
+Once the new bindings are part of the \verb'nenv' environment,
+all of the closures that captured this environment
+are able to access the other procedure identifiers defined
+in the \verb'letrec' (including themselves, recursively),
+and we evaluate the body of the \verb'letrec'
+in this modified environment.
+\end{minipage}

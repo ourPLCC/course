@@ -1,0 +1,53 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language TYPE1} (continued)\exx
+Examples of top-level declarations/definitions:
+\Large
+\begin{enumerate}
+\setlength{\parskip}{.3ex}
+\item
+\begin{qv}
+define x = 3 % type int
+define x = 4 % error - multiple definitions for x
+\end{qv}
+
+\item
+\begin{qv}
+define x = 3 % type int
+set x = 4    % ok - types agree
+set x = true % error - type of RHS must be int
+\end{qv}
+
+\item
+\begin{qv}
+define fact = proc(x:int):int
+  if zero?(x) then 1 else *(x,.fact(sub1(x)))
+  % error - fact on the RHS has no type binding!
+\end{qv}
+
+\item
+\begin{qv}
+declare fact : [int=>int]
+define fact = proc(x:int):int
+  if zero?(x) then 1 else *(x,.fact(sub1(x))) %ok
+\end{qv}
+
+\item
+\begin{qv}
+declare f : [=>bool]
+define y = 2
+define f = proc():int y
+  % error - defined type does not match declared type
+\end{qv}
+
+\item
+\begin{qv}
+declare f : [=>bool]
+define y = 2
+define f = proc():bool y
+  % error - body type does not match return type
+\end{qv}
+
+\end{enumerate}
+\end{minipage}

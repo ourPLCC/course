@@ -1,0 +1,14 @@
+#!/bin/bash
+
+CMD=$(basename $0)
+
+SSET=$1
+
+if [ -f "$SSET/FILES" ]; then
+	cat $SSET/FILES
+elif [ -d "$SSET" ]; then
+	/usr/local/bin/renumber --dir="$SSET" --suffix=".tex" --number | \
+	sed "s/^/$SSET\//"
+fi 
+
+exit 0

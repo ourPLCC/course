@@ -1,0 +1,24 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language SET} (continued)\exx
+\emm\VerbBox{\fbox}{\verb'SetExp(Token var, Exp exp)'}\exx
+So far, we have dealt only with the implementation details
+of environments.  How do we implement the semantics
+of \verb'set' expressions?
+Coding this is now simple:
+\begin{qv}
+SetExp
+%%%
+    public Val eval(Env env) {
+        Val val = exp.eval(env);
+        Ref ref = env.applyEnvRef(var);
+        return ref.setRef(val);
+    }
+%%%
+\end{qv}
+Notice that a \verb'set' expression evaluates
+to the value of the RHS of the assignment.
+This means that multiple \verb'set' operations can appear
+in one expression.
+\end{minipage}

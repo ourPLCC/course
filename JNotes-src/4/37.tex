@@ -1,0 +1,21 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language TYPE1} (continued)\\[1.5ex]
+For \verb'PrimappExp',
+we do the same thing, except that we simply ask the primitive
+to identify its type using its \verb'definedType' method:
+\Large
+\begin{qv}
+    public Type evalType(TypeEnv tenv) {
+        ProcType pt = prim.definedType();
+        List<Type> argTypeList = rands.evalTypeRands(tenv);
+        Type.checkEqualTypes(pt.paramTypeList, argTypeList);
+        return pt.returnType;
+    }
+\end{qv}
+\LARGE
+Notice that the type of a primitive is defined statically.
+The primitive's \verb'definedType' method just retrieves the type,
+which must be a \verb'ProcType'.
+\end{minipage}

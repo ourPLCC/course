@@ -1,0 +1,34 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Continuations} (continued)\exx
+Two more expressions require our attention:
+\verb'let' expressions and procedure applications.
+As we have shown, a let expression can (mostly) be converted
+into a procedure application,
+so code for both of these should be much the same.
+The caution here is that
+call-by-reference parameter passing semantics for procedure application
+behaves differently from the value semantics
+for the RHS expressions in a \verb'let'.\exx
+In the \verb'LetExp' class,
+its \verb'eval' method asks its \verb'letDecls' object
+to extend its environment
+by binding all of the LHS variables
+to (references to) their RHS values.
+This extended environment is used
+to return an \verb'EvalCont' object
+that evaluates the body of the \verb'let'
+in this extended environment
+and pass its value on to the \verb'vcont' continuation.
+\Large
+\begin{qv}
+LetExp
+%%%
+    public ACont eval(Env env, VCont vcont) {
+        env = letDecls.addBindings(env);
+        return new EvalCont(exp, env, vcont);
+    }
+%%%
+\end{qv}
+\end{minipage}

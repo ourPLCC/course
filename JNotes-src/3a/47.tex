@@ -1,0 +1,31 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Aliasing} (continued)
+\begin{qv}
+let
+  a = 3
+  addplus1 = proc(x,y) {set x = add1(x) ; +(x,y)}
+in
+  .addplus1(a,a)
+\end{qv}
+Using call-by-reference,
+when \verb'addplus1' is applied
+to the actual parameters \verb'a' and \verb'a',
+both formal parameters \verb'x' and \verb'y' of \verb'addplus1'
+refer to the {\em same cell} as \verb'a'.
+Therefore the \VerbBox{\fbox}{\verb'set x = add1(x)'} expression
+is equivalent to the expression
+\VerbBox{\fbox}{\verb'set a = add1(a)'}
+which increments \verb'a' to 4,
+and the next expression \verb'+(x,y)' is essentially equivalent
+to the expression \verb'+(a,a)' which now evaluates to 8.
+Thus the value of the program is 8.\exx
+{\em Aliasing} occurs when two different formal parameters
+refer to the same actual parameter.
+As this example shows, aliasing can lead
+to unexpected side-effects and should be avoided.
+{\bf Of course, the best way to avoid problems such as
+order of evaluation ambiguities and aliasing
+is to avoid using langauges with side-effects!}
+\end{minipage}

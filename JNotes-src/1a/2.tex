@@ -1,0 +1,47 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf PLCC -- Tokens}\\
+\Large
+Comments may appear in a language specification file
+beginning with `\verb'#'' and continuing to the end of the line,
+except inside a token specification regular expression
+or in Java code in the semantics section.\exx
+In the lexical specification part of a language specification file,
+a line is either
+a \verb'skip' specification or a \verb'token' specification.
+These specifications have the following form:
+\begin{quote}
+\verb'{skip|token}' {\em NAME} \verb. '.{\em re}\verb.'.
+\end{quote}
+where {\em NAME} is a string of uppercase letters, decimal digits,
+and underscores,
+starting with an uppercase letter,
+and {\em re} is a {\em regular expression}
+as defined by the Java \verb'Pattern' class.\exx
+Here are some regular expression examples:
+
+\begin{center}
+\large
+\begin{tabular}{r|l}
+{\bf re} & {\bf matches} \\ \hline
+\verb'd' & the letter \verb'd' \\
+\verb'\d' & a single decimal digit \\
+\verb'd+' & one or more \verb'd's \\
+\verb'\d+' & one or more decimal digits \\
+\verb'.' & any character \\
+\verb'\.' & the dot character (\verb'.') \\
+\verb'.*' & zero or more characters \\
+\verb'%.*' & the character \verb'%' followed zero or more characters \\
+\verb'[a-z]' & any lowercase letter in the range \verb'a' to \verb'z' \\
+\verb'\w'  & any letter (lowercase or uppercase), digit, or underscore \\
+\verb'[A-Za-z0-9_]' & the same as \verb'\w' \\
+\end{tabular}
+\end{center}
+
+\Large
+PLCC regular expressions do not match anything that crosses a line boundary,
+so the regular expression \verb?'.*'? matches everything
+up to the end of the current line, including the end-of-line marker.
+\end{minipage}
+\clearpage

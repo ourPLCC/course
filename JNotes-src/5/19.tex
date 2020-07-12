@@ -1,0 +1,29 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language OBJ} (continued)\exx
+The \verb'<...>' operator, when applied to a class,
+extracts the static environment of the class.
+When used in an expression of the form
+\begin{qv}
+<...>exp
+\end{qv}
+the expression \verb'exp' is evaluated
+in the static environment of the given class.
+This can be used to evaluate an expression
+that refers to any static variable in the class.\exx
+Consider a class \verb'c', for example.
+For a static variable \verb'x' in the class \verb'c',
+the expression \verb'<c>x' evaluates
+to the value of the variable.
+For a static procedure \verb'f' in the class \verb'c',
+the expression \verb'.<c>f(...)' evaluates
+to the application of \verb'f' to its actual parameters.\exx
+When making a procedure application such as \verb'.<c>f(...)',
+it is important to know
+\begin{itemize}
+\parskip -0.5ex
+\item the environment in which \verb'f' is evaluated, and
+\item the environment in which the actual parameters to \verb'f' are evaluated.
+\end{itemize}
+\end{minipage}

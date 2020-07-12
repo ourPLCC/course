@@ -1,0 +1,28 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language OBJ} (continued)\exx
+In the previous example,
+the \verb'init' method is invoked separately,
+after the object is created using \verb'new',
+and not as part of the object creation itself.
+Naming this procedure ``\verb'init''' is not a requirement.
+A class can have several methods that initialize its fields,
+much as a \verb'Java' class can have several constructors.
+Unlike \verb'Java', the \verb'OBJ' language can apply its methods --
+even the ones intended to initialize the fields --
+at any time.
+\begin{qv}
+define c =
+    class
+        field x
+        method init = proc() {set x = 5 ; self}
+        method foo = proc() {set x = add1(x) ; self}
+    end
+
+define o = .<new c>init()
+<o>x              % => 5
+<o>{.foo() ; x}   % => 6
+<o>{.init() ; x } % => 5
+\end{qv}
+\end{minipage}

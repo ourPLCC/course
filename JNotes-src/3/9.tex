@@ -1,0 +1,27 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language V0} (continued)\exx
+The \verb'grammar' file in Language V0
+has three parts, separated by lines with a single `\verb'%'':
+the lexical specification,
+the grammar rules,
+and the code (semantics) section.\exx
+If only the lexical specification is given,
+the \verb'plccmk' tool only produces Java code
+for a scanner (class \verb'Scan'),
+but nothing else.
+If only the lexical specification and grammar rules are given,
+the \verb'plccmk' tool
+produces a scanner and a parser for the grammar,
+but nothing else.\exx
+The code section is the heart of the language semantics.
+In this section, the Java classes defined by the grammar rules
+are given life in terms of defining behavior --
+for example, by defining \verb'toString' methods.
+We will presently see how a \verb'toString' method can be used
+to print the arithmetic value of an expression,
+but for now we are content with simply printing
+a copy of the expression itself.\exx
+{\em The code section defines the language semantics.}
+\end{minipage}

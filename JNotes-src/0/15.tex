@@ -1,0 +1,42 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Tokens} (continued)\exx
+Here are some example specification files that you can try.
+Each of these examples can be put in a file named \verb'grammar'
+for processing by \verb'plccmk'.
+These examples define what input should be skipped
+and what input should be treated as tokens.
+Comments in a language specification file begin
+with the \verb'#' character and go to the end of a line.
+\Large
+\begin{itemize}
+\item
+\begin{qv}
+# Every character in the file is a token, including whitespace
+token CHAR '.'
+\end{qv}
+\item
+\begin{qv}
+# Every line in the file is a token
+token LINE '.*'
+\end{qv}
+\item
+\begin{qv}
+# Tokens in the file are 'words' consisting of one or more
+# letters, digits or underscores -- skip everything else
+skip NONWORD '\W+'  # skip non-word characters
+token WORD '\w+'    # keep one or more word characters
+\end{qv}
+\item
+\begin{qv}
+# Tokens in the file consist of one or more non-whitespace
+# characters, skipping all whitespace.
+# Gives the same output as Java's 'next()' Scanner method.
+skip WHITESPACE '\s+'  # skip whitespace characters
+token NEXT '\S+'       # keep one or more non-space characters
+\end{qv}
+\end{itemize}
+\Large
+\end{minipage}
+\clearpage

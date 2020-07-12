@@ -1,0 +1,40 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language TYPE0} (continued)\exx
+\Large
+Our \verb'TYPE0' language has two new expressions:
+a \verb'TrueExp' and a \verb'FalseExp',
+with obvious concrete and abstract syntax:\exx
+\emm\begin{tabular}{ll}
+\verb'<exp>:TrueExp' & \verb'::= TRUE'\\
+    & \VerbBox{\fbox}{\verb'TrueExp()'} \\
+\verb'<exp>:FalseExp' & \verb'::= FALSE'\\
+    & \VerbBox{\fbox}{\verb'FalseExp()'} \\
+\end{tabular}\exx
+What should the \verb'eval' method return for these classes?
+So far, we have used an \verb'IntVal' of zero to be false
+and everything else to be true.
+Once we have syntax for \verb'true' and \verb'false' expressions,
+we should introduce corresponding semantics.
+We therefore create a new \verb'Val' type, \verb'BoolVal',
+that represent the values of these expressions.
+The code for the \verb'BoolVal' class is in the \verb'val' file.\exx
+Once we have a \verb'BoolVal',
+we can define the \verb'eval' behavior
+for the \verb'TrueExp' and \verb'FalseExp' classes.
+Here's the code for \verb'TrueExp' --
+the code for \verb'FalseExp' is nearly identical:
+\begin{qv}
+public Val eval(Env env) {
+    return new BoolVal(true);
+}
+\end{qv}
+Obviously the \verb'isTrue' method applied
+to a \verb'BoolVal' object constructed with \verb'true'
+should return true, and similarly a \verb'BoolVal' object
+constructed with \verb'false' should return false.
+The \verb'isTrue' method applied to any other value
+(either an \verb'IntVal' or a \verb'ProcVal')
+should throw an exception.
+\end{minipage}

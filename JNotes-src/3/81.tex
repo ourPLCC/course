@@ -1,0 +1,23 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language V4} (continued)\exx
+Observe that we evaluate every expression in the list
+but only return the last value.
+\begin{qv}
+{1;3;5}
+  % => 5
+
+{42}
+  % => 42
+\end{qv}
+The sequence construct can be used to enclose a single expression
+that might otherwise look too unwieldy.
+Here's an example:
+\begin{qv}
+.{proc(t,u) +(t,u)} (3,4)
+\end{qv}
+The braces in this expression are not required,
+but they help to visualize the scope of the \verb'proc' expression.
+
+\end{minipage}

@@ -1,0 +1,36 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Parsers} (continued)\exx
+\Large
+\emm\LightBox{\MYlonGrammarKleene}\exx
+We want to redefine the \verb'toString()' method
+in the \verb'Lon' class
+so it prints the values of the tokens in the \verb'numList' field.
+This field, an object of type \verb'List<Token>',
+is accessible from the \verb'Lon' class
+as follows:
+\begin{qv}
+nums.numList
+\end{qv}
+So we can get the the \verb'NUM' entries by iterating
+over this list,
+accumulating the corresponding (\verb'String') values of the tokens,
+and returning the resulting string.
+Here is the completed version of the PLCC specification
+that adds the modified \verb'toString()' method to the \verb'Lon.java' file.
+This code also adds back the parentheses to make the output look ``pretty''.
+\begin{qv}
+Lon
+%%%
+    public String toString() {
+        String ret = "( ";
+        for (Token tok: nums.numList) {
+            ret += tok + " ";
+        }
+        return ret + ")";
+    }
+%%%
+\end{qv}
+\end{minipage}
+\clearpage

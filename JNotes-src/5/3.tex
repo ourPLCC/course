@@ -1,0 +1,27 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language OBJ} (continued)\exx
+Consider the following example.
+\begin{qv}
+define c1 =
+  class % extends an unnamed class
+    field x
+    field y
+  end
+define c2 = 
+  class extends c1
+    field z
+    field x
+  end
+define obj1 = new c1
+define obj2 = new c2
+<obj1>set x = 3
+<obj2>set x = 5
+<obj1>x % evaluates to 3
+\end{qv}
+In this example, \verb'c1' is a class
+and \verb'c2' is a subclass of \verb'c1'.
+Object \verb'obj1' is an instance of \verb'c1'
+and \verb'obj2' is an instance of \verb'c2'.  
+\end{minipage}

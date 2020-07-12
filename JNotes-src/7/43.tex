@@ -1,0 +1,35 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Concurrency} (continued)
+\large
+\begin{qv}
+ConcurrentCont
+%%%
+import java.util.*;
+
+public class ConcurrentCont extends ACont {
+
+    public Queue<ACont> queue; // apply these in parallel
+    public ACont acont; // what to do when the queue is empty
+
+    public ConcurrentCont(Queue<ACont> queue, ACont acont) {
+        this.queue = queue;
+        this.acont = acont;
+    }
+
+    public ACont apply() {
+        ACont thread = queue.poll();
+        if (thread == null)
+            return acont;
+        try {
+            thread = thread.apply();
+            queue.add(thread);
+        } catch (NullContException) {
+        }
+        return this; // bounce me!
+    }
+}
+%%%
+\end{qv}
+\end{minipage}

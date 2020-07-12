@@ -1,0 +1,19 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Continuations} (continued)\exx
+To evaluate a \verb'SeqExp',
+we evaluate the first expression and save its value.
+If there are more expressions in the list,
+we evaluate each of them in turn,
+keeping only the value of the last expression and passing it on
+to the saved continuation.
+We create a \verb'SequenceCont' continuation
+that has fields for the initial expression,
+an iterator that produces the next expression
+in the sequence if there is one,
+the environment in which the expressions are evaluated,
+and the original continuation to which we send
+the final expression value.\exx
+The \verb'SequenceCont' class is on the next slide.
+\end{minipage}
