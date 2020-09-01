@@ -1,0 +1,27 @@
+# numlistv3.plcc
+#
+# Custom code added to tree root class
+
+# Lexical specification
+skip WHITESPACE '\s+'
+NUM '\d+'
+LPAREN '\('
+RPAREN '\)'
+%
+# Grammar
+<numSeq> ::= LPAREN <nums> RPAREN
+<nums>   **= <NUM>
+%
+
+NumSeq
+%%%
+
+    public String toString() {
+        String ret = "( ";
+        for (Token tok: nums.numList) {
+            ret += tok + " ";
+        }
+        return ret + ")";
+    }
+
+%%%

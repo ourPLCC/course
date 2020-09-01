@@ -1,0 +1,27 @@
+# IF Exercise
+# J Heliotis
+# 23 January 2020
+
+# This one does not work because of the nested "else" problem.
+
+skip WHITESPACE '\s+'
+
+token LPAREN '\('
+token RPAREN '\)'
+token IF 'if'
+token ELSE 'else'
+token SEMI ';'
+token EXPR 'EXPR'
+token STMT 'STMT'
+
+%
+
+<prog> ::= <stmt> SEMI
+<stmt>:Default ::= <STMT>
+<expr> ::= <EXPR>
+<stmt>:IfStmt ::= IF LPAREN <expr> RPAREN <stmt> <elsePart>
+<elsePart>:RealElse ::= SEMI ELSE <stmt>
+<elsePart>:NoElse ::=
+
+%
+

@@ -1,0 +1,30 @@
+# numlistv2.plcc
+#
+# Alternate form: uses a special iterative construct in PLCC
+
+skip WHITESPACE '\s+'
+NUMBER '\d+'
+LPAREN '\('
+RPAREN '\)'
+
+# End of lexical spec
+%
+
+# Grammar rules start here, start rule first.
+# Putting a token type in angle brackets causes its value to be saved.
+
+<numSeq> ::= LPAREN <nums> RPAREN
+<nums> **= <NUMBER>
+
+# Classes created: Numseq, Nums
+#
+# NumSeq
+#   field nums(Nums)
+# Nums
+#   field numberList(List<Token>)
+
+# End of syntax spec
+%
+
+# Custom code would go here.
+

@@ -1,0 +1,46 @@
+# numlistv4.plcc
+#
+# Note printing of token type.
+
+skip WHITESPACE '\s+'
+NUMBER '\d+'
+LPAREN '\('
+RPAREN '\)'
+
+# End of lexical spec
+%
+
+# Grammar rules start here, start rule first.
+# Putting a token type in angle brackets causes its value to be saved.
+
+<numSeq> ::= LPAREN <nums> RPAREN
+<nums>   **= <NUMBER>
+
+# Classes created: NumSeq, Nums
+#
+# NumSeq
+#   field nums(Nums)
+# Nums
+#   field numList(List<Token>)
+
+# End of syntax spec
+%
+
+# Custom code
+
+
+NumSeq
+
+%%%
+/* Custom Code */
+
+@Override
+public String toString() {
+    String result = "(( ";
+    for (Token tok: nums.numberList) {
+        result += "(" + tok.val + ')' + tok.str + " ";
+    }
+    return result + "))";
+}
+%%%
+

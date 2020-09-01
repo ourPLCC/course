@@ -1,0 +1,22 @@
+# Simple test for your PLCC installation
+
+# Lexical specification
+skip WHITESPACE '\s+'
+
+LPAREN '\('
+RPAREN '\)'
+PRINT 'print'
+END '\.'
+STRING '[a-zA-Z]+'
+
+%
+
+# Grammar
+<program> ::= <stmtSeq> END
+
+<stmtSeq> **= <printStmt>
+
+<printStmt> ::= PRINT LPAREN <STRING> RPAREN
+
+%
+

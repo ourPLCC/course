@@ -1,0 +1,5 @@
+
+skip WHITESPACE '\s+'
+token LPAREN '\('
+token RPAREN '\)'
+token NUMBERS '(\d+\s*)*'

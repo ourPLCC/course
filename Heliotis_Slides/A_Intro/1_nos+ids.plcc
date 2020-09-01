@@ -1,0 +1,5 @@
+# Recognize number literals and identifiers as tokens.
+
+token NUM '\d+'
+token ID '[A-Za-z]\w*'
+

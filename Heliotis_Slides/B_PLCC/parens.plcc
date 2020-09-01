@@ -1,0 +1,14 @@
+skip WHITESPACE '\s+'
+
+ATSIGN '@'
+LPAREN '\('
+RPAREN '\)'
+
+%
+
+<balanced> ::= <parens> ATSIGN
+<parens>:Parentheses ::= LPAREN <parens>p1 RPAREN <parens>p2
+<parens>:EmptyParens ::= 
+
+%
+

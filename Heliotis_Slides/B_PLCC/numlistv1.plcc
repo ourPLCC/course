@@ -1,0 +1,38 @@
+# numlistv1.plcc
+# Language specification for a list of numbers
+#
+# Lexical spec: becomes values for an enumerated type
+#
+skip WHITESPACE '\s+'
+NUMBER '\d+'
+LPAREN '\('
+RPAREN '\)'
+
+# End of lexical spec
+%
+
+# Grammar rules start here, start rule first.
+# Putting a token type in angle brackets causes its value to be saved.
+
+<numSeq> ::= LPAREN <numbers> RPAREN
+<numbers>:NonEmptyNumbers ::= <NUMBER> <numbers>
+<numbers>:EmptyNumbers ::=
+
+# Abstract classes created
+# Numbers
+#   subclcasses NonEmptyNumbers, EmptyNumbers
+#
+# Classes created: NumSeq, NonEmptyNumbers, EmptyNumbers
+#
+# NumSeq
+#   fields numbers(Numbers)
+# NonEmptyNumbers, extends Numbers
+#   fields number(Token), numbers(Numbers)
+# EmptyNumbers, extends Numbers
+#   no fields!
+
+# End of syntax spec
+%
+
+# Custom code would go here.
+

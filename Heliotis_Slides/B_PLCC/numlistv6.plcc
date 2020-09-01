@@ -1,0 +1,46 @@
+# numlistv6.plcc
+#
+# Change semantic action to print the minimum value of the list.
+# NOTE that this is the recursive grammar.
+
+# Lexical specification
+skip WHITESPACE '\s+'
+LPAREN '\('
+RPAREN '\)'
+NUM '\d+'
+%
+# Grammar
+<numSeq>        ::= LPAREN <NUM> <nums> RPAREN
+<nums>:NumsNode ::= <NUM> <nums>
+<nums>:NumsNull ::=
+%
+
+# add a toString method to the NumSeq class
+NumSeq
+%%%
+    public String toString() {
+        int minSoFar = Integer.parseInt(num.str);
+        int m = nums.min(minSoFar); // get the overall minimum
+        return "minimum value = " + m;
+    }
+%%%
+
+Nums
+%%%
+    public abstract int min(int minSoFar);
+%%%
+
+NumsNode
+%%%
+    public int min(int minSoFar) {
+        int minOfChildren = nums.min( Integer.parseInt( num.str ) );
+        return minSoFar < minOfChildren ? minSoFar : minOfChildren;
+    }
+%%%
+
+NumsNull
+%%%
+    public int min(int minSoFar) {
+        return minSoFar;
+    }
+%%%

@@ -1,0 +1,31 @@
+# WHILE Exercise
+# J Heliotis
+# 23 January 2020
+
+# 
+
+skip WHITESPACE '\s+'
+
+token LPAREN '\('
+token RPAREN '\)'
+token LBRACE '\{'
+token RBRACE '\}'
+token WHILE 'while'
+token SEMI ';'
+token EXPR 'EXPR'
+token STMT 'STMT'
+
+%
+
+<prog> ::= <stmt>
+
+<stmt>:Default ::= <STMT> SEMI
+<stmt>:While ::= WHILE LPAREN <expr> RPAREN LBRACE <stmts> RBRACE
+
+<stmts>:None ::= 
+<stmts>:More ::= <stmt> <stmts>
+
+<expr> ::= <EXPR>
+
+%
+

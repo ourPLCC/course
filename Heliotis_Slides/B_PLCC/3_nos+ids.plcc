@@ -1,0 +1,9 @@
+# Recognize number literals and identifiers as tokens.
+# Skip over whitespace
+
+skip WHITESPACE '\s+'
+
+token NUMBER '\d+'
+token IDENT '[A-Za-z]\w*'
+%
+%

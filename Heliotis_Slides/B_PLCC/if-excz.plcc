@@ -1,0 +1,32 @@
+# IF Exercise
+# J Heliotis
+# 23 January 2020
+
+# 
+
+skip WHITESPACE '\s+'
+
+token LPAREN '\('
+token RPAREN '\)'
+token IF 'if'
+token ELSE 'else'
+token SEMI ';'
+token EXPR 'EXPR'
+token STMT 'STMT'
+
+%
+
+<prog> ::= <stmt>
+
+<stmt>:PartialIf ::= <ifPart> <stmt>
+
+<stmt>:OtherStmt ::= <other>
+<other>:FullIf ::= <ifPart> <other> ELSE <stmt>
+<other>:Default ::= <STMT> SEMI
+
+<ifPart> ::= IF LPAREN <expr> RPAREN
+
+<expr> ::= <EXPR>
+
+%
+

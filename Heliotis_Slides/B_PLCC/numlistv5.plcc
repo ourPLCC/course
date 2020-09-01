@@ -1,0 +1,53 @@
+# numlistv5.plcc
+#
+# Here we respect encapsulation and let the subordinate object
+# print its own values.
+
+# Lexical specification
+#
+skip WHITESPACE '\s+'
+NUM '\d+'
+LPAREN '\('
+RPAREN '\)'
+COMMA ','
+
+%
+
+# Grammar
+
+<numSeq>  ::= LPAREN <nums> RPAREN
+<nums>    **= <number> +COMMA
+<number>  ::= <NUM>
+
+%
+
+NumSeq
+%%%
+
+    public String toString() {
+        return nums.toString();
+    }
+
+%%%
+
+Nums
+%%%
+
+    public String toString() {
+        String ret = "( ";
+        for (Number number: numberList) {
+            ret += number + " ";
+        }
+        return ret + ")";
+    }
+
+%%%
+
+Number
+%%%
+
+    public String toString() {
+        return num.str;
+    }
+
+%%%

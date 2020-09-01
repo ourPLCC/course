@@ -1,0 +1,4 @@
+token NUM '\d+'
+token ID '[A-Za-z]\w*'
+%
+%
