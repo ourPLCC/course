@@ -1,0 +1,49 @@
+$ rep-t
+--> 
+   0: <program>
+if 13 then 6 else 5
+   1: | <exp>:IfExp
+   1: | | IF "IF"
+   1: | | <exp>:LitExp
+   1: | | | LIT "13"
+   1: | | THEN "THEN"
+   1: | | <exp>:LitExp
+   1: | | | LIT "6"
+   1: | | ELSE "ELSE"
+   1: | | <exp>:LitExp
+   1: | | | LIT "5"
+6
+--> 
+   1: <program>
+if -(x,10) then 100 else +(i,v)
+   2: | <exp>:IfExp
+   2: | | IF "IF"
+   2: | | <exp>:PrimAppExp
+   2: | | | <prim>:SubPrim
+   2: | | | | SUBOP "-"
+   2: | | | LPAREN "("
+   2: | | | <rands>
+   2: | | | | <exp>:VarExp
+   2: | | | | | VAR "x"
+   2: | | | | COMMA ","
+   2: | | | | <exp>:LitExp
+   2: | | | | | LIT "10"
+   2: | | | RPAREN ")"
+   2: | | THEN "THEN"
+   2: | | <exp>:LitExp
+   2: | | | LIT "100"
+   2: | | ELSE "ELSE"
+   2: | | <exp>:PrimAppExp
+   2: | | | <prim>:AddPrim
+   2: | | | | ADDOP "+"
+   2: | | | LPAREN "("
+   2: | | | <rands>
+   2: | | | | <exp>:VarExp
+   2: | | | | | VAR "i"
+   2: | | | | COMMA ","
+   2: | | | | <exp>:VarExp
+   2: | | | | | VAR "v"
+   2: | | | RPAREN ")"
+6
+--> 
+   2: <program>

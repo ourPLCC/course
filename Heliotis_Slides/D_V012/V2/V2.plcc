@@ -1,0 +1,55 @@
+# Language V2: IF expressions
+# This language evaluates expressions, including IF expressions.
+# The Exp class code includes something to set up some
+# initial bindings.
+
+skip WHITESPACE '\s+'
+skip COMMENT '%.*'
+LIT '\d+'
+LPAREN '\('
+RPAREN '\)'
+COMMA ','
+IF 'if'
+THEN 'then'
+ELSE 'else'
+ADDOP '\+'
+SUBOP '\-'
+ADD1OP 'add1'
+SUB1OP 'sub1'
+VAR '[A-Za-z]\w*'
+%
+<program>        ::= <exp>
+<exp>:LitExp     ::= <LIT>
+<exp>:VarExp     ::= <VAR>
+<exp>:PrimAppExp ::= <prim> LPAREN <operands> RPAREN
+<exp>:IfExp      ::= IF <exp>test THEN <exp>thenPart ELSE <exp>elsePart
+<operands>       **= <exp> +COMMA
+<prim>:AddPrim   ::= ADDOP
+<prim>:SubPrim   ::= SUBOP
+<prim>:Add1Prim  ::= ADD1OP
+<prim>:Sub1Prim  ::= SUB1OP
+%
+
+# class methods that just print out the expression
+# (Remember that use of toString is only mandated at the tree's
+#  root node.)
+
+include Add1Prim-i.java
+include AddPrim-i.java
+include Exp-i.java
+include IfExp-i.java
+include LitExp-i.java
+include Prim-i.java
+include PrimAppExp-i.java
+include Program-i.java
+include Operands-i.java
+include Sub1Prim-i.java
+include SubPrim-i.java
+include VarExp-i.java
+
+include EnvSource/Binding-i.java
+include EnvSource/Bindings-i.java
+include EnvSource/Env-i.java
+include EnvSource/EnvNode-i.java
+include EnvSource/Val-i.java
+

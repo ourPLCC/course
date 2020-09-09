@@ -1,0 +1,110 @@
+$ java Rep -t
+--> 
+   0: <program>
+5
+   1: | <exp>:LitExp
+   1: | | LIT "5"
+5
+--> 
+   1: <program>
+blah
+   2: | <exp>:VarExp
+   2: | | VAR "blah"
+blah
+--> 
+   2: <program>
++(9,5)
+   3: | <exp>:PrimappExp
+   3: | | <prim>:AddPrim
+   3: | | | ADDOP "+"
+   3: | | LPAREN "("
+   3: | | <rands>
+   3: | | | <exp>:LitExp
+   3: | | | | LIT "9"
+   3: | | | COMMA ","
+   3: | | | <exp>:LitExp
+   3: | | | | LIT "5"
+   3: | | RPAREN ")"
++(9,5)
+--> 
+   3: <program>
+-(13,blah,89)
+   4: | <exp>:PrimappExp
+   4: | | <prim>:SubPrim
+   4: | | | SUBOP "-"
+   4: | | LPAREN "("
+   4: | | <rands>
+   4: | | | <exp>:LitExp
+   4: | | | | LIT "13"
+   4: | | | COMMA ","
+   4: | | | <exp>:VarExp
+   4: | | | | VAR "blah"
+   4: | | | COMMA ","
+   4: | | | <exp>:LitExp
+   4: | | | | LIT "89"
+   4: | | RPAREN ")"
+-(13,blah,89)
+--> 
+   4: <program>
+-(+(1,2),+(3,4))
+   5: | <exp>:PrimappExp
+   5: | | <prim>:SubPrim
+   5: | | | SUBOP "-"
+   5: | | LPAREN "("
+   5: | | <rands>
+   5: | | | <exp>:PrimappExp
+   5: | | | | <prim>:AddPrim
+   5: | | | | | ADDOP "+"
+   5: | | | | LPAREN "("
+   5: | | | | <rands>
+   5: | | | | | <exp>:LitExp
+   5: | | | | | | LIT "1"
+   5: | | | | | COMMA ","
+   5: | | | | | <exp>:LitExp
+   5: | | | | | | LIT "2"
+   5: | | | | RPAREN ")"
+   5: | | | COMMA ","
+   5: | | | <exp>:PrimappExp
+   5: | | | | <prim>:AddPrim
+   5: | | | | | ADDOP "+"
+   5: | | | | LPAREN "("
+   5: | | | | <rands>
+   5: | | | | | <exp>:LitExp
+   5: | | | | | | LIT "3"
+   5: | | | | | COMMA ","
+   5: | | | | | <exp>:LitExp
+   5: | | | | | | LIT "4"
+   5: | | | | RPAREN ")"
+   5: | | RPAREN ")"
+-(+(1,2),+(3,4))
+--> 
+   5: <program>
++(+(+(+(0))))
+   6: | <exp>:PrimappExp
+   6: | | <prim>:AddPrim
+   6: | | | ADDOP "+"
+   6: | | LPAREN "("
+   6: | | <rands>
+   6: | | | <exp>:PrimappExp
+   6: | | | | <prim>:AddPrim
+   6: | | | | | ADDOP "+"
+   6: | | | | LPAREN "("
+   6: | | | | <rands>
+   6: | | | | | <exp>:PrimappExp
+   6: | | | | | | <prim>:AddPrim
+   6: | | | | | | | ADDOP "+"
+   6: | | | | | | LPAREN "("
+   6: | | | | | | <rands>
+   6: | | | | | | | <exp>:PrimappExp
+   6: | | | | | | | | <prim>:AddPrim
+   6: | | | | | | | | | ADDOP "+"
+   6: | | | | | | | | LPAREN "("
+   6: | | | | | | | | <rands>
+   6: | | | | | | | | | <exp>:LitExp
+   6: | | | | | | | | | | LIT "0"
+   6: | | | | | | | | RPAREN ")"
+   6: | | | | | | RPAREN ")"
+   6: | | | | RPAREN ")"
+   6: | | RPAREN ")"
++(+(+(+(0))))
+--> 

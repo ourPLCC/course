@@ -1,0 +1,102 @@
+# Language V0: primitive expressions
+# The code simply prints out the expressions.
+
+skip WHITESPACE '\s+'
+skip COMMENT '%.*'
+LIT '\d+'
+LPAREN '\('
+RPAREN '\)'
+COMMA ','
+ADDOP '\+'
+SUBOP '\-'
+ADD1OP 'add1'
+SUB1OP 'sub1'
+VAR '[A-Za-z]\w*'
+%
+<program>        ::= <exp>
+<exp>:LitExp     ::= <LIT>
+<exp>:VarExp     ::= <VAR>
+<exp>:PrimAppExp ::= <prim> LPAREN <operands> RPAREN
+<operands>       **= <exp> +COMMA
+<prim>:AddPrim   ::= ADDOP
+<prim>:SubPrim   ::= SUBOP
+<prim>:Add1Prim  ::= ADD1OP
+<prim>:Sub1Prim  ::= SUB1OP
+%
+
+# class methods that just print out the expression
+# (Remember that use of toString is only mandated at the tree's
+#  root node.)
+
+Program
+%%%
+    @Override
+    public String toString() {
+	return exp.toString();
+    }
+%%%
+
+PrimAppExp
+%%%
+    public String toString() {
+	return prim + "(" + operands + ")";
+    }
+%%%
+
+Operands
+%%%
+    public String toString() {
+	String s = "";   // the string to return
+        String sep = ""; // no separator for the first expression
+	// get all of the expressions in the expression list
+	for (Exp e : expList) {
+	    s += sep + e;
+	    sep = ",";   // commas separate the rest of the expressions
+        }
+        return s;
+    }
+%%%
+
+LitExp
+%%%
+    public String toString() {
+	return lit.toString();
+    }
+%%%
+
+VarExp
+%%%
+    public String toString() {
+        return var.toString();
+    }
+%%%
+
+AddPrim
+%%%
+    public String toString() {
+	return "+";
+    }
+%%%
+
+SubPrim
+%%%
+    public String toString() {
+	return "-";
+    }
+%%%
+
+Add1Prim
+%%%
+    public String toString() {
+	return "add1";
+    }
+%%%
+
+Sub1Prim
+%%%
+    public String toString() {
+	return "sub1";
+    }
+%%%
+
+

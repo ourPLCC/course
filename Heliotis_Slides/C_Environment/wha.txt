@@ -1,0 +1,9 @@
+
+WHA?
+
+
+sparta:newVehicle$ pr -f GasVehicle.java Vehicle.java TestVehicle.java ElectricVehicle.java | enscript --color -Ejava -2r -p- | ps2pdf - ../../newVehicles.pdf
+[ 3 pages * 1 copy ] copiadas en -
+1 line was separadas
+
+
