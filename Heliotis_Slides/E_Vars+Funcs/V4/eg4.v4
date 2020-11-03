@@ -1,0 +1,13 @@
+% Nested functions
+
+let
+  square = proc( x ) *( x, x )
+in
+  let 
+    sqdiff = proc( a, b ) -( .square( a ), .square( b ) )
+  in
+    let
+      v1 = 25
+      v2 = 5
+    in
+      sqdiff

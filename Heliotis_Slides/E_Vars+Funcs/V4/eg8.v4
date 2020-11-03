@@ -1,0 +1,11 @@
+% A very important property of closures, laid bare.
+
+let
+  who = 5
+  reveal = proc()
+    let
+      who = 99
+    in
+      who
+  in
+    .reveal()

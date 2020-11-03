@@ -1,0 +1,4 @@
+let
+  add3 = proc( x, y, z ) +( x, +( y, z ) )
+in
+  .add3( 8, 13, 21 )

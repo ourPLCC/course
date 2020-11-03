@@ -1,0 +1,6 @@
+
+declare repeatn : [ int, [ => int ] => int ]
+define repeatn = proc( n: int, action: [ => int ] ): int
+                    if zero?(n)
+                        then 0
+                        else { .action(); .repeatn( sub1(n), action ) }

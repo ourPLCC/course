@@ -1,0 +1,14 @@
+define cons = proc(x, y) proc(t) if t then y else x
+define empty = 0         % give the "empty list" a name
+define prepend = proc(x, xs) .cons(x, xs) % creates a nonempty list
+define isEmpty = proc(xs) if xs then 0 else 1
+define head = proc(lst) .lst(0) % the first element of the list
+define tail  = proc(lst) .lst(1) % the (list of the) rest of the list
+define i_th = proc(lst,i)
+                if i then .i_th(.tail(lst),sub1(i)) else .head(lst)
+
+define seq = proc(n) .prepend(n,.seq(add1(n))) % ∞ recursion?
+define natnos = .seq(1)
+.i_th(natnos,0)
+.i_th(natnos,1)
+.i_th(natnos,100)

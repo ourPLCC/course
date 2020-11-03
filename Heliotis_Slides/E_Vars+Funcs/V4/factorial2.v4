@@ -1,0 +1,13 @@
+
+.proc(fact,x)
+  if x 
+    then *(x,.fact(fact,-(x,1)))
+    else 1
+(
+proc(fact,x)
+  if x 
+    then *(x,.fact(fact,-(x,1)))
+    else 1,
+5
+)
+

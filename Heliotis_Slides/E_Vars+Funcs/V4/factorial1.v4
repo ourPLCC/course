@@ -1,0 +1,9 @@
+
+let
+  fact = proc(f,x)
+    if x 
+      then *(x,.f(f,-(x,1)))
+      else 1
+in
+  .fact(fact, 5)
+

@@ -1,0 +1,10 @@
+
+let
+  add3 = proc(x,y,z)
+           let
+             partial = +(x,y)
+           in
+             +(partial,z)
+in
+  .add3(a,b,c)
+

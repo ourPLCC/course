@@ -15,6 +15,7 @@ Program
 
     @Override
     public String toString() {
+        // System.out.println( "You typed \"" + this.toStringOld() + "\"" );
         return exp.eval( initEnv ).toString();
     }
 

@@ -1,0 +1,8 @@
+let
+    condition = true   % inferred bool variable
+    quantity = 7       % inferred int variable
+    foo = proc( x: int, y: bool ): int
+                if y then add1(x) else x
+    % Procs will be explicitly typed
+in
+    .foo( quantity, condition )

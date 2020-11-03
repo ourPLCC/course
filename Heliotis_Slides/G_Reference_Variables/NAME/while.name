@@ -1,0 +1,15 @@
+define while = proc( test?, do, ans )
+                letrec
+                    loop = proc() if test? then { do; .loop() } else ans
+                in
+                    .loop()
+
+define x = 0
+define sum = 0
+.while( <=?(x,10),
+        {
+            set sum = + ( sum, *( x, x ) );
+            set x = add1( x )
+        },
+        sum
+)

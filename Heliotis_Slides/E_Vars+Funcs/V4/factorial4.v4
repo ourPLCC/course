@@ -1,0 +1,14 @@
+
+let
+  factorial = proc(n)
+                .proc(fn,x) .fn(fn,x)
+                           (
+                           proc(fact,x)
+                             if x 
+                               then *(x,.fact(fact,-(x,1)))
+                               else 1,
+                           n
+                           )
+in
+  .factorial(5)
+

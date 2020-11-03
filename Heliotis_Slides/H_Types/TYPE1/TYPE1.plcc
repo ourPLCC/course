@@ -1,0 +1,168 @@
+# Language TYPE1: type-checking, enforced
+#
+
+skip WHITESPACE '\s+'
+skip COMMENT '%.*'
+
+BOOL 'bool'
+INT 'int'
+LBRACK '\['
+RBRACK '\]'
+RARROW '=>'
+COLON ':'
+
+TRUE 'true'
+FALSE 'false'
+EQOP '==\?'
+NEOP '!=\?'
+LTOP '<\?'
+LEOP '<=\?'
+GTOP '>\?'
+GEOP '>=\?'
+ANDOP 'and'
+OROP 'or'
+NOTOP 'not'
+
+ADD1OP 'add1'
+ADDOP '\+'
+ASSIGN '='
+COMMA ','
+DECLARE 'declare'
+DEFINE 'define'
+DIVOP '/'
+DOT '\.'
+ELSE 'else'
+IF 'if'
+IN 'in'
+LBRACE '\{'
+LET 'let'
+LETREC 'letrec'
+LPAREN '\('
+MULOP '\*'
+PROC 'proc'
+RBRACE '\}'
+RPAREN '\)'
+SEMI ';'
+SET 'set'
+SUB1OP 'sub1'
+SUBOP '\-'
+THEN 'then'
+ZEROPOP 'zero\?'
+
+LIT '\d+'
+VAR '[A-Za-z]\w*\??'
+%
+<program>:Define ::= DEFINE <VAR> ASSIGN <exp>
+<program>:Declare ::= DECLARE <VAR> COLON <typeExpr> # NEW, for mutual recursion
+<program>:Eval   ::= <exp>
+
+<exp>:AppExp     ::= DOT <exp> LPAREN <operands> RPAREN
+<exp>:FalseExp   ::= FALSE
+<exp>:IfExp      ::= IF <exp>test THEN <exp>thenPart ELSE <exp>elsePart
+<exp>:LetExp     ::= LET <letDecls> IN <exp>
+<exp>:LetrecExp  ::= LETREC <letrecDecls> IN <exp>
+<exp>:LitExp     ::= <LIT>
+<exp>:PrimAppExp ::= <prim> LPAREN <operands> RPAREN
+<exp>:ProcExp    ::= PROC LPAREN <formals> RPAREN COLON <typeExpr>retType <exp>
+<exp>:SeqExp     ::= LBRACE <exp> <seqExps> RBRACE
+<exp>:SetExp     ::= SET <VAR> ASSIGN <exp>
+<exp>:TrueExp    ::= TRUE
+<exp>:VarExp     ::= <VAR>
+
+<letDecls>       **= <VAR> ASSIGN <exp>
+<letrecDecls>    **= <VAR> ASSIGN <exp>
+<operands>       **= <exp> +COMMA
+<seqExps>        **= SEMI <exp>
+<formals>        **= <VAR> COLON <typeExpr> +COMMA
+
+<typeExpr>:BoolTypeExpr  ::= BOOL
+<typeExpr>:IntTypeExpr  ::= INT
+<typeExpr>:ProcTypeExpr  ::= LBRACK <typeExprs> RARROW <typeExpr>retTypeExpr RBRACK
+<typeExprs>              **= <typeExpr> +COMMA
+
+<prim>:AddPrim   ::= ADDOP
+<prim>:SubPrim   ::= SUBOP
+<prim>:Add1Prim  ::= ADD1OP
+<prim>:Sub1Prim  ::= SUB1OP
+<prim>:MulPrim   ::= MULOP
+<prim>:DivPrim   ::= DIVOP
+<prim>:ZeropPrim ::= ZEROPOP
+<prim>:EQpPrim   ::= EQOP
+<prim>:NEpPrim   ::= NEOP
+<prim>:LTpPrim   ::= LTOP
+<prim>:LEpPrim   ::= LEOP
+<prim>:GTpPrim   ::= GTOP
+<prim>:GEpPrim   ::= GEOP
+<prim>:AndPrim   ::= ANDOP
+<prim>:OrPrim    ::= OROP
+<prim>:NotPrim   ::= NOTOP
+
+%
+
+include Declare-i.java
+include Define-i.java
+include Eval-i.java
+include Formals-i.java
+include LetDecls-i.java
+include LetrecDecls-i.java
+include Operands-i.java
+include Program-i.java
+
+include EnvSource/Binding-i.java
+include EnvSource/Bindings-i.java
+include EnvSource/BoolVal-i.java
+include EnvSource/Env-i.java
+include EnvSource/EnvNode-i.java
+include EnvSource/IntVal-i.java
+include EnvSource/ProcVal-i.java
+include EnvSource/Ref-i.java
+include EnvSource/Val-i.java
+include EnvSource/ValRef-i.java
+
+include ExpSource/AppExp-i.java
+include ExpSource/Exp-i.java
+include ExpSource/FalseExp-i.java
+include ExpSource/IfExp-i.java
+include ExpSource/LetExp-i.java
+include ExpSource/LetrecExp-i.java
+include ExpSource/LitExp-i.java
+include ExpSource/PrimAppExp-i.java
+include ExpSource/ProcExp-i.java
+include ExpSource/SeqExp-i.java
+include ExpSource/SetExp-i.java
+include ExpSource/TrueExp-i.java
+include ExpSource/VarExp-i.java
+
+include PrimSource/Add1Prim-i.java
+include PrimSource/AddPrim-i.java
+include PrimSource/AndPrim-i.java
+include PrimSource/DivPrim-i.java
+include PrimSource/EQpPrim-i.java
+include PrimSource/GEpPrim-i.java
+include PrimSource/GTpPrim-i.java
+include PrimSource/LEpPrim-i.java
+include PrimSource/LTpPrim-i.java
+include PrimSource/MulPrim-i.java
+include PrimSource/NEpPrim-i.java
+include PrimSource/NotPrim-i.java
+include PrimSource/OrPrim-i.java
+include PrimSource/Prim-i.java
+include PrimSource/Sub1Prim-i.java
+include PrimSource/SubPrim-i.java
+include PrimSource/ZeropPrim-i.java
+
+include TypeEnvSource/TypeBinding-i.java
+include TypeEnvSource/TypeBindings-i.java
+include TypeEnvSource/TypeEnv-i.java
+include TypeEnvSource/TypeEnvNode-i.java
+
+include TypeSource/Type-i.java
+include TypeSource/BoolType-i.java
+include TypeSource/IntType-i.java
+include TypeSource/ProcType-i.java
+include TypeSource/PrimProcType-i.java
+
+include TypeExprSource/BoolTypeExpr-i.java
+include TypeExprSource/IntTypeExpr-i.java
+include TypeExprSource/ProcTypeExpr-i.java
+include TypeExprSource/TypeExpr-i.java

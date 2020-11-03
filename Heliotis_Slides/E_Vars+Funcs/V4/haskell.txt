@@ -1,0 +1,10 @@
+$ ghci
+GHCi, version 8.0.2: http://www.haskell.org/ghc/  :? for help
+
+Prelude> add x y = x + y
+Prelude> add 5 8
+13
+Prelude> sub = \x y -> x - y
+Prelude> sub 5 8
+-3
+Prelude> ^D

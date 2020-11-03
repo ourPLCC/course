@@ -1,0 +1,10 @@
+let x = 1 in set x = 2
+set x = 2
+define incr = proc(n) { set n = add1(n); n }
+define n = 5
+.incr(n)
+n
+define bumper = let n = 0 in proc() set n = add1(n)
+.bumper()
+.bumper()
+.bumper()

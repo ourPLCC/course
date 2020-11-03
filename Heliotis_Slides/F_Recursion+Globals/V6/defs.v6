@@ -1,0 +1,7 @@
+define fact = proc(n) if n then *(n,.fact(sub1(n))) else 1
+define hundred = 100
+define even? = proc(x) if zero?(x) then 1 else .odd?(sub1(x))
+define odd? = proc(x) if zero?(x) then 0 else .even?(sub1(x))
+define venti = 20
+define z = 5
+define double = proc(x) *(x,2)

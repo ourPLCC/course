@@ -1,0 +1,76 @@
+% V4 Examples from Class
+% Week 5
+
+% How procs work
+
+let
+  f = proc(x,y) +(x,y)
+in
+  .f(3,8)
+
+% => 11
+
+% Unused parameter
+
+let
+  f = proc(z,y) +(10,y)
+in
+  .f(3,8)
+
+% => 18
+
+% How and when environments are added
+% (scope)
+
+let
+  x = 10
+in
+  let
+    x = 7
+    f = proc(y) +(x,y)
+  in
+    .f(8)
+
+% => 18
+
+% Passing a procedure (ProcVal) as an argument
+% 1. Both procedures are bound to variables.
+
+let
+  app = proc(f,x) .f(x)
+  g = proc(y) add1(add1(y))
+in
+  .app(g,3)
+
+% => 5
+
+% Passing a procedure (ProcVal) as an argument
+% 2. The passed procedure is unnamed.
+
+let
+  app = proc(f,x) .f(x)
+in
+  .app(proc(y) add1(add1(y)), 3 )
+
+% => 5
+
+% Passing a procedure (ProcVal) as an argument
+% 3. Neither procedure is named.
+
+.proc(f,x) .f(x) (proc(y) add1(add1(y)), 3)
+
+% => 5
+
+% Almost recursion
+% Because of scope issues, the function needs itself
+% as a parameter!
+
+let
+  fact = proc( fact, x )
+    if x
+        then *(x,.fact(fact,-(x,1)))
+        else 1
+in
+  .fact(fact, 5 )
+
+% => 5*4*3*2*1 = 120

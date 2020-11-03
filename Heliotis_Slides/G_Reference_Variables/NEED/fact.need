@@ -1,0 +1,1 @@
+define fact = proc(n) if zero?(n) then 1 else *(n,.fact(sub1(n)))

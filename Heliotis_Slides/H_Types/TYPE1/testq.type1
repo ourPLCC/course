@@ -1,0 +1,7 @@
+declare repeatn : [ int, [=>int] => int ]
+define t = proc(): int
+    let x = 1 in
+    {
+        .repeatn( 5, proc(): int set x = *(2,x) ) ;
+        x
+    }

@@ -1,0 +1,21 @@
+% Define procs that need procs.
+% Shows how proc types are expressed.
+
+define greater = proc( x: int, y: int ): bool >?( x, y )
+define less = proc( x: int, y: int ): bool <?( x, y )
+
+define firstOf3 =
+            proc( compare: [ int, int => bool ], a: int, b: int, c: int ): int
+    if .compare( a, b )
+        then
+            if .compare( a, c )
+                then a
+                else c
+        else
+            if .compare( b, c )
+                then b
+                else c
+
+.firstOf3( greater, 3, 8, 4 )
+.firstOf3( less, 3, 8, 4 )
+

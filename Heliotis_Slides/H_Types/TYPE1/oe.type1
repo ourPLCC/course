@@ -1,0 +1,4 @@
+declare odd? : [int=>bool]  % not really necessary
+declare even? : [int=>bool]
+define odd? = proc(t:int):bool if zero?(t) then false else .even?(sub1(t))
+define even? = proc(t:int):bool if zero?(t) then true else .odd?(sub1(t))

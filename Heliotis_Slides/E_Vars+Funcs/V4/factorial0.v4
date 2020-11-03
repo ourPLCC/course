@@ -1,0 +1,6 @@
+
+let
+  fact = proc(x) if x then *(x,.fact(sub1(x))) else 1
+in
+  .fact(5)
+

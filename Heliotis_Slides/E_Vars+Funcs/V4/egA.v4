@@ -1,0 +1,8 @@
+let
+  p = proc()
+    let
+      who = 99
+    in
+      proc() who
+in
+  .p()()

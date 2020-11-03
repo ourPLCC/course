@@ -1,0 +1,19 @@
+% This is a demo of Boolean stuff.
+
+define isbigger = proc( x: int, y: int ): bool >?( x, y )
+
+let
+    goat = 180
+    redshirt = 175
+    joe = 210
+in
+    if .isbigger( goat, redshirt )
+        then
+            if .isbigger( goat, joe )
+                then goat
+                else joe
+        else
+            if .isbigger( redshirt, joe )
+                then redshirt
+                else joe
+
