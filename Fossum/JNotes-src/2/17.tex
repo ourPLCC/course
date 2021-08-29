@@ -1,0 +1,31 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Environments} (continued)\exx
+\Large
+Here is a test program in the \verb'Env' class.
+This program illustrates how to use the two constructor versions
+in the \verb'Bindings' class.
+\large
+\begin{qv}
+    public static void main(String [] args) {
+        Env env0 = empty;
+        Env env1 = env0.extendEnv(
+            new Bindings(Arrays.asList(
+                new Binding("a", new IntVal(1)),
+                new Binding("b", new IntVal(2)),
+                new Binding("c", new IntVal(3)))));
+        List<String> i2 = Arrays.asList("a", "p");
+        List<Val> v2 = Arrays.asList((Val)new IntVal(4), (Val)new IntVal(5));
+        Env env2 = env1.extendEnv(new Bindings(i2, v2));
+        System.out.println("env0:\n" + env0.toString(0));
+        System.out.println("env1:\n" + env1.toString(0));
+        System.out.println("env2:\n" + env2.toString(0));
+        System.out.print("a(env2) => "); System.out.println(env2.applyEnv("a"));
+        System.out.print("a(env1) => "); System.out.println(env1.applyEnv("a"));
+        System.out.print("p(env2) => "); System.out.println(env2.applyEnv("p"));
+        System.out.print("p(env1) => "); System.out.println(env1.applyEnv("p"));
+    }
+\end{qv}
+\end{minipage}
+\clearpage

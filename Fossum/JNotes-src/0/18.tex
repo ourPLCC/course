@@ -1,0 +1,31 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Tokens} (continued)\exx
+To test these, create a separate directory for each test
+(we use the convention that such directories have names
+that are written \verb'IN_ALL_CAPS'),
+and create a \verb'grammar' file in this directory
+with the given contents.
+Then, in this directory, run the following commands:
+\begin{qv}
+plccmk
+java -cp Java Scan
+\end{qv}
+The `\verb'-cp Java'' command-line arguments
+sets the Java \verb'CLASSPATH' environment to the \verb'Java' directory;
+this, in turn, tells the Java interpreter
+where to find the \verb'Scan' program.\exx
+The \verb'Scan' program expects input from standard input
+(your keyboard)
+and produces output lines that list the tokens as they are scanned,
+in the form
+\begin{qv}
+lno: NAME 'string'
+\end{qv}
+where \verb'lno' is replaced by the input line number where the token is found,
+\verb'NAME' is replaced by the token's symbolic name,
+and \verb'string' is replaced by the token's corresponding lexeme
+from the input that matched the \verb'NAME' token specification.
+\end{minipage}
+\clearpage

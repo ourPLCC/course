@@ -1,0 +1,15 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Parsers} (continued)\exx
+\emm\LightBox{\MYlonGrammarKleene}\exx
+So we only need to redefine the \verb'$run()' method
+in the \verb'Lon' class to get the new behavior we want:
+to display the values of the \verb'NUM' fields from the parse tree.\exx
+Fortunately, PLCC allows us to add methods to PLCC-generated source files
+by including the added methods in the \verb'grammar' file.
+Every time \verb'plccmk' is run,
+these added methods are incorporated
+into the Java source files automatically.
+\end{minipage}
+\clearpage

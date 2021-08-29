@@ -1,0 +1,11 @@
+let
+  fact = proc(x)
+    let
+      factx = proc(f, x, acc)
+        if zero?(x)
+        then acc
+        else .f(f, sub1(x), *(x, acc))
+    in
+      .factx(factx, x, 1)
+  in
+    .fact(5)

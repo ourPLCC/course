@@ -1,0 +1,31 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Logic Programming Puzzles}\exx
+The idea is to define what it means for there to be a {\em path}
+from one state to another.
+First, we consider every crossing
+\begin{qv}
+cross(X,P,Y)
+\end{qv}
+as a path from \verb'X' to \verb'Y':
+\begin{qv}
+path(X,Y) :- cross(X,_,Y).
+\end{qv}
+Then we develop the transitive closure of the relation \verb'path'
+\begin{qv}
+path(X,Z) :- path(X,Y), cross(Y,_,Z).
+\end{qv}
+to get all paths.
+Notice that the second clause in the RHS just needs
+the \verb'cross' premise
+instead of the more general \verb'path(Y,Z)' (why?).\exx
+The query
+\begin{qv}
+path(s0000, s1111)?
+\end{qv}
+will produce a result if and only if there is a path
+from state \verb's0000' (everyone on the starting side)
+to state \verb's1111' (everyone on the ending side).
+You can check that this is the case!
+\end{minipage}

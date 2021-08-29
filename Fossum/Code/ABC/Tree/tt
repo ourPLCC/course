@@ -1,0 +1,12 @@
+edge(a,b).
+edge(b,c).
+edge(b,e).
+edge(c,d).
+
+edge(X,Y) :- edge(Y,X).
+node(X) :- edge(X,_).
+
+path(X,Y) :- edge(X,Y).
+path(X,Y) :- path(X,Z), Z!=X, edge(Z,Y).
+nopath(X,Y) :- node(X), node(Y), not path(X,Y).
+

@@ -1,0 +1,207 @@
+ClassVal
+%%%
+
+public abstract class ClassVal extends Val {
+
+    public abstract ObjectVal makeObject(Ref objRef);
+
+    public ClassVal classVal() {
+        return this;
+    }
+
+    public boolean isClass() {
+        return true;
+    }
+
+}
+
+%%%
+
+# a "parentless" class whose static environment is the environment
+# passed to its constructor
+EnvClass
+%%%
+import java.util.*;
+
+public class EnvClass extends ClassVal {
+
+    // a singleton: the class extended by every other class
+    public static EnvClass envClass = new EnvClass(Program.initEnv);
+
+    public Env staticEnv;
+
+    public EnvClass(Env env) {
+        staticEnv = env; // the environment inherited by all subclasses
+    }
+
+    public Env env() {
+        return staticEnv;
+    }
+
+    // Observe that the environment of objects created with 'new ...'
+    // always extend the static environment of this class.
+    // The 'objRef' reference will eventually be set to the object
+    // being created.
+    public ObjectVal makeObject(Ref objRef) {
+        // start with the static environment of this class
+        Env env = staticEnv;
+        // add the field binding 'self' to refer to the base object (deep)
+        Bindings fieldBindings = new Bindings();
+        env = env.extendEnvRef(fieldBindings); // this object's environment
+        fieldBindings.add("self", objRef);                // deep
+        return new ObjectVal(env);
+    }
+
+    public String toString() {
+        // return "class:" + staticEnv.getDepth();
+        return "class";
+    }
+
+}
+%%%
+
+StdClass
+%%%
+import java.util.*;
+
+public class StdClass extends ClassVal {
+
+    public ClassVal superClass;  // an EnvClass (top-level) or a StdClass
+    public Fields fields;
+    public Methods methods;
+    public Env staticEnv; // the static environment of this class
+    public Bindings staticBindings; // the static bindings of this class
+
+    public StdClass(
+            Env localEnv,        // the environment where this class is created
+            ClassVal superClass, // evaluated by ClassExp
+            Statics statics,     // static variable definitions
+            Fields fields,       // field declarations
+            Methods methods) {   // method definitions
+        this.superClass = superClass;
+        this.fields = fields;
+        this.methods = methods;
+        // this class's static environment extends the superclass environment
+        staticEnv = superClass.env();
+        staticBindings = new Bindings(); // all statics go here
+        staticEnv = staticEnv.extendEnvRef(staticBindings);
+        // initially create bindings for these static symbols ...
+        Ref ref = new ValRef(new ObjectVal(localEnv));
+        staticEnv.add(new Binding("!@", ref)); // not a var
+        staticEnv.add(new Binding("myclass", new ValRef(this)));
+        staticEnv.add(new Binding("superclass", new ValRef(superClass)));
+        // The static RHS expressions are evaluated in the modified
+        // staticEnv that includes the bindings for !@, myclass, superclass.
+        // New static bindings are added as they are created,
+        // as in top-level defines
+        statics.addStaticBindings(staticEnv);
+    }
+
+    public Env env() {
+        return staticEnv;
+    }
+
+    public ObjectVal makeObject(Ref objRef) {
+        // create the parent object first (recursively)
+        ObjectVal parent = superClass.makeObject(objRef);
+
+        // this object's environment extends the parent object's environment
+        Env env = parent.objectEnv;
+
+        // add this class's static bindings (including those for myclass, etc)
+        env = env.extendEnvRef(staticBindings);
+
+        // the fields come next
+        Bindings fieldBindings = new Bindings();
+        env = env.extendEnvRef(fieldBindings);
+        // bind all of this object's instance fields to nil
+        fields.addFieldBindings(fieldBindings);
+
+        // bind all this object's methods as in letrec
+        env = methods.addMethodBindings(env);
+
+        // create the object
+        ObjectVal objectVal = new ObjectVal(env);
+
+        // bind 'super' field to the parent object
+        fieldBindings.add("super", new ValRef(parent)); // parent object
+        // bind 'self' field to the base object being created
+        // (to speed up lookups)
+        fieldBindings.add("self", objRef); // deep
+        // bind 'this' field to this object environment
+        fieldBindings.add("this", new ValRef(objectVal)); // shallow
+        return objectVal;
+    }
+
+    public String toString() {
+        return "class";
+    }
+
+}
+%%%
+
+# an object that captures the environment in which this object is created
+ObjectVal
+%%%
+import java.util.*;
+
+public class ObjectVal extends Val {
+
+    public Env objectEnv;     // this object's environment
+
+    public ObjectVal(Env env) {
+        this.objectEnv = env;
+    }
+
+    public ObjectVal objectVal() {
+        return this;
+    }
+
+    public boolean isObject() {
+        return true;
+    }
+    
+    public Env env() {
+        return objectEnv;
+    }
+
+    public String toString() {
+        return "object";
+    }
+
+}
+%%%
+
+Methods:init
+%%%
+        Env.checkDuplicates(varList, " in method names");
+%%%
+
+Methods
+%%%
+    public Env addMethodBindings(Env env) {
+        if (varList.size() == 0)
+            return env;
+        List<Exp> expList = new ArrayList<Exp>();
+        for (Proc p: procList)
+            expList.add(new ProcExp(p));
+        return new LetDecls(varList, expList).addLetrecBindings(env);
+    }
+%%%
+
+Fields:init
+%%%
+        Env.checkDuplicates(varList,
+                            new String[] {"super", "self", "this"},
+                            " in field variables");
+%%%
+
+Fields
+%%%
+    public void addFieldBindings(Bindings fieldBindings) {
+        for (Token t: varList) {
+            String s = t.toString();
+            fieldBindings.add(s, new ValRef(Val.nil));
+        }
+    }
+%%%

@@ -1,0 +1,27 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf PLCC -- Syntax (continued)}\exx
+The RHS entries in a grammar rule are used
+to declare public fields in the (non-abstract) class
+associated with the grammar rule.
+Only those RHS entries enclosed in angle brackets `\verb'<...>''
+correspond to fields in the class.\exx
+A field can correspond to an RHS token ({\em e.g.} \verb'<NUM>')
+or an RHS nonterminal ({\em e.g.} \verb'<nums>').\exx
+If the field corresponds to an RHS {\em token},
+its field {\em name} defaults to the token name
+with all of its letters in lowercase.
+For example, the field name corresponding
+to the RHS token \verb'<NUM>' is \verb'num',
+and its field {\em type} is \verb'Token'.
+If the field corresponds to an RHS {\em nonterminal},
+its field {\em name} defaults to the nonterminal name (without change).
+For example, the field name coressponding
+to the RHS nonterminal \verb'<nums>' would be \verb'nums',
+and its field {\em type} is the underlying type of the nonterminal --
+in this case, \verb'Nums' --
+obtained by converting the first character
+of the nonterminal name to uppercase.\exx
+\end{minipage}
+\clearpage

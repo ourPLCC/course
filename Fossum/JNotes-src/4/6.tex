@@ -1,0 +1,33 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Types} (continued)\exx
+{\bf Every expression has a type.
+The type of a variable (\verb'VarExp')
+is the type that is bound to the variable
+in the current type environment.}
+All variables must have a type binding.\exx
+A {\em type error} is one of the following:
+\begin{itemize}
+\itemsep -0.5ex
+\item an attempt to define a procedure whose declared return type
+      does not match the type of the body of the procedure;
+\item an attempt to apply a non-procedure as a procedure;
+\item an attempt to apply a procedure to the wrong number
+      of actual parameters;
+\item an attempt to apply a procedure to actual parameters whose types
+      do not match the declared types
+      of the corresponding formal parameters;
+\item an attempt to use a non-boolean as the test in an \verb'if' statement;
+\item an attempt to have expressions of different types
+      in the \verb'then' and \verb'else' parts of an \verb'if' statement;
+\item an attempt to assign a value
+      to a LHS variable in a \verb'set' expression
+      where the type of the variable does not match the type
+      of the RHS expression.
+\end{itemize}
+In the above, we consider primitive procedures
+such as \verb'+', \verb'add1', and \verb'zero?' as procedures
+for the purposes of type checking.
+These primitive procedures have pre-defined procedure types.
+\end{minipage}

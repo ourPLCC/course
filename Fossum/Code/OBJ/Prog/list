@@ -1,0 +1,202 @@
+%% A class that implement Lists, similar
+%% to the built-in List structure in OBJ.
+
+define List =
+  class
+
+    %% a List node -- represents a list with "real" first and rest items
+    static ListNode =
+      class extends myclass
+
+        field fst
+        field rst
+        field siz
+
+        %% return a new List with only those elements of this List
+        %% that f says is not false
+        method filter = proc(f)
+          let
+            filtered = .<rst>filter(f) % recursive call
+          in
+            if .f(fst)
+            then .<filtered>add(fst)
+            else filtered
+
+        %% return a new List by appending this List to l
+        method append = proc(l) !<rst>append(l)>add(fst)!>
+
+        %% return a new List by appending this List to itself
+	method double = proc() .<self>append(self)
+
+        %% sort this List, returning a new List
+        %% uses quicksort, with the fst element of the List as pivot
+        method sort = proc()
+          let
+            %% sort everything in rst less than the pivot
+            lt = !<rst>filter(proc(t) <?(t, fst))>sort()!>           
+            %% sort everything in rst greater than or equal to the pivot
+            %% and add the pivot to the resulting List
+            ge = !<rst>filter(proc(t) >=?(t, fst))>sort()>add(fst)!>
+          in
+            %% combine the two halves into a single sorted List
+           .<lt>append(ge)
+
+%%%%%%%%% The above 'let' can be written as a "one-liner":
+%%        !<rst> filter(proc(t) <?(t, fst))
+%%             > sort()
+%%             > append(!<rst>filter(proc(t) >=?(t, fst))
+%%                           >sort()
+%%                           >add(fst)
+%%                      !>)
+%%        !>
+
+        %% initialize this ListNode
+        method init = proc(fst,rst)
+          { set <self>fst = fst
+          ; set <self>rst = rst
+          ; set siz = add1(.<rst>size())
+          ; self
+          }
+
+        %% the size of this List
+        method size = proc() siz
+
+        method null? = proc() 0 %% is this null?  NO!
+
+        %% display this List in the form [x,y,z,...]
+        method show = proc()
+          { .show1("[")
+          ; putc "]"
+          ; newline
+          ; self
+          }
+
+        %% a helper method for show
+        method show1 = proc(pre)
+          { putc pre
+          ; display fst
+          ; .<rst>show1(",")
+          }
+
+        %% return a new List by applying f
+        %% to all of the elements of this List
+        method map = proc(f) !<rst>map(f)>add(.f(fst))!>
+
+        %% create a built-in List [...] from this List object
+        method toList = proc() addFirst(fst, .<rst>toList())
+          
+      end %% of class ListNode
+
+    %% the empty List class -- no first and rest items
+    static ListNull =
+      class extends myclass
+            
+        method filter = proc(f) self
+        method append = proc(ys) ys
+        method double = proc() self
+        method sort = proc() self
+        method null? = proc() 1 %% is this null?  YES!
+        method show = proc() { putc "[]" ; newline ; self }
+        method show1 = proc(pre) nil 
+        method map = proc(f) self
+        method size = proc() 0
+        method toList = proc () []
+           
+      end %% of class ListNull
+
+    %% the empty List (a singleton in the List class)
+    static null = new ListNull
+
+    %% create a 'List' object from a built-in list [...]
+    static fromList = proc(list) % list is a 'built-in' list
+      if list
+      then .<new ListNode>init(first(list), .fromList(rest(list)))
+      else null
+
+    %% add a value to this List object, returning a new List
+    method add = proc(t) .<new ListNode>init(t,self)
+
+  end %% of class List
+
+{putc !<List>fromList("Hello world")>toList()!> ; newline}
+
+%% start with an empty List, then add 1, 3, and 5
+define zs =
+  !<<List>null
+        >show()
+        >add(1)
+        >show()
+        >add(3)
+        >show()
+        >add(5)
+        >show()
+  !>
+
+{ putc "zs = " ; .<zs>show() }
+
+%% square and append procedure
+define sa = proc(List)
+  !<List>map(proc(x) *(x,x))>append(List)!>
+
+%% square and append zs three times
+{ set zs = .sa(.sa(.sa(zs))) ; putc "zs = " ; .<zs>show() }
+
+%% take the List zs, generate a List
+%% consisting of all the elements of zs that are less than 40,
+%% show this List, add 14 to each of the elements,
+%% append this to the original List of zs, show the result,
+%% and replace zs with the result
+{ putc "zs less than 40 = " 
+; set zs =
+    !<zs>filter(proc(x) <?(x,40))
+        >show()
+        >map(proc(x) +(x,14))
+        >append(zs)
+        >show()
+    !>
+}
+
+%% double the List zs three times, show the result,
+%% sort them, and show the sorted result
+!<zs>double()
+    >double()
+    >double()
+    >show()
+    >sort()
+    >show()
+!>
+
+define rands = 
+  !<<List>null 
+        >add(18) >add(25) >add(25) >add(18) >add(22) >add(32) >add(1)  >add(43)
+        >add(32) >add(19) >add(0)  >add(34) >add(19) >add(30) >add(14) >add(38)
+        >add(0)  >add(12) >add(13) >add(10) >add(42) >add(31) >add(47) >add(23)
+        >add(5)  >add(1)  >add(8)  >add(36) >add(33) >add(13) >add(41) >add(47)
+        >add(6)  >add(19) >add(19) >add(37) >add(42) >add(39) >add(39) >add(17)
+        >add(41) >add(44) >add(39) >add(1)  >add(27) >add(35) >add(43) >add(2)
+        >add(15) >add(36) >add(26) >add(3)  >add(49) >add(2)  >add(1)  >add(13)
+        >add(11) >add(15) >add(38) >add(35) >add(47) >add(26) >add(42) >add(31)
+        >add(8)  >add(20) >add(27) >add(6)  >add(25) >add(2)  >add(22) >add(14)
+        >add(14) >add(48) >add(39) >add(0)  >add(46) >add(32) >add(6)  >add(32)
+        >add(41) >add(11) >add(9)  >add(25) >add(23) >add(18) >add(12) >add(15)
+        >add(15) >add(22) >add(37) >add(25) >add(43) >add(41) >add(1)  >add(9)
+        >add(3)  >add(1)  >add(23) >add(33) >add(31) >add(30) >add(36) >add(38)
+        >add(35) >add(25) >add(26) >add(39) >add(2)  >add(36) >add(37) >add(48)
+        >add(1)  >add(12) >add(15) >add(34) >add(5)  >add(0)  >add(36) >add(33)
+        >add(16) >add(10) >add(33) >add(49) >add(45) >add(49) >add(12) >add(14)
+        >add(22) >add(2)  >add(24) >add(48) >add(41) >add(0)  >add(5)  >add(35)
+        >add(47) >add(35) >add(7)  >add(27) >add(37) >add(20) >add(47) >add(42)
+        >add(35) >add(29) >add(39) >add(6)  >add(47) >add(8)  >add(8)  >add(8)
+        >add(36) >add(1)  >add(15) >add(30) >add(29) >add(45) >add(44) >add(24)
+        >add(6)  >add(25) >add(4)  >add(40) >add(4)  >add(1)  >add(34) >add(25)
+        >add(43) >add(28) >add(38) >add(44) >add(42) >add(12) >add(24) >add(47)
+        >add(18) >add(40) >add(42) >add(24) >add(42) >add(12) >add(8)  >add(1)
+        >add(32) >add(43) >add(39) >add(15) >add(33) >add(18) >add(15) >add(49)
+        >add(44) >add(15) >add(43) >add(22) >add(0)  >add(43) >add(22) >add(11)
+        >double()
+        >double()
+%	>double()
+%	>double()
+	>sort()
+	>show()
+  !>

@@ -1,0 +1,22 @@
+cross(s0000,g,s1010).
+cross(s0001,g,s1011).
+cross(s0001,f,s1101).
+cross(s0010,x,s1010).
+cross(s0010,c,s1011).
+cross(s0010,f,s1110).
+cross(s0100,c,s1101).
+cross(s0100,g,s1110).
+cross(s0101,x,s1101).
+cross(s0101,g,s1111).
+cross(X,P,Y) :- cross(Y,P,X).
+path(X,Y) :- cross(X,_,Y).
+path(X,Z) :- path(X,Y),cross(Y,_,Z).
+c1(X,P1,Z) :- cross(X,P1,Z).
+c2(X,P1,P2,Z) :- c1(X,P1,Y), cross(Y,P2,Z).
+c3(X,P1,P2,P3,Z) :- c2(X,P1,P2,Y), cross(Y,P3,Z).
+c4(X,P1,P2,P3,P4,Z) :- c3(X,P1,P2,P3,Y), cross(Y,P4,Z).
+c5(X,P1,P2,P3,P4,P5,Z) :- c4(X,P1,P2,P3,P4,Y), cross(Y,P5,Z).
+c6(X,P1,P2,P3,P4,P5,P6,Z) :- c5(X,P1,P2,P3,P4,P5,Y), cross(Y,P6,Z).
+c7(X,P1,P2,P3,P4,P5,P6,P7,Z) :- c6(X,P1,P2,P3,P4,P5,P6,Y), cross(Y,P7,Z).
+sol(P,Q,R,S,T,U,V) :- c7(s0000,P,Q,R,S,T,U,V,s1111).
+sol(P,Q,R,S,T,U,V)?

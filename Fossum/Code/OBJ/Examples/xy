@@ -1,0 +1,5 @@
+define c = class
+             field x
+             field y
+             method init = proc(x,y) {set <this>x=x ; set <this>y=y ; self}
+           end

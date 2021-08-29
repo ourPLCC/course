@@ -1,0 +1,34 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language NAME} (continued)\exx
+In the presence of side-effects,
+call-by-reference and call-by-name
+may give different results.
+Consider evaluating the following expression:
+{\Large
+\begin{qv}
+let
+  x = 1
+  f = proc(t,u)
+        {
+          set t = add1(t) ;
+          u
+        }
+in
+  .f(x, +(x,5))
+\end{qv}
+}
+In call-by-reference,
+when we evaluate the application \verb'.f(x, +(x,5))',
+the formal parameter \verb't' in the definition of \verb'f' denotes
+the same reference that \verb'x' denotes (initially containing 1),
+whereas the formal parameter \verb'u' denotes a new reference
+to the value 6.
+Modifying \verb't' in the body of \verb'f' changes
+the expressed value of \verb'x'
+(because \verb't' and \verb'x' denote the same reference)
+but does not change the expressed value of \verb'u'.
+Thus this expression evaluates to 6.
+\end{minipage}
+\clearpage

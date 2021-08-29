@@ -1,0 +1,30 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Types}\exx
+Observe that the \verb'int' type in our (as yet unnamed) language
+is {\em not} the same as the \verb'int' type in Java,
+even though they are closely related and have the same name.
+There should be no confusion about \verb'bool', 
+since in Java the corresponding type is \verb'boolean'.\exx
+Our objective is to associate a type
+with every instance of the class \verb'Val'.
+An \verb'IntVal' has type \verb'int',
+and a \verb'BoolVal' has type \verb'bool'.
+The only other \verb'Val' object is a \verb'ProcVal',
+so we need a way to give a type to a \verb'ProcVal'.\exx
+When we define a procedure, we {\em declare} the types
+of each of the procedure's formal parameters
+and the procedure's return type.
+We show how to do this shortly.
+Once we know these declared types,
+we can define the type of the procedure.\exx
+We use the notation
+\[ [\ t_1\ ,\ t_2\ ,\ \cdots\ ,\ t_n\ =>\ t\ ] \]
+to represent the type of a procedure
+that has $n$ formal parameters of types $t_1$, $t_2$, $\cdots$ $t_n$,
+respectively, and that returns a value of type $t$.\exx
+To simplify things, we do not permit the creation
+of new (named) types,
+so every type is either an integer, boolean, or procedure.
+\end{minipage}

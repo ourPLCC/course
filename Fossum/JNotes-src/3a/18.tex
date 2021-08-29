@@ -1,0 +1,22 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language REF} (continued)\exx
+The term {\em L-value} refers to an expression
+that can be interpreted as a reference.
+(It's called an L-value because it is the sort of expression
+that can appear to the {\em left} of the \verb'=' in a \verb'set'.)
+While a variable \verb'x' can always be considered as an L-value,
+the expression \verb'+(x,0)' can only be interpreted as
+a value, never a reference.
+In Language REF, only variable expressions are L-values.\exx
+In summary,
+{\bf if an actual parameter is a L-value in Language REF,
+(and therefore can be interpreted as a reference),
+then the corresponding formal parameter is bound to the same reference.
+If an actual parameter is something other than an L-value,
+then the corresponding formal parameter is bound
+to a {\em new} temporary reference
+containing the value of the actual parameter.}
+\end{minipage}
+\clearpage

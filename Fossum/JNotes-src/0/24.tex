@@ -1,0 +1,35 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Tokens} (continued)\exx
+Two special ``tokens'' are defined
+in the \verb'Token.java' class:
+\begin{qv}
+$ERROR
+$EOF
+\end{qv}
+Since the PLCC lexical specification requires that token symbol names
+begin with an uppercase letter,
+these ``tokens'' cannot be confused
+with language-specific token symbols.\exx
+The \verb'$ERROR' ``token'' is produced
+when the scanner encounters an input character
+that does not match the beginning
+of any skip or token specification.
+The \verb'toString()' value of this token
+is of the form \verb'!ERROR(...)',
+where the `\verb'...'' part
+displays the offending character.
+In the context of syntax analysis (which we cover later),
+such a character cannot
+be part of a syntactically correct program,
+so syntax analysis will terminate with an error.\exx
+The \verb'$EOF' ``token'' is produced
+when the scanner encounters end-of-file on the input stream.
+In the context of syntax analysis,
+encountering end-of-file signals
+that there are no further input tokens to process,
+so syntax analysis terminates
+(possibly prematurely).
+\end{minipage}
+\clearpage

@@ -1,0 +1,227 @@
+Val
+%%%
+import java.util.*;
+
+public abstract class Val {
+
+    public static final Val nil = new NilVal();
+    public static final IntVal zero = new IntVal(0);
+    public static final IntVal one = new IntVal(1);
+    
+
+    public static Val [] toArray(List<Val> valList) {
+        int n = valList.size();
+        return valList.toArray(new Val[n]);
+    }
+
+    public Val apply(List<Val> valList) {
+        throw new PLCCException(this + ": not a procedure");
+    }
+    
+    public Env env() {
+        throw new PLCCException("<" + this + ">: not an environment");
+    }
+
+    public boolean isTrue() {
+        return true;
+    }
+
+    public boolean isList() {
+        return false;
+    }
+
+    public boolean isArray() {
+        return false;
+    }
+
+    public boolean isObject() {
+        return false;
+    }
+
+    public boolean isClass() {
+        return false;
+    }
+
+    public IntVal intVal() {
+        throw new PLCCException(this + ": not an Int");
+    }
+
+    public ListVal listVal() {
+        throw new PLCCException(this + ": not a List");
+    }
+
+    public ListNode listNode() {
+        throw new PLCCException(this + ": not a ListNode");
+    }
+
+    public ClassVal classVal() {
+        throw new PLCCException(this + ": not a Class");
+    }
+
+    public ObjectVal objectVal() {
+        throw new PLCCException(this + ": not an Obj");
+    }
+
+    public ArrayVal arrayVal() {
+        throw new PLCCException(this + ": not an Array");
+    }
+
+    public int len() {
+        throw new PLCCException("cannot apply len to "+this);
+    }
+
+    public ObjectVal makeObject(Ref objRef) {
+        throw new PLCCException("new " + this + ": not a class");
+    }
+
+    public String putc() {
+        return this.toString();
+    }
+}
+  
+
+%%%
+
+IntVal
+%%%
+import java.util.*;
+
+public class IntVal extends Val {
+
+    public int val;
+
+    public IntVal(String s) {
+        val = Integer.parseInt(s);
+    }
+    
+    public IntVal(Val v) {
+        val = v.intVal().val;
+    }
+    
+    public IntVal(int v) {
+        val = v;
+    }
+
+    public boolean isTrue() {
+        return val != 0;
+    }
+
+    public IntVal intVal() {
+        return this;
+    }
+
+    public String putc() {
+        return "" + (char)val;
+    }
+    
+    public String toString() {
+        return "" + val;
+    }
+
+}
+%%%
+
+ProcVal
+%%%
+import java.util.*;
+
+public class ProcVal extends Val {
+
+    public Formals formals;
+    public Exp body;
+    public Env env;
+
+    public ProcVal(Formals formals, Exp body, Env env) {
+        this.formals = formals;
+        this.body = body;
+        this.env = env;
+    }
+
+    public Val apply(List<Val> valList) {
+        List<Ref> refList = Ref.valsToRefs(valList);
+        Bindings bindings = new Bindings(formals.varList, refList);
+        Env nenv = env.extendEnvRef(bindings);
+        return body.eval(nenv);
+    }
+
+    public Env env() {
+        return env;
+    }
+
+    public String toString() {
+        String ret = "proc(";
+        String sep = "";
+        
+        for (Token t : formals.varList) {
+            String s = t.toString();
+            ret += sep + s;
+            sep = ",";
+        }
+        ret += ")";
+        return ret;
+    }
+}
+
+%%%
+
+NilVal
+%%%
+import java.util.*;
+
+public class NilVal extends Val {
+
+    public boolean isTrue() {
+        return false;
+    }
+
+    public String toString() {
+        return "nil";
+    }
+
+}
+%%%
+
+ArrayVal
+%%%
+
+public class ArrayVal extends Val implements LenVal {
+
+    public ValRef [] refArray;
+    public int size;
+
+    public ArrayVal(int size) {
+        refArray = new ValRef[size];
+        for (int i=0 ; i<size ; i++)
+            refArray[i] = new ValRef(Val.nil);
+        this.size = size;
+    }
+
+    public int len() {
+        return size;
+    }
+
+    public boolean isTrue() {
+        return size > 0;
+    }
+
+    public ArrayVal arrayVal() {
+        return this;
+    }
+
+    public boolean isArray() {
+        return true;
+    }
+
+    public String toString() {
+        // return "array";
+        String s = "(";
+        String sep = "";
+        for (int i=0 ; i<refArray.length ; i++) {
+            s += sep + refArray[i].deRef().toString();
+            sep = ",";
+        }
+        s += ")";
+        return s;
+    }
+}
+%%%

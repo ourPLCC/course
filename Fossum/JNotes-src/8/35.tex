@@ -1,0 +1,33 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Exception Handling} (continued)
+\Large
+\begin{qv}
+HandlerDecls
+%%%
+    public Env addBindings(Env env, Env xenv, VCont vcont) {
+        List<String> idList = new ArrayList<String>();
+        List<Val> valList = new ArrayList<Val>();
+        for (Handler h : handlerList)
+            valList.add(h.makeHandler(env, xenv, vcont));
+        Bindings bindings =
+            new Bindings(varList, Ref.valsToRefs(valList));
+        return xenv.extendEnvRef(bindings);
+    }
+%%%
+\end{qv}
+\LARGE
+A \verb'HandlerVal' behaves much like a \verb'ProcVal',
+except that a \verb'HandlerVal' also captures
+the continuation and the exception environment
+in which the handler is created.
+When the handler is applied,
+the handler body is evaluated
+using the saved exception environment,
+with the result passed on to the saved continuation.
+We can therefore define the \verb'HandlerVal' class
+as a subclass of the \verb'ProcVal' class,
+with two pieces of additional information:
+the saved exception environment and the saved continuation.
+\end{minipage}

@@ -1,0 +1,13 @@
+define x = 3
+define c =
+  let
+    x = 5
+  in
+    .<class
+      static bangat = nil
+      static getenv = proc(env)
+        { set bangat = env ; myclass }
+    end>getenv(@)
+
+<c>x
+<c><bangat>x

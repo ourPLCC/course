@@ -1,0 +1,34 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language V5} (continued)\exx
+{\Large
+\emm\VerbBox{\colorbox{light}}{%
+\begin{tabular}{@{}ll}
+\verb'<exp>:LetrecExp' & \verb'::= LETREC <letDecls> IN <exp>'\\
+  & \VerbBox{\fbox}{\verb'LetrecExp(LetDecls letDecls, Exp exp)'}\\
+\end{tabular}%
+}}\exx
+Recall that the \verb'LetDecls' constructor checks
+for duplicate LHS identifiers during parsing.
+Since the \verb'LetrecExp' grammar rule uses \verb'LetDecls',
+a \verb'letrec' expression also makes this check.\exx
+We can now evaluate a \verb'LetrecExp' object
+in exactly the same way as a \verb'LetExp' object:
+{\Large
+\begin{qv}
+LetrecExp
+%%%
+    public Val eval(Env env) {
+        Env nenv = letDecls.addLetrecBindings(env);
+        return exp.eval(nenv);
+    }
+%%%
+\end{qv}
+}
+The principal idea, then,
+is to evaluate the RHS expressions of a \verb'letrec'
+in an environment that (self-referentially) includes all of the bindings
+in the \verb'letrec'.
+\end{minipage}
+\clearpage

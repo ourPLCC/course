@@ -1,0 +1,40 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Parsers} (continued)\exx
+Continuing with our list-of-numbers example,
+suppose we want our parser to require that the numbers in our list
+are separated by commas, like this:
+\Large
+\begin{qv}
+(5, 8, 13, 21)
+\end{qv}
+\LARGE
+How can we devise a grammar that accommodates these separators?\exx
+PLCC provides a way to specify a token
+that serves as a {\em separator between items
+in a repeating grammar rule}.
+The separator must be a bare token name (no angle brackets)
+at the end of the rule,
+preceded by a `\verb'+'' character.
+So if we want to separate the items in our lists by a comma
+(with token name \verb'COMMA'),
+here is what the specification looks like:
+{\Large
+\begin{qv}
+skip WHITESPACE '\s+'
+NUM '\d+'
+LPAREN '\('
+RPAREN '\)'
+COMMA ','
+%
+<lon>  ::= LPAREN <nums> RPAREN
+<nums> **= <NUM> +COMMA
+%
+\end{qv}
+}
+While this grammar uses a \verb'COMMA' separator between \verb'NUM' items,
+the parser generates {\em exactly the same parse trees}
+for this language as for the previous specification.\exx
+\end{minipage}
+\clearpage

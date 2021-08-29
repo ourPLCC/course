@@ -1,0 +1,210 @@
+# class methods
+
+Program
+%%%
+
+    public static Env env = Env.initEnv(); // the initial environment
+
+    public void $run() {
+        System.out.println(exp.eval(env).toString());
+    }
+
+%%%
+
+Exp
+%%%
+    public abstract Val eval(Env env);
+%%%
+
+PrimappExp
+%%%
+
+    public String toString() {
+        return prim.toString()+ "(" + rands + ")";
+    }
+
+    public Val eval(Env env) {
+        // evaluate the terms in the expression list
+        // and apply the prim to the array of integer results
+        List<Val> args = rands.evalRands(env);
+        Val [] va = Val.toArray(args);
+        return prim.apply(va);
+    }
+
+%%%
+
+LitExp
+%%%
+
+    public Val eval(Env env) {
+        return new IntVal(lit.toString());
+    }
+
+    public String toString() {
+        return lit.toString();
+    }
+
+%%%
+
+IfExp
+%%%
+    public Val eval(Env env) {
+        Val testVal = testExp.eval(env);
+        if (testVal.isTrue())
+            return trueExp.eval(env);
+        else
+            return falseExp.eval(env);
+    }
+
+    public String toString() {
+        return "if " + testExp + " then " + trueExp + " else " +falseExp;
+    }
+%%%
+
+VarExp
+%%%
+
+    public Val eval(Env env) {
+        return env.applyEnv(var);
+    }
+
+    public String toString() {
+        return var.toString();
+    }
+
+%%%
+
+LetExp
+%%%
+    public Val eval(Env env) {
+        Env nenv = letDecls.addBindings(env);
+        return exp.eval(nenv);
+    }
+
+    public String toString() {
+        return "... LetExp ...";
+    }
+%%%
+
+LetrecExp
+%%%
+    public Val eval(Env env) {
+        env = letDecls.addLetrecBindings(env);
+        return exp.eval(env);
+    }
+%%%
+
+ProcExp
+%%%
+    public Val eval(Env env) {
+        return proc.makeClosure(env);
+    }
+%%%
+
+AppExp
+%%%
+
+    public Val eval(Env env) {
+        Val v = exp.eval(env);
+        List<Val> args = rands.evalRands(env);
+        return v.apply(args, env);
+    }
+
+    public String toString() {
+        return " ... AppExp ...";
+    }
+
+%%%
+
+SeqExp
+%%%
+    public Val eval(Env env) {
+        Val v = exp.eval(env);
+        for (Exp e : seqExps.expList)
+            v = e.eval(env);
+        return v;
+    }
+
+    public String toString() {
+        return " ... SeqExp ... ";
+    }
+
+%%%
+
+Formals:init
+%%%
+        // check for duplicates during parsing
+        Env.checkDuplicates(varList, " in proc formals");
+%%%
+
+Proc
+%%%
+    public Val makeClosure(Env env) {
+        return new ProcVal(formals, exp, env);
+    }
+%%%
+
+LetDecls:init
+%%%
+        // check for duplicates during parsing
+        Env.checkDuplicates(varList, " in let/letrec LHS identifiers");
+%%%
+
+LetDecls
+%%%
+    // LetDecls has two fields:
+    //   List<Token> varList
+    //   List<Exp> expList
+    //   The parser guarantees that these lists have the same size
+
+    public Env addBindings(Env env) {
+        Rands rands = new Rands(expList);
+        // evaluate the operand expressions in the enclosing env.
+        List<Val> valList = rands.evalRands(env);
+        Bindings bindings = new Bindings(varList, valList);
+        return env.extendEnv(bindings);
+    }
+
+    public Env addLetrecBindings(Env env) {
+        env = env.extendEnv(new Bindings(varList.size()));
+        Iterator<Token> varIter = varList.iterator();
+        Iterator<Exp> expIter = expList.iterator();
+        while (varIter.hasNext()) {
+            String str = varIter.next().toString();
+            Exp exp = expIter.next();
+            // evaluate the operand expression in the letrec env.
+            Val val = exp.eval(env);
+            // and add the binding to the current env
+            env.add(new Binding(str, val));
+        }
+        return env;
+    }
+
+    public String toString() {
+        return "... LetDecls ...";
+    }
+%%%
+
+Rands
+%%%
+    public String toString() {
+        String s = "";   // the string to return
+        String sep = ""; // no separator for the first expression
+        // get all of the expressions in the expression list
+        for (Exp e : expList) {
+            s += sep + e;
+            sep = ",";   // commas separate the rest of the expressions
+        }
+        return s;
+    }
+
+    // evaluate the individual terms in expList using the given environment
+    // and return a List<Val> object
+    public List<Val> evalRands(Env env) {
+        List<Val> args = new ArrayList<Val>(expList.size());
+        for (Exp e : expList)
+            args.add(e.eval(env));
+        return args;
+    }
+%%%
+

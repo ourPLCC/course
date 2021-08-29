@@ -1,0 +1,24 @@
+# Language LON (list of numbers)
+#   The Rep loop prints the integers in the list
+
+# Lexical specification
+skip WHITESPACE '\s+'
+NUM '\d+'
+LPAREN '\('
+RPAREN '\)'
+%
+# Grammar
+<lon>  ::= LPAREN <nums> RPAREN
+<nums> **= <NUM>
+%
+
+Lon
+%%%
+    public void $run() {
+        System.out.print("( ");
+        for (Token tok: nums.numList) {
+            System.out.print(tok.toString() + " ");
+        }
+        System.out.println(")");
+    }
+%%%

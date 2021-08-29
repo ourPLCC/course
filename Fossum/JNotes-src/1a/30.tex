@@ -1,0 +1,39 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf PLCC -- Hooks (continued)}\exx
+The following lines in this file are called ``hooks'':
+{\Large
+\begin{qv}
+//Formals:top//
+//Formals:import//
+//Formals:init//
+//Formals//
+\end{qv}
+}
+In the semantics section of the language specification file,
+you can arrange to replace these hooks with arbitrary text as needed.\exx
+Use the \verb':init' hook
+to add additional lines of Java code
+at the beginning of the class constructor
+(which is called when parsing a program).
+Consider an instance of the \verb'Formals' class shown on the previous slide.
+If you want to check the \verb'varList' field for duplicate identifiers,
+include the following lines in your \verb'grammar' file
+(or in your \verb'code' file,
+if there is an \verb'include code' line
+in your \verb'grammar' file):
+{\Large
+\begin{qv}
+Formals:init
+%%%
+    Env.checkDuplicates(varList, " in proc formals");
+%%%
+\end{qv}
+}
+This code will then replace the {\Large \verb'//Formals:init//'} line
+appearing at the beginning of the \verb'Formals' class constructor.
+(Since the ``hook'' appears as a comment in the original Java source code,
+it will not affect the compiled code if left unchanged.)
+\end{minipage}
+\clearpage

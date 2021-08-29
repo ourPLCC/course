@@ -1,0 +1,25 @@
+define pair = 
+  class
+    field fst
+    field snd
+    method init = proc(x,y) {set fst = x ; set snd = y ; self}
+    method add = proc(t) .<new pair>init(t, self)
+    method remove = proc() snd
+    method show = proc()
+      {if fst then {display# fst ; .<snd>show()} else newline ; self}
+  end
+
+  !< new pair
+   > add(3)
+   > show()
+   > add(5)
+   > show()
+   > add(11)
+   > show()
+   > remove()
+   > show()
+   > remove()
+   > show()
+   > remove()
+   > show()
+  !>

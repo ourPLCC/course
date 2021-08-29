@@ -1,0 +1,38 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Order of evaluation}\exx
+\Large
+Let's examine the following example:
+\begin{qv}
+let
+  x = 3
+in
+  let
+    y = {set x = add1(x)}
+    z = {set x = add1(x)}
+  in
+    z
+\end{qv}
+Consider the inner \verb'let'.
+We know that the right-hand side expressions
+(here written inside curley braces for clarity)
+are evaluated before their values are bound
+to the left-hand variables.
+But our language does not specify the order
+in which the right-hand side expressions are evaluated.\exx
+In the absence of side-effects,
+{\em i.e.} in our early interpreters without \verb'set',
+the order of evaluation of the RHS expressions wouldn't matter.
+However, when side-effects are possible,
+as in our interpreters such as \verb'SET' and \verb'REF',
+the order of evaluation does matter.\exx
+In the above example, if the second \verb'set' is evaluated first,
+then \verb'z' becomes 4 and \verb'y' becomes 5,
+so the entire expression evaluates to 4 -- the value of \verb'z'.
+If the order of evaluation is reversed,
+the entire expression evaluates to 5.
+Our language does not specify order of evaluation;
+consequently, the value of this expression is ambiguous.
+\end{minipage}
+\clearpage

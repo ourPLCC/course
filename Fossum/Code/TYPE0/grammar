@@ -1,0 +1,91 @@
+# Language TYPE0
+#   Language REF with type declarations (but no type checking)
+
+# Lexical specification
+skip WHITESPACE '\s+'
+skip COMMENT '%.*'
+LIT '\d+'
+LPAREN '\('
+RPAREN '\)'
+COMMA ','
+ADDOP '\+'
+SUBOP '\-'
+MULOP '\*'
+DIVOP '/'
+ADD1OP 'add1'
+SUB1OP 'sub1'
+LTP '<\?'
+LEP '<=\?'
+GTP '>\?'
+GEP '>=\?'
+EQP '=\?'
+NEP '<>\?'
+ZEROP 'zero\?'
+IF 'if'
+THEN 'then'
+ELSE 'else'
+LET 'let'
+LETREC 'letrec'
+DEFINE 'define'
+IN 'in'
+EQUALS '='
+PROC 'proc'
+SET 'set'
+DOT '\.'
+LBRACE '\{'
+RBRACE '\}'
+LBRACK '\['
+RBRACK '\]'
+COLON ':'
+RARROW '=>'
+BOOL 'bool'
+INT  'int'
+TRUE 'true'
+FALSE 'false'
+SEMI ';'
+VAR '[A-Za-z][\w?]*'
+%
+# Grammar
+<program>:Define ::= DEFINE <VAR> EQUALS <exp>
+<program>:Eval ::= <exp>
+<typeExp>:PrimTypeExp ::= <primType>
+<typeExp>:ProcTypeExp ::= LBRACK <typeExps> RARROW <typeExp> RBRACK
+<primType>:BoolPrimtype ::= BOOL
+<primType>:IntPrimType  ::= INT
+<typeExps> **= <typeExp> +COMMA
+<exp>:LitExp   ::= <LIT>
+<exp>:TrueExp  ::= TRUE
+<exp>:FalseExp ::= FALSE
+<exp>:VarExp   ::= <VAR>
+<exp>:IfExp    ::= IF <exp>testExp THEN <exp>trueExp ELSE <exp>falseExp
+<exp>:PrimappExp ::= <prim> LPAREN <rands> RPAREN
+<exp>:LetExp   ::= LET <letDecls> IN <exp>
+<exp>:LetrecExp ::= LETREC <letDecls> IN <exp>
+<exp>:ProcExp  ::= <proc>
+<exp>:AppExp   ::= DOT <exp> LPAREN <rands> RPAREN
+<exp>:SeqExp   ::= LBRACE <exp> <seqExps> RBRACE
+<exp>:SetExp   ::= SET <VAR> EQUALS <exp>
+<seqExps>      **= SEMI <exp>
+<proc>         ::= PROC LPAREN <formals> RPAREN COLON <typeExp> <exp>
+<formals>      **= <VAR> COLON <typeExp> +COMMA
+<letDecls>     **= <VAR> EQUALS <exp>
+<rands>        **= <exp> +COMMA
+<prim>:AddPrim ::= ADDOP
+<prim>:SubPrim ::= SUBOP
+<prim>:MulPrim ::= MULOP
+<prim>:DivPrim ::= DIVOP
+<prim>:Add1Prim ::= ADD1OP
+<prim>:Sub1Prim ::= SUB1OP
+<prim>:ZeropPrim ::= ZEROP
+<prim>:LTPrim   ::= LTP
+<prim>:LEPrim   ::= LEP
+<prim>:GTPrim   ::= GTP
+<prim>:GEPrim   ::= GEP
+<prim>:EQPrim   ::= EQP
+<prim>:NEPrim   ::= NEP
+%
+include code
+include prim
+include envRef
+include val
+include ref

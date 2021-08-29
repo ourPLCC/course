@@ -1,0 +1,186 @@
+ClassVal
+%%%
+
+public abstract class ClassVal extends Val {
+
+    public abstract ObjectVal makeObject(Ref objRef);
+
+    public ClassVal classVal() {
+        return this;
+    }
+
+    public boolean isClass() {
+        return true;
+    }
+
+}
+
+%%%
+
+# a "parentless" class whose static environment extends the environment
+# passed to its constructor
+EnvClass
+%%%
+import java.util.*;
+
+public class EnvClass extends ClassVal {
+
+    // a singleton: the class extended by every other class
+    public static EnvClass envClass = new EnvClass(Program.initEnv);
+
+    public Env staticEnv;
+
+    public EnvClass(Env env) {
+        // the static environment of this class
+        staticEnv = env;
+    }
+
+    public Env env() {
+        return staticEnv;
+    }
+
+    public ObjectVal makeObject(Ref objRef) {
+        // start with the static environment of this class
+        Env env = staticEnv;
+        // add binding of 'self' to this object
+        Bindings fieldBindings = new Bindings();
+        env = env.extendEnvRef(fieldBindings);
+        fieldBindings.add("self", objRef);
+        return new ObjectVal(env);
+    }
+
+    public String toString() {
+        // return "class:" + staticEnv.getDepth();
+        return "class";
+    }
+
+}
+%%%
+
+StdClass
+%%%
+import java.util.*;
+
+public class StdClass extends ClassVal {
+
+    public ClassVal superClass;
+    public Bindings staticBindings; 
+    public Fields fields;
+    public Props props;
+    public Methods methods;
+    public Env staticEnv;
+
+    public StdClass(
+            Env env,
+            ClassVal superClass, // evaluated by ClassExp
+            Statics statics,
+            Fields fields,
+            Props props,
+            Methods methods) {
+        this.superClass = superClass;
+        this.fields = fields;
+        this.props = props;
+        this.methods = methods;
+        staticEnv = superClass.env();
+        // the staticBindings field is used to create instances of this class
+        staticBindings = new Bindings();
+        staticEnv = staticEnv.extendEnvRef(staticBindings);
+        // initially create bindings for these static symbols ...
+        staticBindings.add("!@", new ValRef(new ObjectVal(env))); // not a var
+        staticBindings.add("myclass", new ValRef(this));
+        staticBindings.add("superclass", new ValRef(superClass));
+        // The static RHS expressions are evaluated in the modified
+        // staticEnv that includes the bindings for myclass, superclass
+        // new static bindings are added as they are created
+        // as in top-level defines
+        statics.addStaticBindings(staticEnv);
+    }
+
+    public Env env() {
+        return staticEnv;
+    }
+
+    public ObjectVal makeObject(Ref objRef) {
+        // create the parent object (recursively)
+        ObjectVal parent = superClass.makeObject(objRef);
+        // this object's environment extends the parent object's environment
+        Env env = parent.objectEnv;
+
+        // add this class's static bindings (including those for myclass, etc)
+        env = env.extendEnvRef(staticBindings);
+
+        // the fields come next
+        Bindings fieldBindings = new Bindings();
+        env = env.extendEnvRef(fieldBindings);
+
+        // bind all of this object's instance fields to nil
+        for (Token t : fields.varList) {
+            String s = t.toString();
+            fieldBindings.add(s, new ValRef(Val.nil));
+        }
+
+        // add method bindings
+        env = methods.addMethodBindings(env);
+
+        // add prop bindings
+        env = props.addPropBindings(env);
+
+        // set up default field bindings
+        fieldBindings.add("super", new ValRef(parent)); // parent object
+        fieldBindings.add("self", objRef); // deep
+        ObjectVal objectVal = new ObjectVal(env);
+        fieldBindings.add("this", new ValRef(objectVal)); // shallow
+        return objectVal;
+    }
+
+    public String toString() {
+        return "class";
+    }
+
+}
+%%%
+
+# an object that captures the environment in which this object is created
+ObjectVal
+%%%
+import java.util.*;
+
+public class ObjectVal extends Val {
+
+    public Env objectEnv;     // this object's environment
+
+    public ObjectVal(Env objectEnv) {
+        this.objectEnv = objectEnv;
+    }
+
+    public Env env() {
+        return objectEnv;
+    }
+    
+    public String toString() {
+        return "object";
+    }
+
+}
+%%%
+
+Methods
+%%%
+    public Env addMethodBindings(Env env) {
+        if (varList.size() == 0)
+            return env;
+        List<Exp> expList = new ArrayList<Exp>();
+        for (Proc p: procList)
+            expList.add(new ProcExp(p));
+        return new LetDecls(varList, expList).addLetrecBindings(env);
+    }
+%%%
+
+Props
+%%%
+    public Env addPropBindings(Env env) {
+        if (varList.size() == 0)
+            return env;
+        return new LetpropDecls(varList, propList).addBindings(env);
+    }
+%%%

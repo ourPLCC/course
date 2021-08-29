@@ -1,0 +1,44 @@
+# Language LONN (nonempty list of numbers)
+
+# Lexical specification
+skip WHITESPACE '\s+'
+LPAREN '\('
+RPAREN '\)'
+NUM '\d+'
+%
+# Grammar
+<lon>           ::= LPAREN <NUM> <nums> RPAREN
+<nums>:NumsNode ::= <NUM> <nums>
+<nums>:NumsNull ::=
+%
+
+# add a toString method to the Lon class
+Lon
+%%%
+    public void $run() {
+        int minSoFar = Integer.parseInt(num.toString());
+        int m = nums.min(minSoFar); // get the overall minimum
+        System.out.println("minimum value = " + m);
+    }
+%%%
+
+Nums
+%%%
+    public abstract int min(int minSoFar);
+%%%
+
+NumsNode
+%%%
+    public int min(int minSoFar) {
+        return 0; // This is just a stub. Remove this line ...
+        // ... and complete the method definition
+    }
+%%%
+
+NumsNull
+%%%
+    public int min(int minSoFar) {
+        return 0; // This is just a stub. Remove this line ...
+        // ... and complete the method definition
+    }
+%%%

@@ -1,0 +1,21 @@
+define pair = proc(x,y)
+  proc(t) if t then y else x
+define first = proc(p) .p(0)
+define rest = proc(p) .p(1)
+define nth = proc(n,lst)
+  if n then .nth(sub1(n),.rest(lst)) else .first(lst)
+define fib = proc(m, n) .pair(m,.fib(n, +(m,n)))
+define fibonacci = .fib(0, 1)
+
+% .nth(10,fibonacci) % => 55
+
+define recmult = proc(val, n) if n then +(val,.recmult(val,sub1(n))) else 0
+
+% .recmult( 5, 20 )
+% .recmult( 10, .nth(35,fibonacci) )
+
+define addall = proc(f, n) % add .f(n)+.f(n-1)+...+.f(0) together
+  if n then +(.f(n),.addall(f,sub1(n))) else .f(0)
+define f = proc(n) .nth(n, fibonacci)
+
+% .addall(f, 40)

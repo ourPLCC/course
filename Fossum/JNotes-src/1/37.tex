@@ -1,0 +1,36 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Parsers} (continued)\exx
+Let's return to our tree example
+(directory {\color{red}\verb'TREE'}).
+Here is a modified grammar for a tree
+as originally given on slide 1.12
+that takes into account the PLCC requirements
+for unique class names and the introduction
+of fields for the \verb'NUM' and \verb'SYMBOL' tokens.
+Notice the Java signatures for the class constructors
+shown in boxes.\exx
+\Large
+\emm\begin{tabular}{ll}
+\verb'<tree>:Leaf' & \verb'::= <NUM>'\\
+    & \VerbBox{\fbox}{\verb'Leaf(Token num)'}\\
+\verb'<tree>:Interior' & \verb'::= LPAREN <SYMBOL> <tree> <tree> RPAREN'\\
+    & \VerbBox{\fbox}{\verb'Interior(Token symbol, Tree tree, Tree tree)'}\\
+\end{tabular}\exx
+\LARGE
+But there is a problem
+with the \verb'Interior' constructor signature.
+Java does not allow multiple field names
+or constructor formal parameters
+with the same name:
+specifically, in this case, there cannot be two field names
+with the name \verb'tree'.
+Here is what PLCC has to say about this when given
+the above grammar (the line has been folded for clarity):
+\begin{qv}
+duplicate field name tree in rule RHS
+LPAREN <SYMBOL> <tree> <tree> RPAREN
+\end{qv}
+\end{minipage}
+\clearpage

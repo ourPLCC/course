@@ -1,0 +1,209 @@
+# Environment-related classes
+Env
+%%%
+import java.util.*;
+
+public abstract class Env {
+
+    public static final Env empty = new EnvNull();
+
+    public static Env initEnv() {
+        // an environment with an empty local environment
+        return new EnvNode(new Bindings(), empty);
+    }
+
+    public static void checkDuplicates(List<Token> varList, String msg) {
+        // throws an exeption if the varList has duplicate vars
+        Set<String> varSet = new HashSet<String>(2*varList.size());
+        for (Token var: varList) {
+            String str = var.toString();
+            if (varSet.contains(str)) {
+                msg = "duplicate ID " + str + msg;
+                throw new PLCCException("Semantic error",  msg);
+            }
+            varSet.add(str);
+        }
+    }
+
+    public abstract Binding lookup(String sym, boolean recur);
+
+    public Binding lookup(String sym) {
+        return lookup(sym, true);
+    }
+
+    public Ref applyEnvRef(String sym) {
+        Binding b = lookup(sym);
+        if (b != null)
+            return b.ref;
+        throw new PLCCException("no binding for " + sym);
+    }
+
+    public Ref applyEnvRef(Token tok) {
+        return applyEnvRef(tok.toString());
+    }
+
+    public Val applyEnv(String sym) {
+        return applyEnvRef(sym).deRef();
+    }
+
+    public Val applyEnv(Token tok) {
+        return applyEnv(tok.toString());
+    }
+
+    public Env extendEnvRef(Bindings bindings) {
+        return new EnvNode(bindings, this);
+    }
+
+    public abstract void replaceBindings(Bindings bindings);
+    public abstract void add(Binding b);
+
+    public abstract String toString(int n);
+}
+%%%
+
+EnvNode
+%%%
+import java.util.*;
+
+public class EnvNode extends Env {
+
+    public Bindings bindings; // list of local bindings
+    public Env env;           // next set of bindings
+    
+    // create an environment 
+    public EnvNode(Bindings bindings, Env env) {
+        this.bindings = bindings;
+        this.env = env;
+    }
+
+    public Binding lookup(String sym, boolean recur) {
+        for (Binding b: bindings.bindingList)
+            if (sym.equals(b.id))
+                return b;
+        if (recur)
+            return env.lookup(sym, recur);
+        return null;
+    }
+
+    public void replaceBindings(Bindings bindings) {
+        this.bindings = bindings;
+    }
+
+    public String toString(int n) {
+        return n + ":" + bindings.toString() + "\n" + env.toString(n+1);
+    }
+
+    public String toString() {
+        return bindings.toString() + "\n" + env;
+    }
+
+    public void add(Binding b) {
+        bindings.add(b);
+    }
+
+}
+%%%
+
+EnvNull
+%%%
+import java.util.*;
+
+public class EnvNull extends Env {
+
+    // create an environment 
+    public EnvNull() {
+    }
+
+    public Binding lookup(String sym, boolean recur) {
+        return null;
+    }
+
+    public void replaceBindings(Bindings bindings) {
+        throw new PLCCException("no bindings to replace");
+    }
+
+    public void add(Binding b) {
+        throw new PLCCException("no bindings to add to");
+    }
+
+    public String toString(int n) {
+        return n + ":\n";
+    }
+
+    public String toString() {
+        return "\n";
+    }
+}
+%%%
+
+Binding
+%%%
+public class Binding {
+
+    public String id;
+    public Ref ref;
+
+    public Binding(String id, Ref ref) {
+        this.id = id;
+        this.ref = ref;
+    }
+
+    public String toString() {
+        return "[" + id + "->" + ref + "]";
+    }
+
+}
+%%%
+
+Bindings
+%%%
+import java.util.*;
+
+public class Bindings {
+
+    public List<Binding> bindingList;
+
+    // create an empty list of bindings
+    public Bindings() {
+        bindingList = new ArrayList<Binding>();
+    }
+
+    public Bindings(List<Binding> bindingList) {
+        this.bindingList = bindingList;
+    }
+
+    // idList is a list of Tokens/Strings
+    // refList is a list of Refs
+    public Bindings(List<?> idList, List<Ref> refList) {
+        if (idList.size() != refList.size())
+            throw new PLCCException("List sizes mismatch");
+        bindingList = new ArrayList<Binding>(idList.size());
+        Iterator<?> idIterator = idList.iterator();
+        Iterator<Ref> refIterator = refList.iterator();
+        while (idIterator.hasNext()) {
+            String s = idIterator.next().toString();
+            Ref r = refIterator.next();
+            bindingList.add(new Binding(s, r));
+        }
+    }
+
+    public void add(String s, Ref r) {
+        bindingList.add(new Binding(s, r));
+    }
+
+    public void add(Binding b) {
+        bindingList.add(b);
+    }
+
+    public int size() {
+        return bindingList.size();
+    }
+
+    public String toString() {
+        String s = "";
+        for (Binding b : bindingList)
+            s += b + "\n";
+        return s;
+    }
+}
+%%%

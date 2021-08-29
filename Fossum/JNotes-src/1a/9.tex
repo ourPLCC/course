@@ -1,0 +1,30 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf PLCC -- Syntax (continued)}\exx
+PLCC requires that there are no duplicates
+of Java class names associated with the given grammar rules.
+In particular, if two grammar rules have the same LHS nonterminal name,
+then their left-hand sides must have annotations
+giving distinct Java class names.
+For example, the grammar rules on Slide 1.3
+\begin{qv}
+<nums> ::= <NUM> <nums>
+<nums> ::= 
+\end{qv}
+would not be acceptable to PLCC.
+The following annotations fix this:
+\begin{qv}
+<nums>:NumsNode ::= <NUM> <nums>
+<nums>:NumsNull ::=
+\end{qv}
+When LHS rules are annotated in this way,
+the nonterminal class name (\verb'Nums', in this example)
+becomes an abstract Java class,
+and the annotated class names are used
+to generate classes that extend the abstract class.
+In this example,
+both the \verb'NumsNode' and \verb'NumsNull' classes
+are declared to extend the abstract \verb'Nums' class.
+\end{minipage}
+\clearpage

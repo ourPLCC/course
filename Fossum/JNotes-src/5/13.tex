@@ -1,0 +1,39 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language OBJ} (continued)\exx
+As described on slides 9 and 10,
+as an object is created,
+the \verb'self' identifier is bound
+to the \verb'objRef' reference that is passed to
+the \verb'makeObject' method in \verb'EnvClass'.
+But how can this binding take place
+when the object has not yet been completely created?
+We do this by creating a Java \verb'ValRef' object named \verb'objRef',
+with a dummy initial value (\verb'nil', to be precise),
+and pass this to the \verb'makeObject' method.\exx
+The \verb'objRef' is passed up the superclass chain
+through successive \verb'makeObject' calls.
+When \verb'makeObject' reaches the \verb'EnvClass' Java class,
+the \verb'self' identifier is put into the object environment,
+bound to \verb'objRef'.
+After the original object has been completely created --
+that is, after all of the \verb'makeObject' calls have returned,
+\verb'objRef' is rebound to the newly created object
+with a call to \verb'setRef'.
+Here is the complete \verb'eval' code for a \verb'new' expression
+in the \verb'NewExp' part of the \verb'code' file: 
+\Large
+\begin{qv}
+    public Val eval(Env env) {
+        // get the class from which this object is created
+        Val val = exp.eval(env);
+        // create a reference to a dummy value (nil)
+        Ref objRef = new ValRef(Val.nil);
+        // let the class create the object
+        ObjectVal objVal = val.makeObject(objRef);
+        // set the reference to the newly created object
+        return objRef.setRef(objVal);
+    }
+\end{qv}
+\end{minipage}

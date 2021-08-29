@@ -1,0 +1,44 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language V4} (continued)\exx
+\Large
+\emm\VerbBox{\colorbox{light}}{\begin{tabular}{@{}ll}
+\verb'<exp>:AppExp' & \verb'::= DOT <exp> LPAREN <rands> RPAREN'\\
+  & \VerbBox{\fbox}{\verb'AppExp(Exp exp, Rands rands)'}\\
+\end{tabular}}\exx
+\LARGE
+Here are the steps to evaluate a procedure {\em application} --
+in other words, to evaluate an \verb'AppExp' expression:
+\begin{enumerate}
+\item[0.]
+    Evaluate \verb'exp' in the current environment;
+    this must evaluate to a \verb'ProcVal' object (a closure)
+    with fields \verb'formals',\ \verb'body', and \verb'env'.
+\item[1.]
+    Evaluate \verb'rands'
+    (the {\em actual parameter} [a.k.a. {\em operand}] expressions)
+    in the current environment
+    to get a list of \verb'Val's (the {\em arguments}).
+    [Note: we did exactly the same thing when evaluating the \verb'rands' 
+    of a \verb'PrimappExp'.]
+\item[2.]
+    \begin{enumerate}
+    \item[a.]
+    Create bindings of the procedure's
+    list of formal parameters (\verb'formals')
+    to the list of values obtained in step 2, and
+    \item[b.]
+    use these bindings to extend the environment (\verb'env')
+    captured by the procedure.
+    \end{enumerate}
+\item[3.]
+    Evaluate the \verb'body' of the procedure
+    in the (extended) environment obtained in step 2.
+\end{enumerate}
+Steps 2 and 3 are carried out by the \verb'apply' method
+in the \verb'ProcVal' class.
+The value obtained in step 3 is the value
+of the \verb'AppExp' expression evaluation.
+\end{minipage}
+\clearpage

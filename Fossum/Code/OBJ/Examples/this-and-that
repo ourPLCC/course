@@ -1,0 +1,19 @@
+define c =
+  class
+    field x
+    method init=proc() {set x=3 ; self}
+    method foo = proc() <self>x
+    method bar = proc() <this>x
+  end
+define d =
+  class extends c
+    field x
+    method init=proc() {set x=5 ; .<super>init()}
+  end
+  
+define p = .<new c>init()
+define q = .<new d>init()
+.<p>foo()
+.<p>bar()
+.<q>foo()
+.<q>bar()

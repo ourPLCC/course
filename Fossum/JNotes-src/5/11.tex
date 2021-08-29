@@ -1,0 +1,29 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language OBJ} (continued)\exx
+As each object is created up the superclass chain,
+we insert three predefined fields
+into its list of field bindings:
+\verb'this', \verb'self', and \verb'super'.
+We bind the field identifier \verb'self'
+to the base object being created,
+which is the same as described above.
+We bind the field identifier \verb'this'
+to the object being created at the particular point
+in the superclass chain (we call this a {\em shallow} binding).
+And we bind the field identifier \verb'super'
+to the superclass object.
+The code for creating ghese bindings is shown on Slide 5.16.\exx
+We disallow duplicate field names in class definitions.
+We also disallow field names that duplicate the predefined identifiers
+\verb'this', \verb'self', and \verb'super'.\exx
+Notice that an object can see all
+of the \verb'static' bindings up the superclass chain,
+but that if a \verb'static' variable is bound to a procedure
+(or some other value that captures an environment),
+the procedure captures only the static environment of the class
+and cannot ``see'' any of the fields or methods --
+including the \verb'self' and \verb'this' identifiers --
+in its environment.
+\end{minipage}

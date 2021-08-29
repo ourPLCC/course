@@ -1,0 +1,43 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\begin{SaveVerbatim}{\MYlon}
+<lon>  ::= LPAREN <nums> RPAREN
+<nums> ::= NUM <nums>
+<nums> ::=
+\end{SaveVerbatim}
+\begin{SaveVerbatim}{\MYonemodthree}
+<onemodthree>  ::= ONE
+<onemodthree>  ::= THREE PLUS <onemodthree>
+\end{SaveVerbatim}
+\begin{SaveVerbatim}{\MYtree}
+<tree>  ::= NUM
+<tree>  ::= LPAREN SYMBOL <tree> <tree> RPAREN
+\end{SaveVerbatim}
+\begin{SaveVerbatim}{\MYtreeTOK}
+<tree>:Leaf     ::= <NUM>
+<tree>:Interior ::= LPAREN <SYMBOL> <tree> <tree> RPAREN
+\end{SaveVerbatim}
+\LARGE
+{\bf Backus-Naur Form (BNF)}\exx
+BNF is a meta-language used
+to specify a context-free grammar.
+Almost every modern programming language uses some sort
+of BNF notation to define its syntax.
+We work first with examples of languages
+that define two simple data structures:
+lists and trees.
+Remember that the ``alphabet'' of a programming language
+is a set of tokens,
+so any definition of the syntax of a language
+must first specify its tokens.
+In Slide Set 0, we showed how to specify tokens using PLCC.\exx
+Our first example is to define a language whose ``programs''
+are lists of numbers.
+Some sample ``programs'' in this language are:
+\begin{qv}
+(3 4 5)
+(    7 11  )
+()
+\end{qv}
+\end{minipage}
+\clearpage

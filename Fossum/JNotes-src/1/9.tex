@@ -1,0 +1,44 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Parsing (continued):}
+\begin{enumerate}
+\itemsep -0.5ex
+\item [3.]
+  \begin{enumerate}
+  \item
+    If the leftmost unmatched term in the sentential form is a {\bf token name},
+    match it with the leftmost string in the unmatched sentence.
+    [Here, {\em match} means that the token name
+    in the sentential form describes exactly
+    the leftmost string to be matched.
+    For example, the token name {\tt LPAREN} matches the string `\verb'(''
+    and {\tt NUM} matches the string `\verb'42''.]
+    If there is no match, return failure.
+    If there is a match, replace the leftmost token name in the
+    sentential form with its matching string (its lexeme)
+    from the unmatched sentence
+    and remove the matched string from the unmatched sentence.
+  \item
+    If the leftmost unmatched term
+    in the sentential form is a {\bf nonterminal},
+    choose a rule from the grammar with this nonterminal as its LHS
+    and {\em replace} the nonterminal with the (possibly empty) RHS
+    of the chosen rule.
+    [Which rule to choose depends on
+    finding a rule that is most likely to complete the derivation.
+    For some grammars, there is only one choice: these grammars
+    are said to be {\em predictive}.  All of the grammars we
+    use in this course are predictive.]
+    If no rule can apply, return failure.
+  \end{enumerate}
+\item [4.]
+  If the unmatched sentence is empty, return success:
+  the target sentence has been successfully parsed.
+  Otherwise, return failure.
+\end{enumerate}
+It is possible, for some grammars, that Step 3 loops indefinitely.
+However, for all of the grammars that we encounter in this course,
+this step exits in a finite number of iterations.
+\end{minipage}
+\clearpage

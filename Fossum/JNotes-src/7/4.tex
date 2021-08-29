@@ -1,0 +1,35 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Logic Programming}\exx
+\Large
+The \verb'<dfrq>' nonterminal suggests its four variants:
+\begin{itemize}
+\itemsep -0.1in
+\item[d] stands for {\em delete}
+\item[f] stands for {\em fact}
+\item[r] stands for {\em rule}
+\item[q] stands for {\em query}
+\end{itemize}
+Here are some examples of {\em facts}, written in the \verb'ABC' language:
+\begin{qv}
+planet(earth).
+planet(mercury).
+planet(jupiter).
+larger(jupiter,earth).
+larger(earth,mercury).
+\end{qv}
+If we want to find all of the planets that the current systems knows about,
+we would write the following {\em query}:
+\begin{qv}
+planet(X)?
+\end{qv}
+The system responds with the following result
+(the planets may appear in any order):
+\begin{qv}
+3 matches:
+planet(earth)
+planet(mercury)
+planet(jupiter)
+\end{qv}
+\end{minipage}

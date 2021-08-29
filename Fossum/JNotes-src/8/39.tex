@@ -1,0 +1,27 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Exception Handling} (continued)\exx
+... continued from previous slide
+\begin{itemize}
+\parskip 0ex
+\item
+  The exception environment in which the actual parameters
+  of a thrown handler are evaluated is the same
+  as the exception environment in which the exception is thrown.
+\item
+  The exception environment in which the actual parameters
+  of a procedure or primitive application are evaluated
+  is the same as the exception environment in which
+  the procedure or primitive is applied.
+\item
+  The exception environment when evaluating a procedure body
+  (when the procedure is applied)
+  is the same as the exception environment
+  in which the procedure is applied.
+\item
+  When evaluating the thrown handler exception body,
+  the exception environment and continuation are those saved
+  by the handler when the handler was defined in the \verb'catch' expression.
+\end{itemize}
+\end{minipage}

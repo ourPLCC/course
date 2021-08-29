@@ -1,0 +1,25 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Parsers} (continued)\exx
+\Large
+\emm{\Large\NormalBox{\MYlonGrammarTOK}}\exx
+We now have two fields in the \verb'NumsNode' class:
+\verb'num' (of type \verb'Token')
+and \verb'nums' (of type \verb'Nums').
+When the parser generates a \verb'NumsNode' object,
+it fills in its \verb'num' field
+with the value of the \verb'Token' object.
+The \verb'toString()' method applied to this object
+retrieves the lexeme of the scanned token,
+which is a string of decimal digits.
+The rest of the \verb'NumsNode' object is the same as before.\exx
+The following diagram shows the parse tree for the string
+\begin{qv}
+( 14 6 )
+\end{qv}
+using this revised grammar. Notice that each \verb'NumsNode' object
+now has a \verb'num' field (a \verb'Token') containing decimal digits.\exx
+\centerline{\psfig{figure=lon-14-6-num.eps,width=4in}}
+\end{minipage}
+\clearpage

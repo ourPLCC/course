@@ -1,0 +1,33 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language V5} (continued)\exx
+The implementation of \verb'addLetrecBindings'
+in the \verb'LetDecls' class is shown here:
+{\Large
+\begin{qv}
+LetDecls
+%%%
+    public Env addLetrecBindings(Env env) {
+        // Step 0
+        Env nenv = env.extendEnv(new Bindings(varList.size()));
+        // Step 1
+        Iterator<Token> varIter = varList.iterator();
+        Iterator<Exp> expIter = expList.iterator();
+        while (varIter.hasNext()) {
+            String str = varIter.next().toString();
+            Val val = expIter.next().eval(nenv);
+            nenv.add(new Binding(str, val));
+        }
+        return nenv; // Step 2
+    }
+%%%
+\end{qv}
+}
+Notice that we have previously defined an \verb'addBindings' method
+in the \verb'LetDecls' class (see Language V3)
+used to implement the \verb'eval' semantics of a \verb'let' expression.
+The \verb'addLetrecBindings' method simply becomes another part
+of the \verb'LetDecls' class.
+\end{minipage}
+\clearpage

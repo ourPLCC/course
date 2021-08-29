@@ -1,0 +1,445 @@
+ValContException
+%%%
+public class ValContException extends PLCCException {
+
+    public Val val;
+
+    public ValContException(Val val) {
+        super("Val Continuation Exception");
+        this.val = val;
+    }
+
+    public String toString() {
+        return val.toString();
+    }
+
+}
+%%%
+
+RefContException
+%%%
+public class RefContException extends PLCCException {
+
+    public Ref ref;
+
+    public RefContException(Ref ref) {
+        super("Ref Continuation Exception");
+        this.ref = ref;
+    }
+
+    public String toString() {
+        return ref.toString();
+    }
+
+}
+%%%
+
+NullContException
+%%%
+public class NullContException extends PLCCException {
+
+    public NullContException() {
+        super("Null Continuation Exception");
+    }
+
+    public String toString() {
+        return "null";
+    }
+
+}
+%%%
+
+Cont
+%%%
+import java.util.*;
+
+public abstract class Cont {
+
+    public static int count = 0;
+
+    public int sn = count++; // serial number
+
+    public Cont() {
+        // System.out.print(".");
+    }
+
+    public static void threadedTrampoline(Queue<ACont> queue) {
+        while(true) {
+            ACont thread = queue.poll();
+            if (thread == null)
+                return;
+            try {
+                thread = thread.apply();
+                queue.add(thread);
+            } catch (NullContException e) {
+                // nothing to catch!
+            }
+        }
+    }
+
+}
+%%%
+
+ACont
+%%%
+// Continuation with a parameterless apply method
+public abstract class ACont extends Cont {
+
+    public abstract ACont apply();
+
+    // used to de-couple nested calls to apply
+    public Val trampoline() {
+        ACont acont = this;
+        while(true)
+	    try {
+                // System.out.println(cont.sn + ": " + cont.toString());
+		acont = acont.apply();
+	    } catch (ValContException e) {
+		return e.val;
+	    }
+    }
+
+    public String toString() {
+        return "ACont";
+    }
+
+}
+%%%
+
+VCont
+%%%
+// Continuation with an apply method that takes a Val parameter
+public abstract class VCont extends Cont {
+
+    public abstract ACont apply(Val val);
+
+}
+%%%
+
+RCont
+%%%
+// Continuation with an apply method that takes a Ref parameter
+public abstract class RCont extends Cont {
+
+    public abstract ACont apply(Ref ref);
+
+}
+%%%
+
+ValCont
+%%%
+public class ValCont extends ACont {
+
+    public Val val;
+    public VCont vcont;
+
+    public ValCont(Val val, VCont vcont) {
+        this.val = val;
+        this.vcont = vcont;
+    }
+
+    public ACont apply() {
+        return vcont.apply(val);
+    }
+
+    public String toString() {
+        return "ValCont";
+    }
+
+}
+%%%
+
+ValToRefCont
+%%%
+public class ValToRefCont extends VCont {
+
+    public RCont rcont;
+
+    public ValToRefCont(RCont rcont) {
+        this.rcont = rcont;
+    }
+
+    public ACont apply(Val val) {
+        return new RefCont(new ValRef(val), rcont);
+    }
+
+}
+%%%
+
+RefCont
+%%%
+public class RefCont extends ACont {
+
+    public Ref ref;
+    public RCont rcont;
+
+    public RefCont(Ref ref, RCont rcont) {
+        this.ref = ref;
+        this.rcont = rcont;
+    }
+
+    public ACont apply() {
+        return rcont.apply(ref);
+    }
+
+    public String toString() {
+        return "RefCont";
+    }
+
+}
+%%%
+
+HaltCont
+%%%
+public class HaltCont extends VCont {
+
+    public ACont apply(Val val) {
+        // System.out.println(sn + ": Halt (" + val.toString() + ")");
+        throw new ValContException(val); // jump off the trampoline
+    }
+
+    public String toString() {
+        return "HaltCont";
+    }
+
+}
+%%%
+
+EvalCont
+%%%
+public class EvalCont extends ACont {
+
+    public Exp exp;
+    public Env env;
+    public VCont vcont;
+
+    public EvalCont(Exp exp, Env env, VCont vcont) {
+        this.exp = exp;
+        this.env = env;
+        this.vcont = vcont;
+    }
+
+    public ACont apply() {
+        return exp.eval(env, vcont);
+    }
+
+    public String toString() {
+        return "EvalCont";
+    }
+
+}
+%%%
+
+EvalRefCont
+%%%
+public class EvalRefCont extends ACont {
+
+    public Exp exp;
+    public Env env;
+    public RCont rcont;
+
+    public EvalRefCont(Exp exp, Env env, RCont rcont) {
+        this.exp = exp;
+        this.env = env;
+        this.rcont = rcont;
+    }
+
+    public ACont apply() {
+        return exp.evalRef(env, rcont);
+    }
+
+    public String toString() {
+        return "EvalRefCont";
+    }
+
+}
+%%%
+
+IfCont
+%%%
+public class IfCont extends VCont {
+
+    public Exp trueExp;
+    public Exp falseExp;
+    public Env env;
+    public VCont vcont;
+
+    public IfCont(Exp trueExp, Exp falseExp, Env env, VCont vcont) {
+        this.trueExp = trueExp;
+        this.falseExp = falseExp;
+        this.env = env;
+        this.vcont = vcont;
+    }
+
+    public ACont apply(Val val) {
+        if (val.isTrue())
+            return new EvalCont(trueExp, env, vcont);
+        else
+            return new EvalCont(falseExp, env, vcont);
+    }
+
+    public String toString() {
+        return "IfCont";
+    }
+
+}
+%%% 
+
+SetCont
+%%%
+public class SetCont extends VCont {
+
+    public Ref ref;
+    public VCont vcont;
+
+    public SetCont(Ref ref, VCont vcont) {
+        this.ref = ref;
+        this.vcont = vcont;
+    }
+
+    public ACont apply(Val val) {
+        ref.setRef(val);
+        return new ValCont(val, vcont);
+    }
+
+    public String toString() {
+        return "SetCont";
+    }
+
+}
+%%%
+
+PrimappCont
+%%%
+import java.util.*;
+
+public class PrimappCont extends ACont {
+
+    public Prim prim;             // the primitive to apply
+    public Val [] valArray;       // arguments
+    public VCont vcont;           // the continuation
+
+    public PrimappCont(Prim prim, Val [] valArray, VCont vcont) {
+        this.prim = prim;
+        this.valArray = valArray;
+        this.vcont = vcont;
+    }
+
+    public ACont apply() {
+        Val val = prim.apply(valArray);
+        return new ValCont(val, vcont);
+    }
+   
+    public String toString() {
+        return "PrimappCont";
+    }
+
+}
+%%%
+
+RandCont
+%%%
+// the end of the line for placing the value of a single operand expression
+// into a value array
+public class RandCont extends VCont {
+
+    public Val [] valArray;
+    public int index;
+
+    public RandCont(Val [] valArray, int index) {
+        this.valArray = valArray;
+        this.index = index;
+    }
+
+    public ACont apply(Val val) {
+        valArray[index] = val;
+        // System.out.println("index[" + index + "]=" + val);
+        throw new NullContException();
+    }
+
+}
+%%%
+
+RandRefCont
+%%%
+// the end of the line for placing a reference to a single operand expression
+// into a reference array
+public class RandRefCont extends RCont {
+
+    public Ref [] refArray;
+    public int index;
+
+    public RandRefCont(Ref [] refArray, int index) {
+        this.refArray = refArray;
+        this.index = index;
+    }
+
+    public ACont apply(Ref ref) {
+        refArray[index] = ref;
+        // System.out.println("index[" + index + "]=" + ref);
+        throw new NullContException();
+    }
+
+}
+%%%
+
+AppCont
+%%%
+import java.util.*;
+
+public class AppCont extends VCont {
+
+    public Rands rands;           // the actual parameter expressions
+    public Env env;               // evaluate the params in this environment
+    public VCont vcont;           // who gets the result
+
+    public AppCont(Rands rands, Env env, VCont vcont) {
+        this.rands = rands;
+        this.env = env;
+        this.vcont = vcont;
+    }
+
+    public ACont apply(Val val) {
+        ProcVal procVal = val.procVal();
+        Ref [] refArray = rands.evalRandsRef(env);
+        return procVal.apply(Arrays.asList(refArray), vcont);
+    }
+
+    public String toString() {
+        return "AppCont";
+    }
+
+}
+%%%
+
+SequenceCont
+%%%
+import java.util.*;
+
+// used with SeqExps
+public class SequenceCont extends VCont {
+
+    public Iterator<Exp> expIter; // iterate over the expList
+    public Env env;               // the environment
+    public VCont vcont;           // apply this to the last sequence value
+
+    public SequenceCont (List<Exp> expList, Env env, VCont vcont) {
+        this.env = env;
+        this.vcont = vcont;
+        this.expIter = expList.iterator();
+    }
+
+    public ACont apply(Val val) {
+        if (expIter.hasNext()) {
+            Exp exp = expIter.next();
+            return new EvalCont(exp, env, this);
+        }
+        return new ValCont(val, vcont); // pass the last Val to vcont
+    }
+
+    public String toString() {
+        return "SequenceCont";
+    }
+
+}
+%%%

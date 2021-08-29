@@ -1,0 +1,40 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Parsers} (continued)\exx
+{\Large
+\emm\LightBox{\MYlonGrammarKleene}\exx
+}
+Recall that we want to define the \verb'$run()' method
+in the \verb'Lon' class
+so it displays the values of the tokens in the \verb'numList' field.
+This field, an object of type \verb'List<Token>',
+is accessible in the  \verb'Lon' class as follows:
+{\Large
+\begin{qv}
+nums.numList
+\end{qv}
+}
+So we can display the \verb'NUM' entries by iterating over this list,
+displaing the tokens (as Java \verb'String's) as we do so.
+Here is the completed version of the PLCC specification
+that adds the \verb'$run()' method to the \verb'Lon.java' file
+to achieve our desired result.
+Since the parse tree does not include the tokens for parentheses,
+this code adds back the parentheses in the output
+to make the output look ``pretty''.
+{\Large
+\begin{qv}
+Lon
+%%%
+    public void $run() {
+        System.out.print("( ");
+        for (Token tok: nums.numList)
+            System.out.print(tok.toString() + " ");
+        System.out.println(")");
+    }
+%%%
+\end{qv}
+}
+\end{minipage}
+\clearpage

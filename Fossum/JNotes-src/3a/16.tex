@@ -1,0 +1,22 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language REF} (continued)\exx
+Using call-by-reference semantics,
+the program
+\begin{qv}
+let
+  x = 3
+  p = proc(t) set t = add1(t)
+in
+  { .p(x) ; x }
+\end{qv}
+returns the value 4, since \verb't' denotes
+the same reference as \verb'x'.
+The bindings created by the \verb'let'
+and then during evaluation of the application \verb'.p(x)'
+(just prior to evaluating the procedure body)
+are illustrated in the following figure:
+\cfigw{ref.eps}{9in}
+\end{minipage}
+\clearpage

@@ -1,0 +1,34 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf PLCC -- Semantics (continued)}\exx
+The entire semantics section
+of the TREE language appears here:
+{\Large
+\begin{qv}
+Tree
+%%%
+    public void $run() {
+        System.out.println("Tree: " + this.toString());
+    }
+%%%
+
+Leaf # extends the Tree class
+%%%
+    public String toString() {
+        // 'num' is a Token field in the Leaf class
+        return num.toString();
+    }
+%%%
+
+Interior # extends the Tree class
+%%%
+    public String toString() {
+        // 'left' and 'right' are Tree fields in the Interior class
+        return "("+symbol.toString()+" "+left+" "+right+")"; 
+    }
+%%%
+\end{qv}
+}
+\end{minipage}
+\clearpage

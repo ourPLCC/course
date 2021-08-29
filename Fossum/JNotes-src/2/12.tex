@@ -1,0 +1,21 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Environments} (continued)\exx
+The following diagrams give examples of 
+an \verb'EnvNull' object and an \verb'EnvNode' object.\exx
+The \verb'EnvNull' object has no fields --
+we always draw such an environment as shown below.
+The \verb'EnvNode' object in this example has
+a \verb'bindings' field as shown on slide 2.6
+and an \verb'env' field referring to some enclosing environment (not shown).\exx
+\centerline{\psfig{figure=envs.eps,width=3.5in}}\exx
+In the right-hand \verb'EnvNode' example,
+a call to \verb'lookup("x")' returns
+the \verb'Binding' object \verb'("x", 3)'
+(think of this as a pair),
+a call to \verb'applyEnv("x")' returns
+an \verb'IntVal' object with value 3,
+and a call to \verb'lookup("w")' returns \verb'null'.
+\end{minipage}
+\clearpage

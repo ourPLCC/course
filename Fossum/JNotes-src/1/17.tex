@@ -1,0 +1,20 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Parsers} (continued)\exx
+The following diagram shows how the output of a scanner
+(a program that implements lexical analysis)
+becomes input to a parser
+(a program that implements syntax analysis).
+The output of a parser is a {\em parse tree} --
+which we describe in more detail later.\exx
+\centerline{\psfig{figure=parsing.eps,width=8in}}\exx
+For a particular language whose PLCC \verb'grammar' file
+specifies the language tokens and BNF grammar,
+the \verb'plccmk' program generates and compiles Java source files
+that implement a scanner and parser
+directly from the \verb'grammar' file.\exx
+We start with the list-of-numbers (\verb'LON') example
+to show how this works.
+\end{minipage}
+\clearpage

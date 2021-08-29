@@ -1,0 +1,38 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf PLCC -- Semantics (continued)}\exx
+For an instance of class \verb'Interior',
+an appropriate \verb'toString' method can be:
+{\Large
+\begin{qv}
+public String toString() {
+    return "("+symbol.toString()+" "+left+" "+right+")";
+}
+\end{qv}
+}
+This relies on the proper (recursive) \verb'toString' behavior
+of the \verb'left' and \verb'right' fields,
+both of which are defined as instances of the \verb'Tree' class.\exx
+Recall that PLCC generates a Java class
+for each of the BNF grammar rules
+given in the syntax section of the language specification.
+We can define {\em semantic actions} for these classes
+by adding entries to the semantics section 
+of the language specification file having the form
+{\Large
+\begin{qv}
+ClassName
+%%%
+...
+%%%
+\end{qv}
+}
+where \verb'ClassName' stands for the name of a PLCC-generated class name,
+such as \verb'Tree' in Language TREE.
+PLCC inserts the lines of code bracketed by the '\verb'%%%'' lines
+verbatim into the \verb'ClassName.java' file.
+Most often, these lines define one or more Java methods
+that can be applied to instances of the class.
+\end{minipage}
+\clearpage

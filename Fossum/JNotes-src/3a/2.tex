@@ -1,0 +1,24 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language SET} (continued)\exx
+We introduce the notion of a {\em reference},
+something that {\em refers to} a mutable location in memory.
+Instead of binding a variable directly to an expressed value,
+we bind the variable to a reference
+which itself contains an expressed value.
+\begin{quote}
+\begin{tabular}{@{}l@{ $=$ }l}
+Expressed value & Val $=$ IntVal+ProcVal \\
+Denoted value & Ref(Expressed) \\
+\end{tabular}
+\end{quote}
+To mutate a variable bound to a reference,
+we change the {\em contents} of the reference;
+the variable is still bound to the same reference.
+\cfig{3a.2.eps}
+\vspace{2ex}
+The two right-hand diagrams depict the same environment.
+The rightmost one uses a more compact representation.
+\end{minipage}
+\clearpage

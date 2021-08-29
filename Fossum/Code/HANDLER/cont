@@ -1,0 +1,392 @@
+ContException
+%%%
+public class ContException extends PLCCException {
+
+    public Val val;
+
+    public ContException(Val val) {
+        super("Continuation Exception");
+        this.val = val;
+    }
+
+    public String toString() {
+        return val.toString();
+    }
+
+}
+%%%
+
+Cont
+%%%
+public class Cont {
+
+    public Val val;
+
+    public Cont apply(Val val) {
+        this.val = val; // deposit the value to apply
+        return this; // jump onto the trampoline!
+    }
+
+    public Cont apply(Ref ref) {
+        throw new PLCCException("cannot apply this continuation to a Ref");
+    }
+
+    public Cont apply() {
+        throw new ContException(val); // the default continuation
+    }
+
+    public Val trampoline() {
+        Cont cont = this;
+        while(true)
+	    try {
+                cont = cont.apply();
+	    } catch (ContException e) {
+		return e.val;
+	    }
+    }
+
+}
+%%%
+
+EvalCont
+%%%
+// builds a continuation in which an expression is evaluated
+// this avoids calling exp.eval(...) directly -- and thus building
+// a new stack frame -- but can result in more run-time overhead
+public class EvalCont extends Cont {
+
+    public Exp exp;
+    public Env env;
+    public Env xenv;
+    public Cont cont;
+
+    public EvalCont(Exp exp, Env env, Env xenv, Cont cont) {
+        this.exp = exp;
+        this.env = env;
+        this.xenv = xenv;
+        this.cont = cont;
+    }
+
+    public Cont apply() {
+        return exp.eval(env, xenv, cont);
+    }
+}
+%%% 
+
+TestCont
+%%%
+public class TestCont extends Cont {
+
+    Exp trueExp;
+    Exp falseExp;
+    Env env;
+    Env xenv;
+    Cont cont;
+
+    public TestCont(Exp trueExp, Exp falseExp, Env env, Env xenv, Cont cont) {
+        this.trueExp = trueExp;
+        this.falseExp = falseExp;
+        this.env = env;
+        this.xenv = xenv;
+        this.cont = cont;
+    }
+
+    public Cont apply() {
+        if (val.isTrue())
+            return new EvalCont(trueExp, env, xenv, cont);
+        else
+            return new EvalCont(falseExp, env, xenv, cont);
+    }
+
+}
+%%% 
+
+AppCont
+%%%
+import java.util.*;
+
+public class AppCont extends Cont {
+
+    public List<Exp> rands;
+    public Env env;
+    public Env xenv;
+    public Cont cont;
+
+    public AppCont(List<Exp> rands, Env env, Env xenv, Cont cont) {
+        this.rands = rands;
+        this.env = env;
+        this.xenv = xenv;
+        this.cont = cont;
+    }
+
+    public Cont apply() {
+        return val.apply(rands, env, xenv, xenv, cont);
+    }
+
+}
+%%%
+
+SetCont
+%%%
+public class SetCont extends Cont {
+
+    public Ref ref;
+    public Cont cont;
+
+    public SetCont(Token var, Env env, Cont cont) {
+        this.ref = env.applyEnvRef(var.toString());
+        this.cont = cont;
+    }
+
+    public Cont apply() {
+        ref.setRef(val);
+        return cont.apply(val);
+    }
+}
+%%%
+
+LetrecBuildCont
+%%%
+import java.util.*;
+
+// builds a letrec continuation with an environment in which
+//   an expression will be evaluated, with bindings
+//   to VARs to their associated Values
+// used with LetrecExps
+public class LetrecBuildCont extends Cont {
+
+    public Iterator<Token> varIter; // VAR tokens
+    public Iterator<Exp> expIter;   // actual parameter expressions
+    public Env paramEnv;            // actual parameter evaluation environment
+    public Env paramxEnv;           // actual parameter exception environment
+    public Exp bodyExp;             // body expression
+    public Env bodyEnv;             // body evaluation environment
+    public Env bodyxEnv;            // body execption environment
+    public Cont cont;               // continuation
+
+    public LetrecBuildCont(List<Token> varList,
+                     List<Exp> expList,
+                     Env paramEnv,
+                     Env paramxEnv,
+                     Exp bodyExp,
+                     Env bodyEnv,
+                     Env bodyxEnv,
+                     Cont cont) {
+        varIter = varList.iterator();
+        expIter = expList.iterator();
+        this.paramEnv = paramEnv;
+        this.paramxEnv = paramxEnv;
+        this.bodyExp = bodyExp;
+        this.bodyEnv = bodyEnv.extendEnvRef(new Bindings());
+        this.bodyxEnv = bodyxEnv;
+        this.cont = cont;
+    }
+
+    public Cont apply() {
+        // bind the identifier to the value
+        String id = varIter.next().toString();
+        bodyEnv.add(new Binding(id, new ValRef(val)));
+        return next();
+    }
+        
+    public Cont next() {
+        if (expIter.hasNext()) {
+            Exp exp = expIter.next(); // an actual parameter expression
+            return new EvalCont(exp, paramEnv, paramxEnv, this);
+        }
+        // no more arguments -- just extend the body environment
+        // with the new bindings and evaluate the body
+        return new EvalCont(bodyExp, bodyEnv, bodyxEnv, cont);
+    }
+
+}
+%%%
+
+BuildCont
+%%%
+import java.util.*;
+
+// builds a continuation with an environment in which
+//   an expression will be evaluated, with bindings
+//   to VARs to their associated Values
+// used with both LetExps and AppExps (an AppExp uses a subclass of this)
+public class BuildCont extends Cont {
+
+    public Bindings bindings;       // add these to the bodyEnv
+    public Iterator<Token> varIter; // VAR tokens
+    public Iterator<Exp> expIter;   // actual parameter expressions
+    public Env paramEnv;            // actual parameter evaluation environment
+    public Env paramxEnv;           // actual parameter exception environment
+    public Exp bodyExp;             // body expression
+    public Env bodyEnv;             // body evaluation environment
+    public Env bodyxEnv;            // body execption environment
+    public Cont cont;               // continuation
+
+    public BuildCont(List<Token> varList,
+                     List<Exp> expList,
+                     Env paramEnv,
+                     Env paramxEnv,
+                     Exp bodyExp,
+                     Env bodyEnv,
+                     Env bodyxEnv,
+                     Cont cont) {
+        bindings = new Bindings();
+        varIter = varList.iterator();
+        expIter = expList.iterator();
+        this.paramEnv = paramEnv;
+        this.paramxEnv = paramxEnv;
+        this.bodyExp = bodyExp;
+        this.bodyEnv = bodyEnv;
+        this.bodyxEnv = bodyxEnv;
+        this.cont = cont;
+    }
+
+    public Cont apply() {
+        // bind the identifier to the value
+        String id = varIter.next().toString();
+        bindings.add(id, new ValRef(val));
+        return next();
+    }
+        
+    public Cont next() {
+        if (expIter.hasNext()) {
+            Exp exp = expIter.next(); // an actual parameter expression
+            return new EvalCont(exp, paramEnv, paramxEnv, this);
+        }
+        // no more arguments -- just extend the body environment
+        // with the new bindings and evaluate the body
+        bodyEnv = bodyEnv.extendEnvRef(bindings);
+        return new EvalCont(bodyExp, bodyEnv, bodyxEnv, cont);
+    }
+
+}
+%%%
+
+BuildRefCont
+%%%
+import java.util.*;
+
+public class BuildRefCont extends BuildCont {
+
+    public Ref ref;
+
+    public BuildRefCont(List<Token> varList,
+                     List<Exp> expList,
+                     Env paramEnv,
+                     Env paramxEnv,
+                     Exp bodyExp,
+                     Env bodyEnv,
+                     Env bodyxEnv,
+                     Cont cont) {
+        super(varList,
+              expList,
+              paramEnv,
+              paramxEnv,
+              bodyExp,
+              bodyEnv,
+              bodyxEnv,
+              cont);
+    }
+
+    public Cont apply(Val val) {
+        this.ref = new ValRef(val);
+        return this; // jump onto the trampoline
+    }
+
+    public Cont apply(Ref ref) {
+        this.ref = ref;
+        return this; // jump onto the trampoline
+    }
+
+    public Cont apply() {
+        String id = varIter.next().toString();
+        bindings.add(id, ref);
+        return next();
+    }
+
+    public Cont next() {
+        if (expIter.hasNext()) {
+            Exp exp = expIter.next();
+            return exp.evalRef(paramEnv, paramxEnv, this);
+        }
+        bodyEnv = bodyEnv.extendEnvRef(bindings);
+        return new EvalCont(bodyExp, bodyEnv, bodyxEnv, cont);
+    }
+
+}
+%%%
+
+PrimappCont
+%%%
+import java.util.*;
+
+public class PrimappCont extends Cont {
+
+    public Prim prim;             // the primitive to apply
+    public Iterator<Exp> expIter; // actual parameter expressions
+    public Env env;               // Env in which actual params are evaluated
+    public Env xenv;              // exception environment
+    public List<Val> valList;     // list of arguments (built here)
+    public Cont cont;             // the continuation
+
+    public PrimappCont(Prim prim,
+                       List<Exp> expList,
+                       Env env,
+                       Env xenv,
+                       Cont cont) {
+        this.prim = prim;
+        expIter = expList.iterator();
+        this.env = env;
+        this.xenv = xenv;
+        valList = new ArrayList<Val>(expList.size());
+        this.cont = cont;
+    }
+
+    public Cont apply() {
+        valList.add(val);
+        return next();
+    }
+
+    public Cont next() {
+        if (expIter.hasNext()) {
+            Exp exp = expIter.next();
+            return new EvalCont(exp, env, xenv, this);
+        }
+        Val v = prim.apply(Val.toArray(valList));
+        return cont.apply(v);
+    }
+   
+}
+%%%
+
+SequenceCont
+%%%
+import java.util.*;
+
+// used with SeqExps
+public class SequenceCont extends Cont {
+
+    public Exp exp;               // current expression
+    public Iterator<Exp> expIter; // a list of additional expressions
+    public Env env;               // the environment
+    public Env xenv;              // execption environment
+    public Cont cont;             // the next continuation
+
+    public SequenceCont (List<Exp> expList, Env env, Env xenv, Cont cont) {
+        expIter = expList.iterator();
+        this.env = env;
+        this.xenv = xenv;
+        this.cont = cont;
+    }
+
+    public Cont apply() {
+        if (expIter.hasNext()) {
+            // discard the current value and evaluate the next expression
+            Exp exp = expIter.next();
+            return new EvalCont(exp, env, xenv, this);
+        }
+        return cont.apply(val);
+    }
+
+}
+%%%

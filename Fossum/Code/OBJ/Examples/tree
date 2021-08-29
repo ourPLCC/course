@@ -1,0 +1,162 @@
+define binTree =
+  class
+    static BTnode =
+      class extends myclass
+        field left
+        field val
+        field right
+        method lt? = proc(x)
+          if <?(val,x)
+          then
+            if .<left>lt?(x)
+            then 
+              if .<right>lt?(x)
+              then 1
+              else 0
+            else 0
+          else 0
+        method gt? = proc(x)
+          if >?(val,x)
+          then 
+            if .<left>gt?(x) 
+            then 
+              if .<right>gt?(x)
+              then 1
+              else 0
+            else 0
+          else 0
+        method bst? = proc()
+          if .<left>lt?(val)
+          then
+            if .<right>gt?(val)
+            then
+              if .<left>bst?()
+              then
+                if .<right>bst?()
+                then 1
+                else 0
+              else 0
+            else 0
+          else 0
+        method sum = proc() +(val, +(.<left>sum(), .<right>sum()))
+        method nodeCount = proc() add1(+(.<left>nodeCount(), .<right>nodeCount()))
+	method init = proc(left, val, right)
+          { set <this>left=left
+          ; set <this>right=right
+          ; set <this>val = val
+          ; this
+          }
+        % add a value to this BST
+        method addBST = proc(v)
+          if <?(v,val) then .makeNode(.<left>addBST(v), val, right)
+          else if >?(v,val) then .makeNode(left, val, .<right>addBST(v))
+          else this % duplicate value, no change
+        % do an inorder traversal of this tree,
+        % returning, in order, a list of the values in the visited nodes
+        method traverse = proc()
+          .maplvl(proc(t) .<t>traverse(), left, val, right)
+          % .append(.<left>traverse(), addFirst(val, .<right>traverse()))
+        % search for a value in this BST --
+        % return 1 if found, 0 otherwise
+        method search = proc(v)
+          if <?(v,val)
+          then .<left>search(v)
+          else if >?(v,val)
+          then .<right>search(v)
+          else 1
+      end
+    static BTnull =
+      class extends myclass
+        method lt? = proc(x) 1
+        method gt? = proc(x) 1
+        method bst? = proc() 1
+        method sum = proc() 0
+        method nodeCount = proc() 0
+        method addBST = proc(v) .makeLeaf(v)
+        method search = proc(v) 0
+        method traverse = proc() []
+      end
+    static nullNode = new BTnull % singleton
+    static makeNode = proc(left,val,right) .<new BTnode>init(left,val,right)
+    static makeLeaf = proc(v) .makeNode(nullNode, v, nullNode)
+    % convert a list to a BST
+    static list2BST = proc(lst)
+      if lst
+      then .<.list2BST(rest(lst))>addBST(first(lst))
+      else nullNode
+  end
+
+% top-level defines for frequently used binTree procedures/objects
+define nullNode = <binTree>nullNode
+define makeNode = <binTree>makeNode
+define makeLeaf = <binTree>makeLeaf
+define treeSort = proc(lst) !<binTree>list2BST(lst)>traverse()!>
+
+% append two lists
+define append = proc(xs, ys)
+  if xs
+  then addFirst(first(xs), .append(rest(xs), ys))
+  else ys
+
+define maplvl = proc(f, lst1, val, lst2)
+  .append(.f(lst1), addFirst(val, .f(lst2)))
+
+define t5  = .makeLeaf(5)
+define t3  = .makeNode(nullNode, 3, t5)
+define t10 = .makeLeaf(10)
+define t12 = .makeNode(t10, 12, nullNode)
+define t8  = .makeLeaf(8)
+define t9  = .makeNode(t8, 9, t12)
+define t7  = .makeNode(t3, 7, t9)
+
+% t7 is a BST
+.<t7>bst?()
+% naBST is not a BST
+define naBST = .makeNode(.makeLeaf(5), 3, nullNode)
+.<naBST>bst?()
+
+% create a BST with nodes 3, 2, 4, 1, and 5
+define t12345 = !<nullNode>addBST(3)>addBST(2)>addBST(4)>addBST(1)>addBST(5)!>
+.<t12345>bst?()
+.<t12345>search(5)
+.<t12345>search(3)
+.<t12345>search(6)
+
+% create another BST with nodes 3, 2, 4, 1, and 5
+% using the list2BST procedure that takes a list and returns a BST
+define bst12345 = .<binTree>list2BST([3,2,4,1,5])
+.<bst12345>bst?()
+.<bst12345>search(5)
+.<bst12345>search(3)
+.<bst12345>search(6)
+
+.treeSort([5,1,4,2,3]) % => [1,2,3,4,5]
+
+% return a list of all of the items in xs that satisfy the predicate p
+define filter = proc(p, xs)
+  if xs
+  then
+    let
+      f = first(xs)
+      ys = .filter(p, rest(xs))
+    in
+      if .p(f)
+      then addFirst(f, ys)
+      else ys
+  else xs
+
+% implement quick sort
+define qSort = proc(xs)
+  if xs
+  then
+    let
+      fst = first(xs)
+      rst = rest(xs)
+    in
+      let
+        lt = .qSort(.filter(proc(x) <?(x,fst), rst))
+        ge = .qSort(.filter(proc(x) >=?(x, fst), rst))
+      in
+        .append(lt, addFirst(fst, ge))
+  else
+    xs

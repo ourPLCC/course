@@ -1,0 +1,32 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Parsers} (continued)\exx
+Here is the complete \verb'grammar' file
+in code directory {\color{red}\verb'LON2'} with these changes:
+{\Large
+\begin{qv}
+# Lexical specification
+skip WHITESPACE '\s+'
+NUM '\d+'
+LPAREN '\('
+RPAREN '\)'
+%
+# Grammar
+<lon>  ::= LPAREN <nums> RPAREN
+<nums> **= <NUM>
+%
+
+Lon
+%%%
+    public void $run() {
+        System.out.print("( ");
+        for (Token tok: nums.numList)
+            System.out.print(tok.toString() + " ");
+        System.out.println(")");
+    }
+%%%
+\end{qv}
+}
+\end{minipage}
+\clearpage

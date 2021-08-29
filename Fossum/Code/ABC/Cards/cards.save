@@ -1,0 +1,63 @@
+suit(jc,c).
+suit(qc,c).
+suit(kc,c).
+suit(ac,c).
+suit(jd,d).
+suit(qd,d).
+suit(kd,d).
+suit(ad,d).
+suit(jh,h).
+suit(qh,h).
+suit(kh,h).
+suit(ah,h).
+suit(js,s).
+suit(qs,s).
+suit(ks,s).
+suit(as,s).
+rank(jc,j).
+rank(qc,q).
+rank(kc,k).
+rank(ac,a).
+rank(jd,j).
+rank(qd,q).
+rank(kd,k).
+rank(ad,a).
+rank(jh,j).
+rank(qh,q).
+rank(kh,k).
+rank(ah,a).
+rank(js,j).
+rank(qs,q).
+rank(ks,k).
+rank(as,a).
+
+rank(R) :- rank(_,R).
+suit(S) :- suit(_,S).
+card(X) :- rank(X,_).
+
+hand(W,X,Y,Z) :- card(W), card(X), card(Y), card(Z).
+hand(W,X,Y,Z) :- hand(X,W,Y,Z). % interchange W,X
+hand(W,X,Y,Z) :- hand(Y,X,W,Z). % interchange W,Y
+hand(W,X,Y,Z) :- hand(Z,X,Y,W). % interchange W,Z
+hand(W,X,Y,Z) :- hand(W,Y,X,Z). % interchange X,Y
+hand(W,X,Y,Z) :- hand(W,Z,Y,X). % interchange X,Z
+hand(W,X,Y,Z) :- hand(W,X,Z,Y). % interchange Y,Z
+
+flush(W,X,Y,Z) :- suit(W,S), suit(X,S), suit(Y,S), suit(Z,S).
+pair(W,X,Y,Z) :- rank(W,R), rank(X,R), card(Y), card(Z).
+pair(W,X,Y,Z) :- rank(W,R), card(X), rank(Y,R), card(Z).
+pair(W,X,Y,Z) :- rank(W,R), card(X), card(Y), rank(Z,R).
+pair(W,X,Y,Z) :- card(W), rank(X,R), rank(Y,R), card(Z).
+pair(W,X,Y,Z) :- card(W), rank(X,R), card(Y), rank(Z,R).
+pair(W,X,Y,Z) :- card(W), card(X), rank(Y,R), rank(Z,R).
+three(W,X,Y,Z) :- rank(W,R), rank(X,R), rank(Y,R), card(Z).
+three(W,X,Y,Z) :- rank(W,R), rank(X,R), card(Y), rank(Z,R).
+three(W,X,Y,Z) :- rank(W,R), card(X), rank(Y,R), rank(Z,R).
+three(W,X,Y,Z) :- card(W), rank(X,R), rank(Y,R), rank(Z,R).
+twopair(W,X,Y,Z) :- rank(W,R1), rank(X,R1), rank(Y,R2), rank(Z,R2).
+twopair(W,X,Y,Z) :- rank(W,R1), rank(Y,R1), rank(X,R2), rank(Z,R2).
+twopair(W,X,Y,Z) :- rank(W,R1), rank(Z,R1), rank(X,R2), rank(Y,R2).
+four(W,X,Y,Z) :- rank(W,R), rank(X,R), rank(Y,R), rank(Z,R).
+straight(W,X,Y,Z) :- rank(W,WR), rank(X,XR), rank(Y,YR), rank(Z,ZR),
+                     WR!=XR, WR!=YR, WR!=ZR, XR!=YR, XR!=ZR, YR!=ZR.
+

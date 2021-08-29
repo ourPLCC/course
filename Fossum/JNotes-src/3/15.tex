@@ -1,0 +1,34 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language V0} (continued)\exx
+Recall that repeating grammar rules
+have fields that are Java lists.
+For example, our Language V0 grammar has the following repeating rule:
+\begin{qv}
+<rands> **= <exp> +COMMA
+\end{qv}
+This rule says that the \verb'<rands>' nonterminal
+can derive zero or more \verb'<exp>' entries,
+separated by commas.
+The following sentences would match the \verb'<rands>' nonterminal:
+\begin{qv}
+a,b,c     <-- <exp> COMMA <exp> COMMA <exp>
+1, +(2,3) <-- <exp> COMMA <exp>
+add1(x)   <-- <exp>
+          <-- empty string
+\end{qv}
+The class defined by this rule is named \verb'Rands'.
+Its RHS shows only one nonterminal \verb'<exp>',
+so its corresponding Java class \verb'Rands'
+has a field \verb'expList' of type \verb'List<Exp>'.\exx
+You might wonder how we chose the name ``rands''.
+It's actually a shortened form of the term ``operands''.
+In mathematics and in programming,
+operands are the things being operated on.
+For example, given the expression \verb'+(2,3)',
+the operator is `\verb'+'' and its operands are \verb'2' and \verb'3'.
+(Some language designs use the term ``rator''
+as a shortened form of the term ``operator''.)
+\end{minipage}
+\clearpage

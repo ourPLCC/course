@@ -1,0 +1,49 @@
+skip WHITESPACE '\s+'
+skip COMMENT '%.*'
+PRINT 'Print'
+CLEAR 'Clear'
+DOT '\.'
+NOT 'not'
+EQ '='
+NE '!='
+IF ':-'
+QUERY '\?'
+DEL '~'
+COMMA ','
+RPAREN '\)'
+LPAREN '\('
+US '_'
+VAR '[A-Z_][_\w]*'
+LIT '[a-z][_\w]*'
+
+%
+
+# grammar specification
+<program>:Prog ::= <head> <dfrq>
+<program>:Print ::= PRINT
+<program>:Clear ::= CLEAR
+<dfrq>:Delete ::= DEL
+<dfrq>:Fact ::= DOT
+<dfrq>:Rule ::= IF <conjuncts> DOT
+<dfrq>:Query ::= QUERY
+<head> ::= <LIT> LPAREN <args> RPAREN
+<args> **= <vlw> +COMMA
+<vlw>:Var ::= <VAR>
+<vlw>:Lit ::= <LIT>
+<vlw>:WC  ::= US # wildcard
+<conjuncts> **= <conjunct> +COMMA
+<conjunct>:HeadConj ::= <head>
+<conjunct>:RelConj  ::= <VAR>lh <rel> <vlw>rh
+<conjunct>:NotConj  ::= NOT <head>
+<rel>:EQRel ::= EQ
+<rel>:NERel ::= NE
+
+%
+
+*:import
+%%%
+import abcdatalog.ast.*;
+%%%
+
+# semantics
+include code

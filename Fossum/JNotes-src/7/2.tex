@@ -1,0 +1,32 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Logic Programming}\exx
+Our implementation of AbcDatalog resides
+in the \verb'ABC' language subdirectory of the \verb'Code' directory.
+The \verb'README.txt' file in this subdirectory provides
+some information about where to find the AbcDatalog source files
+and details about implementation specifics.\exx
+The tokens of the \verb'ABC' language are given here:
+{\Large
+\begin{qv}
+skip WHITESPACE '\s+'
+skip COMMENT '%.*'
+PRINT 'Print'
+CLEAR 'Clear'
+DOT '\.'
+NOT 'not'
+EQ '='
+NE '!='
+IF ':-'
+QUERY '\?'
+DEL '~'
+COMMA ','
+RPAREN '\)'
+LPAREN '\('
+US '_'
+VAR '[A-Z_][_\w]*'
+LIT '[a-z][_\w]*'
+\end{qv}
+}
+\end{minipage}

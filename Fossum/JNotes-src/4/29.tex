@@ -1,0 +1,39 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language TYPE1} (continued)\exx
+\Large
+The \verb'definedType' method in the \verb'Proc' class
+evaluates the procedure's defined type, which must be a \verb'ProcType':
+it gets the declared types of the formal parameters
+from the \verb'Formals' object
+and the declared return type
+from the procedure's \verb'typeExp'.
+The defined type is determined exclusively by the declared types
+of the formal parameters and the procedure's declared return type.
+\large
+\begin{qv}
+Proc
+%%%
+    public ProcType definedType() {
+        List<Type> declaredTypeList = formals.formalTypeList();
+        Type declaredReturnType = typeExp.toType();
+        return new ProcType(declaredTypeList, declaredReturnType);
+    }
+%%%
+\end{qv}
+\Large
+The \verb'Formals' class defines the \verb'formalTypeList' method:
+\large
+\begin{qv}
+Formals
+%%%
+    public List<Type> formalTypeList() {
+        List<Type> typeList = new ArrayList<Type>(typeExpList.size());
+        for (TypeExp texp : typeExpList)
+            typeList.add(texp.toType());
+        return typeList;
+    }
+%%%
+\end{qv}
+\end{minipage}

@@ -1,0 +1,33 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Environments} (continued)\exx
+A {\em local environment} is a list of zero or more bindings.
+In the context of block-structured languages,
+you can think of a local environment
+as capturing all of the bindings defined in a particular block.
+We represent a local environment using the class \verb'Bindings'.
+A \verb'Bindings' object has a single field named \verb'bindingList'
+which is a \verb'List' of \verb'Binding' objects.
+{\Large
+\begin{qv}
+public class Bindings {
+
+    public List<Binding> bindingList;
+
+    // create an empty list of bindings
+    public Bindings() {
+        bindingList = new ArrayList<Binding>();
+    }
+
+    public Bindings(List<Binding> bindingList) {
+        this.bindingList = bindingList;
+    }
+
+    ... methods lookup() and add() are given later ...
+
+}
+\end{qv}
+}
+\end{minipage}
+\clearpage

@@ -1,0 +1,40 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Parsers} (continued)\exx
+Here's a sample interaction using this trace feature
+for Language \verb'LON',
+with the output edited for the sake of readability:
+{\Large
+\begin{qv}
+$ java -cp Java Rep -t
+--> (14 6)
+<lon>
+| LPAREN "("
+| <nums>:NumsNode
+| | NUM "42"
+| | <nums>:NumsNode
+| | | NUM "6"
+| | | <nums>:NumsNull
+| RPAREN ")"
+Lon@372f7a8d
+\end{qv}
+}
+In this example,
+the root of the parse tree is a \verb'Lon' object
+whose \verb'nums' field is an instance of \verb'NumsNode'.
+This instance in turn has a \verb'nums' field that is also
+an instance of \verb'NumsNode'.
+And finally, this instance has a \verb'nums' field
+that is an instance of \verb'NumsNull'.
+A \verb'NumsNull' object has no fields.
+The trace also shows how each token is matched by the parser,
+along with the lexeme
+from the input program that matched the token.
+The line `\verb'Lon@372f7a8d'' shows the result
+of the parse, which is a \verb'Lon' object
+representing the root of the parse tree.
+The `\verb'@372f7a8d'' part represents the location
+in memory where the \verb'Lon' object resides.
+\end{minipage}
+\clearpage

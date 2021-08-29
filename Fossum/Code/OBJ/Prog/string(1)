@@ -1,0 +1,84 @@
+define append = proc(s, t)
+  if list?(s)
+  then
+    if list?(t)
+    then
+      if s
+      then addFirst(first(s), .append(rest(s), t))
+      else t
+    else nil
+  else nil
+
+% return the first n items in s
+define substr1 = proc(s, n)
+  if list?(s)
+  then
+    if <=?(len(s), n)
+    then s
+    else
+      letrec
+        loop = proc(s, n)
+          if <=?(n, 0)
+          then []
+          else addFirst(first(s), .loop(rest(s), sub1(n)))
+      in
+        .loop(s, n)
+  else nil
+
+% return the items in s starting at position m and ending at position n-1
+define substr = proc(s, m, n)
+  if list?(s)
+  then
+    letrec
+      loop = proc(s, m, n)
+        if s
+        then
+          if <=?(m, 0)
+          then .substr1(s, n)
+          else .loop(rest(s), sub1(m), sub1(n))
+        else s
+    in
+      .loop(s, m, n)
+  else nil
+
+% turn an integer into its decimal string
+define itoa = proc(i)
+  if zero?(i)
+  then ['0]
+  else
+    letrec
+      aux = proc(i, lst)
+        % i must be greater than zero
+        let
+          q = /(i,10) % quotient
+        in
+          let
+            r = -(i, *(q,10)) % remainder
+          in
+            let
+              lst = addFirst(+(r, '0), lst)
+            in
+              if zero?(q)
+              then lst
+              else .aux(q, lst)
+    in
+      if <?(i,0)
+      then addFirst('-, .aux(-(0,i), []))
+      else .aux(i, [])
+
+% turn a (signed) decimal string into an integer
+define atoi = proc(lst)
+  % lst is a nonempty string of decimal digits, possibly
+  % preceded by the '-' character
+  if =?('-, first(lst))
+  then -(0, .atoi(rest(lst)))
+  else
+    letrec
+      aux = proc(lst, val)
+        % lst is a (possibly empty) list of decimal digits
+        % val is the translated value so far
+        if lst
+        then .aux(rest(lst), +(-(first(lst), '0), *(val,10)))
+        else val
+    in
+      .aux(lst, 0)

@@ -1,0 +1,40 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Parsers} (continued)\exx
+As a result, the following grammar is acceptable to PLCC:\\
+{\Large
+\emm\begin{tabular}{ll}
+\verb'<tree>:Leaf' & \verb'::= <NUM>'\\
+    & \VerbBox{\fbox}{\verb'Leaf(Token num)'}\\
+\verb'<tree>:Interior' & \verb'::= LPAREN <SYMBOL> <tree>left <tree>right RPAREN'\\
+    & \VerbBox{\fbox}{\verb'Interior(Token symbol, Tree left, Tree right)'}\\
+\end{tabular}\exx
+}
+When processed by PLCC, we get the following interaction
+using the \verb'Rep' parser loop:
+{\Large
+\begin{qv}
+$ java -cp Java Rep
+--> 3
+Leaf@15db9742
+--> (foo 5 8) 
+Interior@6d06d69c
+--> (foo (bar 13 23) 8)
+Interior@7852e922
+--> (goo blah 99) % blah is the culprit here
+%%% Parse error: Tree cannot begin with SYMBOL
+--> 
+\end{qv}
+}
+Examine the Java code for the \verb'Interior' class.
+You will see the following fields:
+{\Large
+\begin{qv}
+public Token symbol;
+public Tree left;
+public Tree right;
+\end{qv}
+}
+\end{minipage}
+\clearpage

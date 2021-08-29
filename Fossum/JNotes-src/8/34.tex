@@ -1,0 +1,30 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Exception Handling} (continued)\exx
+Since we want to maintain static scope rules
+in ordinary expression evaluation,
+but allow dynamic scope rules in exception handling,
+we maintain two environments:
+a static environment for expression evaluation --
+usually called \verb'env' --
+and a dynamic environment for exception handling --
+usually called \verb'xenv'.
+Both \verb'env' and \verb'xenv' are passed
+to \verb'eval' methods,
+but the \verb'xenv' environment is used only
+when installing handlers (in a \verb'catch' expression)
+and when throwing exceptions.\exx
+Here is the code for a \verb'CatchExp'.
+The code for \verb'HandlerDecls' is on the next page.
+\Large
+\begin{qv}
+CatchExp
+%%%
+    public ACont eval(Env env, Env xenv, VCont vcont) {
+        xenv = handlerDecls.addBindings(env, xenv, vcont);
+        return new EvalCont(exp, env, xenv, vcont);
+    }
+%%%
+\end{qv}
+\end{minipage}

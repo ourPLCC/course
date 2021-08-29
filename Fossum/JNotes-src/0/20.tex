@@ -1,0 +1,33 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Tokens} (continued)\exx
+The \verb'plccmk' script calls the \verb'plcc.py' translator
+on the \verb'grammar' specification file.
+The \verb'plcc' translator takes the \verb'Token.pattern' file
+in the \verb'Std' directory
+and modifies it using the grammar specification,
+creating a Java source file \verb'Token.java'
+in your \verb'Java' subdirectory.
+It also copies the \verb'Scan.java' file in the \verb'Std' directory
+into your \verb'Java' subdirectory.
+The \verb'plccmk' script then compiles these two Java programs.
+If you have made any mistakes in your \verb'grammar' file,
+these mistakes may show up during translation
+(with the \verb'plcc.py' program)
+or during compilation of the Java source files.\exx
+The important pieces of the \verb'Scan' class
+are the constructor and two methods: \verb'cur()' and \verb'adv()'.
+The \verb'Scan' constructor must be passed
+a \verb'BufferedReader',
+which is the input stream of characters to be read by the scanning process.
+A \verb'BufferedReader' can be constructed from a \verb'File' object,
+from \verb'System.in', or from a filename given in a \verb'String'.
+The \verb'Scan' program reads characters
+from this \verb'BufferedReader' object
+line-by-line, extracts tokens from these lines
+(skipping characters if necessary),
+and delivers the current token with the \verb'cur()' method --
+\verb'cur' stands for {\em cur}rent.\exx
+\end{minipage}
+\clearpage

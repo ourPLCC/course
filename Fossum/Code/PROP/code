@@ -1,0 +1,545 @@
+# class methods
+
+Program
+%%%
+    public static Env initEnv = Env.initEnv();
+%%%
+
+Define
+%%%
+    // notice that calling $run() triggers a modification
+    // of the initial environment
+    public void $run() {
+        String id = var.toString();
+        Env env = Program.initEnv;
+        Val val = exp.eval(env);
+        Ref ref = new ValRef(val);
+        Binding b = env.lookup(id);
+        if (b != null)
+            b.ref = ref;
+        else
+            env.add(new Binding(id, ref));
+        System.out.println(id);
+    }
+%%%
+
+Eval
+%%%
+    public void $run() {
+        Val val = exp.eval(initEnv);
+        System.out.println(val);
+    }
+%%%
+
+Exp
+%%%
+    public abstract Val eval(Env env);
+    public Ref evalRef(Env env) {
+        return new ValRef(eval(env));
+    }
+%%%
+
+PrimappExp
+%%%
+
+    public String toString() {
+        return prim.toString()+ "(" + rands + ")";
+    }
+
+    public Val eval(Env env) {
+        // evaluate the terms in the expression list
+        // and apply the prim to the array of integer results
+        List<Val> valList = rands.evalRands(env);
+        Val [] va = Val.toArray(valList);
+        return prim.apply(va);
+    }
+
+%%%
+
+LitExp
+%%%
+
+    public Val eval(Env env) {
+        return new IntVal(lit.toString());
+    }
+
+    public String toString() {
+        return lit.toString();
+    }
+
+%%%
+
+IfExp
+%%%
+    public Val eval(Env env) {
+        Val testVal = testExp.eval(env);
+        if (testVal.isTrue())
+            return trueExp.eval(env);
+        else
+            return falseExp.eval(env);
+    }
+
+    public String toString() {
+        return "if " + testExp + " then " + trueExp + " else " +falseExp;
+    }
+%%%
+
+VarExp
+%%%
+
+    public Val eval(Env env) {
+        return env.applyEnv(var);
+    }
+
+    public Ref evalRef(Env env) {
+        return env.applyEnvRef(var);
+    }
+
+    public String toString() {
+        return var.toString();
+    }
+
+%%%
+
+LetExp
+%%%
+    public Val eval(Env env) {
+        Env nenv = letDecls.addBindings(env);
+        return exp.eval(nenv);
+    }
+
+    public String toString() {
+        return " ...LetExp... ";
+    }
+%%%
+
+LetrecExp
+%%%
+    public Val eval(Env env) {
+        Env nenv = letDecls.addLetrecBindings(env);
+        return exp.eval(nenv);
+    }
+
+    public String toString() {
+        return " ...LetrecExp... ";
+    }
+%%%
+
+LetpropExp
+%%%
+    public Val eval(Env env) {
+        Env nenv = letpropDecls.addBindings(env);
+        return exp.eval(nenv);
+    }
+
+    public String toString() {
+        return " ...LetpropExp... ";
+    }
+%%%
+
+ProcExp
+%%%
+    public Val eval(Env env) {
+        return proc.makeClosure(env);
+    }
+
+    public String toString() {
+        return " ...ProcExp... ";
+    }
+%%%
+
+ClassExp
+%%%
+    public Val eval(Env env) {
+        ClassVal superClass = ext.toClassVal(env);
+        return new StdClass(env, superClass, statics, fields, props, methods);
+    }
+
+    public String toString() {
+        return " ...ClassExp... ";
+    }
+%%%
+
+Statics:init
+%%%
+        Env.checkDuplicates(varList, " in static variable definitions");
+%%%
+
+Statics
+%%%
+    public void addStaticBindings(Env env) {
+        Iterator<Token> varIter = varList.iterator(); // LHS identifiers
+        Iterator<Exp> expIter = expList.iterator();    // RHS expressions
+        while(varIter.hasNext()) {
+            Token var = varIter.next();
+            String id = var.toString(); // the LHS identifier
+            Exp exp = expIter.next();    // the RHS expression
+            Val val = exp.eval(env);
+            Ref ref = new ValRef(val);
+            env.add(new Binding(id, ref));
+        }
+    }
+%%%
+
+NewExp
+%%%
+    public Val eval(Env env) {
+        Val v = exp.eval(env);
+        ClassVal cv = null;
+        try {
+            cv = v.classVal();
+        } catch (Exception e) {
+            throw new PLCCException("new: cannot create an instance of a non-class");
+        } 
+        // create a reference to a dummy value (nil)
+        Ref objRef = new ValRef(Val.nil);
+        // let the class create the object
+        ObjectVal ov = cv.makeObject(objRef);
+        // set the reference to the newly created object
+        return objRef.setRef(ov);
+    }
+
+    public String toString() {
+        return " ...NewExp... ";
+    }
+%%%
+
+AppExp
+%%%
+
+    public Val eval(Env env) {
+        Val v = exp.eval(env);
+        List<Ref> refList = rands.evalRandsRef(env);
+        return v.apply(refList);
+    }
+
+    public String toString() {
+        return " ...AppExp... ";
+    }
+
+%%%
+
+SeqExp
+%%%
+    public Val eval(Env env) {
+        Val v = exp.eval(env);
+        for (Exp e : seqExps.expList)
+            v = e.eval(env);
+        return v;
+    }
+
+    public String toString() {
+        return " ...SeqExp... ";
+    }
+
+%%%
+
+SetExp
+%%%
+    public Val eval(Env env) {
+        // return loc.getEnv(env).applyEnvRef(var).setRef(exp.eval(env));
+        Env nenv = loc.getEnv(env);
+        Ref ref = nenv.applyEnvRef(var);
+        Val v = exp.eval(env);
+        return ref.setRef(v);
+    }
+
+    public String toString() {
+        return " ...SetExp... ";
+    }
+%%%
+
+Loc
+%%%
+    public abstract Env getEnv(Env env);
+%%%
+
+ObjLoc
+%%%
+    public Env getEnv(Env env) {
+        Val v = exp.eval(env);
+        return v.env();
+    }
+%%%
+
+SimpleLoc
+%%%
+    public Env getEnv(Env env) {
+        return env;
+    }
+%%%
+
+EnvExp
+%%%
+    public Val eval(Env env) {
+        Val v = vExp.eval(env);
+        return eExp.eval(v.env());
+    }
+
+    public String toString() {
+        return " ...EnvExp... ";
+    }
+
+%%%
+
+EenvExp
+%%%
+    public Val eval(Env env) {
+        Val v = exp.eval(env);      // the environment object
+        return mangle.eval(env, v);
+    }
+
+    public String toString() {
+        return " ...EenvExp... ";
+    }
+%%%
+
+Mangle
+%%%
+    public Val eval(Env env, Val v) {
+        Iterator<Exp> ie = expList.iterator();
+        Iterator<Rands> ir = randsList.iterator();
+        while (ie.hasNext()) {
+            // ie.next() evaluates to the ProcVal to apply
+            // ir.next() are the method rands -- evaluated in env
+            // v.env() is the environment in which to build the ProcVal
+            Val p = ie.next().eval(v.env());
+            List<Ref> refList = ir.next().evalRandsRef(env);
+            v = p.apply(refList);
+        }
+        return v;
+    }
+%%%
+
+NilExp
+%%%
+    public Val eval(Env env) {
+        return Val.nil;
+    }
+
+    public String toString() {
+        return " ...NilExp... ";
+    }
+
+%%%
+
+AtExp
+%%%
+    public Val eval(Env env) {
+        return new ObjectVal(env);
+    }
+
+    public String toString() {
+        return " ...AtExp... ";
+    }
+
+%%%
+
+AtAtExp
+%%%
+    public Val eval(Env env) {
+        System.out.println(env.toString());
+        return new ObjectVal(env);
+    }
+
+    public String toString() {
+        return " ...AtAtExp... ";
+    }
+%%%
+
+DisplayExp
+%%%
+    public Val eval(Env env) {
+        Val v = exp.eval(env);
+        System.out.print(v+" ");
+        return Val.nil;
+    }
+
+    public String toString() {
+        return " ...DisplayExp... ";
+    }
+
+%%%
+
+NewlineExp
+%%%
+    public Val eval(Env env) {
+        System.out.println();
+        return Val.nil;
+    }
+
+    public String toString() {
+        return " ...NewlineExp... ";
+    }
+
+%%%
+
+PutcExp
+%%%
+    public Val eval(Env env) {
+        Val v = exp.eval(env);
+        int i = v.intVal().val;
+        System.out.print((char)i);
+        return Val.nil;
+    }
+
+    public String toString() {
+        return " ...PutcExp... ";
+    }
+%%%
+
+ListExp
+%%%
+    public Val eval(Env env) {
+        List<Val> valList = rands.evalRands(env);
+        int n = valList.size();
+        Val [] valArray = valList.toArray(new Val[n]);
+        ListVal lst = new ListNull();
+        while (n > 0)
+            lst = new ListNode(valArray[--n], lst);
+        return lst;
+    }
+%%%
+
+Ext
+%%%
+    public abstract ClassVal toClassVal(Env env);
+%%%
+
+Ext0
+%%%
+
+    public ClassVal toClassVal(Env env) {
+        return EnvClass.envClass; // a singleton
+    }
+
+%%%
+
+Ext1
+%%%
+    public ClassVal toClassVal(Env env) {
+        Val v = exp.eval(env);
+        try {
+            return v.classVal();
+        } catch (Exception e) {
+            throw new PLCCException("cannot extend a non-class");
+        }
+    }
+%%%
+
+Formals:init
+%%%
+        // check for duplicates during parsing
+        Env.checkDuplicates(varList, " in proc formals");
+%%%
+
+Proc
+%%%
+    public Val makeClosure(Env env) {
+        return new ProcVal(formals, exp, env);
+    }
+
+%%%
+
+LetDecls:init
+%%%
+        // check for duplicates during parsing
+        Env.checkDuplicates(varList, " in let/letrec LHS identifiers");
+%%%
+
+LetDecls
+%%%
+    public Env addBindings(Env env) {
+        Rands rands = new Rands(expList);
+        List<Val> valList = rands.evalRands(env);
+        List<Ref> refList = Ref.valsToRefs(valList);
+        Bindings bindings = new Bindings(varList, refList);
+        return env.extendEnvRef(bindings);
+    }
+
+    public Env addLetrecBindings(Env env) {
+        Env nenv = env.extendEnvRef(new Bindings());
+        Iterator<Token> varIter = varList.iterator();
+        Iterator<Exp> expIter = expList.iterator();
+        while (varIter.hasNext()) {
+            String str = varIter.next().toString();
+            Val val = expIter.next().eval(nenv);
+            Ref ref = new ValRef(val);
+            nenv.add(new Binding(str, ref));
+        }
+        return nenv;
+    }
+
+    public String toString() {
+        return " ...LetDecls... ";
+    }
+%%%
+
+LetpropDecls
+%%%
+    public Env addBindings(Env env) {
+        List<Ref> refList = new ArrayList<Ref>(propList.size());
+        for (Prop p : propList)
+            refList.add(p.makePropThunk(env));
+        Bindings bindings = new Bindings(varList, refList);
+        return env.extendEnvRef(bindings);
+    }
+%%%
+
+Prop
+%%%
+    public Ref makePropThunk(Env env) {
+        return setter.makeThunk(exp, env);
+    }
+%%%
+
+Setter
+%%%
+    public abstract Ref makeThunk(Exp getExp, Env env);
+%%%
+
+Set0
+%%%
+    public Ref makeThunk(Exp getExp, Env env) {
+        return new ROPropRef(getExp, env);
+    }
+%%%
+
+Set1
+%%%
+    public Ref makeThunk(Exp getExp, Env env) {
+        // the getExp is the getter, and this exp is the setter
+        return new RWPropRef(getExp, exp, env);
+    }
+%%%
+
+Rands
+%%%
+    public String toString() {
+        String s = "";   // the string to return
+        String sep = ""; // no separator for the first expression
+        // get all of the expressions in the expression list
+        for (Exp e : expList) {
+            s += sep + e;
+            sep = ",";   // commas separate the rest of the expressions
+        }
+        return s;
+    }
+
+    // use each expression's evalRef method to build
+    // a List<Ref> object
+    public List<Ref> evalRandsRef(Env env) {
+        List<Ref> refList = new ArrayList<Ref>(expList.size());
+        for (Exp e : expList)
+            refList.add(e.evalRef(env));
+        return refList;
+    }
+
+     public List<Val> evalRands(Env env) {
+        List<Val> valList = new ArrayList<Val>(expList.size());
+        for (Exp e : expList)
+            valList.add(e.eval(env));
+        return valList;
+    }
+
+%%%

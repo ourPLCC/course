@@ -1,0 +1,33 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Continuations} (continued)\exx
+To evaluate a procedure application,
+we need to evaluate the procedure expression
+(it must evaluate to a \verb'ProcVal'),
+the actual parameter expressions using reference semantics,
+bind the actual parameter references to their formal parameter names,
+use these bindings to extend the environment captured by the procedure,
+and finally evaluate the body of the procedure in this extended environment.
+The \verb'eval' method in the \verb'AppExp' class
+is given here:
+\Large
+\begin{qv}
+AppExp
+%%%
+public Cont eval(Env env, Cont cont) {
+    return new EvalCont(exp,
+                        env,
+                        new AppCont(rands, env, vcont));
+}
+%%%
+\end{qv}
+\LARGE
+The \verb'AppCont' continuation, shown on the next slide,
+gets an expression that must evaluate to a \verb'ProcVal',
+evaluates the reference parameters,
+and passes the reference parameters along
+with the \verb'vcont' continuation to the \verb'ProcVal'
+to evaluate the procedure body
+and pass its value along for further processing.
+\end{minipage}

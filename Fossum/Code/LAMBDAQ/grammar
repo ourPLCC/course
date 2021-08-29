@@ -1,0 +1,94 @@
+# Language LambdaQ
+#   Language Lambda with a query start rule: <SYM> "?" <exp>
+#   The Rep loop prints whether the <SYM> appears free and/or bound in <exp>
+
+# Lexical specification
+skip WHITESPACE '\s+'
+LPAREN '\('
+RPAREN '\)'
+LBRACE '\{'
+RBRACE '\}'
+DOT '\.'
+PROC 'proc'
+Q '\?'
+SYM '\w+'
+%
+# Grammar
+<test>     ::= <SYM> Q <exp>
+<exp>:Var  ::= <SYM>
+<exp>:Proc ::= PROC LPAREN <SYM> RPAREN LBRACE <exp> RBRACE
+<exp>:App  ::= DOT <exp>rator LPAREN <exp>rand RPAREN
+%
+
+Test
+%%%
+public void $run() {
+    // return "exp="+exp;
+    String s = "";
+    String ss = "in " + exp + ", " + sym + " occurs ";
+    if (exp.occursFree(sym.toString())) {
+        s += ss + "free";
+        ss = " and ";
+    }
+    if (exp.occursBound(sym.toString())) {
+        s += ss + "bound";
+    }
+    System.out.println(s);
+}
+%%%
+
+Var
+%%%
+public boolean occursFree(String s) {
+    return s.equals(sym.toString());
+}
+
+public boolean occursBound(String s) {
+    return false;
+}
+
+public String toString() {
+    return sym.toString();
+}
+%%%
+
+Proc
+%%%
+
+public boolean occursFree(String s) {
+    return !(s.equals(sym.toString())) && exp.occursFree(s);
+}
+
+public boolean occursBound(String s) {
+    return exp.occursBound(s) || (s.equals(sym.toString())&&exp.occursFree(s));
+}
+
+public String toString() {
+    return "proc(" + sym + "){" + exp + "}";
+}
+%%%
+
+App
+%%%
+
+public boolean occursFree(String s) {
+    return rator.occursFree(s) || rand.occursFree(s);
+}
+
+public boolean occursBound(String s) {
+    return rator.occursBound(s) || rand.occursBound(s);
+}
+
+public String toString() {
+    return "." + rator + "(" + rand + ")";
+}
+%%%
+
+Exp
+%%%
+
+public abstract boolean occursFree(String s);
+
+public abstract boolean occursBound(String s);
+
+%%%

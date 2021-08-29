@@ -1,0 +1,28 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language OBJ} (continued)
+{\Large
+\begin{qv}
+public ObjectVal makeObject(Ref objRef) {
+    // create the parent object first (recursively)
+    ObjectVal parent = superClass.makeObject(objRef);
+
+    // this object's environment extends the parent's environment
+    Env env = parent.objectEnv;
+
+    // add this class's static bindings
+    env = env.extendEnvRef(staticBindings);
+
+    // the fields come next
+    Bindings fieldBindings = new Bindings();
+    env = env.extendEnvRef(fieldBindings);
+    // bind all of this object's instance fields to nil
+    fields.addFieldBindings(fieldBindings);
+
+    // bind all this object's methods as in letrec
+    env = methods.addMethodBindings(env);
+\end{qv}
+}
+... continued on next slide ...
+\end{minipage}

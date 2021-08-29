@@ -1,0 +1,38 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Types} (continued)\exx
+Here are some examples of type expressions:
+{\Large
+\begin{enumerate}
+\setlength{\itemsep}{-0.4ex}
+\item \verb'int'
+\item \verb'bool'
+\item \verb'[ bool, int => int ]'
+\item \verb'[ [int=>bool], [int,int=>int] => [int,int=>bool] ]'
+\item \verb'[ => int ]'
+\end{enumerate}
+}
+Type expressions 1 and 2 describe primitive
+\verb'int' and \verb'bool' types, respectively.
+Type expression 3 describes a procedure type
+that takes two parameters of type \verb'bool' and \verb'int', respectively,
+and that returns an \verb'int'.
+Type expression 4 describes a procedure type
+that takes two procedure parameters
+of type \verb'[int=>bool]' and \verb'[int,int=>int]',
+respectively, and that returns a procedure
+of type \verb'[int,int=>bool]'.
+Type expression 5 describes a procedure type
+that takes no parameters and that returns an \verb'int'.
+Observe that {\bf any type expression that starts with a `\verb'[''
+must be a procedure type}.\exx
+Our typed language now requires
+that every procedure expression be annotated
+with type expressions for each of the procedure's formal parameters --
+its {\em (declared) formal parameter types} --
+and a type expression for the procedure's return value --
+its {\em (declared) return type}.
+Together, these annotations completely define the procedure's type,
+called (not surprisingly) the {\em defined type} of the procedure.
+\end{minipage}

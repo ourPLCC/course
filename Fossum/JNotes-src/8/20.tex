@@ -1,0 +1,30 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Continuations} (continued)\exx
+The \verb'eval' method in the \verb'SeqExp' class
+creates a continuation to evaluate the first expression
+in the sequence,
+which passes this value to a \verb'SequenceCont'
+that determines if more expressions need to be evaluated.
+As an optimization,
+if the \verb'expList' is empty,
+we simply side-step the creation of the \verb'SequenceCont' object
+and directly arrange to evaluate the first expression \verb'exp'
+using the original continuation.
+\Large
+\begin{qv}
+SeqExp
+%%%
+    public ACont eval(Env env, VCont vcont) {
+        List<Exp> expList = seqExps.expList;
+        if (expList.size() > 0)
+            return new EvalCont(exp,
+                                env,
+                                new SequenceCont(expList,env,vcont));
+        // if only one expression, just evaluate it
+        return new EvalCont(exp, env, vcont);
+    }
+%%%
+\end{qv}
+\end{minipage}

@@ -1,0 +1,29 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Parsers} (continued)\exx
+{\em
+For every grammar rule,
+PLCC creates a Java class uniquely associated with the rule.
+For grammar rules that have the same nonterminal appearing
+on the LHS of multiple rules,
+PLCC creates an abstract class based on the nonterminal name,
+and the annotated class names
+become derived classes of this abstract class.}\exx
+The first BNF nonterminal
+in a language's syntax specification section
+is the {\em start symbol} for the language.
+Given a program in the language,
+the parser produces an instance of the class of the start symbol,
+which is the root of the parse tree for the program.\exx
+Consider Language \verb'LON',
+whose \verb'grammar' file syntax specification section is shown below.
+The start symbol is \verb'<lon>',
+and the corresponding class name is \verb'Lon'.
+Given a program in Language \verb'LON',
+the output of the parser is an instance of the \verb'Lon' class.
+We will see shortly how to interpret this instance
+as the root of a {\em parse tree}.\exx
+\emm\LightBox{\MYlonGrammarOnly}
+\end{minipage}
+\clearpage

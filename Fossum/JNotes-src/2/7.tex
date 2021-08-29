@@ -1,0 +1,34 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Environments} (continued)\exx
+Given a local environment,
+we want to be able to look up the \verb'Binding' associated
+with a particular symbol
+and to add \verb'Binding' objects to the local environment.
+It is also convenient to consider adding a \verb'Binding'
+obtaind from a symbol and a value.
+The following methods are part of the \verb'Bindings' (local environment) class:
+{\Large
+\begin{qv}
+// look up the Binding associated with a given symbol
+public Binding lookup(String sym) {
+    for (Binding b: bindingList)
+        if (sym.equals(b.id))
+            return b;
+    return null;
+}
+
+// add a Binding object to this local environment
+public void add(Binding b) {
+    bindingList.add(b);
+}
+
+// add a binding (s, v) to this local environment
+public void add(String s, Val v) {
+    add(new Binding(s, v));
+}
+\end{qv}
+}
+\end{minipage}
+\clearpage

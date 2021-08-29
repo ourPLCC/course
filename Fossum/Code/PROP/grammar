@@ -1,0 +1,139 @@
+# Language PROP
+#   Language OBJ with properties and call-by-reference
+
+# Lexical specification
+skip WHITESPACE '\s+'
+skip COMMENT '%.*'
+LIT '\d+'
+LPAREN '\('
+RPAREN '\)'
+COMMA ','
+ADDOP '\+'
+SUBOP '\-'
+MULOP '\*'
+DIVOP '/'
+ADD1OP 'add1'
+SUB1OP 'sub1'
+ZEROP 'zero\?'
+#TRUEP 'true\?'
+LTP '<\?'
+LEP '<=\?'
+GTP '>\?'
+GEP '>=\?'
+NEP '<>\?'
+EQP '=\?'
+LISTOP 'list'
+FIRSTOP 'first'
+RESTOP 'rest'
+ADDFIRSTOP 'addFirst'
+IF 'if'
+THEN 'then'
+ELSE 'else'
+LET 'let'
+LETREC 'letrec'
+LETPROP 'letprop'
+DEFINE 'define'
+IN 'in'
+EQUALS '='
+PROC 'proc'
+SET 'set'
+CLASS 'class'
+EXTENDS 'extends'
+STATIC 'static'
+FIELD 'field'
+METHOD 'method'
+END 'end'
+EVAL 'eval'
+NEW 'new'
+NIL 'nil'
+PROP 'prop'
+PROPERTY 'property'
+DISPLAY 'display'
+NEWLINE 'newline'
+PUTC 'putc'
+AT '@'
+ATAT '@@'
+DOT '\.'
+LBRACE '\{'
+RBRACE '\}'
+LBRACK '\['
+RBRACK '\]'
+LANGLE '<'
+RANGLE '>'
+LLANGLE '!<'
+RRANGLE '!>'
+SEMI ';'
+COLON ':'
+VAR '[A-Za-z\&\?\$][\w\?\&\$]*'
+%
+# Grammar
+<program>:Define ::= DEFINE <VAR> EQUALS <exp>
+<program>:Eval   ::= <exp>
+<exp>:LitExp     ::= <LIT>
+<exp>:VarExp     ::= <VAR>
+<exp>:IfExp      ::= IF <exp>testExp THEN <exp>trueExp ELSE <exp>falseExp
+<exp>:PrimappExp ::= <prim> LPAREN <rands> RPAREN
+<exp>:LetExp     ::= LET <letDecls> IN <exp>
+<exp>:LetrecExp  ::= LETREC <letDecls> IN <exp>
+<exp>:LetpropExp ::= LETPROP <letpropDecls> IN <exp>
+<exp>:ProcExp    ::= <proc>
+<exp>:AppExp     ::= DOT <exp> LPAREN <rands> RPAREN
+<exp>:SeqExp     ::= LBRACE <exp> <seqExps> RBRACE
+<exp>:SetExp     ::= SET <loc> <VAR> EQUALS <exp>
+<exp>:ClassExp   ::= CLASS <ext> <statics> <fields> <methods> <props> END
+<exp>:NilExp     ::= NIL
+<exp>:NewExp     ::= NEW <exp>
+<exp>:EnvExp     ::= LANGLE <exp>vExp RANGLE <exp>eExp
+# !<obj>msg1(rands1)>msg2(rands2)>msg3(rands3)...!>
+# is the same as .<.<.<obj>msg1(rands1)>msg2(rands2)>msg3(rands3) ...
+<exp>:EenvExp    ::= LLANGLE <exp> <mangle> RRANGLE
+<mangle>         **= RANGLE <exp> LPAREN <rands> RPAREN
+<exp>:AtExp      ::= AT
+<exp>:AtAtExp    ::= ATAT
+<exp>:DisplayExp ::= DISPLAY <exp>
+<exp>:PutcExp    ::= PUTC <exp>
+<exp>:NewlineExp ::= NEWLINE
+<exp>:ListExp    ::= LBRACK <rands> RBRACK
+<ext>:Ext1       ::= EXTENDS <exp>
+<ext>:Ext0       ::=
+<loc>:ObjLoc     ::= LANGLE <exp> RANGLE
+<loc>:SimpleLoc  ::=
+<statics>        **= STATIC <VAR> EQUALS <exp>
+<fields>         **= FIELD <VAR>
+<props>          **= PROPERTY <VAR> EQUALS <prop>
+<methods>        **= METHOD <VAR> EQUALS <proc>
+<seqExps>        **= SEMI <exp>
+<proc>           ::= PROC LPAREN <formals> RPAREN <exp>
+<prop>           ::= PROP <exp> <setter>
+<setter>:Set0    ::=
+<setter>:Set1    ::= COLON <exp>
+<formals>        **= <VAR> +COMMA
+<letDecls>       **= <VAR> EQUALS <exp>
+<letpropDecls>   **= <VAR> EQUALS <prop>
+<rands>          **= <exp> +COMMA
+<prim>:AddPrim   ::= ADDOP
+<prim>:SubPrim   ::= SUBOP
+<prim>:MulPrim   ::= MULOP
+<prim>:DivPrim   ::= DIVOP
+<prim>:Add1Prim  ::= ADD1OP
+<prim>:Sub1Prim  ::= SUB1OP
+<prim>:ZeropPrim ::= ZEROP
+#<prim>:TruepPrim ::= TRUEP
+<prim>:LTPrim    ::= LTP
+<prim>:LEPrim    ::= LEP
+<prim>:GTPrim    ::= GTP
+<prim>:GEPrim    ::= GEP
+<prim>:NEPrim    ::= NEP
+<prim>:EQPrim    ::= EQP
+<prim>:ListPrim  ::= LISTOP
+<prim>:FirstPrim ::= FIRSTOP
+<prim>:RestPrim  ::= RESTOP
+<prim>:AddFirstPrim  ::= ADDFIRSTOP
+%
+include code
+include prim
+include envRef
+include val
+include list
+include class
+include ref

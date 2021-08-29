@@ -1,0 +1,21 @@
+define c =
+  class
+    field x
+    method m = proc() <this>x
+    method mm = proc() <self>x
+  end
+
+define d =
+  class extends c
+    field x
+    method m = proc() <this>x
+  end
+
+define o = new c
+define p = new d
+
+<o>set x = 3
+<p>set <super>x = 5
+<p>set x = 8
+
+

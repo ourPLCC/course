@@ -1,0 +1,30 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf PLCC -- Tokens}\exx
+If there are characters remaining in the input stream,
+the \verb'cur()' method checks
+the token and skip regular expressions one-by-one,
+in the order in which they appear
+in the lexical specification.
+Each regular expression is matched
+against the current unmatched input,
+up to (and including) the end of the current line.
+If no characters match the regular expression,
+the next specification is tried.\exx
+If the regular expression is a skip specification
+that matches at least one input character
+and if no prior token specification has found a matching token candidate,
+the matched part is skipped and processing continues
+on the remainder of the input,
+{\em starting over from the first lexical specification}.
+If a prior token specification has found a matching token candidate,
+the skip specification is ignored.\exx
+If a token specification match of length at least one occurs,
+and if this match is longer than the match length
+of the previous token candidate (if any),
+this token specification is chosen
+as the current token candidate.
+If not, the previous token candidate is retained.\exx
+\end{minipage}
+\clearpage

@@ -1,0 +1,16 @@
+let
+  count = 1
+in
+  letrec
+    par = proc(f, g) atomic set count=add1(count)
+    % par = proc(f, g) set count=add1(count)
+    d = proc(t)
+      if t
+      then
+        let
+          t1 = sub1(t)
+        in
+          .par(.d(t1), .d(t1)) % evaluate actuals in parallel
+      else count
+  in
+    .d(16) 

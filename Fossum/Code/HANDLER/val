@@ -1,0 +1,143 @@
+Val
+%%%
+import java.util.*;
+
+public abstract class Val {
+
+    public static Val [] toArray(List<Val> valList) {
+        int n = valList.size();
+        return valList.toArray(new Val[n]);
+    }
+
+    public Cont apply(List<Exp> expList,
+                      Env paramEnv,
+                      Env paramxEnv,
+                      Env bodyxEnv,
+                      Cont cont) {
+        throw new PLCCException("Cannot apply " + this.toString());
+    }
+
+    public Cont apply(List<Val> args, Env e, Env xenv) {
+        throw new PLCCException("Cannot apply " + this.toString());
+    }
+
+    // everything defaults to true except for an IntVal of zero
+    public boolean isTrue() {
+        return true;
+    }
+
+    public IntVal intVal() {
+        throw new PLCCException(this + ": not an int");
+    }
+
+    public HandlerVal handlerVal() {
+        throw new PLCCException(this + ": not a handler");
+    }
+}
+%%%
+
+IntVal
+%%%
+import java.util.*;
+
+public class IntVal extends Val {
+
+    public int val;
+    
+    public IntVal(String s) {
+        val = Integer.parseInt(s);
+    }
+    
+    public IntVal(Val v) {
+        val = v.intVal().val;
+    }
+    
+    public IntVal(int v) {
+        val = v;
+    }
+
+    public IntVal intVal() {
+        return this;
+    }
+    
+    public boolean isTrue() {
+        return val != 0;
+    }
+    
+    public String toString() {
+        return "" + val;
+    }
+
+}
+
+%%%
+
+ProcVal
+%%%
+import java.util.*;
+
+public class ProcVal extends Val {
+
+    public Formals formals;
+    public Exp body;
+    public Env bodyEnv;
+
+    public ProcVal(Formals formals, Exp body, Env bodyEnv) {
+        this.formals = formals;
+        this.body = body;
+        this.bodyEnv = bodyEnv;
+    }
+
+    public Cont apply(List<Exp> expList,
+                      Env paramEnv,  // parameter evaluation environment
+                      Env paramxEnv, // parameter exception environment
+                      Env bodyxEnv,  // body exception environment
+                      Cont cont) {
+        BuildRefCont buildRefCont = 
+            new BuildRefCont(formals.varList,
+                          expList,
+                          paramEnv,
+                          paramxEnv,
+                          body,
+                          bodyEnv,
+                          bodyxEnv,
+                          cont);
+        return buildRefCont.next();
+    }
+
+    public boolean isTrue() {
+        return true;
+    }
+
+    public String toString() {
+        return "proc(" + formals + ")";
+    }
+}
+
+%%%
+
+HandlerVal
+%%%
+import java.util.*;
+
+public class HandlerVal extends ProcVal {
+
+    public Cont cont; // A HandlerVal captures the handler's continuation ...
+    public Env xenv;  // ... and exception environment
+
+    public HandlerVal(Formals formals,
+                      Exp body,
+                      Env bodyEnv,
+                      Env xenv,
+                      Cont cont) {
+        super(formals, body, bodyEnv);
+        this.xenv = xenv;
+	this.cont = cont;
+    }
+
+    public HandlerVal handlerVal() {
+        return this;
+    }
+
+}
+%%%

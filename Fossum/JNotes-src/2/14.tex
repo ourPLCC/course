@@ -1,0 +1,35 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Environments} (continued)\exx
+In some cases, we may want to create a \verb'Bindings' object
+from a \verb'List' of symbols and a \verb'List' of values
+by binding each symbol to its corresponding value.
+The resulting \verb'Bindings' object can then be used
+to extend an environment.
+Here is a constructor for a \verb'Bindings' object
+that does this pairing.
+\Large
+\begin{qv}
+public Bindings (List<?> idList, List<Val> valList) {
+    // idList.size() and valList.size() must be the same
+    bindingList = new ArrayList<Binding>();
+    Iterator<?> idIterator = idList.iterator();
+    Iterator<Val> valIterator = valList.iterator();
+    while (idIterator.hasNext()) {
+        String s = idIterator.next().toString();
+        Val v = valIterator.next();
+        this.add(new Binding(s, v));
+    }
+}
+\end{qv}
+\LARGE
+The purpose of the `\verb'?'' wildcard
+in the \verb'List<?>' parameter declaration
+is to allow for a \verb'List' of either \verb'String's or \verb'Token's.\exx
+This constructor relies on the two \verb'List' parameters
+having the same size.
+It is the responsibility of the caller to ensure
+that this is the case.
+\end{minipage}
+\clearpage

@@ -1,0 +1,32 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Parsers} (continued)\exx
+The solution is to use different identifiers for these field names
+and to their corresponding constructor formal parameters.
+PLCC allows duplicate RHS fields (in angle brackets)
+to be annotated -- much like we have seen
+for duplicate LHS nonterminal names
+-- with alternate names that avoid this conflict.\exx
+In the case we are considering, we can resolve this issue in the RHS
+of the \verb'<tree>:Interior' grammar rule
+by using the identifier \verb'left' for the first \verb'<tree>' field
+and the identifier \verb'right' for the second \verb'<tree>' field,
+as shown here:\exx
+\Large
+\emm\begin{tabular}{ll}
+\verb'<tree>:Interior' & \verb'::= LPAREN <SYMBOL> <tree>left <tree>right RPAREN'\\
+    & \VerbBox{\fbox}{\verb'Interior(Token symbol, Tree left, Tree right)'}\\
+\end{tabular}\exx
+\LARGE
+In summary, this grammar rule creates:
+\begin{itemize}
+\itemsep -0.1in
+\item a class \verb'Interior'
+\item that extends the abstract class \verb'Tree' and
+\item that has a field \verb'symbol' of type \verb'Token',
+\item a field \verb'left' of type \verb'Tree', and
+\item a field \verb'right' of type \verb'Tree'.
+\end{itemize}
+\end{minipage}
+\clearpage

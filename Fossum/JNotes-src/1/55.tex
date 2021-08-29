@@ -1,0 +1,43 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Static Properties of Variables} (continued)\exx
+\Large
+It is possible for one symbol to have multiple bindings
+depending on where it occurs in the program.
+Consider:
+{\Large
+\begin{qv}
+public class Bar {
+  public static int x;
+  public static void main(String [] args) {
+    x = 3;
+    System.out.println(x);
+    { // beginning of block
+      int x = 4;
+      System.out.println(x);
+    } // end of block
+    System.out.println(x);
+  }
+}
+\end{qv}
+}
+When this program is run, the output appears as follows:
+\vspace{-0.75ex}
+\begin{qv}
+3
+4
+3
+\end{qv}
+\vspace{-0.75ex}
+This is because the ``\verb'int x = 4;''' line defines
+a new variable \verb'x' bound to the value 4
+whose scope is from its point of declaration
+to the end of the {\em block} in which it is defined,
+as shown in the program comments.
+In this case, we say that the definition of \verb'x' in the block
+{\em shadows} the global \verb'int x',
+and that the block definition
+{\em punches a hole in the scope} of the global definition.
+\end{minipage}
+\clearpage

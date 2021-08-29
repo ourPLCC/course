@@ -1,0 +1,33 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language V1} (continued)\exx
+The definitions of \verb'apply' for the classes
+\verb'SubPrim', \verb'MulPrim', and \verb'DivPrim'
+(the latter two are added in V1)
+have obvious implementations, except that in \verb'DivPrim',
+the \verb'apply' method throws an exception
+if it detects and attempt to divide by zero.\exx
+For the \verb'Add1Prim' class,
+the \verb'apply' method expects only one value,
+which is passed as element zero of the \verb'va' array.
+{\Large
+\begin{qv}
+Add1Prim
+%%%
+    public Val apply(Val [] va) {
+        if (va.length != 1)
+            throw new PLCCException("one argument expected");
+        int i0 = va[0].intVal().val;
+        return new IntVal(i0 + 1);
+    }
+%%%
+\end{qv}
+}
+Again, the definition of \verb'apply' for the \verb'Sub1Prim' class
+is entirely similar.
+The definition of \verb'apply' for the \verb'ZeropPrim' class
+returns an \verb'IntVal' of 1 (true) for a zero argument
+and an \verb'IntVal' of 0 (false) for a nonzero argument.
+\end{minipage}
+\clearpage

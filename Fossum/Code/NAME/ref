@@ -1,0 +1,73 @@
+Ref
+%%%
+import java.util.*;
+
+public abstract class Ref {
+
+    public static List<Ref> valsToRefs(List<Val> valList) {
+        List<Ref> refList = new ArrayList<Ref>(valList.size());
+        for (Val v : valList)
+            refList.add(new ValRef(v));
+        return refList;
+    }
+
+    public abstract Val deRef();
+    public abstract Val setRef(Val v);
+}
+
+%%%
+
+ThunkRef
+%%%
+
+public class ThunkRef extends Ref {
+
+    public Exp exp;
+    public Env env;
+
+    public ThunkRef(Exp exp, Env env) {
+        this.exp = exp;
+        this.env = env;
+    }
+
+    public Val deRef() {
+        return exp.eval(env);
+    }
+
+    public Val setRef(Val v) {
+        throw new PLCCException("cannot modify a read-only expression");
+    }
+
+    public String toString() {
+        return "thunk";
+    }
+
+}
+%%%
+
+
+ValRef
+%%%
+
+public class ValRef extends Ref {
+
+    public Val val;
+
+    public ValRef(Val val) {
+        this.val = val;
+    }
+
+    public Val deRef() {
+        return val;
+    }
+
+    public Val setRef(Val v) {
+        return val = v;
+    }
+
+    public String toString() {
+        return val.toString();
+    }
+
+}
+%%%

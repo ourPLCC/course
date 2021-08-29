@@ -1,0 +1,35 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Parsers} (continued)\exx
+\emm\LightBox{\MYlonGrammarKleene}\exx
+For example, if we want to define the \verb'$run()' method
+in the \verb'Lon.java' source file,
+we put the following lines into the \verb'grammar' file
+{\em in the semantics section following the syntax section}.
+The semantics section is separated from the syntax section
+by a line containing a single `\verb'%''.
+{\Large
+\begin{qv}
+Lon
+%%%
+    public void $run() {
+        ...
+    }
+%%%
+\end{qv}
+}
+The \verb'Lon' line tells PLCC that we are adding a method
+to the \verb'Lon.java' file,
+and the two lines containing \verb'%%%'
+bracket the Java code to be added.
+This technique can be used to add Java code
+to {\em any} PLCC-generated Java file arising
+from the BNF grammar lines.
+PLCC inserts this added code at the end of the class definition
+in the Java code generated automatically by PLCC for the class.
+In the case of the \verb'Lon' class,
+the above Java code appears at the end
+of the automatically-generated \verb'Lon.java' class code.\exx
+\end{minipage}
+\clearpage

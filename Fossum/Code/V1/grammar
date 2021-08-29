@@ -1,0 +1,38 @@
+# Language V1
+# The Rep loop prints the arithmetic value of the expression
+#   using an initial set of bindings to certain Roman numerals
+
+# Lexical specification
+skip WHITESPACE '\s+'
+skip COMMENT '%.*'
+LIT '\d+'
+LPAREN '\('
+RPAREN '\)'
+COMMA ','
+ADDOP '\+'
+SUBOP '\-'
+MULOP '\*'
+DIVOP '/'
+ADD1OP 'add1'
+SUB1OP 'sub1'
+ZEROP 'zero\?'
+VAR '[A-Za-z]\w*'
+%
+# Grammar
+<program>        ::= <exp>
+<exp>:LitExp     ::= <LIT>
+<exp>:VarExp     ::= <VAR>
+<exp>:PrimappExp ::= <prim> LPAREN <rands> RPAREN
+<rands>          **= <exp> +COMMA
+<prim>:AddPrim   ::= ADDOP
+<prim>:SubPrim   ::= SUBOP
+<prim>:MulPrim   ::= MULOP
+<prim>:DivPrim   ::= DIVOP
+<prim>:Add1Prim  ::= ADD1OP
+<prim>:Sub1Prim  ::= SUB1OP
+<prim>:ZeropPrim ::= ZEROP
+%
+include code
+include prim
+include envRN
+include val

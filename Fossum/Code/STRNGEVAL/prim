@@ -1,0 +1,341 @@
+Prim
+%%%
+    // apply the primitive to the passed values
+    public abstract Val apply(Val [] va);
+%%%
+
+AddPrim
+%%%
+
+    public String toString() {
+        return "+";
+    }
+
+    public Val apply(Val [] va) {
+        if (va.length != 2)
+            throw new PLCCException("+: two arguments expected");
+        int i0 = va[0].intVal().val;
+        int i1 = va[1].intVal().val;
+        return new IntVal(i0 + i1);
+    }
+%%%
+
+SubPrim
+%%%
+
+    public String toString() {
+        return "-";
+    }
+
+    public Val apply(Val [] va) {
+        if (va.length != 2)
+            throw new PLCCException("-: two arguments expected");
+        int i0 = va[0].intVal().val;
+        int i1 = va[1].intVal().val;
+        return new IntVal(i0 - i1);
+    }
+%%%
+
+MulPrim
+%%%
+
+    public String toString() {
+        return "*";
+    }
+
+    public Val apply(Val [] va) {
+        if (va.length != 2)
+            throw new PLCCException("*: two arguments expected");
+        int i0 = va[0].intVal().val;
+        int i1 = va[1].intVal().val;
+        return new IntVal(i0 * i1);
+    }
+
+%%%
+
+DivPrim
+%%%
+
+    public String toString() {
+        return "/";
+    }
+
+    public Val apply(Val [] va) {
+        if (va.length != 2)
+            throw new PLCCException("/: two arguments expected");
+        int i0 = va[0].intVal().val;
+        int i1 = va[1].intVal().val;
+        if (i1 == 0)
+            throw new PLCCException("attempt to divide by zero");
+        return new IntVal(i0 / i1);
+    }
+
+%%%
+
+Add1Prim
+%%%
+
+    public String toString() {
+        return "add1";
+    }
+
+    public Val apply(Val [] va) {
+        if (va.length != 1)
+            throw new PLCCException("add1: one argument expected");
+        int i0 = va[0].intVal().val;
+        return new IntVal(i0 + 1);
+    }
+
+%%%
+
+Sub1Prim
+%%%
+
+    public String toString() {
+        return "sub1";
+    }
+
+    public Val apply(Val [] va) {
+        if (va.length != 1)
+            throw new PLCCException("sub1: one argument expected");
+        int i0 = va[0].intVal().val;
+        return new IntVal(i0 - 1);
+    }
+
+%%%
+
+ZeropPrim
+%%%
+
+    public String toString() {
+        return "zero?";
+    }
+
+    public Val apply(Val [] va) {
+        if (va.length != 1)
+            throw new PLCCException("zero?: one argument expected");
+        int i0 = va[0].intVal().val;
+        return new IntVal(i0 == 0 ? 1 : 0);
+    }
+
+%%%
+
+LTPrim
+%%%
+    public String toString() {
+        return "<?";
+    }
+
+    public Val apply(Val [] va) {
+        if (va.length != 2)
+            throw new PLCCException("<?: two arguments expected");
+        int i0 = va[0].intVal().val;
+        int i1 = va[1].intVal().val;
+        return new IntVal(i0 < i1 ? 1 : 0);
+    }
+%%%
+
+LEPrim
+%%%
+    public String toString() {
+        return "<=?";
+    }
+
+    public Val apply(Val [] va) {
+        if (va.length != 2)
+            throw new PLCCException("<=?: two arguments expected");
+        int i0 = va[0].intVal().val;
+        int i1 = va[1].intVal().val;
+        return new IntVal(i0 <= i1 ? 1 : 0);
+    }
+%%%
+
+GTPrim
+%%%
+    public String toString() {
+        return ">?";
+    }
+
+    public Val apply(Val [] va) {
+        if (va.length != 2)
+            throw new PLCCException(">?: two arguments expected");
+        int i0 = va[0].intVal().val;
+        int i1 = va[1].intVal().val;
+        return new IntVal(i0 > i1 ? 1 : 0);
+    }
+%%%
+
+GEPrim
+%%%
+    public String toString() {
+        return ">=?";
+    }
+
+    public Val apply(Val [] va) {
+        if (va.length != 2)
+            throw new PLCCException(">=?: two arguments expected");
+        int i0 = va[0].intVal().val;
+        int i1 = va[1].intVal().val;
+        return new IntVal(i0 >= i1 ? 1 : 0);
+    }
+%%%
+
+NEPrim
+%%%
+    public String toString() {
+        return "<>?";
+    }
+
+    public Val apply(Val [] va) {
+        if (va.length != 2)
+            throw new PLCCException("<>?: two arguments expected");
+        int i0 = va[0].intVal().val;
+        int i1 = va[1].intVal().val;
+        return new IntVal(i0 != i1 ? 1 : 0);
+    }
+%%%
+
+EQPrim
+%%%
+    public String toString() {
+        return "=?";
+    }
+
+    public Val apply(Val [] va) {
+        if (va.length != 2)
+            throw new PLCCException("=?: two arguments expected");
+        int i0 = va[0].intVal().val;
+        int i1 = va[1].intVal().val;
+        return new IntVal(i0 == i1 ? 1 : 0);
+    }
+%%%
+
+ObjectpPrim
+%%%
+    public Val apply(Val [] va) {
+	if (va.length != 1)
+            throw new PLCCException("object?: one argument expected");
+        Val v0 = va[0];
+        return new IntVal(v0.isObject() ? 1 : 0);
+   }
+%%%
+
+ClasspPrim
+%%%
+    public Val apply(Val [] va) {
+	if (va.length != 1)
+            throw new PLCCException("class?: one argument expected");
+        Val v0 = va[0];
+        return new IntVal(v0.isClass() ? 1 : 0);
+   }
+%%%
+
+ListpPrim
+%%%
+    public Val apply(Val [] va) {
+	if (va.length != 1)
+	    throw new PLCCException("list?: one argument expected");
+        Val v0 = va[0];
+	return new IntVal(v0.isList() ? 1 : 0);
+    }
+%%%
+
+StringpPrim
+%%%
+    public Val apply(Val [] va) {
+	if (va.length != 1)
+	    throw new PLCCException("string?: one argument expected");
+        Val v0 = va[0];
+	return new IntVal(v0.isStrng() ? 1 : 0);
+    }
+	
+%%%
+
+FirstPrim
+%%%
+    public Val apply(Val [] va) {
+        if (va.length != 1)
+            throw new PLCCException("one argument expected");
+        return va[0].first();
+    }
+%%%
+
+RestPrim
+%%%
+    public Val apply(Val [] va) {
+        if (va.length != 1)
+            throw new PLCCException("one argument expected");
+        return va[0].rest();
+    }
+%%%
+
+AddFirstPrim
+%%%
+    public Val apply(Val [] va) {
+        if (va.length != 2)
+            throw new PLCCException("addFirst: two arguments expected");
+        Val v0 = va[0];
+        Val v1 = va[1];
+        return v1.add(v0);
+    }
+%%%
+
+ConsPrim
+%%%
+    public Val apply(Val [] va) {
+        if (va.length != 2)
+            throw new PLCCException("cons: two arguments expected");
+        return new AddFirstPrim().apply(va);
+    }
+%%%
+
+LenPrim
+%%%
+    public Val apply(Val [] va) {
+        if (va.length != 1)
+            throw new PLCCException("len: one argument expected");
+        return new IntVal(va[0].len());
+    }
+
+%%%
+
+ToStringPrim
+%%%
+    public Val apply(Val [] va) {
+        if (va.length != 1)
+            throw new PLCCException("toString: one argument expected");
+        Val v = va[0];
+        return new StrngVal(v.toString());
+    }
+%%%
+
+AppendPrim
+%%%
+    public Val apply(Val [] va) {
+        if (va.length != 2)
+            throw new PLCCException("append: two arguments expected");
+        Val v0 = va[0];
+        Val v1 = va[1];
+        return v0.append(v1);
+    }
+%%%
+
+Str2LstPrim
+%%%
+    public Val apply(Val [] va) {
+        if (va.length != 1)
+            throw new PLCCException("str2lst: one argument expected");
+        StrngVal str = va[0].strngVal();
+        return str.listVal;
+    }
+%%%
+
+Lst2StrPrim
+%%%
+    public Val apply(Val [] va) {
+        if (va.length != 1)
+            throw new PLCCException("lst2str: one argument expected");
+        ListVal lst = va[0].listVal();
+        return new StrngVal(lst); 
+    }
+%%%

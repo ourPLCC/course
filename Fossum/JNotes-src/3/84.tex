@@ -1,0 +1,21 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language V5} (continued)\exx
+In order to solve this problem,
+we create a new \verb'let'-like environment
+that supports direct recursion.
+Called \verb'letrec',
+it allows us to define procedures
+that support direct recursion.\exx
+This is what we want:
+\Large
+\begin{qv}
+letrec
+  fact = proc(x) if zero?(x) then 1 else *(x,.fact(sub1(x)))
+in
+  .fact(5)
+  % => 120
+\end{qv}
+\end{minipage}
+\clearpage

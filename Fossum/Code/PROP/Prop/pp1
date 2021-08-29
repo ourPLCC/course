@@ -1,0 +1,8 @@
+let
+  x = 5
+  xrefs = 0
+in
+  letprop
+    x = prop { set xrefs = add1(xrefs) ; display xrefs}
+  in
+    {x;x;x;x;x;x;x;display x; display xrefs}

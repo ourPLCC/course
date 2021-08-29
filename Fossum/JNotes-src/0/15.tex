@@ -1,0 +1,37 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Tokens} (continued)\exx
+Writing a scanner is somewhat involved,
+so we have provided you with a tool set
+that produces a Java scanner automatically
+from a file that specifies the tokens using regular expressions.
+This tool set, named \verb'PLCC',
+consists of a program written in Python 3
+along with some support files.
+\verb'PLCC' stands for a ``Programming Languages Compiler Compiler''.
+You should be able to use this tool set with any system
+that supports Python 3 and Java.
+The \verb'plcc.py' Python program
+and the \verb'Std' subdirectory that contains its support files
+are on the RIT Ubuntu lab systems in this directory:
+\begin{qv}
+/usr/local/pub/plcc/src
+\end{qv}
+This directory also contains a shell script called \verb'plcc'
+that runs the \verb'plcc.py' Python program,
+along with a script called \verb'plccmk'
+that also compiles the Java programs created by PLCC.
+When you are working on one of our Ubuntu lab systems,
+you can simply run \verb'plcc' or \verb'plccmk'
+to process the various languages we will specify in this course.\exx
+See the \verb'HOWTO.html' file in \verb'/usr/local/pub/plcc/tvf'
+for {\em important information} about how
+to set up your CS account environment
+so that PLCC will be able to access the required program files
+and library routines on CS servers and lab workstations.
+This file also explains how you can use \verb'github'
+to set up PLCC on a local Windows or Linux computer system.
+If you do this, you are on your own.
+\end{minipage}
+\clearpage

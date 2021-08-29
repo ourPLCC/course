@@ -1,0 +1,31 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Parsers} (continued)\exx
+%\Large
+%\emm\LightBox{\MYlon}\exx
+Here is a complete text file representation
+of {\color{red}Language \verb'LON'},
+including its lexical and syntax specification sections,
+suitable for processing by \verb'plccmk'.
+Notice that we have included the annotations
+for the two \verb'<nums>' rules as described on the previous slide.
+Also notice that a line containing a single `\verb'%'' separates
+the lexical specification from the syntax specification (BNF rules).\exx
+\begin{SaveVerbatim}{\MYlonGrammar}
+# Language specification for a list of numbers
+# Lexical spec
+skip WHITESPACE '\s+'
+NUM '\d+'
+LPAREN '\('
+RPAREN '\)'
+%
+# Syntax spec (BNF rules)
+<lon>           ::= LPAREN <nums> RPAREN
+<nums>:NumsNode ::= NUM <nums>
+<nums>:NumsNull ::= 
+%
+\end{SaveVerbatim}
+\emm\NormalBox{\MYlonGrammar}\exx
+\end{minipage}
+\clearpage

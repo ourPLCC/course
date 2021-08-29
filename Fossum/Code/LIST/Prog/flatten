@@ -1,0 +1,19 @@
+define flatten = proc(xs)
+  if xs
+  then
+    let
+      f = first(xs)
+      r = rest(xs)
+    in
+      if list?(f)
+      then .append(.flatten(f), .flatten(r))
+      else addFirst(f, .flatten(r))
+  else xs
+
+define shuttle = proc(xs, ys)
+    if xs
+    then .shuttle(rest(xs), addFirst(first(xs), ys))
+    else ys
+
+define append = proc(xs, ys)
+    .shuttle(.shuttle(xs,[]), ys)

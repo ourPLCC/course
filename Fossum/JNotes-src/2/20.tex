@@ -1,0 +1,32 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Environments} (continued)\exx
+We will encounter language definitions
+that end up creating dozens of Java source files.
+To manage these complex languages,
+we separate the contents of the semantics section of the grammar file
+into separate files grouped by purpose.
+In many cases, different languages may share some of the same source files.
+The semantics section then simply identifies the names of these files
+using an \verb'include' feature
+that treats the contents of these files
+as if they were part of the entire grammar file.\exx
+For example, one of our early languages \verb'V1'
+has the following grammar file structure:
+{\Large
+\begin{qv}
+# lexical specification
+...
+%
+# BNF grammar
+...
+%
+include code            # BNF grammar semantics
+include prim            # primitive operations (PLUS, MINUS, etc.)
+include ../Env/envRN    # environment code (Env, Binding, etc.)
+include val             # value semantics (IntVal, etc.)
+\end{qv}
+}
+\end{minipage}
+\clearpage

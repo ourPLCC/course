@@ -1,0 +1,31 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Concurrency} (continued)\exx
+When evaluating an atomic expression,
+we circumvent the evaluation of the queued expression
+by evaluating the expression directly --
+using a non-threaded trampoline.
+Once the value has been determined,
+we pass it on to the pending continuation
+so the threading can continue.
+Observe that during the evaluation of an \verb'atomic' expression,
+the threaded trampoline stops processing queued continuations.
+\Large
+\begin{qv}
+AtomicExp
+%%%
+    public Cont eval(Env env, Cont cont) {
+        Val val = exp.eval(env); // don't thread on me
+        return cont.apply(val);
+    }
+%%%
+\end{qv}
+\LARGE
+It's harmless to evaluate an \verb'atomic' expression
+in a non-threaded environment.
+However, an \verb'atomic' expression must complete
+before its value can be applied to the next continuation,
+so deeply nested \verb'atomic' expressions can lead to stack overflow.
+Using \verb'atomic' expressions should be done sparingly.
+\end{minipage}

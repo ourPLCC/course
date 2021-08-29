@@ -1,0 +1,43 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf PLCC -- Parsing (continued)}\exx
+The code samples shown above
+omit a \verb'Trace' parameter named \verb'trace$'
+that plays a role in calling the \verb'parse' methods.
+If this parameter is not \verb'null' --
+when the `\verb'-t'' command-line option is given
+to the \verb'Parse' or \verb'Rep' programs --
+parsing the program
+will display a visual ``parse trace'' to standard error (by default).
+In Language \verb'LON', an example parse trace
+for the program `\verb'(1 3 5)'' looks like this:
+{\Large
+\begin{qv}
+   1: <lon>
+   1: | LPAREN "("
+   1: | <nums>:NumsNode
+   1: | | NUM "1"
+   1: | | <nums>:NumsNode
+   1: | | | NUM "3"
+   1: | | | <nums>:NumsNode
+   1: | | | | NUM "5"
+   1: | | | | <nums>:NumsNull
+   1: | RPAREN ")"
+\end{qv}
+}
+Each line in the parse trace displays
+either a nonterminal or a token.
+If it displays a nonterminal,
+this shows that the parser calls
+the \verb'parse' method for that nonterminal
+(possibly in the given subclass).
+If it displays a token,
+then the scanner also displays the token's lexeme.
+The decimal number at the beginning of each line
+is the line number in the source file where the parse found
+the nonterminal or token;
+the number of vertical bars indicates
+the recursive depth of the parse.
+\end{minipage}
+\clearpage

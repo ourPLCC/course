@@ -1,0 +1,37 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language V0} (continued)\exx
+The \verb'Rep' program defaults to running
+the \verb'$run()' method in the \verb'Program' class,
+which prints the \verb'Program' object as a \verb'String'.
+(Actually, it prints the \verb'_Start' object as a \verb'String',
+but since the \verb'Program' class extends the \verb'_Start' class,
+these behaviors are the same.)
+As we have seen, this displays a string that looks like this:
+{\Large
+\begin{qv}
+Program@....
+\end{qv}
+}
+So our next step is to show how we can redefine the \verb'$run()' method
+in the \verb'Program' class
+so that overrides the default behavior
+by printing the same text as the program input
+with extra whitespace removed!\exx
+This means that we should see the following when interacting
+with the \verb'Rep' program from Language V0:
+{\Large
+\begin{qv}
+--> add1( +(2, 3   ))
+add1(+(2,3))
+--> x
+x
+--> +  ( p  ,
+- ( q,r)  )
++(p,-(q,r))
+--> ...
+\end{qv}
+}
+\end{minipage}
+\clearpage

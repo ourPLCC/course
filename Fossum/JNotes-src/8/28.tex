@@ -1,0 +1,26 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Continuations} (continued)\exx
+Finally we handle \verb'set' expressions.
+A \verb'SetCont' object captures the information necessary
+to modify the value of the LHS variable of a \verb'set':
+\Large
+\begin{qv}
+public class SetCont extends VCont {
+
+    public Ref ref;
+    public VCont vcont;
+
+    public SetCont(Ref ref, VCont vcont) {
+        this.ref = ref;
+        this.vcont = vcont;
+    }
+
+    public ACont apply(Val val) {
+        ref.setRef(val);                // modify the binding
+        return new ValCont(val, vcont); // pass the value on
+    }
+}
+\end{qv}
+\end{minipage}

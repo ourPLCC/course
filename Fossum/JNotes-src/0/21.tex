@@ -1,0 +1,30 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Tokens} (continued)\exx
+The \verb'adv()' method advances the scanning process
+so that the token returned by the next call to \verb'cur()'
+is the next token in the input.
+Notice that multiple calls to \verb'cur()'
+without any intervening calls to \verb'adv()'
+all return the same token.\exx
+A \verb'Token' object has four public fields
+(also called {\em instance variables}):
+an \verb'enum Match' field named \verb'match'
+that is the token's symbolic name;
+a \verb'String str' field that is the token's lexeme derived
+from the input stream (and is returned by
+the \verb'toString()' method in this class);
+an \verb'int lno' field that is the line number,
+starting at one, of the input stream where the token appears;
+and a \verb'String line' field that is
+the source line of the input stream where the token appears.\exx
+For the purposes of compatibility,
+the \verb'Scan' class defines methods \verb'hasNext()' and \verb'next()'
+that behave exactly like their counterparts in the Java \verb'Scanner' class.
+The \verb'boolean hasNext()' method returns \verb'true'
+if and only if the input stream has additional tokens,
+in which case the \verb'Token next()' method returns (and consumes)
+the next \verb'Token' object from the input stream.
+\end{minipage}
+\clearpage

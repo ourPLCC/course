@@ -1,0 +1,35 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Parsers} (continued)\exx
+The PLCC tool set is designed
+to make it easy to build a scanner and parser
+for a large collection of programming languages.
+While it is not ``industrial strength'' like many of the standard tool sets,
+it is easy to learn.
+The target language for PLCC is Java,
+so all of the source code that PLCC generates
+consists of self-contained Java programs.
+To use PLCC, you only need to be comfortable
+reading and writing programs in Java.\exx
+To say that a parser returns only success or failure
+is cold comfort,
+since in most cases you want to ``run'' a program
+once it parses successfully.
+So a parser generally does one of two things:
+it ``runs'' the program {\em as it carries out the parse algorithm}
+(which is called {\em interpretation on the fly}),
+or it produces some form of output
+that can later be used to run the program {\em once the parse is complete}.
+PLCC uses the latter approach,
+since generating a parser is simpler
+if it is divorced from any attempts to carry out
+run-time behavior during the parse.\exx
+The input to a PLCC parser is a token stream --
+specifically, the tokens produced by an instance of the \verb'Scan' class
+(see Slide Set 0).
+The output of a PLCC parser is a {\em parse tree} of a program:
+more specifically, it is a Java object
+that is the root of the parse tree.
+\end{minipage}
+\clearpage

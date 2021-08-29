@@ -1,0 +1,33 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Tokens} (continued)\exx
+The lexical specification section of a \verb'grammar' file
+uses {\em regular expressions} to specify language tokens.
+A regular expression is a formal description of a pattern
+that can match a sequence of characters in a character stream.
+For example, the regular expression `\verb'd'' matches the letter \verb'd',
+the regular expression `\verb'\d'' matches any decimal digit,
+and the regular expression `\verb'\d+'' matches one or more decimal digits.
+{\bf You should read the Java documentation for the \verb'Pattern' class
+for information about how to write regular expressions.}\exx
+When specifying tokens, we must identify
+what input stream characters do {\em not} belong to tokens
+and should be skipped.
+Typically, we skip whitespace: spaces, tabs, and newlines.
+We identify these skipped characters in the \verb'grammar' file
+using a {\em skip specification} line like this :
+\begin{qv}
+skip WHITESPACE '\s+'
+\end{qv}
+The regular expression `\verb'\s'' stands for ``space''
+(the space character, a tab, or a newline),
+and the regular expression `\verb'\s+'' stands for one or more spaces.
+We use the symbolic name ``WHITESPACE''
+to identify this particular collection of characters to be skipped.
+(Any symbolic name would suffice,
+but it makes sense to use one that describes its purpose.)
+We also typically skip comments.\exx
+{\bf Characters to be skipped during lexical analysis are not tokens.}
+\end{minipage}
+\clearpage

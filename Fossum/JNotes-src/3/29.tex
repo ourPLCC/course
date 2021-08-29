@@ -1,0 +1,36 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language V1} (continued)\exx
+Finally we consider \verb'PrimappExp'.
+A \verb'PrimappExp' object has two instance variables:
+a \verb'Prim' object named \verb'prim'
+and a \verb'Rands' object named \verb'rands'.
+To evaluate such an expression,
+we need to apply the given primitive operation
+(the \verb'prim' object)
+to the values of the expressions in the \verb'rands' object.\exx
+An object of type \verb'Rands' has
+a \verb'List<Exp>' instance variable named \verb'expList'.
+In order to perform the operation determined by the \verb'prim' object,
+we need to evaluate each of the expressions in \verb'expList'.
+A utility method named \verb'evalRands' in the \verb'Rands' class
+does the work for us.
+Of course, this method needs to know what environment is being used
+to evaluate the expressions,
+so an \verb'Env' object is a parameter to this method.
+{\Large
+\begin{qv}
+Rands
+%%%
+    public List<Val> evalRands(Env env) {
+        List<Val> args = new ArrayList<Val>(expList.size());
+        for (Exp exp : expList)
+            args.add(exp.eval(env));
+        return args;
+    }
+%%%
+\end{qv}
+}
+\end{minipage}
+\clearpage

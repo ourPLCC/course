@@ -1,0 +1,39 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language {\color{red} NAME}} (continued)
+\Large
+\begin{qv}
+let
+  x = 1
+  f = proc(t,u)
+        {
+          set t = add1(t) ;
+          u
+        }
+in
+  .f(x, +(x,5))
+\end{qv}
+\LARGE
+Consider now what happens when we evaluate \verb'.f(x, +(x,5))'
+using call-by-name:
+The formal parameter \verb't' still denotes 
+the same reference that \verb'x' denotes (initially containing 1),
+but the formal parameter \verb'u' denotes
+the (un-evaluated) expression \verb'+(x,5)'.\exx
+The \verb'set' operation in the body of this procedure
+increments the formal parameter \verb't';
+but since \verb't' denotes the same reference as \verb'x',
+the value of \verb'x' changes too, to two.
+When we then evaluate the formal parameter \verb'u'
+at the end of the \verb'proc' body,
+we evaluate the expression \verb'+(x,5)' denoted by \verb'u'
+{\em in the environment of the caller}.
+Since this expression gets evaluated after the \verb'set',
+and the value of \verb'x' is now 2,
+the value of the expression \verb'+(x,5)'
+(and thus the value returned by the procedure application)
+is \verb'+(2,5)' or 7.
+Thus the entire expression evaluates to 7.
+\end{minipage}
+\clearpage

@@ -1,0 +1,19 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Parsers} (continued)\exx
+\LARGE
+\emm\LightBox{\MYlonGrammarOnly}\exx
+By default, the value of a parse tree
+is simply the \verb'toString()' value of the parse tree Java instance.
+For Language \verb'LON',
+this value is a Java \verb'String' of the form \verb'Lon@xxxx',
+where the \verb'xxxx' part is the hexadecimal address
+of where the object resides in memory.
+Observe that \verb'Lon' is the Java class that defines
+the start symbol of the \verb'LON' BNF rules.\exx
+The `\verb'-t'' command-line argument turns on a parse trace
+when used with the \verb'Parse' or \verb'Rep' programs.
+The next slide shows the output using this feature.
+\end{minipage}
+\clearpage

@@ -1,0 +1,34 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Exception Handling} (continued)\exx
+The exception environment rules
+when evaluating expressions,
+defining handlers,
+and throwing exceptions are:
+\begin{itemize}
+\parskip 0ex
+\item
+  The top-level exception environment is always empty.
+\item
+  Handlers defined in a \verb'catch' expression are added
+  to the exception environment in which the \verb'catch' expression appears,
+  and this extended exception environment becomes the exception environment
+  in which the \verb'catch' expression body is evaluated.
+\item
+  A handler defined in a \verb'catch' expression
+  saves the evaluation and exception environments
+  and the execution continuation
+  in which the \verb'catch' expression appears,
+  in addition to the handler's formal parameters and body expression.
+\item
+  When evaluating a \verb'throw' expression,
+  the appropriate handler is found by searching
+  the current exception environment
+  in which the \verb'throw' expression appears.
+\end{itemize}
+
+continued on next slide ...
+
+
+\end{minipage}

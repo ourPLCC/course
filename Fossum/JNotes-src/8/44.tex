@@ -1,0 +1,31 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Concurrency} (continued)\exx
+\LARGE
+When a queued expression evaluation continuation completes,
+its value must be deposited in the proper place
+in the array of values.
+The following continuation represents what
+to do with the expression value once the evaluation completes:
+\Large
+\begin{qv}
+public class ValIndexCont extends VCont {
+
+    Val [] valArray; // an array of values
+    int index;       // where to put the result
+
+    public ValIndexCont(Val [] valArray, int index) {
+        this.valArray = valArray;
+        this.index = index;
+    }
+
+    public ACont apply(Val val) {
+        valArray[index] = val;
+        throw new NullContException(); // all done
+    }
+
+}
+\end{qv}
+\LARGE
+\end{minipage}

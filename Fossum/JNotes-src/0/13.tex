@@ -1,0 +1,33 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Tokens} (continued)\exx
+To specify tokens, we use token specification lines
+having the format
+\begin{quote}
+\verb'token' <symbolic name> <re>
+\end{quote}
+where <symbolic name> identifies the token
+and <re> is a regular expression that defines the structure
+of the token's lexeme.\exx
+We adopt one simplifying rule
+for {\em all} the languages we discuss in this class:
+{\em \mbox{tokens} cannot cross line boundaries}.
+Be warned, however,
+that not all programming languages conform to this rule.\exx
+For example, we may use the following lines
+in our \verb'grammar' file to specify 
+a {\em number},
+the {\em reserved word} \verb'proc',
+and an {\em identifier}:
+\begin{qv}
+token NUM '\d+'
+token PROC 'proc'
+token ID '[A-Za-z]\w*'
+\end{qv}
+We like to use symbolic names for our tokens
+that make it easy to remember what they represent.\exx
+You can find the documentation for regular expressions
+such as these in the Java \verb'Pattern' class.\exx
+\end{minipage}
+\clearpage

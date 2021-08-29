@@ -1,0 +1,199 @@
+# Environment-related classes
+
+Env
+%%%
+import java.util.*;
+
+public abstract class Env {
+
+    public static final Env empty = new EnvNull();
+
+    public static void checkDuplicates(List<Token> varList, String msg) {
+        // throws an exeption if the varList has duplicate vars
+        Set<String> varSet = new HashSet<String>(2*varList.size());
+        for (Token var: varList) {
+            String str = var.toString();
+            if (varSet.contains(str)) {
+                msg = "duplicate ID " + str + msg;
+                throw new PLCCException("Semantic error",  msg);
+            }
+            varSet.add(str);
+        }
+    }
+
+    public static void checkDuplicates(List<Token> varList) {
+        checkDuplicates(varList, "");
+    }
+
+    public static Env initEnv() {
+        // initial environment with no bindings
+        return new EnvNode(new Bindings(), empty);
+    }
+
+    public abstract Binding lookup(String sym); // only local bindings
+
+    public abstract Val applyEnv(String sym);
+
+    public Val applyEnv(Token tok) {
+        return applyEnv(tok.toString());
+    }
+
+    public Env extendEnv(Bindings bindings) {
+        return new EnvNode(bindings, this);
+    }
+
+    public abstract Env add(Binding b);
+
+}
+%%%
+
+EnvNode
+%%%
+import java.util.*;
+
+public class EnvNode extends Env {
+
+    public Bindings bindings; // list of local bindings
+    public Env env;           // next set of bindings
+    
+    // create an environment 
+    public EnvNode(Bindings bindings, Env env) {
+        this.bindings = bindings;
+        this.env = env;
+    }
+
+    public Binding lookup(String sym) {
+        return bindings.lookup(sym);
+    }
+
+    public Val applyEnv(String sym) {
+        Binding b = bindings.lookup(sym);
+        if (b == null)
+            return env.applyEnv(sym);
+        return b.val;
+    }
+
+    public Env add(Binding b) {
+        bindings.add(b);
+        return this;
+    }
+
+    public String toString() {
+        return bindings.toString() + "----\n" + env;
+    }
+
+}
+%%%
+
+EnvNull
+%%%
+import java.util.*;
+
+public class EnvNull extends Env {
+
+    // create an environment 
+    public EnvNull() {
+    }
+    
+    // find the Val corresponding to a given id
+    public Val applyEnv(String sym) {
+        throw new PLCCException("no binding for "+sym);
+    }
+
+    public Binding lookup(String sym) {
+        return null;
+    }
+
+    public Env add(Binding b) {
+        throw new PLCCException("no bindings to add to");
+    }
+
+    public String toString() {
+        return "\n";
+    }
+}
+%%%
+
+Binding
+%%%
+public class Binding {
+
+    public String id;
+    public Val val;
+
+    public Binding(String id, Val val) {
+        this.id = id;
+        this.val = val;
+    }
+
+    public String toString() {
+        return "[" + id + ":" + val.toString() + "]";
+    }
+
+}
+%%%
+
+Bindings
+%%%
+import java.util.*;
+
+public class Bindings {
+
+    public List<Binding> bindingList;
+
+    // create an empty list of bindings
+    public Bindings() {
+        bindingList = new ArrayList<Binding>();
+    }
+
+    // create an empty list of bindings with the given capacity
+    public Bindings(int capacity) {
+        bindingList = new ArrayList<Binding>(capacity);
+    }
+
+    public Bindings(List<Binding> bindingList) {
+        this.bindingList = bindingList;
+    }
+
+    public Binding lookup(String sym) {
+        for (Binding b: bindingList)
+            if (sym.equals(b.id))
+                return b;
+        return null;
+    }
+
+    // idList is a list of Tokens/Strings (whatever has a toString())
+    // valList is a list of Vals
+    public Bindings(List<?> idList, List<Val> valList) {
+        if (idList.size() != valList.size())
+            throw new PLCCException("List sizes mismatch");
+        bindingList = new ArrayList<Binding>(idList.size());
+        Iterator<?> idIterator = idList.iterator();
+        Iterator<Val> valIterator = valList.iterator();
+        while (idIterator.hasNext()) {
+            String s = idIterator.next().toString();
+            Val v = valIterator.next();
+            this.add(new Binding(s, v));
+        }
+    }
+
+    public void add(Binding b) {
+        bindingList.add(b);
+    }
+
+    public void add(String s, Val v) {
+        add(new Binding(s, v));
+    }
+
+    public int size() {
+        return bindingList.size();
+    }
+
+    public String toString() {
+        String s = "";
+        for (Binding b : bindingList)
+            s += b + "\n";
+        return s;
+    }
+}
+%%%

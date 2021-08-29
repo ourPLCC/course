@@ -1,0 +1,24 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language V0} (continued)\exx
+Consider the following grammar rule in Language V0:
+\begin{qv}
+<exp>:LitExp ::= <LIT>
+\end{qv}
+This rule creates a Java class \verb'LitExp'
+having a single field named \verb'lit' of type \verb'Token'.
+The \verb'LIT' token name is defined in the lexical specification
+to be a sequence of one or more decimal digits.\exx
+Continuing in this way,
+each of the BNF grammar rules of Language V0 (Slide 3.7)
+defines a class given by its LHS
+with a well-defined set of instance variables
+corresponding to the (angle bracket) entries in its RHS.\exx
+We will encounter a few situations
+when two RHS entries are defined by the same name in angle brackets.
+As we have already observerd,
+in these cases, we disambiguate the entries
+by providing different instance variable names.
+\end{minipage}
+\clearpage

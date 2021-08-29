@@ -1,0 +1,18 @@
+let
+  x = 3
+in
+  let c = 
+    class
+      static cc =
+        class
+          static x = 5
+        end
+      static x = 4
+    end
+  in
+    { display# <c><!@>x
+    ; display# <c>x
+    ; display# <c><cc>x   
+    ; nil
+    }
+  

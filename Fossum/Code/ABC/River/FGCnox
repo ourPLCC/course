@@ -1,0 +1,11 @@
+cross(s0000,g,s1010).
+cross(s0001,g,s1011).
+cross(s0001,f,s1101).
+cross(s0010,c,s1011).
+cross(s0010,f,s1110).
+cross(s0100,c,s1101).
+cross(s0100,g,s1110).
+cross(s0101,g,s1111).
+cross(X,P,Y) :- cross(Y,P,X).
+path(X,Y) :- cross(X,_,Y).
+path(X,Z) :- path(X,Y),cross(Y,_,Z).

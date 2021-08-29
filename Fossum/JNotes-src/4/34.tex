@@ -1,0 +1,36 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language TYPE1} (continued)\exx
+A \verb'letrec' expression is treated similar
+to a \verb'let' expression,
+except that the types of the RHS procedures
+must be evaluated in an environment
+that has type bindings for the LHS variables.
+Since the defined type of a RHS procedure can be determined
+solely by declared types of its parameters and return type,
+the types of the LHS variables can be determined
+independent of any environment.
+So we can use these LHS variables to extend
+the type environment
+and then evalute the types of the RHS procedure {\em bodies}
+using this extended environment,
+for the purpose of type checking with their declared return types.
+The \verb'addLetrecTypeBindings' method in the \verb'LetDecls' class
+does all the work.
+{\Large
+\begin{qv}
+public TypeEnv addLetrecTypeBindings(TypeEnv tenv) {
+    tenv = tenv.extendTypeEnv(new TypeBindings(varList.size()));
+    Iterator<Token> varIter = varList.iterator();
+    Iterator<Exp> expIter = expList.iterator();
+    while (varIter.hasNext()) {
+        String str = varIter.next().toString();
+        Type typ = expIter.next().evalType(tenv);
+        tenv.add(new TypeBinding(str, typ));
+    }
+    return tenv;
+}
+\end{qv}
+}
+\end{minipage}

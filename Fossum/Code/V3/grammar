@@ -1,0 +1,46 @@
+# Language V3
+#   Language V2 + let
+
+# Lexical specification
+skip WHITESPACE '\s+'
+skip COMMENT '%.*'
+LIT '\d+'
+LPAREN '\('
+RPAREN '\)'
+COMMA ','
+ADDOP '\+'
+SUBOP '\-'
+MULOP '\*'
+DIVOP '/'
+ADD1OP 'add1'
+SUB1OP 'sub1'
+ZEROP 'zero\?'
+IF 'if'
+THEN 'then'
+ELSE 'else'
+LET 'let'
+IN 'in'
+EQUALS '='
+VAR '[A-Za-z]\w*'
+%
+# Grammar
+<program> ::= <exp>
+<exp>:LitExp ::= <LIT>
+<exp>:VarExp ::= <VAR>
+<exp>:IfExp  ::= IF <exp>testExp THEN <exp>trueExp ELSE <exp>falseExp
+<exp>:PrimappExp ::= <prim> LPAREN <rands> RPAREN
+<exp>:LetExp ::= LET <letDecls> IN <exp>
+<letDecls>   **= <VAR> EQUALS <exp>
+<rands> **= <exp> +COMMA
+<prim>:AddPrim ::= ADDOP
+<prim>:SubPrim ::= SUBOP
+<prim>:MulPrim ::= MULOP
+<prim>:DivPrim ::= DIVOP
+<prim>:Add1Prim ::= ADD1OP
+<prim>:Sub1Prim ::= SUB1OP
+<prim>:ZeropPrim ::= ZEROP
+%
+include code
+include prim
+include envVal
+include val

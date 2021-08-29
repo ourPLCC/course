@@ -1,0 +1,28 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language REF} (continued)\exx
+When actual parameter expressions are not themselves variables,
+we use value semantics.
+To illustrate this, consider the value returned by the following program:
+\begin{qv}
+let
+  x = 3
+  p = proc(t) set t = add1(t)
+in
+  { .p(+(x,0)) ; x }
+\end{qv}
+Clearly the expressed value
+of the actual parameter \verb'+(x,0)'
+is the same as that of \verb'x',
+but the expression \verb'+(x,0)' is not a variable,
+so value semantics apply to this actual parameter.
+This means that when we apply the procedure \verb'p',
+the formal parameter \verb't' denotes
+a {\em new} reference to the value of this expression:
+the variables \verb't' and \verb'x' have the same expressed values,
+but they have different denoted values,
+so modifying \verb't' does not affect the value of \verb'x'.
+This expression evaluates to 3.
+\end{minipage}
+\clearpage

@@ -1,0 +1,30 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Exception Handling}\exx
+Because a continuation holds an execution context,
+it is possible to save the execution context
+of an early part of a computation
+and to return to this context in case something unusual happens later.
+This gives us the opportunity to implement {\em exception handling}:
+that is, the ability to stop the evaluation of an expression,
+returning instead to a saved execution context.\exx
+We implement exception handling
+by allowing for named {\em exception handlers}
+that save the current continuation
+and that otherwise behave like procedures.
+The exception handlers are installed
+in a special {\em exception environment}
+that is separate from the normal evaluation environment.
+When a named exception is thrown -- as we describe shortly --
+the most recent exception handler having that name is looked up
+in the exception environment,
+the handler is applied (just like a procedure),
+and the resulting value is passed
+to the handler's saved continuation.\exx
+Since the saved continuation jumps onto the trampoline
+by calling the continuation's \verb'apply' method,
+the program execution continues
+at the point where the exception handler was installed
+rather than at the point where the exception was thrown.
+\end{minipage}

@@ -1,0 +1,54 @@
+suit(jc,c).
+suit(qc,c).
+suit(kc,c).
+suit(ac,c).
+suit(jd,d).
+suit(qd,d).
+suit(kd,d).
+suit(ad,d).
+suit(jh,h).
+suit(qh,h).
+suit(kh,h).
+suit(ah,h).
+suit(js,s).
+suit(qs,s).
+suit(ks,s).
+suit(as,s).
+rank(jc,j).
+rank(qc,q).
+rank(kc,k).
+rank(ac,a).
+rank(jd,j).
+rank(qd,q).
+rank(kd,k).
+rank(ad,a).
+rank(jh,j).
+rank(qh,q).
+rank(kh,k).
+rank(ah,a).
+rank(js,j).
+rank(qs,q).
+rank(ks,k).
+rank(as,a).
+
+rank(R) :- rank(_,R).
+suit(S) :- suit(_,S).
+card(X) :- rank(X,_).
+
+flush(ID) :- hand(ID,W,X,Y,Z),suit(W,S), suit(X,S), suit(Y,S), suit(Z,S).
+pair(ID) :- hand(ID,W,X,Y,Z), rank(W,R), rank(X,R).
+pair(ID) :- hand(ID,W,X,Y,Z), rank(W,R), rank(Y,R).
+pair(ID) :- hand(ID,W,X,Y,Z), rank(W,R), rank(Z,R).
+pair(ID) :- hand(ID,W,X,Y,Z), rank(X,R), rank(Y,R).
+pair(ID) :- hand(ID,W,X,Y,Z), rank(X,R), rank(Z,R).
+pair(ID) :- hand(ID,W,X,Y,Z), rank(Y,R), rank(Z,R).
+three(ID) :- hand(ID,W,X,Y,Z), rank(W,R), rank(X,R), rank(Y,R).
+three(ID) :- hand(ID,W,X,Y,Z), rank(W,R), rank(X,R), rank(Z,R).
+three(ID) :- hand(ID,W,X,Y,Z), rank(W,R), rank(Y,R), rank(Z,R).
+three(ID) :- hand(ID,W,X,Y,Z), rank(X,R), rank(Y,R), rank(Z,R).
+twopair(ID) :- hand(ID,W,X,Y,Z), rank(W,R1), rank(X,R1), rank(Y,R2), rank(Z,R2).
+twopair(ID) :- hand(ID,W,X,Y,Z), rank(W,R1), rank(Y,R1), rank(X,R2), rank(Z,R2).
+twopair(ID) :- hand(ID,W,X,Y,Z), rank(W,R1), rank(Z,R1), rank(X,R2), rank(Y,R2).
+four(ID) :- hand(ID,W,X,Y,Z), rank(W,R), rank(X,R), rank(Y,R), rank(Z,R).
+straight(ID) :- hand(ID,W,X,Y,Z), rank(W,WR), rank(X,XR), rank(Y,YR), rank(Z,ZR),
+                     WR!=XR, WR!=YR, WR!=ZR, XR!=YR, XR!=ZR, YR!=ZR.

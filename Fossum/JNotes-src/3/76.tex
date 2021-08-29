@@ -1,0 +1,28 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Drawing Envinronments} (continued)\exx
+Finally, consider this example:\\[1.5ex]
+\Large
+\begin{verbbox}
+let
+  x = 3
+in
+  let
+    f = proc(t) +(t,x)
+  in
+    .f(5)
+\end{verbbox}
+\emm\theverbbox\\[1.5ex]
+\LARGE
+The value of this expression is also 8.
+Evaluating this expression creates three environments:
+one with a binding of \verb'x' to 3,
+another with a binding of \verb'f' to the closure,
+and a third created by applying \verb'f' to the argument 5.
+The resulting environment diagram is shown
+on the following page.
+The environment in which the body of \verb'f'
+is marked with an asterisk `\verb'*''.
+\end{minipage}
+\clearpage

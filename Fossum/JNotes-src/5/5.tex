@@ -1,0 +1,32 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language OBJ} (continued)\exx
+Every \verb'Exp' expression evaluates to a \verb'Val' object,
+and a \verb'ClassExp' is no exception,
+so evaluating such a \verb'ClassExp'
+({\em i.e.}, calling its \verb'eval' method)
+returns a \verb'Val' object.
+Looking only at the syntax,
+it seems reasonable
+that such an object has a superclass
+(the \verb'ext' [for \verb'EXTENDS'] part),
+a set of static identifiers and asociated values,
+a set of field names,
+and a set of method names and associated procedures.\exx
+We define a \verb'StdClass' object in the file \verb'class',
+which extends the \verb'Val' class.
+(Actually, it extends \verb'ClassVal' class
+which in turn extends the \verb'Val' class.)
+Evaluating a \verb'ClassExp' expression
+returns an instance of \verb'StdClass'.\exx
+[{\bf Warning}:  In this chapter we implement
+classes and objects in our source language (\verb'OBJ'),
+using classes and objects in our implementation language (Java).
+This can be confusing.
+For example, a \verb'ClassExp' evaluates to an object in Java
+that represents a class in our source language.
+Be sure that you have a clear understanding of the context
+in which the terms ``class'' and ``object'' are being used
+in the following discussion.]
+\end{minipage}

@@ -1,0 +1,29 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf PLCC -- Semantics (continued)}\exx
+As we observed above,
+PLCC automatically generates a Java source file for each of the classes --
+both abstract and non-abstract --
+that are derived from the BNF grammar rules in the syntax section.
+In the semantics section of the language specification file,
+if PLCC encounters an entry of the form
+\begin{qv}
+ClassName
+%%%
+...
+%%%
+\end{qv}
+where \verb'ClassName' stands for a class that is {\em not} one
+of the automatically generated classes,
+then PLCC generates a new file \verb'ClassName.java'
+containing the code bracketed by the `\verb'%%%'' lines.
+This makes it possible for PLCC to generate Java source files
+that can be used to augment the semantics of the language.
+For example, we will use this to implement {\em environments},
+which we describe later.\exx
+In this situation, there is no automatically generated source file,
+so the Java code bracketed by the `\verb'%%%'' lines
+must be a complete Java source file, not just a method.
+\end{minipage}
+\clearpage

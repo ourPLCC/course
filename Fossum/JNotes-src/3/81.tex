@@ -1,0 +1,37 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language V4} (continued)\exx
+Finally, Language V4 includes
+the ability to evaluate a sequence of expressions,
+returning the value of the last expression.
+The component expressions in a sequence expression are always evaluated
+left-to-right.
+Sequence expressions do not have any particular usefulness now
+because our language is not {\em side-effecting},
+but they will turn out to be useful in later languages
+that do support side-effects.\exx
+{\Large
+\emm\begin{tabular}{@{}ll}
+\verb'<exp>:SeqExp' & \verb'::= LBRACE <exp> <seqExps> RBRACE'\\
+  & \VerbBox{\fbox}{\verb'SeqExp(Exp exp, SeqExps seqExps)'}\\
+\verb'<seqExps>' & \verb'**= SEMI <exp>'\\
+  & \VerbBox{\fbox}{\verb'SeqExps(List<Exp> expList)'}\\
+\end{tabular}\exx
+}
+The semantics of evaluating a \verb'SeqExp' are given here:
+{\Large
+\begin{qv}
+SeqExp
+%%%
+    public Val eval(env) {
+        Val v = exp.eval(env);
+        for (Exp e : seqExps.expList)
+            v = e.eval(env);
+        return v;
+    }
+%%%
+\end{qv}
+}
+\end{minipage}
+\clearpage

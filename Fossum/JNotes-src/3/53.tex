@@ -1,0 +1,43 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language V4} (continued)\exx
+In Language V4, procedures are treated as values
+just like integers.
+In particular, we create a \verb'ProcVal' class
+that extends the \verb'Val' class.
+This means that a \verb'ProcVal' object can occur
+anywhere a \verb'Val' object is expected.\exx
+Here is an example of a Language V4 program
+that includes a procedure definition and application.
+\Large
+\begin{qv}
+let
+  f = proc(x) +(x,3)
+in
+  .f(5)
+\end{qv}
+\LARGE
+In Language V4, a procedure definition starts with the \verb'PROC' token,
+and a procedure application starts with a \verb'DOT'.
+It is possible that you can define and apply a procedure in one expression,
+such as
+\Large
+\begin{qv}
+.proc(x) +(x,3) (5)
+\end{qv}
+\LARGE
+Both of these expressions return the same value,
+namely the integer \verb'8'.
+Notice, too, that
+\Large
+\begin{qv}
+proc(x) +(x,3)
+\end{qv}
+\LARGE
+also returns a value, but the value is a procedure, not an integer.
+(One's intent when defining a procedure is eventually to apply it,
+although this is not a requirement.)
+\end{minipage}
+
+\clearpage

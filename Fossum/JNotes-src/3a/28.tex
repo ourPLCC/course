@@ -1,0 +1,19 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language NAME} (continued)\exx
+A thunk amounts to a parameterless procedure
+that consists of an expression and an environment
+in which the expression is to be evaluated.
+It looks just like a closure,
+except that there is no formal parameter list.\exx
+\emm\Large\VerbBox{\fbox}{\verb'ThunkRef(Exp exp, Env env)'}\exx
+\LARGE
+A \verb'ThunkRef' is a \verb'Ref', since we want
+to de-reference (\verb'deRef') it
+whenever we refer to the corresponding actual parameter.
+We bind a formal parameter to a thunk reference
+only during procedure application.
+Thunks will otherwise not play a role in expression semantics.
+\end{minipage}
+\clearpage

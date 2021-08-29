@@ -1,0 +1,28 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Parsers} (continued)\exx
+\LARGE
+\emm\LightBox{\MYlonGrammarOnly}\exx
+PLCC also generates an interactive parser/evaluator
+called \verb'Rep' that resides in the \verb'Java' subdirectory
+along with the \verb'Parse' program.
+\verb'Rep' executes a ``Read-Eval-Print'' loop
+that displays a prompt,
+{\em Reads} program input from standard input,
+{\em Evaluates} (parses) the program,
+and {\em Prints} the result obtained
+from ``running'' the program.
+Normally, this result is a representation
+of the ``value'' of the program's parse tree:
+an instance of the Java class defined
+by the start symbol of the language's BNF grammar.\exx
+How to determine the ``value'' of a parse tree
+is the essence of {\em semantic analysis},
+which we describe in detail
+for each of the languages we consider in these notes.
+In some cases, this value may be just
+a re-cast version of the program text;
+in others, it may be the numeric value of a function application.\exx
+\end{minipage}
+\clearpage

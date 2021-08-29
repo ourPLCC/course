@@ -1,0 +1,119 @@
+ListVal
+%%%
+
+public abstract class ListVal extends Val {
+	
+    public abstract String toStringSep(String sep);
+
+    public ListVal add(Val v) {
+        // System.err.println("adding " + v);
+	return new ListNode(v, this);
+    }
+
+    public ListVal listVal() {
+        return this;
+    }
+
+    public int len() {
+        return 0;
+    }
+
+    public String toString() {
+        return "[" + this.toStringSep("") + "]";
+    }
+
+    public ListVal append(Val v) {
+       // default case where this is empty
+       return v.listVal();
+    }
+
+}
+%%%
+
+ListNode
+%%%
+import java.util.*;
+
+public class ListNode extends ListVal {
+
+    public Val val;
+    public ListVal listVal;
+    public int length;
+    
+    public ListNode(Val val, ListVal listVal) {
+        this.val = val;
+        this.listVal = listVal;
+        length = listVal.len() + 1;
+    }
+    
+    public Env env() {
+        throw new PLCCException("ListVal: no environment");
+    }
+
+    public boolean isList() {
+	return true;
+    }
+
+    public ListNode listNode() {
+        return this;
+    }
+
+    public String putc() {
+	return val.putc() + listVal.putc();
+    }
+
+    public String toStringSep(String sep) {
+        return sep + val + listVal.toStringSep(",");
+    }
+
+    public Val first() {
+        return val;
+    }
+
+    public ListVal rest() {
+        return listVal;
+    }
+
+    public ListVal append(Val v) {
+        return listVal.append(v.listVal()).add(val);
+    }
+
+    public int len() {
+        return length;
+    }
+
+}
+%%%
+
+ListNull
+%%%
+import java.util.*;
+
+public class ListNull extends ListVal {
+
+    public ListNull() {
+    }
+
+    public Env env() {
+        throw new PLCCException("ListVal: no environment");
+    }
+
+    public boolean isList() {
+	return true;
+    }
+
+    public boolean isTrue() {
+        return false;
+    }
+
+    public String putc() {
+	return "";
+    }
+
+    public String toStringSep(String sep) {
+        return "";
+    }
+
+}
+
+%%%

@@ -1,0 +1,18 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Logic Programming Puzzles}\exx
+Consider modifying the puzzle with the additional constraint
+that every crossing has at least one passenger.
+Is there a solution to this variant?
+To determine this, simply remove the \verb'cross' premises
+with an \verb'x' in the passenger slot (see Slide 7.14)
+and see if \verb'path(s0000, s1111)?' returns a result.\exx
+Another variant would have a boat with two places for passengers,
+but the solution in this case would be trivial to see
+``by inspection'', requiring no programming .\exx
+The Prolog language, upon which Datalog (and AbcDatalog) is based,
+has a much richer collection of data structures and operations
+that lends itself to expressing a larger set of problems,
+including those that require the use of lists and numeric operations.
+\end{minipage}

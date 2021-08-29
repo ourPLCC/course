@@ -1,0 +1,40 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language V4} (continued)\exx
+\Large
+\emm\VerbBox{\colorbox{light}}{\begin{tabular}{@{}ll}
+\verb'<exp>:ProcExp' & \verb'::= <proc>'\\
+  & \VerbBox{\fbox}{\verb'ProcExp(Proc proc)'}\\
+\verb'<proc>' & \verb'::= PROC LPAREN <formals> RPAREN <exp>'\\
+  & \VerbBox{\fbox}{\verb'Proc(Formals formals, Exp exp)'}\\
+\verb'<formals>' & \verb'**= <VAR> +COMMA'\\
+  & \VerbBox{\fbox}{\verb'Formals(List<Token> varList)'}\\
+\end{tabular}}\exx
+\LARGE
+The \verb'makeClosure' method in the \verb'Proc' class
+creates a \verb'ProcVal' object given an environment.
+\Large
+\begin{qv}
+Proc
+%%%
+    public Val makeClosure(Env env) {
+        return new ProcVal(formals, exp, env);
+    }
+%%%
+\end{qv}
+\LARGE
+The semantics of the \verb'eval' method
+in the \verb'ProcExp' class is now trivial:
+\Large
+\begin{qv}
+ProcExp
+%%%
+    public Val eval(Env env) {
+        return proc.makeClosure(env);
+    }
+%%%
+\end{qv}
+\end{minipage}
+
+\clearpage

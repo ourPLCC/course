@@ -1,0 +1,33 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Logic Programming}\exx
+We similarly define a relation \verb'rel' on \verb'A' to be {\em symmetric}
+if \verb'rel(x,y)' implies \verb'rel(y,x)'.
+Just like we did for a reflexive closure,
+we can create the {\em symmetric closure} of the relation \verb'rel'
+in the \verb'ABC' language as follows:
+{\Large
+\begin{qv}
+rel(X,Y) :- rel(Y,X).
+\end{qv}
+}
+Finally, we define a relation \verb'rel' on \verb'A' to be {\em transitive}
+if \verb'rel(x,y)' and \verb'rel(y,z)' implies \verb'rel(x,z)'.
+We can create the {\em transitive closure} of the relation \verb'rel'
+in the \verb'ABC' language as follows:
+{\Large
+\begin{qv}
+rel(X,Z) :- rel(X,Y), rel(Y,Z).
+\end{qv}
+}
+Notice that this is exactly what we did
+with the \verb'larger' relation on the planets.\exx
+One can create any one of these closures individually,
+or all of them, if you wish.
+If your resulting relation is reflexive, symmetric, and transitive,
+it is called an {\em equivalence relation},
+an important construct in first-order logic and set theory.\exx
+(Notice that the rule defining the reflexive closure assumes
+that everything in the set \verb'A' is related to {\em something}.)
+\end{minipage}

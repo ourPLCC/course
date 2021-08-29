@@ -1,0 +1,32 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language V0} (continued)\exx
+Observe that this PLCC language specification has all three
+of the parts described in Slide Set 1a:
+the lexical specification section (token specifications), 
+the syntax specification section (given as BNF rules),
+and the semantic specification section (just an \verb'include' line).\exx
+You can consider a grammar rule like
+{\Large
+\begin{qv}
+<program>        ::= <exp>
+\end{qv}
+}
+to mean that ``a \verb'program' consists of an \verb'exp'''
+(where \verb'exp' stands for an ``expression'').
+Similarly, you can consider a grammar rule like
+{\Large
+\begin{qv}
+<exp>:LitExp     ::= <LIT>
+\end{qv}
+}
+to mean that ``a \verb'LitExp' is (an instance of) an expression (an \verb'exp')
+that consists of a \verb'LIT'.''
+Similar remarks apply to all the grammar rules.\exx
+The `\verb'include code'' line at the end of this file
+means that the contents of the file named \verb'code'
+should be inserted into the \verb'grammar' file input stream
+at that point to be processed by PLCC.
+\end{minipage}
+\clearpage

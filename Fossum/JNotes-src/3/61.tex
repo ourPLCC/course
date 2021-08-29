@@ -1,0 +1,26 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language V4} (continued)\exx
+Let's now examine the detailed semantics of a \verb'ProcExp',
+which is used to {\em define} a procedure.\exx
+\Large
+\emm\VerbBox{\colorbox{light}}{\begin{tabular}{@{}ll}
+\verb'<exp>:ProcExp' & \verb'::= <proc>'\\
+  & \VerbBox{\fbox}{\verb'ProcExp(Proc proc)'}\\
+\verb'<proc>' & \verb'::= PROC LPAREN <formals> RPAREN <exp>'\\
+  & \VerbBox{\fbox}{\verb'Proc(Formals formals, Exp exp)'}\\
+\verb'<formals>' & \verb'**= <VAR> +COMMA'\\
+  & \VerbBox{\fbox}{\verb'Formals(List<Token> varList)'}\\
+\end{tabular}}\exx
+\LARGE
+As noted in Slide 3.59,
+a \verb'ProcVal' closure is constructed
+with instance variables consisting of
+the list of formal parameters (a \verb'Formals' object),
+the procedure body (an \verb'Exp' object),
+and the environment in which the procedure is defined
+(an \verb'Env' object).\exx
+\end{minipage}
+
+\clearpage

@@ -1,0 +1,4 @@
+define count = 0
+define p = letprop p = prop set count=add1(count) in p
+define q = let c=0 in letprop q = prop set c=add1(c) in q
+

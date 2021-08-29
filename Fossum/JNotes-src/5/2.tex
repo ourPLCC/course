@@ -1,0 +1,32 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language OBJ}\\
+\vspace{-1ex}\\
+All classes of an \verb'OBJ' program belong to a {\em class hierarchy},
+which is tree structure with an unnamed class at the root of the tree
+and with program-created classes at the other nodes of the tree.\exx
+In the class hierarchy,
+a class \verb'X' that occurs as a child node of class \verb'Y'
+in the class hierarchy
+is called a {\em subclass} of \verb'Y',
+and \verb'Y' is called a {\em superclass} of \verb'X'.
+In this case, we also say that \verb'X' {\em extends} \verb'Y'.\exx
+When an object of class \verb'X' is instantiated,
+instances of each of the classes that lie
+on the path from \verb'X' to the root of the tree
+are created, and the combination of all those instances
+is considered as the resulting object.\exx
+If \verb'Y' is the superclass of \verb'X',
+then an object \verb'x' created from class \verb'X' ``contains''
+an object \verb'y' created from \verb'Y'.
+The object \verb'y' is called the {\em parent} of \verb'x',
+and likewise \verb'x' is called the {\em child} of \verb'y'.\exx
+A class may also have \verb'static' variables
+whose values are shared among all instances of the class.\exx
+If \verb'x' is an object and \verb'f' is a field,
+the expression \verb'<x>f' evaluates to the value bound to \verb'f'
+in object \verb'x'.
+In languages like C++ and Java,
+this would be written instead as \verb'x.f'.
+\end{minipage}

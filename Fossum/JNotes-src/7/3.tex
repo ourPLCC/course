@@ -1,0 +1,31 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Logic Programming}\exx
+Of these, the \verb'PRINT' and \verb'CLEAR' tokens are not part
+of the Harvard implementation of AbcDatalog.\exx
+Here is the grammar specification for the \verb'ABC' language,
+in PLCC format:
+{\Large
+\begin{qv}
+<program>:DFRQ      ::= <head> <dfrq>
+<program>:Print     ::= PRINT
+<program>:Clear     ::= CLEAR
+<dfrq>:Delete       ::= DEL
+<dfrq>:Fact         ::= DOT
+<dfrq>:Rule         ::= IF <conjuncts> DOT
+<dfrq>:Query        ::= QUERY
+<head>              ::= <LIT> LPAREN <args> RPAREN
+<args>              **= <vlw> +COMMA
+<vlw>:Var           ::= <VAR>
+<vlw>:Lit           ::= <LIT>
+<vlw>:WC            ::= US # wildcard
+<conjuncts>         **= <conjunct> +COMMA
+<conjunct>:HeadConj ::= <head>
+<conjunct>:RelConj  ::= <VAR>lh <rel> <vlw>rh
+<conjunct>:NotConj  ::= NOT <head>
+<rel>:EQRel         ::= EQ
+<rel>:NERel         ::= NE
+\end{qv}
+}
+\end{minipage}

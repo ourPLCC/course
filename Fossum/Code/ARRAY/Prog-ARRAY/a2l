@@ -1,0 +1,48 @@
+% turn an array into a list
+define a2l = proc(a)
+  let
+    i = len(a)
+    lst = [] 
+  in
+    while <?(0, i)  do
+      { set i = sub1(i)
+      ; set lst = addFirst(\a[i], lst)
+      }
+    else
+      lst
+
+% turn a list into an array -- this one uses a recursive helper
+define l2a = proc(lst)
+  letrec
+    % insert the elements of lst into the array ary beginning at position loc
+    insert = proc(lst, ary, loc)
+      if lst
+      then {set \ary[loc] = first(lst) ; .insert(rest(lst), ary, add1(loc))}
+      else ary
+  in
+    .insert(lst, array[len(lst)], 0)
+
+% examples
+define m = 10
+define ary = array[m]
+
+% fill a with the squares of the index positions
+let
+  i=0
+in
+  while <?(i,m) do
+    { set \ary[i] = *(i,i)
+    ; set i = add1(i)
+    }
+  else
+    nil
+
+% display ary
+ary
+% convert a to a list
+define lst = .a2l(ary)
+% display lst
+lst
+% convert it back to an array
+.l2a(lst)
+

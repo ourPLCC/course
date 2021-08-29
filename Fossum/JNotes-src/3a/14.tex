@@ -1,0 +1,29 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language REF}\exx
+A parameter passing semantics that evaluates actual parameters
+and that binds the formal parameters
+to these actual parameter values
+is called {\em call-by-value}.
+This is what is used in languages \verb'V1' to \verb'V6'.
+In the language \verb'SET',
+where bindings are to references instead of values,
+the actual parameter values are turned
+into {\em new} references,
+and these references are bound to the formal parameters.\exx
+Considering the illustration in the previous slide,
+Suppose we {\em want} a behavior
+that binds the formal parameter \verb't'
+to the {\em same} reference that is bound to \verb'x'
+instead of a new reference containing a copy.
+The following diagram shows how the bindings
+in the previous diagram change
+when \verb't' is bound to the same reference as verb'x':
+\cfigw{3a.14.eps}{6in}
+Such a parameter passing semantics is called
+{\em call-by-reference}.
+We explore call-by-reference next,
+along with variants on this theme.
+\end{minipage}
+\clearpage

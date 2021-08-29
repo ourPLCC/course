@@ -1,0 +1,37 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Environments} (continued)\exx
+Our environments are implemented as instances
+of a Java abstract class \verb'Env',
+a simple version of which we show here:
+{\large
+\begin{qv}
+public abstract class Env {
+
+    public static final Env empty = new EnvNull();
+
+    public abstract Env add(Binding b);
+
+    public static Env initEnv() {
+        // initial environment with no bindings
+        return new EnvNode(new Bindings(), empty);
+    }
+
+    public abstract Binding lookup(String sym); // only local bindings
+
+    public abstract Val applyEnv(String sym);
+
+    public Val applyEnv(Token tok) {
+        return applyEnv(tok.toString());
+    }
+
+    public Env extendEnv(Bindings bindings) {
+        return new EnvNode(bindings, this);
+    }
+
+}
+\end{qv}
+}
+\end{minipage}
+\clearpage

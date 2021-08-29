@@ -1,0 +1,59 @@
+# class methods
+
+Program
+%%%
+    public static Env initEnv = Env.initEnv();
+
+    public void $run() {
+        System.out.println(exp.eval(initEnv).toString());
+    }
+
+%%%
+
+Exp
+%%%
+    public abstract Val eval(Env env);
+%%%
+
+PrimappExp
+%%%
+
+    public Val eval(Env env) {
+        // evaluate the terms in the expression list
+        // and apply the prim to the array of integer results
+        List<Val> args = rands.evalRands(env);
+        Val [] va = Val.toArray(args);
+        return prim.apply(va);
+    }
+
+%%%
+
+LitExp
+%%%
+
+    public Val eval(Env env) {
+        return new IntVal(lit.toString());
+    }
+
+%%%
+
+VarExp
+%%%
+
+    public Val eval(Env env) {
+        return env.applyEnv(var);
+    }
+
+%%%
+
+Rands
+%%%
+
+    public List<Val> evalRands(Env env) {
+        List<Val> args = new ArrayList<Val>(expList.size());
+        for (Exp e : expList)
+            args.add(e.eval(env));
+        return args;
+    }
+
+%%%

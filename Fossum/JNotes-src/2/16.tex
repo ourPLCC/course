@@ -1,0 +1,31 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Environments} (continued)\\[1.5ex]
+Class/method summary:
+{\Large
+\begin{qv}
+abstract class Env
+    public abstract Binding lookup(String sym)
+    public Val applyEnv(String sym)
+    public Env extendEnv(Bindings bindings)
+    public Env add(Binding b)
+
+class EnvNode extends Env
+    public Binding lookup(String sym)
+
+class EnvNull extends Env
+
+class Bindings
+    public Binding lookup(String sym)
+    public void add(Binding b)
+
+class Binding
+
+abstract class Val
+
+class IntVal extends Val
+\end{qv}
+}
+\end{minipage}
+\clearpage

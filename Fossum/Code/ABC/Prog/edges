@@ -1,0 +1,14 @@
+% some edge relations
+edge(a,b).
+edge(a,c).
+edge(b,d).
+edge(d,c).
+
+% make the edge relation symmetric (so the graph is undirected)
+edge(X,Y) :- edge(Y,X).
+
+% identify the nodes
+node(X) :- edge(X,_).
+node(X) :- edge(_,X).
+
+% nothing is true unless there's a fact or a rule that makes it true!

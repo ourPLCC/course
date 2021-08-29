@@ -1,0 +1,25 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf PLCC -- Hooks (continued)}\exx
+You use the final hook in an automatically-generated Java source file
+to add method definitions (and sometimes field declarations)
+that will be appended to the class definition.
+We have already seen how this is used,
+for example, in Language LON on Slide 1.48,
+which we repeat here:
+{\Large
+\begin{qv}
+Lon
+%%%
+    public void $run() {
+        System.out.print("( ");
+        for (Token tok: nums.numList)
+            System.out.print(tok.toString() + " ");
+        System.out.println(")");
+    }
+%%%
+\end{qv}
+}
+\end{minipage}
+\clearpage

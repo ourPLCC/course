@@ -1,0 +1,51 @@
+GINGER '(?i)ginger'
+BLAH '[A-Za-z\']+'
+NL '\n'
+PUNCT '[-\.,!\? ]'
+skip SKIP '.'
+%
+<whatwesay>   ::= <words> NL
+<words>       **= <word>
+<word>:Blah   ::= BLAH 
+<word>:Ginger ::= GINGER
+<word>:Punct  ::= <PUNCT>
+%
+
+Whatwesay
+%%%
+    public void $run() {
+        System.out.println(words.toString());
+    }
+%%%
+
+Words
+%%%
+    public String toString() {
+        String ret = "";
+        for (Word w : wordList) {
+            ret += w.toString();
+        }
+        return ret;
+    }
+%%%
+
+Blah
+%%%
+    public String toString() {
+        return "blah";
+    }
+%%%
+
+Ginger
+%%%
+    public String toString() {
+        return "Ginger";
+    }
+%%%
+
+Punct
+%%%
+    public String toString() {
+        return punct.toString();
+    }
+%%%

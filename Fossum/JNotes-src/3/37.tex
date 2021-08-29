@@ -1,0 +1,39 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language V2}\exx
+Language V2 is the same as Language V1,
+with the addition of the syntax and semantics of an \verb'if' expression.
+The relevant grammar rule and abstract syntax representation
+are shown here:\exx
+{\Large
+\emm\begin{tabular}{@{}ll}
+\verb'<exp>:IfExp' & \verb'::= IF <exp>testExp THEN <exp>trueExp ELSE <exp>falseExp' \\
+  & \VerbBox{\fbox}{\verb'IfExp(Exp testExp, Exp trueExp, Exp falseExp)'}\\
+\end{tabular}
+}
+
+Notice that we need to add
+token names \verb'IF', \verb'THEN', and \verb'ELSE'
+to our lexical specification,
+along with their obvious regular expressions.\exx
+The RHS of the \verb'IfExp' grammar rule has three occurrences
+of the \verb'<exp>' nonterminal.
+Since the \verb'<exp>' items on the RHS of this grammar rule define
+the instance variables of the class,
+we have named these instance variables
+\verb'testExp', \verb'trueExp', and \verb'falseExp', respectively.
+Each of these objects refers to an instance of the \verb'Exp' class.
+The \verb'IfExp' class has three instance variables:
+{\Large
+\begin{qv}
+Exp testExp;
+Exp trueExp;
+Exp falseExp;
+\end{qv}
+}
+[{\bf Exercise} (not to hand in):
+See what would happen if you used `\verb'<IF>''
+in the RHS of this grammar rule instead of `\verb'IF''.]
+\end{minipage}
+\clearpage

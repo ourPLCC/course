@@ -1,0 +1,21 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language TYPE1} (continued)\exx
+\Large
+\Large
+The \verb'Rands' object must define
+the \verb'evalTypeRands' method, which is straight-forward.
+Notice that this is where static scope rules come into play:
+in a \verb'let' expression, the types of the RHS expressions
+are evaluated in the enclosing type environment, \verb'tenv'.
+\begin{qv}
+public List<Type> evalTypeRands(TypeEnv tenv) {
+    List<Type> typeList = new ArrayList<Type>();
+    for (Exp e : expList)
+        typeList.add(e.evalType(tenv));
+    return typeList;
+}
+\end{qv}
+        
+\end{minipage}

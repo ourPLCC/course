@@ -1,0 +1,13 @@
+define o =
+  new
+    class
+      static x = 3
+      property x = prop 11 : nil
+      property y = prop 4 : nil
+    end
+<o>set x=17
+<o>set y=92
+<o>x
+<o>y
+<<o>myclass>x
+<<o>myclass>y

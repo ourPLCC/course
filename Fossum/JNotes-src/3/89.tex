@@ -1,0 +1,37 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language V5} (continued)\exx
+\large
+This picture illustrates the three steps
+carried out in \verb'addLetrecBindings',
+for the following \verb'letrec' example:
+\begin{qv}
+letrec
+    x = 5 
+    f = proc(t) *(t,x)
+in
+    .f(42)
+\end{qv}
+\begin{enumerate}
+\item [0.] Create a new environment \verb'nenv'
+      by extending the old environment with an empty list of bindings;
+\item Create a \verb'Binding' of each LHS identifier
+      (\verb'x' and \verb'f' in this example)
+      to the value of its corresponding RHS expression
+      (5 and \verb'proc(t)...' in this example) --
+      where each expression is evaluated
+      in the environment \verb'nenv' --
+      and add this binding to \verb'nenv'.
+\item Once all of the (LHS, RHS) bindings have been added to \verb'nenv',
+      return \verb'nenv' as the value of \verb'addLetrecBindings'.
+\end{enumerate}
+Observe that the environment captured by procedure \verb'f'
+knows about the binding of \verb'x' to \verb'5',
+so the \verb'letrec' expression evaluates to 210.
+If this had been a \verb'let' instead of a \verb'letrec',
+the \verb'x' in the body of \verb'f' would be unbound.
+{\center\ \psfig{figure=letrec-steps.eps,width=.6\textwidth}\ \\}
+
+\end{minipage}
+\clearpage

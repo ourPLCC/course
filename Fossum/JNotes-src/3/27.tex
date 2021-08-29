@@ -1,0 +1,33 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language V1} (continued)\exx
+Three classes extend the \verb'Exp' class: they are
+\verb'LitExp', \verb'VarExp', and \verb'PrimappExp'.
+We'll start with \verb'LitExp'.
+Here is the code part of the grammar file
+that defines the \verb'eval' behavior of a \verb'LitExp' object.
+The \verb'eval' behavior coexists with the \verb'toString' behavior
+that we defined in Language V0:
+\begin{qv}
+LitExp
+%%%
+    public Val eval(Env env) {
+        return new IntVal(lit.toString());
+    }
+%%%
+\end{qv}
+Remember that a \verb'LitExp' has a \verb'Token' field named \verb'lit'.
+When we apply the \verb'toString()' method to this field,
+we get the string of decimal digits
+that came from the part of the program text we are parsing.
+The \verb'IntVal' constructor converts this into a real Java \verb'int'
+that becomes part of the \verb'IntVal' instance.
+Obviously an environment doesn't have anything to do
+with the value of a numeric literal --
+a literal \verb'10' evaluates to the integer value 10
+no matter what environment you have --
+so the \verb'eval' routine for a \verb'LitExp'
+simply returns the appropriate \verb'IntVal' object.
+\end{minipage}
+\clearpage

@@ -1,0 +1,38 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language NAME}\exx
+We now turn to a different parameter passing mechanism,
+{\em call-by-name}.
+In call-by-name procedure application,
+we bind each procedure's formal parameter
+to its corresponding {\em un-evaluated actual parameter expression}.
+Each time we reference a formal parameter in the procedure body,
+we evaluate its corresponding actual parameter expression
+{\em in the environment where the procedure was called}
+-- the {\em calling environment},
+and this value becomes the expressed value of the formal parameter.\exx
+Call-by-name has behaviors that differ from call-by-reference:
+(1)
+if we never reference the formal parameter in the procedure body,
+we never evaluate the actual parameter expression; and
+(2)
+every time we evaluate the formal parameter in the procedure body,
+we re-evaluate the actual parameter expression.\exx
+In the presence of side-effects, call-by-name has interesting
+properties that make it very powerful
+but often difficult to reason about.
+The language ALGOL 60 had call-by-value and call-by-name
+as its parameter passing mechanisms.
+ALGOL 60 had its greatest influence on languages
+such as Pascal, C/C++, and Java.
+Although call-by-name has been all but abandoned
+by modern imperative (side-effecting) programming languages --
+mostly because of its inefficiency,
+it still plays a role in functional programming:
+Scheme supports a variant, {\em call-by-need},
+by means of \verb'promise/force';
+Haskell also supports call-by-need.
+We proceed to implement both call-by-name and call-by-need.
+\end{minipage}
+\clearpage

@@ -1,0 +1,39 @@
+define listIterator =
+  class
+    field y   % the current list element, or nil if list is exhausted
+    field ys  % the rest of the list, or nil if list is exhausted
+    method setFields = proc(xs)
+      if xs
+      then { set y = first(xs) ; set ys = rest(xs) }
+      else { set y = nil ; set ys = nil }
+    method init = proc(xs)
+      { .setFields(xs) ; this }
+    method hasNext = proc()
+      % { putc "hasNext: " ; display y ; newline ; y }
+      y
+    method next = proc()
+      let
+        yy = y
+      in
+        { .setFields(ys) ; yy }
+  end
+
+% iterate through the items, and apply p to each non-nil element
+define iterate = proc(iter, p)
+  if .<iter>hasNext()
+  then 
+   let
+     y = .<iter>next()
+   in
+     { .p(y) ; .iterate(iter, p) }
+  else nil
+
+define iter = .<new listIterator>init([5,3,4,6,8,1,2])
+define p =
+  let
+    sum = 0
+  in
+    proc(y) set sum = +(sum,y) 
+.iterate(iter, p)
+.p(0) % retrieve the sum
+

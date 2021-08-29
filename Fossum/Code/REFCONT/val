@@ -1,0 +1,100 @@
+Val
+%%%
+import java.util.*;
+
+public abstract class Val {
+
+    public static Val [] toArray(List<Val> valList) {
+        int n = valList.size();
+        return valList.toArray(new Val[n]);
+    }
+
+    public IntVal intVal() {
+        throw new PLCCException(this + ": not an int");
+    }
+
+    // everything defaults to true except for an IntVal of zero
+    public boolean isTrue() {
+        return true;
+    }
+
+    public ProcVal procVal() {
+        throw new PLCCException(this + ":not a proc");
+    }
+}
+%%%
+
+IntVal
+%%%
+import java.util.*;
+
+public class IntVal extends Val {
+
+    public int val;
+    
+    public IntVal(String s) {
+        val = Integer.parseInt(s);
+    }
+    
+    public IntVal(int v) {
+        val = v;
+    }
+
+    public IntVal intVal() {
+        return this;
+    }
+    
+    public boolean isTrue() {
+        return val != 0;
+    }
+    
+    public String toString() {
+        return "" + val;
+    }
+
+}
+
+%%%
+
+ProcVal
+%%%
+import java.util.*;
+
+public class ProcVal extends Val {
+
+    public Formals formals;
+    public Exp body;
+    public Env env;
+
+    public ProcVal(Formals formals, Exp body, Env env) {
+        this.formals = formals;
+        this.body = body;
+        this.env = env;
+    }
+
+    public ProcVal procVal() {
+        return this;
+    }
+
+    public ACont apply(List<Ref> refList, VCont vcont) {
+        Env env = this.env; // local copy of the captured environment
+        List<Token> varList = formals.varList;
+        if (refList.size() != varList.size())
+            throw new PLCCException("formal/actual parameter mismatch");
+        if (varList.size() > 0) {
+            Bindings bindings = new Bindings(varList, refList);
+            env = env.extendEnvRef(bindings);
+        }
+        return new EvalCont(body, env, vcont);
+    }
+
+    public boolean isTrue() {
+        return true;
+    }
+
+    public String toString() {
+        return "proc(" + formals + ")";
+    }
+}
+
+%%%

@@ -1,0 +1,32 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Types} (continued)\exx
+Notice that static scope rules make it possible to determine
+the types of variables that appear free in a procedure body --
+in other words, variables that do not appear
+as procedure formal parameters.\exx
+Numeric literals all have type \verb'int'.
+We predefine the identifiers \verb'true' and \verb'false'
+to have type \verb'bool',
+with the obvious semantics
+in test expressions of \verb'if...' expressions.\exx
+The type of a \verb'let' or \verb'letrec' expression
+is the type of the expression's body.\exx
+Observe that the expressed value
+of the \verb'testExp' in an \verb'IfExp'
+can no longer be an \verb'IntVal',
+so an expression like
+{\Large
+\begin{qv}
+if 0 then 3 else 4
+\end{qv}
+}
+that we have seen in Language SET
+won't work in our typed language.\exx
+Since the type of a variable is determined by static scope rules,
+the only ``interesting'' types are those of procedures.
+We need to add syntax rules for procedure definitions
+that permit us to declare
+the types of its formal parameters and its return type.
+\end{minipage}

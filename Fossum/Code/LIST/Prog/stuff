@@ -1,0 +1,47 @@
+define foldr = proc(f, z, xs)
+  if xs
+  then .f(first(xs), .foldr(f, z, rest(xs)))
+  else z
+
+define foldl = proc(f, z, xs)
+  if xs
+  then .foldl(f, .f(z, first(xs)), rest(xs))
+  else z
+
+define compose = proc(f, g)
+  proc(t) .f(.g(t))
+
+define plus1 = proc(t) add1(t)
+define add = proc(t, u) +(t,u)
+define cons = proc(x, xs) addFirst(x, xs)
+
+define append = proc(xs, ys)
+  if xs
+  then addFirst(first(xs), .append(rest(xs), ys))
+  else ys
+
+define flip = proc(g)
+  proc(t,u) .g(u, t)
+
+define map = proc(f, xs)
+  .foldr(proc(t, xs) .cons(.f(t), xs), [], xs)
+
+define reverse = proc(xs)
+  .foldl(.flip(cons), [], xs) 
+
+define zip = proc(f, xs, ys)
+  if xs
+  then addFirst(.f(first(xs), first(ys)), .zip(f, rest(xs), rest(ys)))
+  else []
+
+define filter = proc(f, xs)
+  if xs
+  then
+    let
+      x = first(xs)
+      ys = .filter(f, rest(xs))
+    in
+      if .f(x)
+        then addFirst(x, ys)
+        else ys
+  else []

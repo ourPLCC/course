@@ -1,0 +1,35 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Tokens} (continued)\exx
+The \verb'printTokens()' method in the \verb'Scan' class
+produces the output described on the previous slide.
+Here is the code for this method:
+{\Large
+\begin{qv}
+public void printTokens() {
+    while (hasNext()) {
+        Token t = next();
+        String s;
+        switch(t.match) {
+        case $ERROR:
+            s = t.str;
+            break;
+        default:
+            s = String.format("%s '%s'", t.match.toString(), t.str);
+        }
+        System.out.println(String.format("%4d: %s", lno, s));
+    }
+}
+\end{qv}
+}
+Running \verb'plccmk'
+in the directory containing the \verb'grammar' file
+generates Java source files
+in the \verb'Java' directory and compiles them.
+You can then run the \verb'Scan' program as follows:
+\begin{qv}
+java -cp Java Scan
+\end{qv}
+\end{minipage}
+\clearpage

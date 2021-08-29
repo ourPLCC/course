@@ -1,0 +1,26 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language V1} (continued)\exx
+Here is the new \verb'$run()' method for the \verb'Program' object,
+along with the definition
+of the initial environment \verb'initEnv' in the \verb'Program' class:
+{\Large
+\begin{qv}
+Program
+%%%
+    public static Env initEnv = Env.initEnv();
+
+    public void $run() {
+        System.out.println(exp.eval(initEnv).toString());
+    }
+%%%
+\end{qv}
+}
+To test this, run the \verb'Rep' program in the \verb'Java' subdirectory
+and enter expressions at the prompt:
+\begin{qv}
+java -cp Java Rep
+\end{qv}
+\end{minipage}
+\clearpage

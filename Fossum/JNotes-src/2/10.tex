@@ -1,0 +1,31 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Environments} (continued)\exx
+An empty environment is an instance of the class \verb'EnvNull'.
+An \verb'EnvNull' object has no fields.
+The \verb'lookup' method in the \verb'EnvNull' class returns \verb'null'
+(no \verb'Binding' can be found in the empty environment),
+and the \verb'applyEnv' method in this class throws a \verb'PLCCException'.
+{\Large
+\begin{qv}
+public class EnvNull extends Env {
+
+    // create an empty environment
+    public EnvNull() {
+    }
+
+    // find the Val corresponding to a given id
+    public Val applyEnv(String sym) {
+        throw new PLCCException("no binding for "+sym);
+    }
+
+    public Binding lookup(String sym) {
+        return null;
+    }
+
+}
+\end{qv}
+}
+\end{minipage}
+\clearpage

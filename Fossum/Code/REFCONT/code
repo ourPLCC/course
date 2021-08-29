@@ -1,0 +1,302 @@
+# class methods
+
+Program
+%%%
+    public static Env env = Env.initEnv(); // the initial environment
+%%%
+
+Define
+%%%
+    // notice that calling $run() triggers a modification
+    // of the initial environment
+    public void $run() {
+        String id = var.toString();
+        Env env = Program.env;
+        Val val = exp.eval(env);
+        Ref ref = new ValRef(val);
+        Binding b = env.lookup(id);
+        if (b != null)
+            b.ref = ref;
+        else
+            env.add(new Binding(id, ref));
+        System.out.println(id);
+    }
+%%%
+
+Eval
+%%%
+    public void $run() {
+        Val val = exp.eval(env);
+        System.out.println(val);
+    }
+%%%
+
+Exp
+%%%
+
+    // default value semantics
+    public Val eval(Env env) {
+        ACont acont = new EvalCont(this, env, new HaltCont());
+        Val val = acont.trampoline();
+        return val;
+    }
+
+    // default reference semantics (for all but VarExps)
+    public Ref evalRef(Env env) {
+        Val val = this.eval(env);
+        return new ValRef(val);
+    }
+    
+    // value continuation evaluation for expressions semantics
+    public abstract ACont eval(Env env, VCont vcont);
+
+    // default reference continuation evaluation semantics for references
+    public ACont evalRef(Env env, RCont rcont) {
+        return new EvalCont(this, env, new ValToRefCont(rcont));
+    }
+
+%%%
+
+PrimappExp
+%%%
+
+    public ACont eval(Env env, VCont vcont) {
+        List<Val> valList = rands.evalRands(env); 
+        int size = valList.size();
+        Val [] valArray = valList.toArray(new Val[size]);
+        Val val = prim.apply(valArray);
+        return new ValCont(val, vcont);
+    }
+
+    public String toString() {
+        return " ...Primapp... ";
+    }
+
+%%%
+
+LitExp
+%%%
+
+    public ACont eval(Env env, VCont vcont) {
+        return new ValCont(new IntVal(lit.str), vcont);
+    }
+
+    public String toString() {
+        return lit.str;
+    }
+
+%%%
+
+IfExp
+%%%
+    public ACont eval(Env env, VCont vcont) {
+        return new EvalCont(testExp,
+                            env,
+                            new IfCont(trueExp, falseExp, env, vcont));
+    }
+
+    public String toString() {
+        return " ...If... ";
+    }
+%%%
+
+VarExp
+%%%
+
+    public ACont eval(Env env, VCont vcont) {
+        // System.out.print(".");
+        return new ValCont(env.applyEnv(var.str), vcont);
+    }
+
+    public ACont evalRef(Env env, RCont rcont) {
+        // System.out.print(".");
+        return new RefCont(env.applyEnvRef(var.str), rcont);
+    }
+
+    // reference semantics for variables
+    public Ref evalRef(Env env) {
+        return env.applyEnvRef(var.str);
+    }
+
+    public String toString() {
+        return var.str;
+    }
+
+%%%
+
+LetExp
+%%%
+
+    public ACont eval(Env env, VCont vcont) {
+        env = letDecls.addBindings(env);
+        return new EvalCont(exp, env, vcont);
+    }
+
+    public String toString() {
+        return " ...Let... ";
+    }
+
+%%%
+
+SetExp
+%%%
+
+    public ACont eval(Env env, VCont vcont) {
+        // don't actually modify the binding yet
+        Ref ref = env.applyEnvRef(var.toString());
+        return new EvalCont(exp, env, new SetCont(ref, vcont));
+    }
+
+    public String toString() {
+        return " ...Set... ";
+    }
+%%%
+
+LetrecExp
+%%%
+
+    public ACont eval(Env env, VCont vcont) {
+        Env nenv = letDecls.addLetrecBindings(env);
+        return new EvalCont(exp, nenv, vcont);
+    }
+
+    public String toString() {
+        return " ...Letrec... ";
+    }
+%%%
+
+ProcExp
+%%%
+
+    public ACont eval(Env env, VCont vcont) {
+        return vcont.apply(proc.makeClosure(env));
+    }
+
+    public String toString() {
+        return " ...Proc... ";
+    }
+%%%
+
+AppExp
+%%%
+
+    public ACont eval(Env env, VCont vcont) {
+        return new EvalCont(exp, env, new AppCont(rands, env, vcont));
+    }
+
+    public String toString() {
+        return " ...App... ";
+    }
+
+%%%
+
+SeqExp
+%%%
+
+    public ACont eval(Env env, VCont vcont) {
+        List<Exp> expList = seqExps.expList;
+        if (expList.size() > 0)
+            return new EvalCont(exp,
+                                env,
+                                new SequenceCont(expList, env, vcont));
+        // if only one expression, just evalulate it
+        return new EvalCont(exp, env, vcont);
+    }
+
+    public String toString() {
+        return " ...Seq... ";
+    }
+
+%%%
+
+Formals:init
+%%%
+        // check for duplicates during parsing
+        Env.checkDuplicates(varList, " in proc formals");
+%%%
+
+Proc
+%%%
+    public Val makeClosure(Env env) {
+        return new ProcVal(formals, exp, env);
+    }
+%%%
+
+LetDecls:init
+%%%
+        // check for duplicates during parsing
+        Env.checkDuplicates(varList, " in let/letrec LHS identifiers");
+%%%
+
+LetDecls
+%%%
+    public Env addBindings(Env env) {
+        if (varList.size() > 0) {
+            Rands rands = new Rands(expList);
+            List<Val> valList = rands.evalRands(env);
+            Bindings bindings = new Bindings(varList, Ref.valsToRefs(valList));
+            env = env.extendEnvRef(bindings);
+        }
+        return env;
+    }
+
+    public Env addLetrecBindings(Env env) {
+        Env nenv = env.extendEnvRef(new Bindings());
+        Iterator<Token> varIter = varList.iterator();
+        Iterator<Exp> expIter = expList.iterator();
+        while (varIter.hasNext()) {
+            String str = varIter.next().toString();
+            Val val = expIter.next().eval(env);
+            Ref ref = new ValRef(val);
+            env.add(new Binding(str, ref));
+        }
+        return nenv;
+    }
+
+    public String toString() {
+        return " ...LetDecls... ";
+    }
+%%%
+
+Rands
+%%%
+
+    public List<Val> evalRands(Env env) {
+        List<Val> valList = new ArrayList<Val>(expList.size());
+        for (Exp exp : expList)
+            valList.add(exp.eval(env));   
+        return valList;
+    }
+
+    public List<Ref> evalRandsRef(Env env) {
+        List<Ref> refList = new ArrayList<Ref>(expList.size());
+        for (Exp exp : expList)
+            refList.add(exp.evalRef(env));
+        return refList;
+    }
+
+
+    public String toString() {
+        String s = "";   // the string to return
+        String sep = ""; // no separator for the first expression
+        // get all of the expressions in the expression list
+        for (Exp e : expList) {
+            s += sep + e;
+            sep = ",";   // commas separate the rest of the expressions
+        }
+        return s;
+    }
+%%%
+
+Formals
+%%%
+    public String toString() {
+        String s = "";
+        String sep = "";
+        for (Token tok : varList) {
+            s += sep + tok;
+            sep = ",";
+        }
+        return s;
+    }
+%%%

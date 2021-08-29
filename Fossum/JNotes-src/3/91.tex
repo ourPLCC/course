@@ -1,0 +1,27 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language V6}\exx
+So far, our source language has no capability to define top-level
+variables that persist from one expression evaluation to another.
+A {\em top-level} variable is one that has a binding
+in the initial (``top-level'') environment.
+We would like to extend our languages to allow for such definitions.
+All we need to do is to add bindings
+to the {\em initial environment}, the environment that all expressions
+in the source language extend from.\exx
+The initial environment of our languages
+is a \verb'static Env env' variable in the \verb'Program' class,
+obtained from the \verb'initEnv' static method
+in the \verb'Env' class.
+Notice that this initial (top-level) environment starts out having
+an empty list of bindings.\exx
+Our strategy for making top-level definitions is
+to take advantage of the \verb'add' method in the \verb'Env' class.
+To add a new top-level definition,
+we create a \verb'Binding' object and add it
+to the top-level \verb'Env' object.
+Once we add bindings in this way, these bindings will be known
+in any subsequent expression evaluation that uses the initial environment.
+\end{minipage}
+\clearpage

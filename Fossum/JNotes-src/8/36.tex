@@ -1,0 +1,40 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Exception Handling} (continued)\exx
+When an exception is thrown --
+always by name, and never anonymously --
+the name is looked up in the exception environment
+and the handler is applied,
+returning its value to its saved continuation instead
+of the continuation in which the exception is thrown:
+\large
+\begin{qv}
+ThrowExp
+%%%
+    public ACont eval(Env env, Env xenv, Cont vcont) {
+        HandlerVal handler =
+            xenv.applyEnv(var.toString()).handlerVal();
+        return handler.apply(rands.expList, env, xenv,
+                             handler.xenv, handler.vcont);
+    }
+%%%
+\end{qv}
+\LARGE
+Notice that evaluating the handler's actual parameters
+or its body
+may result in throwing additional exceptions,
+which can result in a cascade
+of exception handling, as shown on the following slide.
+Notice, too, that when the handler body is evaluated,
+its exception environment is the one
+in which the \verb'catch' expression is evaluated.
+This means if an exception is thrown
+when evaluating a handler body,
+its handler is searched for outside
+of the \verb'catch' expression handlers named in the expression.
+If evaluating an expression results
+in a \verb'throw' that refers to a handler name
+that is not in the current exception environment,
+the value of the expression is undefined.
+\end{minipage}

@@ -1,0 +1,24 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Environments} (continued)\exx
+A nonempty environment is an instance of the class \verb'EnvNode'.
+An \verb'EnvNode' object has two fields:
+a \verb'Bindings' object named \verb'bindings' that holds the local bindings
+and an \verb'Env' object named \verb'env' that refers
+to an enclosing (in the sense of static scope rules) environment.\exx
+In the \verb'EnvNode' class,
+making a call to \verb'lookup' for a symbol always means
+looking for it in the local bindings.\exx
+When we call \verb'applyEnv' in the \verb'EnvNode' class,
+we search for the symbol in the local bindings using \verb'lookup':
+\begin{itemize}
+\item if that returns a non-\verb'null' \verb'Binding' object,
+    \verb'applyEnv' returns the \verb'Val' field in the \verb'Binding'.
+\item if that returns \verb'null',
+    \verb'applyEnv' returns the result
+    of calling \verb'applyEnv' (recursively) on the enclosing environment.
+\end{itemize}
+The \verb'EnvNode' class is given on the following slide.
+\end{minipage}
+\clearpage

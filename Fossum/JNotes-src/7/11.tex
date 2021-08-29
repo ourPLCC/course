@@ -1,0 +1,35 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Logic Programming Puzzles}\exx
+For example, in the first river crossing
+(starting from state \verb's0000'),
+the farmer takes the boat and the goose
+from the starting side to the ending side.
+We represent this in the \verb'ABC' language by the following fact:
+\begin{qv}
+cross(s0000, g, s1010). % carry the goose in the boat
+\end{qv}
+You can see that this is the {\em only} legal crossing
+starting from the initial state \verb's0000'.
+We use the letter \verb'x' to mean a river crossing
+with no ``passenger'' in the boat.\exx
+Observe that for every legal crossing of the form
+\begin{qv}
+cross(s0..., ?, s1...).
+\end{qv}
+(where the \verb'?' can be any of \verb'fgcx')
+with the boat (and farmer) going from the starting side
+to the ending side of the river,
+there is a corresponding legal crossing of the form
+\begin{qv}
+cross(s1..., ?, s0...).
+\end{qv},
+and {\em vice versa}.
+This means that we need only consider the legal crossings
+where the boat is on the starting side of the river,
+and use the following rule to generate the others:
+\begin{qv}
+cross(X, P, Y) :- cross(Y, P, X).
+\end{qv}
+\end{minipage}

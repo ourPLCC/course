@@ -1,0 +1,32 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language OBJ} (continued)\exx
+Although counter-intuitive,
+objects are actually simpler than classes,
+because an object is essentially a wrapper
+for an instance of \verb'Env'!\exx
+An \verb'ObjectVal' is a Java class
+that extends the \verb'Val' class.
+It has a single instance variable:
+\begin{qv}
+    public Env objectEnv;
+\end{qv}
+The \verb'new' operator in our source language
+takes a class expression and returns
+a Java \verb'ObjectVal' instance
+that essentially couples the \verb'static' bindings of the class
+with bindings for the class fields and methods.\exx
+Since our language does not define
+an explicit constructor in class expressions,
+we initially bind object fields to (a reference to) \verb'nil'.\exx
+The method variable names in the class definition are bound
+to procedure closures that capture the environment
+that includes bindings for the class \verb'static' variables
+(from the \verb'staticBindings' field), 
+along with bindings for the fields as described above.
+The method closures are created as in \verb'letrec',
+so they can refer to themselves recursively.
+As with static and field definitions,
+we disallow duplicate method variable names.
+\end{minipage}

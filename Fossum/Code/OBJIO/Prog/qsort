@@ -1,0 +1,34 @@
+% returns a new list keeping only those elements of the original list
+% whose falue of f is true
+define filter = proc(f, xs)
+  if xs 
+  then
+    let
+      y = first(xs)
+      ys = .filter(f,rest(xs))
+    in
+      if .f(y)
+      then cons(y, ys)
+      else ys
+  else
+    []
+
+%          | <0 if x<y
+% f(x,y) = { =0 if x=y
+%          | >0 if x>y
+define qsort = proc(f, xs)
+  if xs
+  then
+    let
+      y = first(xs) % pivot
+      ys = rest(xs)
+    in
+      let
+        lt = .qsort(.filter(proc(t,y) <?(.f(t,y),0), ys))
+        ge = .qsort(.filter(proc(t,y) >=?(.f(t,y),0), ys))
+      in
+        append(lt, cons(y, ge))
+  else
+    []
+
+.qsort(proc(x,y) -(x,y), [5,3,4,2,6,8,7])

@@ -1,0 +1,33 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language TYPE0}\exx
+We define a language named \verb'TYPE0'
+that is based on the \verb'SET' language
+and that implements type syntax.
+We first require that a procedure definition --
+in the \verb'<proc>' grammar rule --
+declare the types of each of its formal parameters
+and the return type of the procedure.
+Each of these declarations are given by a type expression,
+described earlier,
+in the following grammar rules related to a \verb'<proc>'.
+Notice that these grammar rules are similar
+to the original grammar rules for the \verb'SET' language,
+with the exception that they include type declarations.\exx
+\Large
+\emm\begin{tabular}{ll}
+\verb'<proc>' & \verb'::= PROC LPAREN <formals> RPAREN COLON <typeExp> <exp>'\\
+    & \VerbBox{\fbox}{\verb'Proc(Formals formals, TypeExp typeExp, Exp exp)'}\\
+\verb'<formals>' & \verb'**= <VAR> COLON <typeExp> +COMMA' \\
+    & \VerbBox{\fbox}{\verb'Formals(List<Token> varList, List<TypeExp> typeExpList)'}\\
+\end{tabular}\exx
+\LARGE
+These changes do {\em not} affect
+the behavior of the \verb'eval' methods
+that define the semantics of the \verb'SET' language.
+Thus the resulting \verb'TYPE0' language has the same semantics
+as the \verb'SET' language,
+except for the presence of \verb'bool' values:
+the type information in a program is simply ignored.
+\end{minipage}

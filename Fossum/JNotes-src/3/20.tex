@@ -1,0 +1,36 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language V0} (continued)\exx
+To finish our implementation,
+we show how to implement the \verb'toString()' method
+for an \verb'Exp' object so that it returns
+a \verb'String' representation of itself.\exx
+There are three \verb'Exp' classes:
+\verb'LitExp', \verb'VarExp', and \verb'PrimappExp'.
+Defining a \verb'toString()' method
+for the first two classes is particularly easy,
+since they both have right-hand sides
+that are just token strings:
+their \verb'toString' methods simpy return
+the \verb'String' value of the corresponding \verb'Token' instance variables
+(see Slide 3.7):
+{\Large
+\begin{qv}
+LitExp
+%%%
+    public String toString() {
+        return lit.toString();
+    }
+%%%
+
+VarExp
+%%%
+    public String toString() {
+        return var.toString();
+    }
+%%%
+\end{qv}
+}
+\end{minipage}
+\clearpage

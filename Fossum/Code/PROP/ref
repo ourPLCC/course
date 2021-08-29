@@ -1,0 +1,118 @@
+Ref
+%%%
+import java.util.*;
+
+public abstract class Ref {
+
+    public static List<Ref> valsToRefs(List<Val> valList) {
+        List<Ref> refList = new ArrayList<Ref>(valList.size());
+        for (Val v : valList)
+            refList.add(new ValRef(v));
+        return refList;
+    }
+
+    public abstract Val deRef();
+    public abstract Val setRef(Val v);
+}
+
+%%%
+
+ValRef
+%%%
+
+public class ValRef extends Ref {
+
+    public Val val;
+
+    public ValRef(Val val) {
+        this.val = val;
+    }
+
+    public Val deRef() {
+        return val;
+    }
+
+    public Val setRef(Val v) {
+        return val = v;
+    }
+
+    public String toString() {
+        return val.toString();
+    }
+
+}
+
+%%%
+
+ROPropRef
+%%%
+import java.util.*;
+
+public class ROPropRef extends Ref {
+
+    public Exp get;
+    public Env env;
+
+    public ROPropRef(Exp get, Env env) {
+        this.get = get;
+        this.env = env;
+    }
+
+    public Env env() {
+        return env;
+    }
+
+    public Val deRef() {
+        return get.eval(env);
+    }
+
+    public Val setRef(Val v) {
+        throw new PLCCException("cannot modify a read-only value");
+    }
+
+    public String toString() {
+        return "prop";
+    }
+        
+}
+%%%
+
+RWPropRef
+%%%
+import java.util.*;
+
+public class RWPropRef extends Ref {
+
+    public Exp get;
+    public Exp set;
+    public Env env;
+
+    public RWPropRef(Exp get, Exp set, Env env) {
+        this.get = get;
+        this.set = set;
+        this.env = env;
+    }
+
+    public Env env() {
+        return env;
+    }
+
+    public String toString() {
+        return "prop";
+    }
+
+    public Val deRef() {
+        return get.eval(env);
+    }
+
+    public Val setRef(Val v) {
+        Bindings bindings = new Bindings();
+        Binding b = new Binding("$", new ValRef(v));
+        bindings.add(b);
+        Env nenv = env.extendEnvRef(bindings);
+        return set.eval(nenv);
+    }
+        
+}
+
+%%%

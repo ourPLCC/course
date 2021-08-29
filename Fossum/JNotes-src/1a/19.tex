@@ -1,0 +1,35 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf PLCC -- Semantics (continued)}\exx
+To get a behavior different from this default behavior,
+the \verb'$run()' method can be redefined
+in the start symbol class or any of its subclasses.
+For example, the \verb'$run()' method may be redefined
+in the \verb'Tree' class so that
+it displays a more human-readable \verb'toString' representation of the object
+than the somewhat uninformative default representation.
+Here is code for the \verb'$run()' method in the \verb'Tree' class
+that redefines this behavior:
+{\Large
+\begin{qv}
+    public void $run() {
+       System.out.println("Tree: " + this.toString());
+    }
+\end{qv}
+}
+Since the \verb'Tree' class appears more than once on the LHS of the grammar rules,
+each derived class \verb'Leaf' and \verb'Interior' can define
+its respective \verb'toString' method.\exx
+For example, the \verb'Leaf' class has a field \verb'num'
+of type \verb'Token'.
+The \verb'toString' method in this class can be easily written as follows:
+{\Large
+\begin{qv}
+public String toString() {
+    return num.toString();
+}
+\end{qv}
+}
+\end{minipage}
+\clearpage

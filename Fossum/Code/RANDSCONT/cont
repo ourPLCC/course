@@ -1,0 +1,321 @@
+ContException
+%%%
+public class ContException extends PLCCException {
+
+    public Val val;
+
+    public ContException(Val val) {
+        super("Continuation Exception");
+        this.val = val;
+    }
+
+    public String toString() {
+        return val.toString();
+    }
+
+}
+%%%
+
+Cont
+%%%
+import java.util.*;
+
+public abstract class Cont {
+
+    // these methods are defined in subclasses
+
+    public Cont apply(Val val) {
+        throw new PLCCException("cannot apply " + this + " to a Val");
+    }
+
+    public Cont apply() {
+        throw new PLCCException("cannot apply " + this);
+    }
+
+    public Val trampoline() {
+        Cont cont = this;
+        while(true)
+	    try {
+		cont = cont.apply();
+	    } catch (ContException e) {
+		return e.val;
+	    }
+    }
+
+    public String toString() {
+        return "Cont";
+    }
+
+}
+%%%
+
+ValCont
+%%%
+public class ValCont extends Cont {
+
+    public Val val;
+    public Cont cont;
+
+    public ValCont(Val val, Cont cont) {
+        this.val = val;
+        this.cont = cont;
+    }
+
+    public Cont apply() {
+        return cont.apply(val);
+    }
+
+    public String toString() {
+        return "ValCont";
+    }
+
+}
+%%%
+
+HaltCont
+%%%
+public class HaltCont extends Cont {
+
+    public Cont apply(Val val) {
+        throw new ContException(val);
+    }
+
+    public String toString() {
+        return "HaltCont";
+    }
+
+}
+%%%
+
+EvalCont
+%%%
+public class EvalCont extends Cont {
+
+    public Exp exp;
+    public Env env;
+    public Cont cont;
+
+    public EvalCont(Exp exp, Env env, Cont cont) {
+        this.exp = exp;
+        this.env = env;
+        this.cont = cont;
+    }
+
+    public Cont apply() {
+        return exp.eval(env, cont);
+    }
+
+    public String toString() {
+        return "EvalCont";
+    }
+
+}
+%%%
+
+IfCont
+%%%
+public class IfCont extends Cont {
+
+    public Exp testExp;
+    public Exp trueExp;
+    public Exp falseExp;
+    public Env env;
+    public Cont cont;
+
+    public IfCont(Exp testExp, Exp trueExp, Exp falseExp, Env env, Cont cont) {
+        this.testExp = testExp;
+        this.trueExp = trueExp;
+        this.falseExp = falseExp;
+        this.env = env;
+        this.cont = cont;
+    }
+
+    public Cont apply(Val val) {
+        if (val.isTrue())
+            return new EvalCont(trueExp, env, cont);
+        else
+            return new EvalCont(falseExp, env, cont);
+    }
+
+    public Cont apply() {
+        return new EvalCont(testExp, env, this);
+        // return testExp.eval(env, this);
+    }
+
+    public String toString() {
+        return "IfCont";
+    }
+
+}
+%%% 
+
+SetCont
+%%%
+public class SetCont extends Cont {
+
+    public Ref ref;
+    public Cont cont;
+
+    public SetCont(Ref ref, Cont cont) {
+        this.ref = ref;
+        this.cont = cont;
+    }
+
+    public Cont apply(Val val) {
+        ref.setRef(val);
+        return new ValCont(val, cont);
+    }
+
+    public String toString() {
+        return "SetCont";
+    }
+
+}
+%%%
+
+PrimappCont
+%%%
+import java.util.*;
+
+public class PrimappCont extends Cont {
+
+    public Prim prim;             // the primitive to apply
+    public List<Exp> expList;     // actual parameter expressions
+    public Env env;               // Env in which actual params are evaluated
+    public Cont cont;             // the continuation
+
+    public PrimappCont(Prim prim, List<Exp> expList, Env env, Cont cont) {
+        this.prim = prim;
+        this.expList = expList;
+        this.env = env;
+        this.cont = cont;
+    }
+
+    public Cont apply() {
+        ArrayList<Val> valList = new ArrayList<Val>(expList.size());
+        Iterator<Exp> expIter = expList.iterator();
+        while (expIter.hasNext()) {
+            Exp exp = expIter.next();
+            Val val = exp.eval(env);
+            valList.add(val);
+        }
+        Val val = prim.apply(Val.toArray(valList));
+        return new ValCont(val, cont);
+    }
+   
+    public String toString() {
+        return "PrimappCont";
+    }
+
+}
+%%%
+
+LetCont
+%%%
+import java.util.*;
+
+public class LetCont extends Cont {
+
+    public List<Token> varList;    // LHS identifiers
+    public List<Exp> expList;      // RHS expressions
+    public Exp exp;                // let body expression
+    public Env env;                // evaluate expressions in this env
+    public Cont cont;
+
+    public LetCont(List<Token> varList, List<Exp> expList, Exp exp, Env env,
+                   Cont cont) {
+        this.varList = varList;
+        this.expList = expList;
+        this.exp = exp;
+        this.env = env;
+        this.cont = cont;
+    }
+
+    public Cont apply() {
+        Iterator<Exp> expIter = expList.iterator();
+        List<Ref> refList = new ArrayList<Ref>(expList.size());
+        while (expIter.hasNext()) {
+            Exp exp = expIter.next(); // the next RHS expression
+            Val val = exp.eval(env);
+            refList.add(new ValRef(val));
+        }
+        Bindings bindings = new Bindings(varList, refList);
+        Env nenv = env.extendEnvRef(bindings);
+        return new EvalCont(exp, nenv, cont);
+    }
+
+    public String toString() {
+        return "LetCont";
+    }
+
+}
+%%%
+
+AppCont
+%%%
+import java.util.*;
+
+public class AppCont extends Cont {
+
+    public List<Exp> expList;     // delivers the actual parameter expressions
+    public Env env;               // evaluate the params in this environment
+    public Cont cont;             // who gets the result
+
+    public Val procVal;           // should evaluate to a ProcVal
+
+    public AppCont(List<Exp> expList, Env env, Cont cont) {
+        this.expList = expList;
+        this.env = env;
+        this.cont = cont;
+    }
+
+    public Cont apply(Val val) {
+        procVal = val;
+        List<Ref> refList = new ArrayList<Ref>(expList.size());
+        Iterator<Exp> expIter = expList.iterator();
+        while (expIter.hasNext()) {
+            Exp exp = expIter.next();
+            refList.add(exp.evalRef(env));
+        }
+        return procVal.apply(refList, cont); // let the procVal do the rest
+    }
+
+    public String toString() {
+        return "AppCont";
+    }
+
+}
+%%%
+
+SequenceCont
+%%%
+import java.util.*;
+
+// used with SeqExps
+public class SequenceCont extends Cont {
+
+    public Iterator<Exp> expIter; // a list of additional expressions
+    public Env env;               // the environment
+    public Cont cont;             // the next continuation
+
+    public SequenceCont (List<Exp> expList, Env env, Cont cont) {
+        expIter = expList.iterator();
+        this.env = env;
+        this.cont = cont;
+    }
+
+    public Cont apply(Val val) {
+        if (expIter.hasNext()) {
+            // discard the current value and evaluate the next expression
+            Exp exp = expIter.next();
+            return new EvalCont(exp, env, this); // calls this apply again!
+        }
+        return new ValCont(val, cont); // pass the last Val to cont
+    }
+
+    public String toString() {
+        return "SequenceCont";
+    }
+
+}
+%%%

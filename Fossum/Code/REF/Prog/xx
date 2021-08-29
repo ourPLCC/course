@@ -1,0 +1,19 @@
+define x=0
+define g = proc(t) proc() set t=add1(t)
+define h1 = .g(x)
+define h2 = .g(x)
+.h1()
+.h2()
+.h1()
+.h2()
+set x=0
+.h1()
+.h2()
+.h1()
+.h2()
+define x=99
+.h1()
+.h2()
+.h1()
+.h2()
+x

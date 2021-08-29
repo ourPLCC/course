@@ -1,0 +1,38 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language V3} (continued)\exx
+Now that we can define our own environments,
+we will remove our initial environment with bindings
+for Roman numerals.\exx
+In the first example, a new environment is created
+binding \verb'x' to 3 and \verb'y' to 8,
+so that the \verb'+(x,y)' expression evaluates to 11.
+{\Large
+\begin{qv}
+let x = 3 y = 8
+in +(x,y)
+  % => 11
+\end{qv}
+}
+In the second \verb'let' expression example,
+a new environment is created
+binding \verb'x' to 10.
+The body of this \verb'let' expression
+is itself a \verb'let' expression
+with bindings of \verb'z' to 3 and \verb'y' to 8.
+The environment of the inner \verb'let'
+extends the environment of the outer \verb'let',
+so that the \verb'x' in the expression \verb'+(x,y)' is bound to 10.
+The entire expression therefore evaluates to 18.
+{\Large
+\begin{qv}
+let x = 10
+in
+  let z = 3 y = 8
+  in +(x,y)
+  % => 18
+\end{qv}
+}
+\end{minipage}
+\clearpage

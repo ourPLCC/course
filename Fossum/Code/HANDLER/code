@@ -1,0 +1,326 @@
+# class methods
+
+Program
+%%%
+    public static Env env = Env.initEnv(); // the initial environment
+    public static Env xenv = Env.initEnv(); // the initial exception environment
+%%%
+
+Define
+%%%
+    // notice that calling $run() triggers a modification
+    // of the initial environment
+    public void $run() {
+        String id = var.toString();
+        Env env = Program.env;
+        Env xenv = Program.xenv;
+        Cont cont = new EvalCont(exp, env, xenv, new Cont());
+        Val val = cont.trampoline();
+        Ref ref = new ValRef(val);
+        Binding b = env.lookup(id);
+        if (b != null)
+            b.ref = ref;
+        else
+            env.add(new Binding(id, ref));
+        System.out.println(id);
+    }
+%%%
+
+Eval
+%%%
+    public void $run() {
+        Cont cont = new EvalCont(exp, Program.env, Program.xenv, new Cont());
+        Val val = cont.trampoline();
+        System.out.println(val);
+    }
+%%%
+
+Exp
+%%%
+
+    public abstract Cont eval(Env env, Env xenv, Cont cont);
+
+    public Cont evalRef(Env env, Env xenv, Cont cont) {
+        // cont converts the val to a ref
+        return new EvalCont(this, env, xenv, cont);
+    }
+
+%%%
+
+PrimappExp
+%%%
+
+    public String toString() {
+        return prim.toString()+ "(" + rands + ")";
+    }
+    
+    public Cont eval(Env env, Env xenv, Cont cont) {
+        PrimappCont primappCont =
+            new PrimappCont(prim, rands.expList, env, xenv, cont);
+        return  primappCont.next();
+    }
+
+%%%
+
+LitExp
+%%%
+
+    public Cont eval(Env env, Env xenv, Cont cont) {
+        return cont.apply(new IntVal(lit.str));
+    }
+
+    public String toString() {
+        return lit.str;
+    }
+
+%%%
+
+IfExp
+%%%
+    public Cont eval(Env env, Env xenv, Cont cont) {
+        cont = new TestCont(trueExp, falseExp, env, xenv, cont);
+        return new EvalCont(testExp, env, xenv, cont);
+    }
+
+    public String toString() {
+        return "if " + testExp + " then " + trueExp + " else " +falseExp;
+    }
+%%%
+
+VarExp
+%%%
+
+    public Cont eval(Env env, Env xenv, Cont cont) {
+        return cont.apply(env.applyEnv(var.str));
+    }
+
+    public Cont evalRef(Env env, Env xenv, Cont cont) {
+        return cont.apply(env.applyEnvRef(var.str));
+    }
+
+    public String toString() {
+        return var.str;
+    }
+
+%%%
+
+LetExp
+%%%
+
+    public Cont eval(Env env, Env xenv, Cont cont) {
+        return letDecls.makeBuildCont(exp, env, xenv, cont);
+    }
+
+    public String toString() {
+        return " ...LetExp... ";
+    }
+
+%%%
+
+SetExp
+%%%
+
+    public Cont eval(Env env, Env xenv, Cont cont) {
+        // don't actually modify the binding yet
+        cont = new SetCont(var, env, cont);
+        return new EvalCont(exp, env, xenv, cont);
+    }
+
+    public String toString() {
+        return " ...SetExp... ";
+    }
+%%%
+
+LetrecExp
+%%%
+
+    public Cont eval(Env env, Env xenv, Cont cont) {
+        return letDecls.makeLetrecBuildCont(exp, env, xenv, cont);
+    }
+
+    public String toString() {
+        return " ...LetrecExp... ";
+    }
+%%%
+
+CatchExp
+%%%
+    public Cont eval(Env env, Env xenv, Cont cont) {
+        xenv = handlerDecls.addBindings(env, xenv, cont);
+        return new EvalCont(exp, env, xenv, cont);
+    }
+
+    public String toString() {
+        return " ...CatchExp... ";
+    }
+%%%
+
+ProcExp
+%%%
+
+    public Cont eval(Env env, Env xenv, Cont cont) {
+        return cont.apply(proc.makeClosure(env));
+    }
+
+    public String toString() {
+        return " ...ProcExp... ";
+    }
+%%%
+
+AppExp
+%%%
+
+    public Cont eval(Env env, Env xenv, Cont cont) {
+        cont = new AppCont(rands.expList, env, xenv, cont);
+        return new EvalCont(exp, env, xenv, cont);
+    }
+
+    public String toString() {
+        return " ...AppExp... ";
+    }
+
+%%%
+
+ThrowExp
+%%%
+    public Cont eval(Env env, Env xenv, Cont cont) {
+        HandlerVal handler = xenv.applyEnv(var.toString()).handlerVal();
+	return handler.apply(
+            rands.expList, // handler actual parameter expressions
+            env,           // parameter evaluation environment
+            xenv,          // parameter exception environment
+            handler.xenv,  // handler body execption environment
+            handler.cont   // pass the value to the handler's saved contiuation
+        );
+    }
+
+    public String toString() {
+        return " ...ThrowExp...";
+    }
+%%%
+
+SeqExp
+%%%
+
+    public Cont eval(Env env, Env xenv, Cont cont) {
+        List<Exp> expList = seqExps.expList;
+	if (expList.size() > 0)
+	    cont = new SequenceCont(expList, env, xenv, cont);
+        return new EvalCont(exp, env, xenv, cont);
+    }
+
+    public String toString() {
+        return " ...SeqExp... ";
+    }
+
+%%%
+
+Formals:init
+%%%
+        // check for duplicates during parsing
+        Env.checkDuplicates(varList, " in proc formals");
+%%%
+
+Proc
+%%%
+    public Val makeClosure(Env env) {
+        return new ProcVal(formals, exp, env);
+    }
+%%%
+
+LetDecls:init
+%%%
+        // check for duplicates during parsing
+        Env.checkDuplicates(varList, " in let/letrec LHS identifiers");
+%%%
+
+LetDecls
+%%%
+    public Cont makeBuildCont(Exp exp, Env env, Env xenv, Cont cont) {
+        BuildCont buildCont =
+            new BuildCont(varList,
+                          expList,
+                          env,
+                          xenv,
+                          exp,
+                          env,
+                          xenv,
+                          cont);
+        return buildCont.next();
+    }
+
+    public Cont makeLetrecBuildCont(Exp exp, Env env, Env xenv, Cont cont) {
+        LetrecBuildCont buildCont =
+            new LetrecBuildCont(varList,
+                          expList,
+                          env,
+                          xenv,
+                          exp,
+                          env,
+                          xenv,
+                          cont);
+        return buildCont.next();
+    }
+
+    public String toString() {
+        return " ...LetDecls... ";
+    }
+%%%
+
+Handler
+%%%
+    public HandlerVal makeHandler(Env env, Env xenv, Cont cont) {
+        return new HandlerVal(formals, exp, env, xenv, cont);
+    }
+%%%
+
+HandlerDecls
+%%%
+    public Env addBindings(Env env, Env xenv, Cont cont) {
+        List<String> idList = new ArrayList<String>(handlerList.size());
+        List<Val> valList = new ArrayList<Val>(handlerList.size());
+        for (Handler h : handlerList)
+            valList.add(h.makeHandler(env, xenv, cont));
+        Bindings bindings =
+            new Bindings(varList, Ref.valsToRefs(valList));
+        return xenv.extendEnvRef(bindings);
+    }
+
+    public String toString() {
+        return " ...HandlerDecls... ";
+    }
+%%%
+
+Rands
+%%%
+    public String toString() {
+        String s = "";   // the string to return
+        String sep = ""; // no separator for the first expression
+        // get all of the expressions in the expression list
+        for (Exp e : expList) {
+            s += sep + e;
+            sep = ",";   // commas separate the rest of the expressions
+        }
+        return s;
+    }
+
+    // evaluate the individual terms in expList using the given environment
+    // and return a List<Val> object
+    public List<Val> evalRands(Env env) {
+        return null;
+    }
+%%%
+
+Formals
+%%%
+    public String toString() {
+        String s = "";
+        String sep = "";
+        for (Token tok : varList) {
+            s += sep + tok;
+            sep = ",";
+        }
+        return s;
+    }
+%%%
+        

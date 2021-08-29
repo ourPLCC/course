@@ -1,0 +1,37 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Logic Programming Puzzles}\exx
+Consider the Fox/Goose/Corn river crossing puzzle
+(also known as the Wolf/Goat/Cabbage puzzle):\exx
+A farmer, a fox, a goose, and a bag of corn are
+on one side of a river.
+The farmer has a boat that can hold {\em at most one} other ``passenger'' --
+either the fox, the goose, the bag of corn, or nothing at all.
+The problem is to transport everything
+to the other side of the river using the boat.
+One constraint is that the farmer cannot
+leave the fox and the goose together on one side
+with the farmer on the other side --
+otherwise the fox, unsupervised, will eat the goose.
+Another constraint is that the farmer cannot
+leave the goose and the bag of corn together on one side
+with the farmer on the other side --
+otherwise the goose, unsupervised, will eat the corn.
+A final constraint is that the farmer and the boat
+will always be on the same side of the river together.
+{\em Can the farmer transport everything
+from one side of the river to the other
+using the boat, while maintaining the constraints?}\exx
+We will model this problem by considering all possible {\em states},
+where a state is a string of the form \verb'sbfgc'.
+Here, \verb's' is just the letter `s',
+which stands for {\em state}.
+The \verb'bfgc' positions will be digits \verb'0' or \verb'1',
+referring to which side of the river the boat,
+the fox, the goose, and the cabbage are on, respectively.
+We will use the digit \verb'0' to mean the starting side
+and the digit \verb'1' to mean the ending side.
+So the problem is to move from state \verb's0000' to state \verb's1111'
+by legal river crossings.\exx
+\end{minipage}

@@ -1,0 +1,20 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Parsers} (continued)\exx
+The revised grammar now looks like this:\exx
+\emm{\Large\NormalBox{\MYlonGrammarTOK}}\exx
+Since we now have two fields in the \verb'NumsNode' class,
+we need to modify the signature of the \verb'NumsNode' constructor,
+as shown here (compare with slide 1.31):\exx
+\emm\begin{tabular}{ll}
+\verb'<lon>' & \verb'::= LPAREN <nums> RPAREN'\\
+    & \VerbBox{\fbox}{\verb'Lon(Nums nums)'}\\
+\verb'<nums>:NumsNode' & \verb'::= <NUM> <nums>'\\
+    & \VerbBox{\fbox}{\verb'NumsNode(Token num, Nums nums)'}\\
+\verb'<nums>:NumsNull' & \verb'::= '\\
+    & \VerbBox{\fbox}{\verb'NumsNull()'}\\
+\end{tabular}\exx
+
+\end{minipage}
+\clearpage

@@ -1,0 +1,33 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language OBJ} (continued)\exx
+A an instance of the Java \verb'EnvClass' class
+has one instance variable:
+{\Large
+\begin{qv}
+    public Env staticEnv;
+\end{qv}
+}
+Here is the code for the \verb'EnvClass' constructor:
+{\Large
+\begin{qv}
+public EnvClass(Env env) {
+    // the static environment of this class
+    staticEnv = env;
+}
+\end{qv}
+}
+The \verb'EnvClass' defines a static \verb'envClass' Java object
+that is a ``singleton'' instance of an EnvClass.
+This \verb'envClass' object is the root of the class hierarchy tree
+whose \verb'staticEnv' is the top-level environment.\exx
+A standard class (an instance of the Java \verb'StdClass' class)
+has a similar constructor,
+except that it builds on the environment of its superclass
+as described earlier.
+A standard class defines bindings
+for the variables \verb'myclass' and \verb'superclass',
+whose values are self-explanatory.
+You can find the code for this constructor in the file \verb'class'.
+\end{minipage}

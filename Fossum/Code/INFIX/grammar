@@ -1,0 +1,66 @@
+# Language INFIX
+#   Language V4 with infix arithmetic expressions
+
+# Lexical specification
+skip WHITESPACE '\s+'
+skip COMMENT '%.*'
+LIT '\d+'
+LPAREN '\('
+RPAREN '\)'
+COMMA ','
+ADDOP '\+'
+SUBOP '\-'
+MULOP '\*'
+DIVOP '/'
+ADD1OP 'add1'
+SUB1OP 'sub1'
+ZEROP 'zero\?'
+IF 'if'
+THEN 'then'
+ELSE 'else'
+ENDIF 'endif'
+DEF 'def'
+DEFINE 'define'
+EQUALS '='
+PROC 'proc'
+DOT '\.'
+SEMI ';'
+LBRACE '\{'
+RBRACE '\}'
+HASH '#'
+VAR '[A-Za-z][\w?]*'
+%
+# Grammar
+<program>:Define       ::= DEFINE <VAR> EQUALS <exp> SEMI
+<program>:Eval         ::= <exp> SEMI
+<exp>                  ::= <term> <terms>
+<terms>                **= <prim0> <term>
+<term>                 ::= <factor> <factors>
+<factors>              **= <prim1> <factor>
+<factor>:LitFactor     ::= <LIT>
+<factor>:VarFactor     ::= <VAR>
+<factor>:ParenFactor   ::= LPAREN <exp> RPAREN
+<factor>:Prim2Factor   ::= <prim2> <factor>
+<factor>:IfFactor      ::= IF <exp>testExp THEN <exp>trueExp ELSE <exp>falseExp ENDIF
+<factor>:AppFactor     ::= DOT <exp> LPAREN <rands> RPAREN
+<factor>:PrimappFactor ::= <prim> LPAREN <rands> RPAREN
+<factor>:BlockFactor   ::= <block>
+<factor>:ProcFactor    ::= PROC LPAREN <formals> RPAREN <block>
+<formals>              **= <VAR> +COMMA
+<block>                ::= LBRACE <blockDecls> <exp> <exps> RBRACE
+<exps>                 **= SEMI <exp>
+<blockDecls>           **= DEF <VAR> EQUALS <exp> SEMI
+<rands>                **= <exp> +COMMA
+<prim0>:AddPrim0       ::= ADDOP
+<prim0>:SubPrim0       ::= SUBOP
+<prim1>:MulPrim1       ::= MULOP
+<prim1>:DivPrim1       ::= DIVOP
+<prim2>:NegPrim2       ::= SUBOP
+<prim>:Add1Prim        ::= ADD1OP
+<prim>:Sub1Prim        ::= SUB1OP
+<prim>:ZeropPrim       ::= ZEROP
+%
+include code
+include prim
+include envVal
+include val

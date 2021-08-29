@@ -1,0 +1,80 @@
+% a binary tree
+define BT =
+  class
+    static BTnode =
+      class
+        field left
+        field val
+        field right
+        method init = proc(left, val, right)
+          { set <this>left = left
+          ; set <this>val = val
+          ; set <this>right = right
+          ; self
+          }
+        % traversals
+        method inorder = proc()   % left-node-right
+          append(.<left>inorder(), addFirst(val, .<right>inorder()))
+        method preorder = proc()  % node-left-right
+          addFirst(val, append(.<left>preorder(), .<right>preorder()))
+        method postorder = proc() % left-right-node
+          append(.<left>postorder(), append(.<right>postorder(), [val]))
+      end
+    static BTnull =
+      class
+        method inorder = proc() []
+      end
+    static nullNode = new BTnull % singleton
+    static create = proc() nullNode
+    static makeBT = proc(left, val, right) .<new BTnode>init(left,val,right)
+    static makeLeaf = proc(val) .makeBT(nullNode, val, nullNode)
+  end
+
+% binary search tree
+define BST =
+  class extends BT
+    static BSTnode =
+      class extends BTnode
+        method insert = proc(v)
+          if <?(v,val) then
+            .<!@>makeBST(.<left>insert(v), val, right)
+          else if >?(v,val) then
+            .<!@>makeBST(left, val, .<right>insert(v))
+          else
+            self
+        method find = proc(v)
+          if <?(v, val) then
+            .<left>find(v)
+          else if >?(v, val) then
+            .<right>find(v)
+          else
+            self
+      end
+    static BSTnull =
+      class extends BTnull
+        method find = proc(v) nil
+        method insert = proc(v) .<!@>makeLeaf(v)
+      end
+    static makeBST = proc(left, val, right)
+      .<new BSTnode>init(left,val,right) % init is defined in BT
+    static nullNode = new BSTnull % singleton
+    static makeLeaf = proc(val) .makeBST(nullNode, val, nullNode)
+    % create a BST from the elements of the list
+    static lst2bst = proc(xs)
+      if xs
+      then .<.lst2bst(rest(xs))>insert(first(xs))
+      else nullNode
+    static create = proc() nullNode
+  end
+
+% list shuttle utility function (shuttle is tail recursive)
+define shuttle = proc(xs, ys)
+  if xs
+  then .shuttle(rest(xs), addFirst(first(xs), ys))
+  else ys
+
+% sort ignores duplicates
+define sort = proc(xs)
+  !<BST>lst2bst(xs)>inorder()!>
+
+.sort([5,3,4,2,6,8,7,1])

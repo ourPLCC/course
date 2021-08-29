@@ -1,0 +1,40 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language OBJ} (continued)\exx
+The RHS expressions in static definitions are evaluated
+in the static environment of the class,
+which extends the static environment of its superclass (and so on...).
+For example, consider the following definitions and expression:
+{\Large
+\begin{qv}
+define c = class static x=5 end
+define x = 3
+<class extends c static y=x end>y
+\end{qv}
+}
+In the class that extends \verb'c', 
+the value of \verb'x' on the RHS of the \verb'static y=x' expression
+can be found in the static environment of the superclass \verb'c',
+where \verb'x' is bound to 5.
+Thus the variable \verb'y' is bound to 5, not 3,
+so the expression evaluates to 5.\exx
+Now consider a variant of the expression:
+{\Large
+\begin{qv}
+define c = class static xx=5 end
+define x = 3
+<class extends c static y=x end>y
+\end{qv}
+}
+In the class that extends \verb'c', 
+the value of \verb'x' on the RHS of the \verb'static y=x' expression
+can be found in the static environment of superclass \verb'c'.
+But \verb'c' does not define a variable \verb'x',
+so the value of \verb'x' must be found
+in the static environment of {\em its} superclass,
+the singleton \verb'EnvClass' that captures the top-level environment.
+Since \verb'x' in the top-level environment is bound to 3,
+the variable \verb'y' is bound to 3 as well,
+so this expression evaluates to 3.
+\end{minipage}

@@ -1,0 +1,72 @@
+ListVal
+%%%
+public abstract class ListVal extends Val {
+    public abstract String toString(String sep);
+}
+
+%%%
+
+ListNode
+%%%
+import java.util.*;
+
+public class ListNode extends ListVal {
+
+    public Val val;
+    public ListVal listVal;
+    
+    public ListNode(Val val, ListVal listVal) {
+        this.val = val;
+        this.listVal = listVal;
+    }
+    
+    public Env env() {
+        throw new PLCCException("ListVal: no environment");
+    }
+
+    public Ref toRef() {
+        return new ValRef(this);
+    }
+
+    public String toString() {
+        return "[" + this.toString("") + "]";
+    }
+
+    public String toString(String sep) {
+        return sep + val + listVal.toString(",");
+    }
+
+}
+%%%
+
+ListNull
+%%%
+import java.util.*;
+
+public class ListNull extends ListVal {
+
+    public ListNull() {
+    }
+
+    public Env env() {
+        throw new PLCCException("ListVal: no environment");
+    }
+
+    public boolean isTrue() {
+        return false;
+    }
+
+    public Ref toRef() {
+        return new ValRef(this);
+    }
+
+    public String toString() {
+        return "[]";
+    }
+
+    public String toString(String sep) {
+        return "";
+    }
+}
+
+%%%

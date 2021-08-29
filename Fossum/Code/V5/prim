@@ -1,0 +1,122 @@
+Prim
+%%%
+    // apply the primitive to the passed values
+    public abstract Val apply(Val [] va);
+%%%
+
+AddPrim
+%%%
+
+    public String toString() {
+	return "+";
+    }
+
+    public Val apply(Val [] va) {
+	if (va.length != 2)
+	    throw new PLCCException("two arguments expected");
+	int i0 = va[0].intVal().val;
+	int i1 = va[1].intVal().val;
+	return new IntVal(i0 + i1);
+    }
+%%%
+
+SubPrim
+%%%
+
+    public String toString() {
+	return "-";
+    }
+
+    public Val apply(Val [] va) {
+	if (va.length != 2)
+	    throw new PLCCException("two arguments expected");
+	int i0 = va[0].intVal().val;
+	int i1 = va[1].intVal().val;
+	return new IntVal(i0 - i1);
+    }
+%%%
+
+MulPrim
+%%%
+
+    public String toString() {
+	return "*";
+    }
+
+    public Val apply(Val [] va) {
+	if (va.length != 2)
+	    throw new PLCCException("two arguments expected");
+	int i0 = va[0].intVal().val;
+	int i1 = va[1].intVal().val;
+	return new IntVal(i0 * i1);
+    }
+
+%%%
+
+DivPrim
+%%%
+
+    public String toString() {
+	return "/";
+    }
+
+    public Val apply(Val [] va) {
+	if (va.length != 2)
+	    throw new PLCCException("two arguments expected");
+	int i0 = va[0].intVal().val;
+	int i1 = va[1].intVal().val;
+	if (i1 == 0)
+            throw new PLCCException("attempt to divide by zero");
+	return new IntVal(i0 / i1);
+    }
+
+%%%
+
+Add1Prim
+%%%
+
+    public String toString() {
+	return "add1";
+    }
+
+    public Val apply(Val [] va) {
+	if (va.length != 1)
+	    throw new PLCCException("one argument expected");
+	int i0 = va[0].intVal().val;
+	return new IntVal(i0 + 1);
+    }
+
+%%%
+
+Sub1Prim
+%%%
+
+    public String toString() {
+	return "sub1";
+    }
+
+    public Val apply(Val [] va) {
+	if (va.length != 1)
+	    throw new PLCCException("one argument expected");
+	int i0 = va[0].intVal().val;
+	return new IntVal(i0 - 1);
+    }
+
+%%%
+
+ZeropPrim
+%%%
+
+    public String toString() {
+	return "zero?";
+    }
+
+    public Val apply(Val [] va) {
+        if (va.length != 1)
+	    throw new PLCCException("one argument expected");
+	int i0 = va[0].intVal().val;
+	return new IntVal(i0 == 0 ? 1 : 0);
+    }
+
+%%%
+

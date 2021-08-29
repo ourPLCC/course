@@ -1,0 +1,178 @@
+Val
+%%%
+import java.util.*;
+
+public abstract class Val {
+
+    public static Val [] toArray(List<Val> valList) {
+        int n = valList.size();
+        return valList.toArray(new Val[n]);
+    }
+
+    public Val apply(List<Val> args, Env e) {
+        throw new PLCCException("Cannot apply " + this.toString());
+    }
+
+    public IntVal intVal() {
+        throw new PLCCException(this + ": not an Int");
+    }
+
+    public ListNode listNode() {
+        throw new PLCCException(this + ": not a nonempty List");
+    }
+
+    public ListVal listVal() {
+        throw new PLCCException(this + ": not a List");
+    }
+
+    public boolean isTrue() {
+        // every Val is true except for zero (IntVal(0))
+        // and the empty list (ListNull)
+        return true;
+    }
+
+    public boolean isList() {
+        return false; // only ListVals are true
+    }
+}
+%%%
+
+IntVal
+%%%
+import java.util.*;
+
+public class IntVal extends Val {
+
+    public int val;
+    
+    public IntVal(String s) {
+        val = Integer.parseInt(s);
+    }
+    
+    public IntVal(int v) {
+        val = v;
+    }
+
+    public IntVal intVal() {
+        return this;
+    }
+    
+    public boolean isTrue() {
+        return val != 0;
+    }
+    
+    public String toString() {
+        return "" + val;
+    }
+
+    public static void main(String [] args) {
+        Val v = new IntVal(3);
+        Val w = new IntVal(0);
+        System.out.println("v=" + v);
+        System.out.println("w=" + w);
+    }
+    
+}
+%%%
+
+ProcVal
+%%%
+import java.util.*;
+
+public class ProcVal extends Val {
+
+    public Formals formals;
+    public Exp body;
+    public Env env;
+
+    public ProcVal(Formals formals, Exp body, Env env) {
+        this.formals = formals;
+        this.body = body;
+        this.env = env;
+    }
+
+    public Val apply(List<Val> args, Env e) {
+        Bindings bindings = new Bindings(formals.varList, args);
+        Env nenv = env.extendEnv(bindings);
+        return body.eval(nenv);
+    }
+
+    public String toString() {
+        String ids = "";
+        String sep = "";
+        for (Token tok: formals.varList) {
+            ids += sep+tok.toString();
+            sep=",";
+        }
+        return "proc("+ids+")";
+    }
+}
+
+%%%
+
+ListVal
+%%%
+public abstract class ListVal extends Val {
+
+    public static final ListVal listNull = new ListNull();
+
+    public ListVal addFirst(Val val) {
+            return new ListNode(val, this);
+    }
+
+    public boolean isList() {
+        return true;
+    }
+
+    public ListVal listVal() {
+        return this;
+    }
+
+    public abstract String toString(String sep);
+
+}
+%%%
+
+ListNode
+%%%
+public class ListNode extends ListVal {
+
+    public Val val;
+    public ListVal list;
+
+    public ListNode(Val val, ListVal list) {
+        this.val = val;
+        this.list = list;
+    }
+
+    public ListNode listNode() {
+        return this;
+    }
+
+    public String toString() {
+        return "[" + this.toString("") + "]";
+    }
+
+    public String toString(String sep) {
+        return sep + val + list.toString(",");
+    }
+}
+%%%    
+
+ListNull
+%%%
+public class ListNull extends ListVal {
+
+    public boolean isTrue() {
+        return false;
+    }
+
+    public String toString() {
+        return "[]";
+    }
+
+    public String toString(String sep) {
+        return "";
+    }
+}
+%%%    

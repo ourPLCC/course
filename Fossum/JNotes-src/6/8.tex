@@ -1,0 +1,38 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language INFIX} (continued)\exx
+Since the variable bindings in a block create an extended environment
+using the \verb'letrec' strategy,
+the RHS expressions in a \verb'def'
+can refer to variables defined in the same block,
+and procedures can be self-recursive.\exx
+A \verb'proc' definition in \verb'INIFX' is similar to \verb'V5',
+except that the body of the procedure is a block instead of an \verb'exp',
+meaning that it can have its own ``local'' variables using \verb'def's.
+Here's an example:
+{\Large
+\begin{qv}
+proc(x) {def y=3; def z=add1(y); x+y+z}
+\end{qv}
+}
+A procedure application in \verb'INIFX' is expressed
+in exactly the same way as in \verb'V4'.
+The following program evaluates to 120:
+{\Large
+\begin{qv}
+{
+  def f = proc(x)
+    {if x then x*.f(sub1(x)) else one endif};
+  def one = 1;
+  .f(5)
+} ;
+\end{qv}
+}
+Observe that body of the the procedure \verb'f' can refer
+to \verb'f' recursively,
+and can even refer to the free variable \verb'one'
+before it is defined in the same block,
+since the semantics of the outer \verb'block'
+behave as in \verb'letrec'.
+\end{minipage}

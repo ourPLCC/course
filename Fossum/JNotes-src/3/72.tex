@@ -1,0 +1,44 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Drawing Envinronments} (continued)\exx
+In the definition of the \verb'ProcVal' class,
+a \verb'ProcVal' object has three fields:
+\Large
+\begin{qv}
+public Formals formals; // list of formal parameters
+public Exp body;        // procedure body
+public Env env;         // captured environment
+\end{qv}
+\LARGE
+Here, the {\em captured environnment} is the environment
+in which the procedure is defined.
+For example, consider the following expression:\\[1.5ex]
+\Large
+\begin{verbbox}
+let
+  x = 3
+in
+  proc(t) +(t,x)
+\end{verbbox}
+\emm\theverbbox\\[1.5ex]
+\LARGE
+This expression evaluates to a \verb'ProcVal':
+its \verb'formals' field consists of a list having a single string, `\verb't'',
+its \verb'body' is the expression `\verb'+(t,x)'',
+and its captured environment is the one defined by the \verb'let',
+having a single binding of \verb'x' to the value \verb'3'.
+(Recall that we also use the term {\em closure}
+to refer to a a \verb'ProcVal' object.)
+We normally display a \verb'ProcVal' object as a rectangle
+with its three compartments, in this order:
+formals, body, and captured environment.
+We show the \verb'formals' as a comma-separated list of identifiers,
+the \verb'body' as an (un-evaluated) expression,
+and the captured environment (\verb'env') as an arrow
+pointing to the appropriate node in the environment
+in which the procedure definition occurs.
+The following slide shows the \verb'ProcVal' that results
+from the evaluation of the above expression.
+\end{minipage}
+\clearpage

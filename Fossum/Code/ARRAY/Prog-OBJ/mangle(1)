@@ -1,0 +1,20 @@
+%% must load the list0 file first
+
+let
+  a = 5
+  b = 7
+in
+  <lst>!<null>add(a)>add(b)>show()!> % error -- unbound a (and b)
+
+let
+  a = 5
+  b = 7
+in
+  !<<lst>null>add(a)>add(b)>show()!> % OK -- returns the lst [7,5]
+
+let
+  a = 5
+  b = 7
+  null = <lst>null
+in
+  !<null>add(a)>add(b)>show()!>      % OK -- returns the lst [7,5]

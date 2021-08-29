@@ -1,0 +1,31 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf The Lambda Calculus} (continued)\\[2ex]
+{\bf Lexical and Grammar specification for the Lambda Calculus:}
+{\Large
+\begin{qv}
+# Lexical specification
+skip WHITESPACE '\s+'
+LPAREN '\('
+RPAREN '\)'
+LBRACE '\{'
+RBRACE '\}'
+DOT '\.'
+PROC 'proc'
+SYM '\w+'
+%
+# Grammar
+<exp>:Var  ::= <SYM>
+<exp>:Proc ::= PROC LPAREN <SYM> RPAREN LBRACE <exp> RBRACE
+<exp>:App  ::= DOT <exp>rator LPAREN <exp>rand RPAREN
+%
+\end{qv}
+}
+In the Lambda Calculus,
+if a symbol is bound by a declaration,
+we can easily determine the precise declaration that binds the variable.
+The Lambda Calculus is of interest theoretically,
+but it has no practical value as a programming language.\exx
+\end{minipage}
+\clearpage

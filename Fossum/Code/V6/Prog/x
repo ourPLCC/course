@@ -1,0 +1,5 @@
+define x=2
+define f = proc() x
+.f() % evaluates to 2
+define x=3
+.f() % evaluates to 3

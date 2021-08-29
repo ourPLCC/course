@@ -1,0 +1,16 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf PLCC -- Comments in the lexical specification section}\exx
+In the lexical specification section,
+PLCC comments appearing in a token or skip specification line
+are defined as matching the Java regular expression \verb'"\s+#.*"'.
+Such comments are removed before attemtping
+to process the remaining characters
+in the token or skip specification line.
+This means that a skip or token regular expression
+containing a substring like \verb'" #"'
+will mistakenly be considered as the start of a PLCC comment.
+In this case, use \verb'"[ ]#"' instead.
+\end{minipage}
+\clearpage

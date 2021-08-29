@@ -1,0 +1,145 @@
+# Lexical specification of the BrainF**k language
+LT '\<'
+GT '\>'
+PLUS '\+'
+MINUS '\-'
+COMMA ','
+DOT '\.'
+LBRACK '\['
+RBRACK '\]'
+BANG '!'
+END '\[END\]'
+skip OTHER '.'
+%
+<program>      ::= <cmds> END
+<cmds>         **= <cmd>
+<cmd>:LeftCmd  ::= LT
+<cmd>:RightCmd ::= GT
+<cmd>:IncrCmd  ::= PLUS
+<cmd>:DecrCmd  ::= MINUS
+<cmd>:ReadCmd  ::= COMMA
+<cmd>:WriteCmd ::= DOT
+<cmd>:DumpCmd  ::= BANG # not a part of standard BF
+<cmd>:LoopCmd  ::= LBRACK <cmds> RBRACK
+%
+
+Program
+%%%
+    public void $run() {
+        Cmd.init();
+        cmds.run();
+        System.out.println("\nDone!");
+    }
+
+
+%%%
+
+Cmds
+%%%
+    public void run() {
+        for (Cmd cmd : cmdList)
+            cmd.run();
+    }
+%%%
+
+# this adds the stuff between '%%%' lines to the top of the Cmd.java file,
+# above the definition of the Cmd class
+Cmd:import
+%%%
+    import java.io.*;
+%%%
+
+Cmd
+%%%
+    public static int dptr;
+    public static byte [] data;
+    public static final int dataSize = 30000; // can be any number
+    public static BufferedReader stdin;
+
+    public static void init() {
+        dptr = 0;
+        data = new byte[dataSize];
+        stdin = new BufferedReader(new InputStreamReader(System.in));
+    }
+
+    public abstract void run();
+
+%%%
+
+LeftCmd
+%%%
+    public void run() {
+        dptr--;
+        if (dptr < 0)
+            throw new PLCCException("data pointer out of range");
+    }
+%%%
+
+RightCmd
+%%%
+    public void run() {
+        dptr++;
+        if (dptr >= dataSize)
+            throw new PLCCException("data pointer out of range");
+    }
+%%%
+
+IncrCmd
+%%%
+    public void run() {
+        data[dptr]++;
+    }
+%%%
+
+DecrCmd
+%%%
+    public void run() {
+        data[dptr]--;
+    }
+%%%
+
+ReadCmd:import
+%%%
+    import java.io.*;
+%%%
+
+ReadCmd
+%%%
+    // read a single 8-bit character from standard input
+    public void run() {
+        int i = 0;
+        try {
+            i = stdin.read();
+            if (i < 0)
+                i = 0; // EOF
+        } catch (IOException e) {
+            System.err.println(e);
+            System.exit(1);
+        }
+        data[dptr] = (byte)i;
+    }
+%%%
+
+WriteCmd
+%%%
+    public void run() {
+        System.out.print((char)data[dptr]);
+    }
+%%%
+
+LoopCmd
+%%%
+    public void run() {
+        while(data[dptr] != 0) {
+            cmds.run();
+        }
+    }
+%%%
+
+# not part of standard BF
+DumpCmd
+%%%
+    public void run() {
+        System.out.print(data[dptr]+" ");
+    }
+%%%

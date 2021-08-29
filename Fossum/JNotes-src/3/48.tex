@@ -1,0 +1,39 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language V3} (continued)\exx
+{\Large
+\emm\VerbBox{\colorbox{light}}{%
+\begin{tabular}{@{}ll}
+\verb'<exp>:LetExp' & \verb'::= LET <letDecls> IN <exp>'\\
+  & \VerbBox{\fbox}{\verb'LetExp(LetDecls letDecls, Exp exp)'}\\
+\verb'<letDecls>' & \verb'**= <VAR> EQUALS <exp>'\\
+  & \VerbBox{\fbox}{\verb'LetDecls(List<Token> varList, List<Exp> expList)'}\\
+\end{tabular}}%
+}\exx
+A \verb'LetDecls' object
+has two instance variables:
+\verb'varList' is a list of \verb'Token' objects
+representing the \verb'<VAR>' part of the BNF grammar rule,
+and \verb'expList' is a list of expressions
+representing the \verb'<exp>' part of the BNF grammar rule.
+(The reason that these are \verb'List's is because
+the \verb'letDecls' BNF grammar rule is repeating.)
+Our plan for defining the \verb'addBindings' method
+in the \verb'LetDecls' class
+involves evaluating each of the expressions in \verb'expList'
+in the enclosing environment and binding these values
+to their corresponding token strings in \verb'varList'.
+We then use these bindings to extend the enclosing environment
+given by the \verb'env' parameter,
+and we return this new environment to the \verb'eval' method
+in the \verb'LetExp' class.\exx
+The \verb'LetDecls' constructor throws and exception
+if it finds duplicate identifiers in its \verb'varList'.
+This means that a \verb'let' expression cannot have
+two instances of the same LHS idenfier.
+The code to check for duplicates is inserted
+into the \verb'LetDecls' class constructor
+using the \verb':init' hook.
+\end{minipage}
+\clearpage

@@ -1,0 +1,36 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language V3} (continued)\exx
+In the third example, two new environments are created.
+The outer \verb'let' binds \verb'x' to 3.
+The inner \verb'let' binds \verb'x'
+to the value of \verb'add1(x)'
+and \verb'y' to the value of \verb'add1(x)'.
+Both of these \verb'add1(x)' RHS expressions in the inner \verb'let',
+are evaluated {\em using the outer [enclosing] environment}
+which has \verb'x' bound to 3.
+Thus \verb'add1(x)' evaluates to 4 {\em in both cases}.
+Thus, in the inner environment,
+\verb'x' is bound to 4 and \verb'y' is bound to 4,
+so that the \verb'+(x,y)' expression evaluates to 8.
+{\Large
+\begin{qv}
+let x = 3
+in
+  let
+    x = add1(x)
+    y = add1(x)
+  in
+    +(x,y)
+  % => 8
+\end{qv}
+}
+Observe also that the \verb'add1' primitive is {\em not} side-effecting.
+What this means is that the expression \verb'add1(x)'
+does {\em not} modify the value bound to \verb'x'.
+In other words, \verb'add1(x)' in our languages
+does not behave the same way as \verb'++x' does
+in languages such as C++ and Java.)
+\end{minipage}
+\clearpage

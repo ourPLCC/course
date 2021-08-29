@@ -1,0 +1,46 @@
+define pos? =
+  proc(t)
+    if t
+    then
+      if /(add1(t),t)
+      then 1
+      else 0
+    else 0
+
+define neg? = proc(t) if t then if .pos?(t) then 0 else 1 else 0
+                  
+define lt? =
+  proc(x,y)
+    let
+      t = -(x,y)
+    in
+      .neg?(t)
+
+define le? =
+  proc(x,y)
+    let
+      t = -(x,y)
+    in
+      if t then .neg?(t) else 1
+
+define gt? =
+  proc(x,y)
+    let
+      t = -(x,y)
+    in
+      .pos?(t)
+
+define ge? =
+  proc(x,y)
+    let
+      t = -(x,y)
+    in
+      if t then .pos?(t) else 1
+
+define eq? =
+  proc(x,y)
+    if -(x,y) then 0 else 1
+
+define ne? =
+  proc(x,y)
+    if -(x,y) then 1 else 0

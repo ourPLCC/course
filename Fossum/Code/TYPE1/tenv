@@ -1,0 +1,166 @@
+# Type Environment-related classes
+TypeEnv
+%%%
+import java.util.*;
+
+public abstract class TypeEnv {
+
+    public static TypeEnv initTypeEnv() {
+        // an environment with an empty local environment
+        return new TypeEnvNode(new TypeBindings(), new TypeEnvNull());
+    }
+
+    public Type applyTypeEnv(String sym) {
+        throw new PLCCException("Type error", "no type binding for " + sym);
+    }
+
+    public void add(TypeBinding b) {
+        throw new PLCCException("Type error", "no type bindings to add to");
+    }
+
+    public TypeEnv extendTypeEnv(TypeBindings bindings) {
+        return new TypeEnvNode(bindings, this);
+    }
+
+    public abstract String toString(int n);
+
+}
+%%%
+
+TypeEnvNode
+%%%
+import java.util.*;
+
+public class TypeEnvNode extends TypeEnv {
+
+    public TypeBindings bindings; // list of local bindings
+    public TypeEnv typeEnv;           // next set of bindings
+    
+    // create an environment 
+    public TypeEnvNode(TypeBindings bindings, TypeEnv typeEnv) {
+        this.bindings = bindings;
+        this.typeEnv = typeEnv;
+    }
+    
+    // find the Type corresponding to a given id
+    public Type applyTypeEnv(String sym) {
+        // first look in the local bindings
+        for (TypeBinding b : bindings.bindingList) {
+            if (sym.equals(b.id))
+                return b.type;
+        }
+        // if nothing left, we don't have a match in this list of bindings
+        return typeEnv.applyTypeEnv(sym);
+    }
+
+    public String toString(int n) {
+        return n + ":" + bindings.toString() + "\n" + typeEnv.toString(n+1);
+    }
+
+    public String toString() {
+        return bindings.toString() + "\n" + typeEnv;
+    }
+
+    public void add(TypeBinding b) {
+        bindings.add(b);
+    }
+
+}
+%%%
+
+TypeEnvNull
+%%%
+import java.util.*;
+
+public class TypeEnvNull extends TypeEnv {
+
+    // create an environment 
+    public TypeEnvNull() {
+    }
+    
+    public String toString(int n) {
+        return n + ":\n";
+    }
+
+    public String toString() {
+        return "\n";
+    }
+}
+%%%
+
+TypeBinding
+%%%
+public class TypeBinding {
+
+    public String id;
+    public Type type;
+
+    public TypeBinding(String id, Type type) {
+        this.id = id;
+        this.type = type;
+    }
+
+    public String toString() {
+        return "[" + id + "->" + type.toString() + "]";
+    }
+
+}
+%%%
+
+TypeBindings
+%%%
+import java.util.*;
+
+public class TypeBindings {
+
+    public List<TypeBinding> bindingList;
+
+    // create an empty list of bindings
+    public TypeBindings() {
+        bindingList = new ArrayList<TypeBinding>();
+    }
+
+    public TypeBindings(int capacity) {
+        bindingList = new ArrayList<TypeBinding>(capacity);
+    }
+
+    public TypeBindings(List<TypeBinding> bindingList) {
+        this.bindingList = bindingList;
+    }
+
+    // idList is a list of Tokens/Strings
+    // typeList is a list of Types
+    public TypeBindings(List<?> idList, List<Type> typeList) {
+        if (idList.size() != typeList.size())
+            throw new PLCCException("Type Bindings error",
+                                "List size mismatch");
+        bindingList = new ArrayList<TypeBinding>(idList.size());
+        Iterator<?> idIterator = idList.iterator();
+        Iterator<Type> typeIterator = typeList.iterator();
+        while (idIterator.hasNext()) {
+            String id = idIterator.next().toString();
+            Type typ = typeIterator.next();
+            bindingList.add(new TypeBinding(id, typ));
+        }
+    }
+
+    public void add(String s, Type t) {
+        bindingList.add(new TypeBinding(s, t));
+    }
+
+    public void add(TypeBinding b) {
+        bindingList.add(b);
+    }
+
+    public int size() {
+        return bindingList.size();
+    }
+
+    public String toString() {
+        String s = "";
+        for (TypeBinding b : bindingList)
+            s += " " + b;
+        return s;
+    }
+}
+%%%

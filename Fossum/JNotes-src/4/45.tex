@@ -1,0 +1,37 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language TYPE1} (continued)\exx
+\Large
+The second part is where the variable has a declaration
+but possibly not a definition:
+\large
+\begin{qv}
+Define
+%%%
+    ...
+        // the variable has a declared type, lhst -- see if it needs a def'n
+        try {
+            // look up the value of var in the initial environment
+            lhsv = env.applyEnv(sym);
+        } catch (RuntimeException e) {
+            // the variable has a declared type, but no value bound to it
+            // so we want to add the value binding to the top-level env.
+            // first check the defined type of the RHS
+            rhst = exp.evalType(tenv);
+            // the declared and defined types must be the same
+            Type.checkEquals(lhst, rhst);
+            // get the RHS expression value
+            rhsv = exp.eval(env);
+            // and bind it to the variable
+            env.add(new Binding(sym, new ValRef(rhsv)));
+            System.out.println(sym + ":" + lhst);
+            return;
+        } 
+        // the variable has a value, so must be a duplicate
+        throw new RuntimeException(sym + ": duplicate variable definition");
+    }
+%%%
+\end{qv}
+\Large
+\end{minipage}

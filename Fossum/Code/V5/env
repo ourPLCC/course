@@ -1,0 +1,195 @@
+# Environment-related classes
+
+Env
+%%%
+import java.util.*;
+
+public abstract class Env {
+
+    public static final Env empty = new EnvNull();
+
+    public abstract void add(Binding b);
+    public abstract void replaceBindings(Bindings bindings);
+
+    public static Env initEnv() {
+        // Create bindings for some symbols
+        return new EnvNode(new Bindings(), empty);
+    }
+
+    public abstract Binding lookup(String sym, boolean local);
+
+    public Binding lookup(String sym) {
+        return lookup(sym, true); // defaults to local
+    }
+
+    public Val applyEnv(String sym) {
+        Binding b = lookup(sym, false);
+        if (b != null)
+            return b.val;
+        throw new PLCCException("no binding for "+sym);
+    }
+
+    public Val applyEnv(Token tok) {
+        return applyEnv(tok.toString());
+    }
+
+    public Env extendEnv(Bindings bindings) {
+        return new EnvNode(bindings, this);
+    }
+
+    public abstract String toString(int n);
+
+}
+%%%
+
+EnvNode
+%%%
+import java.util.*;
+
+public class EnvNode extends Env {
+
+    public Bindings bindings; // list of local bindings
+    public Env env;           // next set of bindings
+    
+    // create an environment 
+    public EnvNode(Bindings bindings, Env env) {
+        this.bindings = bindings;
+        this.env = env;
+    }
+
+    public Binding lookup(String sym, boolean local) {
+        for (Binding b: bindings.bindingList)
+            if (sym.equals(b.id))
+                return b;
+        if (local)
+            return null;
+        return env.lookup(sym, false);
+    }
+
+    public void replaceBindings(Bindings bindings) {
+        this.bindings = bindings;
+    }
+    
+    public void add(Binding b) {
+        bindings.add(b);
+    }
+
+    public String toString(int n) {
+        return n + ":" + bindings.toString() + "\n" + env.toString(n+1);
+    } 
+
+    public String toString() {
+        return bindings.toString() + "----\n" + env;
+    }
+
+}
+%%%
+
+EnvNull
+%%%
+import java.util.*;
+
+public class EnvNull extends Env {
+
+    // create an environment 
+    public EnvNull() {
+    }
+    
+    // find the Val corresponding to a given id
+    public Val applyEnv(String sym) {
+        throw new PLCCException("no binding for "+sym);
+    }
+
+    public Binding lookup(String sym, boolean local) {
+        return null;
+    }
+
+    public void replaceBindings(Bindings bindings) {
+        throw new PLCCException("no bindings to replace");
+    }
+
+    public void add(Binding b) {
+        throw new PLCCException("no bindings to add to");
+    }
+
+    public String toString(int n) {
+        return n + ":\n";
+    }
+
+    public String toString() {
+        return "\n";
+    }
+}
+%%%
+
+Binding
+%%%
+public class Binding {
+
+    public String id;
+    public Val val;
+
+    public Binding(String id, Val val) {
+        this.id = id;
+        this.val = val;
+    }
+
+    public String toString() {
+        return "[" + id + ":" + val.toString() + "]";
+    }
+
+}
+%%%
+
+Bindings
+%%%
+import java.util.*;
+
+public class Bindings {
+
+    public List<Binding> bindingList;
+
+    // create an empty list of bindings
+    public Bindings() {
+        bindingList = new ArrayList<Binding>();
+    }
+
+    public Bindings(List<Binding> bindingList) {
+        this.bindingList = bindingList;
+    }
+
+    // idList is a list of Tokens/Strings (whatever has a toString())
+    // valList is a list of Vals
+    public Bindings(List<?> idList, List<Val> valList) {
+        if (idList.size() != valList.size())
+            throw new PLCCException("List sizes mismatch");
+        bindingList = new ArrayList<Binding>();
+        Iterator<?> idIterator = idList.iterator();
+        Iterator<Val> valIterator = valList.iterator();
+        while (idIterator.hasNext()) {
+            String s = idIterator.next().toString();
+            Val v = valIterator.next();
+            bindingList.add(new Binding(s, v));
+        }
+    }
+
+    public void add(Binding b) {
+        bindingList.add(b);
+    }
+
+    public void add(String s, Val v) {
+        add(new Binding(s, v));
+    }
+
+    public int size() {
+        return bindingList.size();
+    }
+
+    public String toString() {
+        String s = "";
+        for (Binding b : bindingList)
+            s += " " + b;
+        return s;
+    }
+}
+%%%

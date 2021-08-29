@@ -1,0 +1,31 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Tokens} (continued)\exx
+Whenever we are faced with two token specifications
+whose regular expressions match a string of consecutive input characters,
+we {\em always choose the one with longest possible match}.
+For example, if the next characters in the input stream are
+\begin{qv}
+procedure
+\end{qv}
+the above specifications would produce an \verb'ID' token
+with lexeme \verb'procedure' instead of a \verb'PROC' token
+with lexeme \verb'proc':
+both of these specifications match the beginning (`\verb'proc'') of input,
+but the \verb'ID' match is longer.\exx
+If two or more token specifications
+match the same input (longest match), we always
+{\em choose the first specification line
+in the \verb'grammar' file that matches} to identify the token.\exx
+In summary, for a given input string, we always
+\begin{enumerate}
+\item choose the token specifications with the longest match, and
+\item among those with the longest match, 
+      choose the first token specification 
+      that appears in the \verb'grammar' file.
+\end{enumerate}
+We use the phrase {\em first longest match}
+to describe these rules for token processing.
+\end{minipage}
+\clearpage

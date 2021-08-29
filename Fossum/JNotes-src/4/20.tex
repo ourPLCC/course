@@ -1,0 +1,22 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language TYPE1} (continued)\exx
+The \verb'definedType' method in the \verb'Prim' class
+asks the primitive object what its procedure type is,
+and the object returns the appropriate type
+from among the ones compiled in the \verb'Type' class.
+For example, in the \verb'AddPrim' class,
+we define:
+{\Large
+\begin{qv}
+    public ProcType definedType() {
+        return Type.ii_i;
+    }
+\end{qv}
+}
+When declaring the formal parameter types of procedures
+and processing \verb'let' and \verb'letrec' expressions,
+we ensure that there are no duplicate variable names.
+using the \verb':init' hook during parsing.\exx
+\end{minipage}

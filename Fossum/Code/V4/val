@@ -1,0 +1,97 @@
+Val
+%%%
+import java.util.*;
+
+public abstract class Val {
+
+    public static Val [] toArray(List<Val> valList) {
+        int n = valList.size();
+        return valList.toArray(new Val[n]);
+    }
+
+    public Val apply(List<Val> args, Env e) {
+        throw new PLCCException("Cannot apply " + this);
+    }
+
+    public boolean isTrue() {
+        return true; // any Val is true except for an IntVal of zero
+    }
+
+    public IntVal intVal() {
+        throw new PLCCException(this + ": not an Int");
+    }
+
+}
+%%%
+
+IntVal
+%%%
+import java.util.*;
+
+public class IntVal extends Val {
+
+    public int val;
+    
+    public IntVal(String s) {
+        val = Integer.parseInt(s);
+    }
+    
+    public IntVal(int v) {
+        val = v;
+    }
+
+    public IntVal intVal() {
+        return this;
+    }
+    
+    public boolean isTrue() {
+        return val != 0;
+    }
+    
+    public String toString() {
+        return "" + val;
+    }
+
+    public static void main(String [] args) {
+        Val v = new IntVal(3);
+        Val w = new IntVal(0);
+        System.out.println("v=" + v);
+        System.out.println("w=" + w);
+    }
+    
+}
+%%%
+
+ProcVal
+%%%
+import java.util.*;
+
+public class ProcVal extends Val {
+
+    public Formals formals;
+    public Exp body;
+    public Env env;
+
+    public ProcVal(Formals formals, Exp body, Env env) {
+        this.formals = formals;
+        this.body = body;
+        this.env = env;
+    }
+
+    public Val apply(List<Val> args, Env e) {
+        // bind the formals to the arguments
+        if (formals.varList.size() != args.size())
+            throw new PLCCException("formals/args number mismatch");
+        Bindings bindings = new Bindings(formals.varList, args);
+        // extend the captured environment with these bindings
+        Env nenv = env.extendEnv(bindings);
+        // and evaluate the body in this new environment
+        return body.eval(nenv);
+    }
+
+    public String toString() {
+        return "proc";
+    }
+}
+
+%%%

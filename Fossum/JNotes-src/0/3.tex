@@ -1,0 +1,35 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Lexical Analysis, Syntax Analysis, and Semantic Analysis}\exx
+A {\em lexical analyzer} is a program or procedure
+that carries out lexical analysis for a particular language.
+Such a program is also called a {\em scanner},
+{\em tokenizer}, or {\em lexer}.
+The input to a scanner is a stream (sequence) of characters,
+and its output is a stream of tokens.
+The behavior of a scanner for a language is defined
+by the lexical specification of the language.\exx
+A {\em syntax analyzer} is a program or procedure
+that carries out syntax analysis for a particular language.
+Such a program is also called a {\em parser}.
+The input to a parser is a stream of tokens
+(produced by a seanner),
+and its output is a {\em parse tree}
+that is an abstract representation of the structure of the program.
+The behavior of a parser for a language is defined
+by the syntax specification of the language.\exx
+The string of input characters that makes up a token
+is called a {\em lexeme}.
+For example, when you read a word (token) from printed text on a page,
+the particular collection of characters that make up the word is its lexeme.
+In this paragraph, the first lexeme is ``the'' (ignoring case),
+consisting of the individual letters `t', `h', and `e'.
+This lexeme is an instance of an English part of speech called an ``article''.
+In this case, ``article'' is the token and ``the'' is the instance.
+The other instances of the ``article'' token (in English)
+are ``a'' and ``an''.
+{\bf A token is an abstraction, and a lexeme 
+is an instance of this abstraction}.\exx
+\end{minipage}
+\clearpage

@@ -1,0 +1,43 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Logic Programming}\exx
+Continuing the above example,
+the query `\verb'larger(X,Y)?''
+produces the following result:
+{\Large
+\begin{qv}
+2 matches:
+larger(jupiter, earth)
+larger(earth, mercury)
+\end{qv}
+}
+How can we logically deduce that jupiter is larger than earth?
+To do so, we build a {\em rule} that says that
+if \verb'X' is larger than \verb'Y',
+and if \verb'Y' is larger than \verb'Z',
+then \verb'X' is larger than \verb'Z'.
+We do so as follows:
+{\Large
+\begin{qv}
+larger(X,Z) :- larger(X,Y), larger(Y,Z).
+\end{qv}
+}
+The LHS of this rule (the part to the left of `\verb':-'')
+is called an {\em Atom},
+and the RHS of this rule is a sequence of {\em Premises}.
+You can read this rule as saying
+{\em the LHS is true if all of the Premises on the RHS are true}.
+The result is all of the possible substitutions
+of \verb'X', \verb'Y', and \verb'Z'
+that make the rule true.\exx
+Once we have included this rule, our ``larger'' query reports this:
+{\Large
+\begin{qv}
+3 matches:
+larger(jupiter, earth)
+larger(earth, mercury)
+larger(jupiter, mercury)
+\end{qv}
+}
+\end{minipage}

@@ -1,0 +1,36 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language REF} (continued)\exx
+Remember that we always use value semantics for \verb'let' bindings.
+This means that a Language REF program such as
+{\Large
+\begin{qv}
+let
+  x = 3
+in
+  let
+    y = x
+  in
+    { set y = add1(y) ; x }
+\end{qv}
+}
+evaluates to 3.\exx
+Our observation (see Slide 3.79) that any \verb'let' can be re-written
+as an equivalent procedure application no longer applies
+with languages that implement call-by-reference semantics.
+Specifically, if we attempt
+to re-write the inner \verb'let' in the above Language REF program
+as a procedure application using the algorithm given on Slide 3.79,
+we get
+{\Large
+\begin{qv}
+let
+  x = 3 
+in
+  .proc(y) {set y = add1(y) ; x } (x)
+\end{qv}
+}
+which evaluates to 4.
+\end{minipage}
+\clearpage

@@ -1,0 +1,26 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language NEED} (continued)\exx
+Here's another example illustrating the difference
+between call-by-reference and call-by-name/need.
+Examine the definition of \verb.seq., which seems
+to recurse infinitely but doesn't with call-by-name (why?).
+\begin{qv}
+define pair = proc(x,y)
+  proc(t) if t then y else x
+define first = proc(p) .p(0)
+define rest = proc(p) .p(1)
+define nth = proc(n,lst)    % zero-based
+  if n then .nth(sub1(n),.rest(lst)) else .first(lst)
+define seq = proc(n) .pair(n,.seq(add1(n)))
+define natno = .seq(0)      % all the natural numbers!!
+%% The above never terminates with call-by-reference.
+%% With call-by-name or call-by-need, we get:
+.first(natno)               % => 0 
+.first(.rest(natno))        % => 1
+.first(.rest(.rest(natno))) % => 2, and so forth ...
+.nth(100,natno)             % => 100
+\end{qv}
+\end{minipage}
+\clearpage

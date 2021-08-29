@@ -1,0 +1,43 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf PLCC}\\
+\Large
+PLCC is the name of a tool set
+that takes a language specification file
+and generates a set of Java source files
+for an interpreter for the language.\exx
+The specification file is in three sections:
+\begin{enumerate}
+\parskip -0.5ex
+\item lexical specification
+\item syntax
+\item semantics 
+\end{enumerate}
+A line containing a single `\verb'%'' is used
+to separate the lexical specification section from the syntax section
+and to separate the syntax section from the semantics secton.\exx
+A specification file can consist
+of just the lexical specification,
+in which case the PLCC toolset creates only
+a token scanner (\verb'Scan') for the language.\exx
+A specification file can consist
+of just the lexical specification and syntax,
+in which case the PLCC toolset creates only
+the scanner and parser (\verb'Parse') for the language.\exx
+The format of a language specification file 
+is shown here:
+{\large
+\begin{qv}
+# lexical specification
+...
+%
+# syntax
+...
+%
+# semantics
+...
+\end{qv}
+}
+\end{minipage}
+\clearpage

@@ -1,0 +1,40 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language NAME} (continued)\exx
+To change from call-by-reference to call-by-name,
+we need to change the default \verb'evalRef' behavior
+of the \verb'Exp' objects
+so that \verb'evalRef' returns a thunk
+for most expressions {\em except for}
+\verb'LitExp', \verb'ProcExp', and \verb'VarExp'.
+This means that we define \verb'evalRef'
+in the \verb'Exp' class with its default behavior as follows:
+{\Large
+\begin{qv}
+public Ref evalRef(Env env) {
+    return new ThunkRef(this, env);
+}
+\end{qv}
+}
+For a \verb'LitExp' and a \verb'ProcExp',
+a thunk is not necessary,
+so we return an ordinary \verb'ValRef' as in the \verb'REF' language:
+{\Large
+\begin{qv}
+public Ref evalRef(Env env) {
+    return new ValRef(eval(env));
+}
+\end{qv}
+}
+Finally, for a \verb'VarExp', we simply use reference semantics
+as in the \verb'REF' language:
+{\Large
+\begin{qv}
+public Ref evalRef(Env env) {
+    return env.applyEnvRef(var);
+}
+\end{qv}
+}
+\end{minipage}
+\clearpage

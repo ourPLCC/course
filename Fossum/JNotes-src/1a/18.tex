@@ -1,0 +1,46 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf PLCC -- Semantics}\exx
+For a given ``program'' in the language defined by its specification,
+the \verb'parse' method in the {\em start symbol class} --
+the class determined by the first nonterminal
+in the language BNF grammar rules --
+returns an instance of this class.
+This instance is the root of the parse tree for the program.
+For example, given the BNF rules
+{\Large
+\begin{qv}
+<tree>:Leaf     ::= <NUMBER>
+<tree>:Interior ::= LPAREN <SYMBOL> <tree>left <tree>right RPAREN
+\end{qv}
+}
+the \verb'parse' method defined in the \verb'Tree' class
+returns an instance of a \verb'Tree' object,
+which is the root of the parse tree.
+(In what follows, we use the term ``parse tree''
+to refer to the root of the parse tree).\exx
+{\bf The runtime semantics of any PLCC program is the behavior
+obtained by calling the \verb'void $run()' method
+on the parse tree.}
+For any PLCC language,
+the start symbol class
+extends a special \verb'_Start' class
+generated automatically by \verb'PLCC',
+so the parse tree is also an instance of \verb'_Start'.
+Because the \verb'_Start' class defines a \verb'$run()' method
+whose behavior is to display the \verb'toString' representation
+of this object to standard output,
+and because the parse tree is an instance of the \verb'_Start' class,
+the \verb'$run()' behavior defined on the parse tree
+defaults to displaying this \verb'toString' representation.
+Here is the code for \verb'$run()' in the \verb'_Start' class:
+{\Large
+\begin{qv}
+    public void $run() {
+        System.out.println(this.toString());
+    }
+\end{qv}
+}
+\end{minipage}
+\clearpage

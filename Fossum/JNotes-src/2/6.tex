@@ -1,0 +1,19 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Environments} (continued)\exx
+A local environment should not have two different bindings with the same symbol,
+although our simple implementation does not enforce this.
+We will see later how to we can achieve this restriction
+when we build our local environments.\exx
+The following diagram gives an example
+of a \verb'Binding' object
+that binds the symbol \verb'"x"' to the integer (\verb'IntVal') value \verb'3',
+and a \verb'Bindings' object
+with a \verb'bindingList' of size three.\exx
+\centerline{\psfig{figure=bindings.eps,width=6in}}
+For the sake of simplicity,
+we omit drawing the extra box
+around the \verb'bindingList' in future \verb'Bindings' diagrams.
+\end{minipage}
+\clearpage

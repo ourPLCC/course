@@ -1,0 +1,25 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Order of evaluation} (continued)\exx
+Here is an example without currying:
+\begin{qv}
+let
+  x = 3
+  y = 5
+  p = proc(t,u) +(t,u)
+in
+  .p(x,y) % => 8
+\end{qv}
+Here is semantically equivalent code
+that has exactly one formal parameter per \verb'proc':
+\begin{qv}
+let
+  x = 3
+  y = 5
+  p = proc(t) proc(u) +(t,u)
+in
+  ..p(x)(y)
+\end{qv}
+\end{minipage}
+\clearpage

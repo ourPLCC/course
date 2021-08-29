@@ -1,0 +1,225 @@
+%% A class that implement Lists, similar
+%% to the built-in list structure in OBJ.
+
+define lst =
+  class
+
+    %% a list node -- represents a list with "real" first and rest items
+    static lstNode =
+      class extends myclass
+
+        field fst
+        field rst
+        field siz
+
+        %% return a new list with only those elements of this list
+        %% that f says is not false
+        method filter = proc(f)
+          !<rst>filter(f)>filterItem(f,fst)!>
+
+        %% return a new list by appending this list to ys 
+        method append = proc(ys) !<rst>append(ys)>add(fst)!>
+
+        %% return a new list by appending this list to itself
+	method double = proc() .<self>append(self)
+
+        %% sort this lst, returning a new lst
+        %% uses quicksort, with the fst element of the lst as pivot
+        method sort = proc()
+          let
+            %% sort everything in rst less than the pivot
+            lt = !<rst>filter(proc(t) <?(t, fst))>sort()!>           
+            %% sort everything in rst greater than or equal to the pivot
+            %% and add the pivot to the resulting list
+            ge = !<rst>filter(proc(t) >=?(t, fst))>sort()>add(fst)!>
+          in
+            %% combine the two halves into a single sorted list
+           .<lt>append(ge)
+
+%%%%%%%%% The above 'let' can be written as a "one-liner":
+%%        !<rst> filter(proc(t) <?(t, fst))
+%%             > sort()
+%%             > append(!<rst>filter(proc(t) >=?(t, fst))
+%%                           >sort()
+%%                           >add(fst)
+%%                      !>)
+%%        !>
+
+        %% initialize this lstNode
+        method init = proc(fst,rst)
+          { set <self>fst = fst
+          ; set <self>rst = rst
+          ; set siz = add1(.<rst>size())
+          ; self
+          }
+
+        %% the size of this list
+        method size = proc() siz
+
+        method null? = proc() 0 %% is this null?  NO!
+
+        %% display this list in the form [x,y,z,...]
+        method show = proc()
+          { let
+              lst = self
+              pre = "["
+              comma = ","
+              size = siz
+            in
+              while size do
+                { putc pre
+                ; display <lst>fst
+                ; set lst = <lst>rst
+                ; set size = sub1(size)
+                ; set pre = comma
+                }
+              else
+                nil
+          ; putc "]"
+          ; newline
+          ; self
+          }
+
+        %% return a new list by applying f
+        %% to all of the elements of this list
+        method map = proc(f) !<rst>map(f)>add(.f(fst))!>
+
+        %% create a built-in list [...] from this lst object
+        method toList = proc() addFirst(fst, .<rst>toList())
+          
+      end %% of class lstNode
+
+    %% the empty list class -- no first and rest items
+    static lstNull =
+      class extends myclass
+
+        method filter = proc(f) self
+        method append = proc(ys) ys
+        method double = proc() self
+        method sort = proc() self
+        method null? = proc() 1 %% is this null?  YES!
+        method show = proc() { putc "[]" ; newline ; self }
+        method map = proc(f) self
+        method size = proc() 0
+        method toList = proc () []
+           
+      end %% of class lstNull
+
+    %% the empty list (a singleton in the lst class)
+    static null = new lstNull
+
+    %% create a 'lst' object from a built-in list [...]
+    static fromList = proc(list) % list is a 'built-in' list
+      if list
+      then .<new lstNode>init(first(list), .fromList(rest(list)))
+      else null
+
+    %% add a value to this lst object, returning a new lst
+    method add = proc(t) .<new lstNode>init(t,self)
+
+    %% if .f(item) is true, add it to the current lst and return the result
+    %% otherwise just return the current lst
+    method filterItem = proc(f, item)
+      if .f(item) then .add(item) else self
+
+  end %% of class lst
+
+{putc !<lst>fromList("Hello world")>toList()!> ; newline}
+
+%% start with an empty list, then add 1, 3, and 5
+define zs =
+  !<<lst>null
+        >show()
+        >add(1)
+        >show()
+        >add(3)
+        >show()
+        >add(5)
+        >show()
+  !>
+
+{ putc "zs = " ; .<zs>show() }
+{ putc "zs size = " ; .<zs>size() }
+
+%% square and append procedure
+define sa = proc(lst)
+  !<lst>map(proc(x) *(x,x))>append(lst)!>
+
+%% square and append zs three times
+{ set zs = .sa(.sa(.sa(zs))) ; putc "zs = " ; .<zs>show() }
+
+%% take the list zs, generate a list
+%% consisting of all the elements of zs that are less than 40,
+%% show this list, add 14 to each of the elements,
+%% append this to the original list of zs, show the result,
+%% and replace zs with the result
+{ putc "zs less than 40 = " 
+; set zs =
+    !<zs>filter(proc(x) <?(x,40))
+        >show()
+        >map(proc(x) +(x,14))
+        >append(zs)
+        >show()
+    !>
+}
+
+%% double the list zs three times, show the result,
+%% sort them, and show the sorted result
+!<zs>double()
+    >double()
+    >double()
+    >show()
+    >sort()
+    >show()
+!>
+
+define rands = 
+  !<<lst>null 
+        >add(18) >add(25) >add(25) >add(18) >add(22) >add(32) >add(1)  >add(43)
+        >add(32) >add(19) >add(0)  >add(34) >add(19) >add(30) >add(14) >add(38)
+        >add(0)  >add(12) >add(13) >add(10) >add(42) >add(31) >add(47) >add(23)
+        >add(5)  >add(1)  >add(8)  >add(36) >add(33) >add(13) >add(41) >add(47)
+        >add(6)  >add(19) >add(19) >add(37) >add(42) >add(39) >add(39) >add(17)
+        >add(41) >add(44) >add(39) >add(1)  >add(27) >add(35) >add(43) >add(2)
+        >add(15) >add(36) >add(26) >add(3)  >add(49) >add(2)  >add(1)  >add(13)
+        >add(11) >add(15) >add(38) >add(35) >add(47) >add(26) >add(42) >add(31)
+        >add(8)  >add(20) >add(27) >add(6)  >add(25) >add(2)  >add(22) >add(14)
+        >add(14) >add(48) >add(39) >add(0)  >add(46) >add(32) >add(6)  >add(32)
+        >add(41) >add(11) >add(9)  >add(25) >add(23) >add(18) >add(12) >add(15)
+        >add(15) >add(22) >add(37) >add(25) >add(43) >add(41) >add(1)  >add(9)
+        >add(3)  >add(1)  >add(23) >add(33) >add(31) >add(30) >add(36) >add(38)
+        >add(35) >add(25) >add(26) >add(39) >add(2)  >add(36) >add(37) >add(48)
+        >add(1)  >add(12) >add(15) >add(34) >add(5)  >add(0)  >add(36) >add(33)
+        >add(16) >add(10) >add(33) >add(49) >add(45) >add(49) >add(12) >add(14)
+        >add(22) >add(2)  >add(24) >add(48) >add(41) >add(0)  >add(5)  >add(35)
+        >add(47) >add(35) >add(7)  >add(27) >add(37) >add(20) >add(47) >add(42)
+        >add(35) >add(29) >add(39) >add(6)  >add(47) >add(8)  >add(8)  >add(8)
+        >add(36) >add(1)  >add(15) >add(30) >add(29) >add(45) >add(44) >add(24)
+        >add(6)  >add(25) >add(4)  >add(40) >add(4)  >add(1)  >add(34) >add(25)
+        >add(43) >add(28) >add(38) >add(44) >add(42) >add(12) >add(24) >add(47)
+        >add(18) >add(40) >add(42) >add(24) >add(42) >add(12) >add(8)  >add(1)
+        >add(32) >add(43) >add(39) >add(15) >add(33) >add(18) >add(15) >add(49)
+        >add(44) >add(15) >add(43) >add(22) >add(0)  >add(43) >add(22) >add(11)
+        >double()
+        >double()
+%	>double()
+%	>double()
+	>sort()
+	>show()
+  !>
+
+%% append for built-in lists
+define append = proc(xs, ys)
+    if xs then addFirst(first(xs), .append(rest(xs), ys)) else ys
+
+%% a list of all of the printable ASCII characters
+define ascii = proc(s,e) % s=start, e=end
+  letrec
+    loop = proc(t)
+      if <?(t, e)
+        then addFirst(t, .loop(add1(t)))
+        else []
+    in
+      .loop(s)
+            
+{newline ; putc .ascii(32,126) ; newline}

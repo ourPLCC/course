@@ -1,0 +1,250 @@
+Program:import
+%%%
+import abcdatalog.engine.bottomup.sequential.*;
+%%%
+
+Program
+%%%
+    public static Set<Clause> clauses = new HashSet<Clause>();
+    public static SemiNaiveEngine engine = null;
+
+    public abstract void eval();
+
+    public static void engineInit() {
+        if (engine == null) {
+            engine = new SemiNaiveEngine();
+            try {
+                engine.init(clauses);
+            } catch (Exception e) {
+                System.out.println(e);
+                System.exit(1);
+            }
+        }
+    }
+
+    public static void addClause(Clause clause) {
+        clauses.add(clause);
+        engine = null; // must do this for any changes in the clauses
+    }
+
+    public static void delClause(Clause clause) {
+        clauses.remove(clause);
+        engine = null; // must do this for any changes in the clauses
+    }
+
+    public static void delClauses(PositiveAtom h) {
+        engineInit();
+        Set<PositiveAtom> rs = engine.query(h);
+        for (PositiveAtom a : rs) {
+            Clause clause = new Clause(a, new ArrayList<Premise>());
+            System.out.println("delete: " + clause);
+            delClause(clause);
+        }
+    }
+        
+
+    public static void clearClauses() {
+        clauses = new HashSet<Clause> ();
+        engine = null;
+    }
+
+    public static void doQuery(PositiveAtom h) {
+        engineInit();
+        Set<PositiveAtom> rs = engine.query(h);
+        int size = rs.size();
+        if (size == 0)
+            return;
+        if (size == 1)
+            System.out.println("1 match:");
+        else
+            System.out.println(size + " matches:");
+        for (PositiveAtom a : rs) {
+            System.out.println(a);
+        }
+    }
+
+    public String toString() {
+        eval();
+        return ""; // default
+    }
+%%%
+
+Prog
+%%%
+
+    public void eval() {
+        PositiveAtom h = head.eval();
+        dfrq.eval(h);
+    }
+
+%%%
+
+Dfrq
+%%%
+    public abstract void eval(PositiveAtom h);
+%%%
+
+Delete
+%%%
+    public void eval(PositiveAtom h) {
+        Program.delClauses(h);
+        /*
+        Clause clause = new Clause(h, new ArrayList<Premise>());
+        System.out.println("delete: " + clause);
+        Program.delClause(clause);
+        */
+    }
+%%%
+
+Fact
+%%%
+    public void eval(PositiveAtom h) {
+        Clause clause = new Clause(h, new ArrayList<Premise>());
+        // System.out.println("fact: " + clause);
+        Program.addClause(clause);
+    }
+%%%
+
+Rule
+%%%
+    public void eval(PositiveAtom h) {
+        List<Premise> body = new ArrayList<Premise>();
+        conjuncts.eval(body);
+        Clause clause = new Clause(h, body);
+        Program.addClause(clause);
+    }
+%%%
+
+Query
+%%%
+    public void eval(PositiveAtom h) {
+        Program.doQuery(h);
+    }
+%%%
+
+Head
+%%%
+    public PositiveAtom eval() {
+        String predSym = lit.toString();
+        Term [] terms = args.getTerms();
+        return PositiveAtom.create(PredicateSym.create(predSym, terms.length), terms);
+    }
+%%%
+
+Args
+%%%
+    public Term [] getTerms() {
+        ArrayList<Term> terms = new ArrayList<Term>();
+        for (Vlw vlw : vlwList) {
+            terms.add(vlw.getTerm());
+        }
+        int size = terms.size();
+        return terms.toArray(new Term[0]);
+    }
+%%%
+
+Vlw
+%%%
+    public abstract Term getTerm();
+%%%
+
+Var
+%%%
+    public Term getTerm() {
+        return Variable.create(var.toString());     
+    }
+%%%
+
+Lit
+%%%
+    public Term getTerm() {
+        return Constant.create(lit.toString());
+    }
+%%%
+
+WC
+%%%
+    public Term getTerm() {
+        return Variable.createFreshVariable();
+    }
+%%%
+
+Print
+%%%
+    public void eval() {
+        // print the EDB and IDB clauses, in that order
+        String ESD = "";
+        String ISD = "";
+        for (Clause clause : Program.clauses) {
+            if (clause.getBody().size() == 0)
+                ESD += clause + "\n";
+            else
+                ISD += clause + "\n";
+        }
+        System.out.print(ESD);
+        System.out.print(ISD);
+    }
+%%%
+
+Clear
+%%%
+    public void eval() {
+        Program.clearClauses();
+    }
+%%%
+
+Conjuncts
+%%%
+    public void eval(List<Premise> body) {
+        for (Conjunct conj : conjunctList) {
+            body.add(conj.getPremise());
+        }
+    }
+%%%
+
+Conjunct
+%%%
+    public abstract Premise getPremise();
+%%%
+
+HeadConj
+%%%
+    public Premise getPremise() {
+        return head.eval();
+    }
+%%%
+
+RelConj
+%%%
+    public Premise getPremise() {
+        Term t1 = Variable.create(lh.toString());
+        Term t2 = rh.getTerm();
+        return rel.getPremise(t1, t2);
+    }
+%%%
+
+NotConj
+%%%
+    public Premise getPremise() {
+        return new NegatedAtom(head.eval());
+    }
+%%%
+
+Rel
+%%%
+    public abstract Premise getPremise(Term t1, Term t2);
+%%%
+
+EQRel
+%%%
+    public Premise getPremise(Term t1, Term t2) {
+        return new BinaryUnifier(t1, t2);
+    }
+%%%
+
+NERel
+%%%
+    public Premise getPremise(Term t1, Term t2) {
+        return new BinaryDisunifier(t1, t2);
+    }
+%%%

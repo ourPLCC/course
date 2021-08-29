@@ -1,0 +1,37 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language V3} (continued)\exx
+{\large
+\emm\VerbBox{\colorbox{light}}{\begin{tabular}{@{}ll}
+\verb'<exp>:LetExp' & \verb'::= LET <letDecls> IN <exp>'\\
+  & \VerbBox{\fbox}{\verb'LetExp(LetDecls letDecls, Exp exp)'}\\
+\verb'<letDecls>' & \verb'**= <VAR> EQUALS <exp>'\\
+  & \VerbBox{\fbox}{\verb'LetDecls(List<Token> varList, List<Exp> expList)'}\\
+\end{tabular}}
+\exx
+}
+Here is another observation you should pay attention to.
+In the \verb'<letDecls>' rule, each \verb'<VAR>' symbol
+is called the {\em left-hand side} (LHS) of the binding
+and the corresponding \verb'<exp>'
+is called its {\em right-hand side} (RHS).
+(Don't confuse this with the LHS and RHS of the grammar rule itself.)
+All of the RHS expressions in a \verb'LetDecls' are evaluated
+in the enclosing environment.
+{\em The LHS \verb'<VAR>' variables become bound
+to their corresponding RHS expression values
+{\bf after} all of the RHS expressions have been evaluated}.
+Thus the following expression
+\begin{qv}
+let p = 4
+in
+  let
+    p = 42
+    x = p
+  in
+    x
+\end{qv}
+evaluates to 4.
+\end{minipage}
+\clearpage

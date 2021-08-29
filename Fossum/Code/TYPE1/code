@@ -1,0 +1,529 @@
+# class methods
+
+Program
+%%%
+    public static Env env = Env.initEnv(); // top-level value environment
+    public static TypeEnv tenv = TypeEnv.initTypeEnv(); // top-level type env
+%%%
+
+Declare
+%%%
+    // calling $run() triggers a modificaiton
+    // of the top-level type environment
+    public void $run() {
+        TypeEnv tenv = Program.tenv; // top-level type environment
+        Type varType; // variable's declared type
+        String sym = var.toString();
+        try {
+            // look up the variable in the top-level type environment
+            varType = tenv.applyTypeEnv(sym);
+        } catch (PLCCException e) {
+            // no type binding -- must be a new type declaration
+            // that we add to the top-level type environment
+            varType = typeExp.toType();
+            tenv.add(new TypeBinding(sym, varType)); // type binding
+            System.out.println(sym + ":" + varType);
+            return;
+        }
+        throw new PLCCException(sym + ": duplicate variable declaration");
+    }
+%%%
+
+Define
+%%%
+    // calling $run() triggers a modification
+    // of the top-level type and value environments
+    public void $run() {
+        Env env = Program.env;       // top-level environment
+        TypeEnv tenv = Program.tenv; // top-level type environment
+        Type rhsExpType; // RHS expression type
+        Val  rhsExpVal; // RHS expression value
+        Type lhsVarType; // LHS variable declared type
+        Val  lhsVarVal; // LHS variable's current value
+        String sym = var.toString(); // the LHS symbol
+        try {
+            // look up the LHS variable in the top-level type environment
+            lhsVarType = tenv.applyTypeEnv(sym);
+        } catch (PLCCException e) {
+            // no type binding -- must be a new variable definition
+            rhsExpType = exp.evalType(tenv);
+            tenv.add(new TypeBinding(sym, rhsExpType));        // type binding
+            rhsExpVal = exp.eval(env);
+            env.add(new Binding(sym, new ValRef(rhsExpVal))); // value binding
+            System.out.println(sym + ":" + rhsExpType);
+            return;
+        }
+        // the variable has a declared type, lhsVarType -- see if it needs a def'n
+        try {
+            // look up the value of variable in the top-level environment
+            lhsVarVal = env.applyEnv(sym);
+        } catch (PLCCException e) {
+            // the variable has a declared type, but no value bound to it
+            rhsExpType = exp.evalType(tenv);
+            // the declared and defined types must be the same
+            Type.checkEquals(lhsVarType, rhsExpType);
+            // get the expression value
+            rhsExpVal = exp.eval(env);
+            // and bind it to the variable
+            env.add(new Binding(sym, new ValRef(rhsExpVal)));
+            System.out.println(sym + ":" + rhsExpType);
+            return;
+        } 
+        // the variable has a value, too -- can't redefine it!
+        throw new PLCCException(sym + ": duplicate variable definition");
+    }
+%%%
+
+Eval
+%%%
+    public void $run() {
+        exp.evalType(Program.tenv); // type check first
+        Val val = exp.eval(env);
+        System.out.println(val);
+    }
+%%%
+
+Exp
+%%%
+    public abstract Val eval(Env env);
+
+    public Ref evalRef(Env env) {
+        return new ValRef(eval(env));
+    }
+
+    public abstract Type evalType(TypeEnv tenv);
+%%%
+
+PrimappExp
+%%%
+
+    public String toString() {
+        return prim.toString()+ "(" + rands + ")";
+    }
+
+    public Val eval(Env env) {
+        // evaluate the terms in the expression list
+        // and apply the prim to the array of integer results
+        List<Val> valList = rands.evalRands(env);
+        Val [] va = Val.toArray(valList);
+        return prim.apply(va);
+    }
+
+    public Type evalType(TypeEnv tenv) {
+        ProcType pt = prim.definedType();
+        List<Type> argTypeList = rands.evalTypeRands(tenv);
+        Type.checkEqualTypes(pt.paramTypeList, argTypeList);
+        return pt.returnType;
+    }
+
+
+%%%
+
+LitExp
+%%%
+
+    public Val eval(Env env) {
+        return new IntVal(lit.toString());
+    }
+
+    public Type evalType(TypeEnv tenv) {
+        return Type.intType;
+    }
+
+    public String toString() {
+        return lit.toString();
+    }
+
+%%%
+
+IfExp
+%%%
+    public Val eval(Env env) {
+        Val testVal = testExp.eval(env);
+        if (testVal.isTrue())
+            return trueExp.eval(env);
+        else
+            return falseExp.eval(env);
+    }
+
+    public Type evalType(TypeEnv tenv) {
+        Type testType = testExp.evalType(tenv);
+        testType.checkBoolType(Type.boolType);
+        Type trueExpType = trueExp.evalType(tenv);
+        Type falseExpType = falseExp.evalType(tenv);
+        Type.checkEquals(trueExpType, falseExpType);
+        return trueExpType;
+    }
+
+    public String toString() {
+        return "if " + testExp + " then " + trueExp + " else " +falseExp;
+    }
+%%%
+
+VarExp
+%%%
+
+    public Val eval(Env env) {
+        return env.applyEnv(var);
+    }
+
+    public Ref evalRef(Env env) {
+        return env.applyEnvRef(var.toString());
+    }
+
+    public Type evalType(TypeEnv tenv) {
+        return tenv.applyTypeEnv(var.toString());
+    }
+
+    public String toString() {
+        return var.toString();
+    }
+
+%%%
+
+LetExp
+%%%
+    public Val eval(Env env) {
+        Env nenv = letDecls.addBindings(env);
+        return exp.eval(nenv);
+    }
+
+    public Type evalType(TypeEnv tenv) {
+        TypeEnv ntenv = letDecls.addTypeBindings(tenv);
+        return exp.evalType(ntenv);
+    }
+
+    public String toString() {
+        return " ...LetExp... ";
+    }
+%%%
+
+LetrecExp
+%%%
+    public Val eval(Env env) {
+        Env nenv = letDecls.addLetrecBindings(env); // new bindings
+        return exp.eval(nenv);
+    }
+
+    public Type evalType(TypeEnv tenv) {
+        TypeEnv ntenv = letDecls.addLetrecTypeBindings(tenv);
+        return exp.evalType(ntenv);
+    }
+
+    public String toString() {
+        return " ...LetrecExp... ";
+    }
+%%%
+
+ProcExp
+%%%
+    public Val eval(Env env) {
+        return proc.makeClosure(env);
+    }
+
+    public Type evalType(TypeEnv tenv) {
+        return proc.evalType(tenv);
+    }     
+
+    public String toString() {
+        return " ...ProcExp... ";
+    }
+%%%
+
+AppExp
+%%%
+
+    public Val eval(Env env) {
+        Val p = exp.eval(env);
+        List<Ref> refList = rands.evalRandsRef(env);
+        return p.apply(refList);
+    }
+
+    public Type evalType(TypeEnv tenv) {
+        Type tt = exp.evalType(tenv);
+        tt.checkProcType();
+        ProcType pt = tt.procType();
+        List<Type> argTypeList = rands.evalTypeRands(tenv);
+        Type.checkEqualTypes(pt.paramTypeList, argTypeList);
+        return pt.returnType;
+    }
+
+    public String toString() {
+        return " ...AppExp... ";
+    }
+
+%%%
+
+SeqExp
+%%%
+    public Val eval(Env env) {
+        Val v = exp.eval(env);
+        for (Exp e : seqExps.expList)
+            v = e.eval(env);
+        return v;
+    }
+
+    public Type evalType(TypeEnv tenv) {
+        Type t = exp.evalType(tenv);
+        for (Exp e : seqExps.expList)
+            t = e.evalType(tenv);
+        return t;
+    }
+
+    public String toString() {
+        return " ...SeqExp... ";
+    }
+
+%%%
+
+SetExp
+%%%
+    public Val eval(Env env) {
+        Val v = exp.eval(env);
+        Ref ref = env.applyEnvRef(var);
+        return ref.setRef(v);
+    }
+
+    public Type evalType(TypeEnv tenv) {
+        Type varType = tenv.applyTypeEnv(var.toString());
+        Type expType = exp.evalType(tenv);
+        Type.checkEquals(varType, expType);
+        return varType;
+    }
+
+%%%
+
+TrueExp
+%%%
+    public Val eval(Env env) {
+        return new BoolVal(true);
+    }
+
+    public Type evalType(TypeEnv tenv) {
+        return Type.boolType;
+    }
+%%%
+
+FalseExp
+%%%
+    public Val eval(Env env) {
+        return new BoolVal(false);
+    }
+
+    public Type evalType(TypeEnv tenv) {
+        return Type.boolType;
+    }
+%%%
+
+Proc
+%%%
+    public Val makeClosure(Env env) {
+        return new ProcVal(formals, typeExp, exp, env);
+    }
+
+    // no type checking done here!
+    public ProcType definedType() {
+        List<Type> formalTypeList = formals.formalTypeList();
+        Type declaredReturnType = typeExp.toType();
+        return new ProcType(formalTypeList, declaredReturnType);
+    }
+
+    public Type evalType(TypeEnv tenv) {
+        // retrieve the declared return type of the proc
+        Type declaredReturnType = typeExp.toType();
+        // bind the formal parameters to their declared types
+        TypeBindings typeBindings = formals.declaredTypeBindings();
+        // extend the tenv by the formal param type bindings
+        TypeEnv ntenv = tenv.extendTypeEnv(typeBindings);
+        // evaluate the type of the body using this extended
+        // type environment
+        Type expType = exp.evalType(ntenv);
+        // and check that the declared return type matches the body type
+        Type.checkEquals(declaredReturnType, expType);
+        // finally build the ProcType
+        List<Type> formalTypeList = formals.formalTypeList(); // again?
+        return new ProcType(formalTypeList, declaredReturnType);
+    }
+
+%%%
+
+Formals:init
+%%%
+        Env.checkDuplicates(varList, " in proc formals");
+%%%
+
+Formals
+%%%
+
+    public List<Type> formalTypeList() {
+        List<Type> typeList = new ArrayList<Type>(typeExpList.size());
+        for (TypeExp texp : typeExpList)
+            typeList.add(texp.toType());
+        return typeList;
+    }
+
+    public TypeBindings declaredTypeBindings() {
+        List<Type> formalTypeList = formalTypeList();
+        return new TypeBindings(varList, formalTypeList);
+    }
+
+    public String toString() {
+        String s = "";
+        String sep = "";
+        Iterator<Token> varIterator = varList.iterator();
+        Iterator<TypeExp> typeIterator = typeExpList.iterator();
+        while (varIterator.hasNext()) {
+            s += sep +
+                 varIterator.next().toString() +
+                 ":" +
+                 typeIterator.next().toType();
+            sep = ",";
+        }
+        return s;
+    }
+%%%
+
+LetDecls:init
+%%%
+        // check for duplicates during parsing
+        Env.checkDuplicates(varList, " in let/letrec LHS identifiers");
+%%%
+
+LetDecls
+%%%
+    public Env addBindings(Env env) {
+        Rands rands = new Rands(expList);
+        List<Val> valList = rands.evalRands(env);
+        List<Ref> refList = Ref.valsToRefs(valList);
+        Bindings bindings = new Bindings(varList, refList);
+        return env.extendEnvRef(bindings);
+    }
+
+    public Env addLetrecBindings(Env env) {
+        Env nenv = env.extendEnvRef(new Bindings(varList.size()));
+        Iterator<Token> varIter = varList.iterator();
+        Iterator<Exp> expIter = expList.iterator();
+        while (varIter.hasNext()) {
+            String str = varIter.next().toString();
+            Val val = expIter.next().eval(nenv);
+            Ref ref = new ValRef(val);
+            nenv.add(new Binding(str, ref));
+        }
+        return nenv;
+    }
+
+    public TypeEnv addTypeBindings(TypeEnv tenv) {
+        List<String> stringVarList = new ArrayList<String>(varList.size());
+        for(Token t : varList)
+            stringVarList.add(t.toString());
+        Rands rands = new Rands(expList);
+        List<Type> typeList = rands.evalTypeRands(tenv);
+        TypeBindings typeBindings = new TypeBindings(stringVarList, typeList);
+        return tenv.extendTypeEnv(typeBindings);
+    }
+
+    public TypeEnv addLetrecTypeBindings(TypeEnv tenv) {
+        List<String> stringVarList = new ArrayList<String>(varList.size());
+        for(Token t : varList) {
+            stringVarList.add(t.toString());
+        }
+        tenv = tenv.extendTypeEnv(new TypeBindings());
+        Iterator<Token> varIter = varList.iterator();
+        Iterator<Exp> expIter = expList.iterator();
+        while (varIter.hasNext()) {
+            String str = varIter.next().toString();
+            Type typ = expIter.next().evalType(tenv);
+            tenv.add(new TypeBinding(str, typ));
+        }
+        return tenv;
+    }
+        
+    public String toString() {
+        return " ...LetDecls... ";
+    }
+%%%
+
+Rands
+%%%
+    public List<Val> evalRands(Env env) {
+        List<Val> valList = new ArrayList<Val>(expList.size());
+        for (Exp e : expList)
+            valList.add(e.eval(env));
+        return valList;
+    }
+
+    public List<Ref> evalRandsRef(Env env) {
+        List<Ref> refList = new ArrayList<Ref>(expList.size());
+        for (Exp e : expList)
+            refList.add(new ValRef(e.eval(env)));
+        return refList;
+    }
+
+    public List<Type> evalTypeRands(TypeEnv tenv) {
+        List<Type> typeList = new ArrayList<Type>(expList.size());
+        for (Exp e : expList)
+            typeList.add(e.evalType(tenv));
+        return typeList;
+    }
+
+    public String toString() {
+        String s = "";   // the string to return
+        String sep = ""; // no separator for the first expression
+        // get all of the expressions in the expression list
+        for (Exp e : expList) {
+            s += sep + e;
+            sep = ",";   // commas separate the rest of the expressions
+        }
+        return s;
+    }
+%%%
+
+TypeExp
+%%%
+    public abstract Type toType();
+%%%
+
+PrimTypeExp
+%%%
+    public Type toType() {
+        return primType.toType();
+    }
+%%%
+
+ProcTypeExp
+%%%
+    public Type toType() {
+        List<Type> paramTypeList = typeExps.toTypes();
+        Type returnType = typeExp.toType();
+        return new ProcType(paramTypeList, returnType);
+    }
+%%%
+
+TypeExps
+%%%
+    public List<Type> toTypes() {
+        List<Type> paramTypeList = new ArrayList<Type>(typeExpList.size());
+        for (TypeExp te : typeExpList)
+            paramTypeList.add(te.toType());
+        return paramTypeList;
+    }
+%%%
+        
+PrimType
+%%%
+    public abstract Type toType();
+%%%
+
+BoolPrimType
+%%%
+    public Type toType() {
+        return new BoolType();
+    }
+%%%
+
+IntPrimType
+%%%
+    public Type toType() {
+        return new IntType();
+    }
+%%%

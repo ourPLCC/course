@@ -1,0 +1,19 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Environments} (continued)\exx
+Both the \verb'EnvNode' and \verb'EnvNull' classes
+define an \verb'add' method --
+declared as an abstract method in the \verb'Env' class --
+that takes a \verb'Binding' object as a parameter.
+In the \verb'EnvNode' class, 
+this method adds the binding to its local environment.
+In the \verb'EnvNull' class,
+this method throws an exception
+(because there is no local environment to add to).\exx
+Attempting to \verb'add' a binding to an \verb'Env' object
+should be considered an error
+if the binding's symbol already appears in the local bindings,
+although this error is not checked in the \verb'Env' classes.
+\end{minipage}
+\clearpage

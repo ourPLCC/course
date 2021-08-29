@@ -1,0 +1,47 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language REF} (continued)\exx
+Our \verb'REF' language has exactly the same grammar rules
+as our \verb'SET' language.
+The {\em only} differences are in the bindings
+of formal parameters during procedure application.
+As the discussion on the previous slides show,
+we need to handle
+actual parameters that are variables
+differently from
+actual paramemeters that are expressions.
+The idea here is to define an \verb'evalRef' method
+for instances of the \verb'Exp' classes
+that takes care of how to translate
+themselves into a reference:
+for anything but a \verb'VarExp', 
+\verb'evalRef' evaluates the expression
+and returns a new reference to the value.
+For a \verb'VarExp',
+\verb'evalRef' returns the same reference
+that the actual parameter denotes.\exx
+So in the \verb'Exp' class,
+the \verb'evalRef' method has the following {\em default} behavior:
+{\Large
+\begin{qv}
+public Ref evalRef(Env env) {
+    return new ValRef(eval(env));
+}
+\end{qv}
+}
+For the \verb'VarExp' subclass -- {\em and only for this class},
+\verb'evalRef' is implemented as:
+{\Large
+\begin{qv}
+public Ref evalRef(Env env) {
+    return env.applyEnvRef(var);
+}
+\end{qv}
+}
+The \verb'evalRef' method in the \verb'VarExp' class
+overrides the \verb'evalRef' method in the \verb'Exp' class.
+In all other classes that extend the \verb'Exp' class,
+the default definition in the parent \verb'Exp' class is used.
+\end{minipage}
+\clearpage

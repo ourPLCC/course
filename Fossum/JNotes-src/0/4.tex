@@ -1,0 +1,33 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Lexical Analysis, Syntax Analysis, and Semantic Analysis (continued)}\exx
+The {\em semantics} (from a Greek word meaning ``meaning'')
+of a programming language refers to
+the rules used to determine the meaning
+of a program written in the language.
+Here ``meaning'' refers to
+(a) whether the program makes sense, and 
+(b) what the program does when it is run.
+In languages such as English,
+a sentence can make sense (such as ``the dog ate the bone'')
+but it may not have any meaning in terms of what it ``does''.
+Programs are expected to ``do'' something,
+and what they ``do'' is part of their semantics.
+{\em Semantic analysis} is the process
+of applying these rules to a program written in the language
+to determine its meaning.\exx
+A {\em semantic analyzer} is a program or procedure
+that carries out semantic analysis.
+The input to a semantic analyzer is a parse tree.
+The output is either a direct execution of the resulting program
+(as defined by what the program does when it is run)
+or some intermediate form
+(such as machine code) that can be run at some other time.
+Direct execution is called {\em interpretation},
+whereas producing an intermediate form is called {\em compilation}.
+We will use the interpretation approach in these notes,
+though the techniques we describe apply as well
+to a compilation approach.\exx
+\end{minipage}
+\clearpage

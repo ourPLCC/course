@@ -1,0 +1,23 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language V0} (continued)\exx
+When we parse a program such as
+\begin{qv}
+add1( +(2,3))
+\end{qv}
+the parser returns an object of type \verb'Program'.
+The \verb'Program' object
+has one instance variable: \verb'exp' of type \verb'Exp'.
+The value of the \verb'exp' instance is an object
+of type \verb'PrimappExp' (which extends the \verb'Exp' class)
+that has two instance variables:
+\verb'prim' of type \verb'Prim' and \verb'rands' of type \verb'Rands'.
+The value of the \verb'prim' instance
+is an object of type \verb'Add1Prim'
+(which extends the \verb'Prim' class)
+that has no instance variables.
+And so forth ...\exx
+On the following slide we show the entire parse tree of this expression.
+\end{minipage}
+\clearpage

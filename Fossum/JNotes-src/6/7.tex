@@ -1,0 +1,36 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language INFIX} (continued)\exx
+We borrow the syntax of \verb'letrec' expressions in Language V5
+to create a new syntactic category called a \verb'block',
+with the following grammar rules:
+{\Large
+\begin{qv}
+<factor>:BlockFactor ::= <block>
+<block>              ::= LBRACE <blockDecls> <exp> <exps> RBRACE
+<blockDecls>         **= DEF <VAR> EQUALS <exp> SEMI
+<exps>               **= SEMI <exp>
+\end{qv}
+}
+As shown in the \verb'INFIX' code file,
+the evaluation semantics of a \verb'block' is
+exactly the same as for a \verb'letrec' in Language V5,
+except that the body of a \verb'block' allows 
+for multiple (semicolon-separated) expressions 
+as in a sequence expression defined in Language V5.
+Here is an example that evaluates to 8.
+{\Large
+\begin{qv}
+{
+  def x=3;
+  def y=5;
+  19 ; x+y % the value of 19 is discarded
+};
+\end{qv}
+}
+We use semicolons in the syntax of a block to terminate
+each of the block's variable definitions (using \verb'def').
+As shown on the next slide,
+\verb'block' is also used to define the body of a procedure.
+\end{minipage}

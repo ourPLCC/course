@@ -1,0 +1,34 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Exception Handling} (continued)\exx
+Here are the new grammar rules that support our exception handling:\exx
+\large
+\emm\begin{tabular}{@{}ll}
+\verb'<exp>:CatchExp' & \verb'::= CATCH <handlerDecls> IN <exp>' \\
+  & \VerbBox{\fbox}{\verb'CatchExp(HandlerDecls handlerDecls, Exp exp)'}\\
+\verb'<exp>:ThrowExp' & \verb'::= THROW <VAR> LPAREN <rands> RPAREN'\\
+  & \VerbBox{\fbox}{\verb'ThrowExp(Token var, Rands rands)'}\\
+\verb'<handler>' & \verb'::= HANDLER LPAREN <formals> RPAREN <exp>'\\
+  & \VerbBox{\fbox}{\verb'Handler(Formals formals, Exp exp)'}\\
+\verb'<handlerDecls>' & \verb'**= <VAR> EQUALS <handler>'\\
+  & \VerbBox{\fbox}{\verb'HandlerDecls(List<Token> varList prim, List<Handler> handlerList)'}\\
+\end{tabular}\exx
+\LARGE
+The \verb'CATCH', \verb'THROW', and \verb'HANDLER' tokens are defined
+in the obvious way.\exx
+One difference between exception handlers and ordinary procedures
+is that when an exception is thrown,
+the exception handler is found and evaluated
+in the current exception environment
+rather than in the current evaluation environment.
+For example, the body of a top-level procedure can throw an exception
+whose handler is not visible at the top level
+but which is defined and invoked
+in a nested exception environment
+when the top-level procedure is applied.
+To throw an exception,
+all that is required is that the handler must be visible
+in the chain of exception environments
+when the exception is thrown.
+\end{minipage}

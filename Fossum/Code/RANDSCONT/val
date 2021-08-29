@@ -1,0 +1,93 @@
+Val
+%%%
+import java.util.*;
+
+public abstract class Val {
+
+    public static Val [] toArray(List<Val> valList) {
+        int n = valList.size();
+        return valList.toArray(new Val[n]);
+    }
+
+    public Cont apply(List<Ref> refList, Cont cont) {
+        throw new PLCCException("Cannot apply " + this.toString());
+    }
+
+    public IntVal intVal() {
+        throw new PLCCException(this + ": not an Int");
+    }
+
+    // everything defaults to true except for an IntVal of zero
+    public boolean isTrue() {
+        return true;
+    }
+}
+%%%
+
+IntVal
+%%%
+import java.util.*;
+
+public class IntVal extends Val {
+
+    public int val;
+    
+    public IntVal(String s) {
+        val = Integer.parseInt(s);
+    }
+    
+    public IntVal(int v) {
+        val = v;
+    }
+
+    public IntVal intVal() {
+        return this;
+    }
+    
+    public boolean isTrue() {
+        return val != 0;
+    }
+    
+    public String toString() {
+        return "" + val;
+    }
+
+}
+
+%%%
+
+ProcVal
+%%%
+import java.util.*;
+
+public class ProcVal extends Val {
+
+    public Formals formals;
+    public Exp body;
+    public Env bodyEnv;
+
+    public ProcVal(Formals formals, Exp body, Env bodyEnv) {
+        this.formals = formals;
+        this.body = body;
+        this.bodyEnv = bodyEnv;
+    }
+
+    public Cont apply(List<Ref> refList, Cont cont) {
+        Env env = bodyEnv; // the captured environment
+        if (refList.size() > 0) {
+            Bindings bindings = new Bindings(formals.varList, refList);
+            env = env.extendEnvRef(bindings);
+        }
+        return new EvalCont(body, env, cont);
+    }
+
+    public boolean isTrue() {
+        return true;
+    }
+
+    public String toString() {
+        return "proc(" + formals + ")";
+    }
+}
+
+%%%

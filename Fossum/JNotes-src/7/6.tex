@@ -1,0 +1,26 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Logic Programming}\exx
+Entering facts, rules, and queries can be done interactively
+at the `\verb'-->'' prompt.\exx
+What if we wanted to include the planet saturn in our list of planets?
+We would certainly add the fact
+{\Large
+\begin{qv}
+planet(saturn).
+\end{qv}
+}
+We know that saturn is larger than earth, so we might then add the fact
+{\Large
+\begin{qv}
+larger(saturn,earth).
+\end{qv}
+}
+But upon a query of the \verb'larger' relation,
+we would see no \verb'larger' relation between saturn and jupiter.
+Try it!\exx
+The important thing is that the query engine
+cannot deduce something that is not explicitly given in facts
+or explicitly deduced from rules.
+\end{minipage}

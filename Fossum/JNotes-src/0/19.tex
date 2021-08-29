@@ -1,0 +1,46 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\Large
+{\bf Tokens} (continued)\exx
+After running the \verb'plccmk' command,
+a \verb'Java' subdirectory is created,
+populated with the following Java source files
+{\Large
+\begin{qv}
+Token.java
+Scan.java
+\end{qv}
+}
+as well as a few other Java support files.
+The \verb'plccmk' command also compiles these source files.
+When you run
+{\Large
+\begin{qv}
+java -cp Java Scan
+\end{qv}
+}
+you can enter strings from your terminal
+and see what tokens are recognized by the scanner.\exx
+Examine the \verb'Token.java' file to see
+how the token specifications in your \verb'grammar' file are translated
+into Java code that associates
+the token names with their corresponding regular expression patterns,
+and similarly for skip patterns.\exx
+When specifying tokens in a \verb'grammar' file,
+you can omit the \verb'token' term (but not the \verb'skip' term).
+This means that both
+{\Large
+\begin{qv}
+WORD '\S+'
+\end{qv}
+}
+and
+{\Large
+\begin{qv}
+token WORD '\S+'
+\end{qv}
+}
+are considered as equivalent.
+We follow this convention in all of our subsequent examples.\exx
+\end{minipage}
+\clearpage

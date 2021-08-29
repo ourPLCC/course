@@ -1,0 +1,26 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language NAME} (continued)\exx
+Two actual parameter expressions 
+that can appear in procedure applications
+have {\em constant behavior}:
+They are \verb'LitExp' and \verb'ProcExp'.
+Evaluating these expressions do not produce any side-effects,
+and their expressed values can never change.
+(Don't confuse {\em evaluting} a procedure expression
+with {\em applying} such an expression.)
+Because of this, in call-by-name
+we can evaluate these actual parameter expressions
+directly during procedure application
+and can bind their corresponding formal parameters
+to new references to their values directly.
+In other words, we use value semantics
+for these actual parameter expressions.\exx
+Evaluating variables that appear as actual parameter expressions
+(\verb'VarExp') also do not produce any side-effects,
+but such variables may have denoted values that can change.
+We therefore use reference semantics
+for actual parameter expressions that are variables.
+\end{minipage}
+\clearpage

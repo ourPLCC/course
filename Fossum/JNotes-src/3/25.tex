@@ -1,0 +1,31 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language V1}\exx
+Now that you see how a parse tree
+for Language V0 can {\em print} itself,
+let's show how a parse tree can {\em evaluate itself}.\exx
+The term {\em evaluate} can have many meanings
+(one of which is to produce a \verb'String' representation of itself),
+but for our purposes,
+to evaluate an arithmetic expression such
+as \VerbBox{\fbox}{\verb'add1( + (2,3))'}
+means to produce the integer value 6.
+In other words, the value of an arithmetic expression
+is its numeric value using usual rules for arithmetic.\exx
+(Remember that we are abstracting the notion of {\em value}
+to refer to an instance of the \verb'Val' class.
+In this setting, a numeric value is an instance
+of the \verb'IntVal' subclass of \verb'Val'.)\exx
+If an expression involves an identifier (symbol),
+we need to determine the value bound to that identifier
+in order to evaluate the expression.
+For example, suppose the identifier \verb'"x"' is bound
+to the integer value 10:
+then the expression \VerbBox{\fbox}{\verb'sub1(x)'}
+would evaluate to 9.\exx
+{\em The interpreter evaluates every expression in some environment.
+This environment determines how to obtain
+the values bound to the identifiers that occur in the expression}\exx
+\end{minipage}
+\clearpage

@@ -1,0 +1,2 @@
+define double = proc(x, ans) if x then .double(sub1(x), +(2,ans)) else ans
+define ddd = proc(x) if x then +(2,.ddd(sub1(x))) else 0

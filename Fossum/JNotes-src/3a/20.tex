@@ -1,0 +1,38 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language REF} (continued)\exx
+The other change is in the \verb'Rands' code.
+In the \verb'SET' language,
+the \verb'evalRands' method was used in
+the implementation of \verb'eval'
+for both a \verb'LetExp' object and an \verb'AppExp' object,
+since both created new bindings to values.
+In the \verb'REF' langauge, 
+an \verb'AppExp' object needs new bindings to values
+except for actual parameters which are variables --
+a situation that is described in the previous slide.
+Therefore, to implement the correct \verb'eval' semantics
+for an \verb'AppExp' object,
+we need to collect \verb'evalRef' references
+instead of \verb'eval' values
+to bind them to the formal parameters.
+The method \verb'evalRandsRef' in the \verb'Rands' class
+does this work for us.
+The \verb'eval' method in the \verb'AppExp' class uses
+the \verb'evalRandsRef' method
+to create the bindings of the formal parameters
+to their appropriate references.
+The definition for \verb'evalRandsRef' follows:
+{\Large
+\begin{qv}
+    public List<Ref> evalRandsRef(Env env) {
+        List<Ref> refList = new ArrayList<Ref>(expList.size());
+        for (Exp exp : expList)
+            refList.add(exp.evalRef(env));
+        return refList;
+    }
+\end{qv}
+}
+\end{minipage}
+\clearpage

@@ -1,0 +1,36 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\large
+\begin{qv}
+SequenceCont
+%%%
+import java.util.*;
+
+// used with SeqExps
+public class SequenceCont extends VCont {
+
+    public Iterator<Exp> expIter; // iterate over the expList
+    public Env env;               // the environment
+    public VCont vcont;           // apply this to the last sequence value
+
+    public SequenceCont (List<Exp> expList, Env env, VCont vcont) {
+        this.env = env;
+        this.vcont = vcont;
+        this.expIter = expList.iterator();
+    }
+
+    public ACont apply(Val val) {
+        if (expIter.hasNext()) {
+            Exp exp = expIter.next();
+            return new EvalCont(exp, env, this);
+        }
+        return new ValCont(val, vcont); // pass the last Val to vcont
+    }
+
+    public String toString() {
+        return "SequenceCont";
+    }
+}
+%%%
+\end{qv}
+\end{minipage}

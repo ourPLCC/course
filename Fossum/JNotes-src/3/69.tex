@@ -1,0 +1,31 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Drawing Envinronments} (continued)\exx
+Now consider the following expression,
+with nested \verb'let's.
+The inner \verb'let' extends the environment defined
+by the outer let (with one node, as shown on the previous page),
+so the envinroment of the inner \verb'let' is a linked
+list with two nodes.
+\Large
+\begin{qv}
+let
+  x = 3
+  y = 5
+in
+  let
+    x = +(x,y) % the RHS evaluates to 8
+    z = x      % the RHS evaluates to 3 (why?)
+  in
+    +(x,y)
+\end{qv}
+\LARGE
+In the following diagram,
+the leftmost node is the environment created by the inner \verb'let':\\
+\Large
+\centerline{\psfig{figure=xyz.eps,height=2in}}
+\LARGE
+The inner \verb'let' body expression evaluates to 13 (why?).
+\end{minipage}
+\clearpage

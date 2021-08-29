@@ -1,0 +1,10 @@
+define x = 3
+define c =
+  let
+    x = 5
+  in
+    class end
+
+<c>x       % => 3
+<c><!@>x   % => 5
+11

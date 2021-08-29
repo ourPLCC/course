@@ -1,0 +1,29 @@
+define filter = proc(p, xs)
+  if xs
+  then
+    let
+      f = first(xs)
+      r = .filter(p, rest(xs))
+    in
+      if .p(f)
+      then addFirst(f, r)
+      else r
+  else
+    xs
+
+define append = proc(xs, ys)
+  if xs
+  then addFirst(first(xs), .append(rest(xs), ys))
+  else ys
+
+define qsort = proc(xs)
+  if xs
+  then
+    let
+      y = first(xs)
+      ys = rest(xs)
+    in
+      .append(.qsort(.filter(proc(t) <?(t,y), ys)),
+              addFirst(y, .qsort(.filter(proc(t) >=?(t,y), ys))))
+  else xs
+

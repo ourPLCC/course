@@ -1,0 +1,39 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language REF} (continued)\exx
+To repeat:
+\begin{itemize}
+\item
+  The parameter passing semantics
+  that we have been using up to now
+  is called {\em call-by-value}.
+  In call-by-value semantics --
+  also referred to as simply {\em value semantics},
+  when an actual parameter expression
+  in a procedure application is a variable,
+  the procedure's corresponding formal parameter denotes
+  a new reference to the expressed value
+  of the actual parameter.
+\item
+  In {\em call-by-reference} semantics --
+  also referred to as simply {\em reference semantics},
+  when an actual parameter expression
+  in a procedure application is a variable,
+  the procedure's corresponding formal parameter denotes
+  the {\em same reference} as the actual parameter.
+\end{itemize}
+The differences between value and reference semantics
+only apply when the actual parameter expression is a variable.
+When the actual parameter expression is not a variable,
+the corresponding formal parameter always denotes
+a new reference to the expressed value
+of the actual parameter.\exx
+Observe that in \verb'let' and \verb'letrec' expressions,
+we always use value semantics for the variable bindings.
+This means that each LHS variable
+in a \verb'let/letrec' expression always denotes
+a new reference to the expressed value
+of its corresponding RHS expression.
+\end{minipage}
+\clearpage

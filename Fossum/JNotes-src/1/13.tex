@@ -1,0 +1,29 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf BNF} (continued)\exx
+\emm{\LightBox{\MYtree}}\exx
+In a given sentential form,
+the nonterminal \verb'<tree>'
+can be replaced by the right-hand side 
+of {\em either} rule having \verb'<tree>' as its left-hand side.
+For example, parsing the string `\verb'( bar 1 ( foo 1 2 ) )'' gives this:\exx
+\emm%
+\begin{tabular}{@{ $\Rightarrow$ }l}
+\multicolumn{1}{l}{\tt{\bf <tree>}} \\
+{\tt{\bf LPAREN SYMBOL} <tree> <tree> RPAREN} \\
+{\tt ( bar {\bf <tree>} <tree> RPAREN}\hspace*{2em}{\em [$^*$see below...]}\\
+{\tt ( bar {\bf NUM} <tree> RPAREN} \\
+{\tt ( bar 1 {\bf <tree>} RPAREN} \\
+{\tt ( bar 1 {\bf LPAREN} SYMBOL <tree> <tree> RPAREN RPAREN}\\
+\verb'...' \\
+\end{tabular}\exx
+{\em $^*$Note: this line collapses two {\bf match} steps into one:}\exx
+\emm%
+\begin{tabular}{l@{ $\Rightarrow$ }l}
+{\tt LPAREN} & {\tt '('} \\
+{\tt SYMBOL} & {\tt bar} \\
+\end{tabular}
+
+\end{minipage}
+\clearpage
