@@ -1,44 +1,23 @@
 \begin{minipage}[t]{\sw}
 \slidenumber
 \LARGE
-\begin{SaveVerbatim}{\MYlonGrammarOnly}
-<lon>           ::= LPAREN <nums> RPAREN
-<nums>:NumsNode ::= NUM <nums>
-<nums>:NumsNull ::= 
-\end{SaveVerbatim}
-\begin{SaveVerbatim}{\MYlonGrammarTOK}
-<lon>           ::= LPAREN <nums> RPAREN
-<nums>:NumsNode ::= <NUM> <nums>
-<nums>:NumsNull ::= 
-\end{SaveVerbatim}
-\begin{SaveVerbatim}{\MYlonGrammarKleene}
-<lon>  ::= LPAREN <nums> RPAREN
-<nums> **= <NUM>
-\end{SaveVerbatim}
-{\bf Parsers} (continued)\exx
-\LARGE
-\emm\LightBox{\MYlonGrammarOnly}\exx
-The above text shows just the grammar rules section
-of the \verb'grammar' file we have been examining.\exx
-In your \verb'LON' directory,
-change to a subdirectory named \verb'Java'.
-This subdirectory was created and populated by the \verb'plccmk' command.
-In this subdirectory you will find (among other things)
-the following Java source files:
+{\bf Parsers} (continued)
 \begin{qv}
-Lon.java
-Nums.java
-NumsNode.java
-NumsNull.java
+plccmk
 \end{qv}
-Each of these corresponds to one or more of the grammar rule lines.
-For example, the line beginning with \verb'<lon>'
-results in the file \verb'Lon.java' being created
-in the \verb'Java' subdirectory.
-As you can see from looking at the Java code in the \verb'Java' subdirectory
-for the \verb'NumsNode' and \verb'NumsNull' classes,
-both of these classes extend the \verb'Nums' abstract class.
-This is because the \verb'<nums>' nonterminal
-appears as the LHS of two grammar rules.
+Your script output should appear as follows:
+\begin{qv}
+Nonterminals (* indicates start symbol):
+ *<lon>
+  <nums>
+
+Abstract classes:
+  Nums
+
+Source files created:
+  NumsNode.java
+  ...
+\end{qv}
+
 \end{minipage}
 \clearpage

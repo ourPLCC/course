@@ -2,18 +2,33 @@
 \slidenumber
 \LARGE
 {\bf Environments} (continued)\exx
-Informally, think of an environment as a linked list of local environments.\exx
-An empty environment is an instance of the class \verb'EnvNull'.
+Given a local environment,
+we want to be able to look up the \verb'Binding' associated
+with a particular symbol
+and to add \verb'Binding' objects to the local environment.
+It is also convenient to consider adding a \verb'Binding'
+obtaind from a symbol and a value.
+The following methods are part of the \verb'Bindings' (local environment) class:
+{\Large
 \begin{qv}
-public class EnvNull extends Env {
+// look up the Binding associated with a given symbol
+public Binding lookup(String sym) {
+    for (Binding b: bindingList)
+        if (sym.equals(b.id))
+            return b;
+    return null;
+}
 
-    public EnvNull () {
-    }
+// add a Binding object to this local environment
+public void add(Binding b) {
+    bindingList.add(b);
+}
 
+// add a binding (s, v) to this local environment
+public void add(String s, Val v) {
+    add(new Binding(s, v));
 }
 \end{qv}
-In the empty environment, \verb'applyEnv' --
-which defaults to the \verb'Env' parent class definition --
-always throws an exception,
-since no symbol is bound to any value in the empty environment.\exx
+}
 \end{minipage}
+\clearpage

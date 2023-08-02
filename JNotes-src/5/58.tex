@@ -1,0 +1,20 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language PROP} (continued)\exx
+The \verb'set' part of a \verb'prop' is optional.
+If the \verb'set' part is omitted,
+any attempt to apply the \verb'set' operator to the variable
+results in a runtime exception.
+In this way, we can implement ``read-only'' properties.
+\Large
+\begin{qv}
+let
+  x = 3 
+in
+  letprop
+    x = prop x %% no 'set' part, so x is read only
+  in
+    {set x = 42 ; x} % => runtime exception
+\end{qv}
+\end{minipage}

@@ -1,35 +1,35 @@
 \begin{minipage}[t]{\sw}
 \slidenumber
 \LARGE
-{\bf Language NAME} (continued)\exx
-The \verb'ThunkRef' class is straight-forward:
-\large
+{\bf Language NAME} (continued)\\[1.5ex]
+Consider the following definition in Language NAME:
+\Large
 \begin{qv}
-ThunkRef
-%%%
-public class ThunkRef extends Ref {
-
-    public Exp exp;
-    public Env env;
-
-    public ThunkRef(Exp exp, Env env) {
-        this.exp = exp;
-        this.env = env;
-    }
-
-    public Val deRef() {
-        return exp.eval(env);
-    }
-
-    public Val setRef(Val v) {
-        throw new RuntimeException("cannot modify a read-only expression");
-    }
-}
-%%%
+define while = proc(test?, do, result)
+  letrec loop = proc()
+    if test? then {do ; .loop()} else result
+  in .loop()
 \end{qv}
 \LARGE
-Observe that the \verb'setRef' method throws an exception.
-This method is only used to evaluate \verb'set' expressions,
-and it doesn't make sense to have
-an expression on the LHS of a \verb'set'.
+Using call-by-name, the expression
+\Large
+\begin{qv}
+let x = 0 sum = 0 in
+  .while(
+    <=?(x,10),                                   % test?
+    { set sum=+(sum,*(x,x)) ; set x = add1(x) }, % do
+    sum                                          % result
+  )
+\end{qv}
+\LARGE
+evaluates to the sum
+\[\sum_{x=0}^{10} x^2 = 385\]\\
+Suppose we were to consider these in Language REF.
+In this case, the \verb'let' expression evaluation would never terminate.
+This is because the actual parameter expression \verb'<=?(x,10)'
+is evaluated only once, to 1 (true) when \verb'x' is initially 0,
+so the \verb'test?' parameter is bound permanently to (a reference to) 1.
+Evaluating \verb'test?' repeatedly always returns 1 (true),
+so the ``loop'' never terminates.
 \end{minipage}
+\clearpage

@@ -1,11 +1,8 @@
-
 \begin{minipage}[t]{\sw}
 \slidenumber
 \LARGE
-{\bf Language NEED} (continued)\exx
-\Large
-Here are the appropriate changes
-to \verb'ThunkRef' ...
+{\bf Language NAME} (continued)\exx
+The \verb'ThunkRef' class is straight-forward:
 \large
 \begin{qv}
 ThunkRef
@@ -14,23 +11,25 @@ public class ThunkRef extends Ref {
 
     public Exp exp;
     public Env env;
-    public Val val;
 
     public ThunkRef(Exp exp, Env env) {
         this.exp = exp;
         this.env = env;
-        this.val = null;
     }
 
     public Val deRef() {
-        if (val == null)
-            val = exp.eval(env);
-        return val;
+        return exp.eval(env);
     }
 
-...
-
+    public Val setRef(Val v) {
+        throw new PLCCException("cannot modify a read-only expression");
+    }
 }
 %%%
 \end{qv}
+\LARGE
+Observe that the \verb'setRef' method throws an exception.
+The \verb'setRef' method is only used with LHS variable references
+during evaluation of \verb'set' expressions.
 \end{minipage}
+\clearpage

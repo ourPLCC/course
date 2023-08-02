@@ -2,22 +2,40 @@
 \slidenumber
 \LARGE
 {\bf Language V5} (continued)\exx
-The \verb'letrec' construct allows us
-to define {\em mutually recursive procedures} --
-two or more procedures that call each other in a recursive fashion.
-Here's a classic example:
+\large
+This picture illustrates the three steps
+carried out in \verb'addLetrecBindings',
+for the following \verb'letrec' example:
 \begin{qv}
 letrec
-  even? = proc(x) if zero?(x) then 1 else .odd?(sub1(x))
-  odd? = proc(x) if zero?(x) then 0 else .even?(sub1(x))
+    x = 5 
+    f = proc(t) *(t,x)
 in
-  .even?(11) % => 0 (false)
+    .f(42)
 \end{qv}
-[{\bf Exercise} (not to hand in): See if you can do this in language V4
-without \verb'letrec'.]\exx
-Notice that we have used \verb'?'
-in the variable names for the \verb'even?' and \verb'odd?' procedures.
-This is an additional feature we have added
-to languages \verb'V5' and beyond.
+\begin{enumerate}
+\item [0.] Create an extended environment
+      by extending the enclosing environment
+      with an empty list of bindings;
+\item In the order in which the LHS identifiers appear,
+      create a \verb'Binding' of the LHS identifier
+      (\verb'x' and then \verb'f' in this example)
+      to the value of its corresponding RHS expression
+      (5 and then \verb'proc(t)...' in this example) --
+      where each RHS expression is evaluated
+      in the extended environment --
+      and add this binding to the extended environment;
+\item Once all of the (LHS, RHS) bindings have been added
+      to the extended environment,
+      return the extended environment
+      as the value of \verb'addLetrecBindings'.
+\end{enumerate}
+Observe that the environment captured by procedure \verb'f'
+knows about the binding of \verb'x' to \verb'5',
+so the \verb'letrec' expression evaluates to 210.
+If this had been a \verb'let' instead of a \verb'letrec',
+the \verb'x' in the body of \verb'f' would be unbound.
+{\center\ \psfig{figure=letrec-steps.eps,width=.6\textwidth}\ \\}
 
 \end{minipage}
+\clearpage

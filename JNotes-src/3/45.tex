@@ -2,28 +2,38 @@
 \slidenumber
 \LARGE
 {\bf Language V3} (continued)\exx
-In the third example, two new environments are created.
-The first binds \verb'x' to 3 (shadowing the initial binding).
-The inner environment binds \verb'x'
-to the value of \verb'add1(x)'
-and \verb'y' to the value of \verb'add1(x)'.
-In both of these,
-the RHS expressions \verb'add1(x)' in the inner \verb'let'
-are evaluated {\em using the outer [enclosing] environment}
-which has \verb'x' bound to 3.
-Thus \verb'add1(x)' evaluates to 4, {\em in both cases}.
-Thus, in the inner environment,
-\verb'x' is bound to 4 and \verb'y' is bound to 4,
-so that the \verb'+(x,y)' expression evaluates to 8.
+In an instance of the \verb'LetDecls' class,
+we require that no \verb'varList' variable occurs twice.
+Slide 3.48 shows how we can achieve this.\exx
+Now that we can define our own environments,
+we will remove our initial environment with bindings
+for Roman numerals.\exx
+In the first example, a new environment is created
+binding \verb'x' to 3 and \verb'y' to 8,
+so that the \verb'+(x,y)' expression evaluates to 11.
+{\Large
 \begin{qv}
-let x = 3
-in
-  let
-    x = add1(x)
-    y = add1(x)
-  in
-    +(x,y)
-  % => 8
+let x = 3 y = 8
+in +(x,y) % => 11
 \end{qv}
-\large
+}
+In the second \verb'let' expression example,
+a new environment is created
+binding \verb'x' to 10.
+The body of this \verb'let' expression
+is itself a \verb'let' expression
+with bindings of \verb'z' to 3 and \verb'y' to 8.
+The environment of the inner \verb'let'
+extends the environment of the outer \verb'let',
+so that the \verb'x' in the expression \verb'+(x,y)' is bound to 10.
+The entire expression therefore evaluates to 18.
+{\Large
+\begin{qv}
+let x = 10
+in
+  let z = 3 y = 8
+  in +(x,y) % => 18
+\end{qv}
+}
 \end{minipage}
+\clearpage

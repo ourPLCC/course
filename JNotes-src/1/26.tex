@@ -3,35 +3,43 @@
 \LARGE
 {\bf Parsers} (continued)\exx
 \Large
-\emm\LightBox{\MYlonGrammarOnly}\exx
-PLCC also generates an interactive parser
-called \verb'Rep' that resides in the \verb'Java' subdirectory
-along with the \verb'Parser' program.
-\verb'Rep' executes a loop
-that prints a prompt,
-{\em Reads} program input from the keyboard,
-{\em Evaluates} (parses) the program,
-and {\em Prints} the result:
-a human-readable representation
-of the root of the program's parse tree.
-Recall that for the language given above,
-the root of the parse tree is
-an instance of the \verb'Lon' class.\exx
-Here is a sample interaction with the \verb'Rep' program
-using this grammar:
+%\emm\LightBox{\MYlonGrammarOnly}\exx
+From a particular language defined by a language specification file,
+PLCC generates a stand-alone parser with class name \verb'Parse'
+that uses the Java classes created
+from processing the lexical and syntax specification sections.
+To run this parser in language directory \verb'LON', for example,
+run the \verb'Parse' class file 
+using `\verb'-cp Java'' on the \verb'java' command line
+so the Java interpreter will know where
+to find the \verb'.class' files.
+This program displays a prompt `\verb'--> '',
+after which it reads, from standard input,
+``programs'' in Language \verb'LON' to parse.
+(Standard input typically comes from your keyboard,
+sometimes called the {\em console}.)
+If the parse for a particular program succeeds,
+the \verb'Parse' program displays the string \verb'"OK"'.
+If the parse fails, it displays
+an error message indicating how the parse failed.\exx
+For example, in the \verb'LON' directory (after having run \verb'plccmk'),
+enter the following command:
 \begin{qv}
-$ java Rep
---> (14 6)
-Lon@15db9742
---> (14 (6)
-java.lang.RuntimeException: Nums cannot begin with LPAREN
---> (42)
-Lon@6d06d69c
---> ()
-Lon@7852e922
---> 
+java -cp Java Parse
 \end{qv}
-Observe that the output is similar to that produced
-by the \verb'Parser' program
+With a standard input of `\verb'( 14 6 )'',
+your input and output looks like this:
+\begin{qv}
+--> ( 14 6 )
+OK
+\end{qv}
+With a standard input of `\verb'( 14 ( 6 )'',
+your input and output looks like this:
+\begin{qv}
+--> ( 14 ( 6 )
+%%% Parse error: Nums cannot begin with LPAREN
+\end{qv}
+You can also use the \verb'parse' shell script,
+which is equivalent to running \verb'java -cp Java Parse'.
 \end{minipage}
 \clearpage

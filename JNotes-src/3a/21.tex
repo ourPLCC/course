@@ -2,32 +2,14 @@
 \slidenumber
 \LARGE
 {\bf Language REF} (continued)\exx
-Notice that we are still using value semantics for \verb'let' bindings.
-This means that a program such as
-\Large
-\begin{qv}
-let
-  x = 3
-in
-  let
-    y = x
-  in
-    { set y = add1(y) ; x }
-\end{qv}
-\LARGE
-still evaluates to 3.\exx
-Our observation that any \verb'let' can be re-written
-as a procedure application no longer applies
-when call-by-reference semantics is used for parameter passing.
-Specifically, if the inner \verb'let' in the above program
-is re-written as a procedure application, we would get
-\Large
-\begin{qv}
-let
-  x = 3 
-in
-  .proc(y) {set y = add1(y) ; x } (x)
-\end{qv}
-\LARGE
-which would evaluate to 4.
+{\em To summarize: 
+for procedure applications that appear in Language REF,
+if an actual parameter is a variable
+(and therefore denotes a reference),
+then we bind the corresponding formal parameter to the same reference.
+If an actual parameter is something other than a variable,
+then the corresponding formal parameter is bound
+to a {\bf new} temporary reference
+containing the expressed value of the actual parameter.}
 \end{minipage}
+\clearpage

@@ -2,22 +2,16 @@
 \slidenumber
 \LARGE
 {\bf Parsers} (continued)\exx
-The solution is to use different identifiers for these field names
-and to their corresponding constructor formal parameters.
-PLCC allows duplicate RHS fields (in angle brackets)
-to be annotated -- much like we have seen
-for duplicate LHS nonterminal names
--- with alternate names that avoid this conflict.\exx
-In the case we are considering, we can resolve this issue in the RHS
-of the \verb'<tree>:Interior' grammar rule
-by using the identifier \verb'left' for the first \verb'<tree>' field
-and the identifier \verb'right' for the second \verb'<tree>' field,
-as shown here:\exx
-\Large
-\emm\begin{tabular}{ll}
-\verb'<tree>:Interior' & \verb'::= LPAREN <SYMBOL> <tree>left <tree>right RPAREN'\\
-    & \VerbBox{\fbox}{\verb'Interior(Token symbol, Tree left, Tree right)'}\\
-\end{tabular}\exx
-\LARGE
+\emm\LightBox{\MYlonGrammarOnly}\exx
+The parse tree for a program in this language
+accurately represents the length
+of the list of numbers given as input -- 
+count the number of instances of \verb'NUM'
+in the parse trace given on Slide 1.30 above --
+but the actual \verb'NUM' tokens
+are not preserved in the parse tree.
+The problem is that the parse tree instances of \verb'NumsNode' objects
+do not have fields corresponding
+to their \verb'NUM' tokens.\exx
 \end{minipage}
 \clearpage

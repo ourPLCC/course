@@ -1,0 +1,34 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Continuations} (continued)\exx
+The \verb'apply' method in the \verb'ACont' class
+is the fundamental action that starts off evaluation.
+This method carries out some action
+and returns another \verb'ACont' continuation
+whose \verb'apply' method is invoked, and so on.
+This proceeds until an \verb'apply' method stops the evaluation
+by throwing an exception --
+either a runtime exception indicating an error,
+or a special \verb'ContException' indicating
+that the expression evaluation has finished.\exx
+In the absence of an exception,
+applying a continuation involves creating a new execution context
+that continues the expression evaluation.\exx
+Here is the signature of the abstract \verb'eval' method
+in our continuation-passing language,
+declared in the \verb'Exp' class:
+\begin{qv}
+public abstract ACont eval(Env env, VCont vcont);
+\end{qv}
+This method is intended to work as follows:
+
+\begin{itemize}
+\setlength{\parskip}{0ex}
+\item evaluate the expression in the environment \verb'env',
+      yielding a value which we call \verb'val'
+\item call \verb'vcont.apply(val)', yielding an \verb'ACont' instance
+      which we call \verb'acont'
+\item call \verb'acont.apply()' to continue evaluation
+\end{itemize}
+\end{minipage}

@@ -7,11 +7,18 @@ Our approach to types is to create a language that is
 We add syntax to provide type information for values,
 and every program is checked
 for proper type matching prior
-to evaluating the program.
+to evaluating the program.\exx
 A {\em static typed} language is one in which type information 
 can be determined at ``compile time'' rather than at runtime.
 In this way, any type errors are found
-before the program is evaluated.\exx
+before the program is evaluated.
+Saying that a language is {\em strongly typed}
+means that there are no type ``holes'' in the system:
+the declared type of a symbol
+(a variable or procedure parameter)
+dictates the types of the values that can be bound to the symbol.
+Everything is type checked, without exception,
+and all expressions must conform to type rules.\exx
 Our typed language is based on the \verb'SET' language.
 In the \verb'SET' language,
 only the integer value \verb'0' is considered false,
@@ -19,12 +26,12 @@ and all other values -- including \verb'ProcVal's -- are true
 when used in conditional expressions.
 The Java programming language, which is staticaly typed,
 requires that the test expression
-in an \verb'if' statement evaluate to a boolean.
+in an \verb'if' statement evaluates to a boolean.
 We follow this example in our typed language
 by introducing {\em primitive types}, \verb'int' and \verb'bool',
 corresponding to integer and boolean expressed values, respectively.
 To implement this, we add a new \verb'BoolVal' subclass
 of the \verb'Val' class.
 With this addition, we can require that the test expression
-in an \verb'if' expression be a boolean.\exx
+in an \verb'if' expression be an instance of \verb'BoolVal'.\exx
 \end{minipage}

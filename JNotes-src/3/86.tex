@@ -2,35 +2,38 @@
 \slidenumber
 \LARGE
 {\bf Language V5} (continued)\exx
-\emm\large\VerbBox{\colorbox{light}}{%
-\begin{tabular}{@{}ll}
-\verb'<exp>:LetrecExp' & \verb'::= LETREC <letrecDecls> IN <exp>'\\
-  & \VerbBox{\fbox}{\verb'LetrecExp(LetrecDecls letrecDecls, Exp exp)'}\\
-\verb'<letrecDecls>' & \verb'**= <VAR> EQUALS <proc>'\\
-  & \VerbBox{\fbox}{\verb'LetrecDecls(List<Token> varList, List<Proc> procList)'}\\
-\end{tabular}%
-}\exx
-\LARGE
-Similar to the \verb'LetDecls' class,
-the \verb'LetrecDecls' class takes care
-of adding the appropriate bindings to the previous environment
-by following the steps described in the previous slide.
-\Large
-\begin{qv}
-LetrecDecls
-%%%
-    public Env addBindings(Env env) {
-        // Step 1
-        Env nenv = env.extendEnv(null); // place-holder
-        // Step 2
-        List<Val> valList = new ArrayList<Val>();
-        for (Proc p: procList)
-            valList.add(p.makeClosure(nenv));
-        Bindings bindings = new Bindings(varList, valList);
-        // Step 3
-        nenv.replaceBindings(bindings);
-        return nenv;
-    }
-%%%
-\end{qv}
+To implement the recursive behavior of a \verb'letrec' as described above,
+we create a new method \verb'addLetrecBindings'
+in the \verb'LetDecls' class.
+This new method is passed the environment
+in which the \verb'letrec' expression appears,
+and it returns a new environment
+as described in the following steps.
+\begin{enumerate}
+\item [0.]
+  Extend the environment actual parameter
+  with an empty \verb'Bindings' object of sufficient size
+  to hold all of the variable bindings.
+  Assign this new environment to the \verb'env' parameter.
+\item
+  The two fields in the \verb'LetDecls' class are
+  \verb'List<Token> varList' and \verb'List<Exp> expList'.
+  Create iterators for these two lists
+  and iterate through them together, in order.
+  For each step in the iteration,
+  get the next identifier \verb'var' from the \verb'varList',
+  and save its \verb'String' representation in a variable \verb'str'.
+  Also, get the next expression \verb'exp' from the \verb'expList',
+  evaluate it in the environment \verb'env'
+  obtained in Step 0, and save its value in a variable \verb'val'.
+  Then create a \verb'new Binding(str, val)'
+  and add it to the \verb'env' environment obtained in Step 0.
+  This binding now becomes part of the local bindings in \verb'env',
+  together with the other local bindings previously added
+  during this iteration.
+\item
+  Once all of the new bindings have been added to \verb'env',
+  return \verb'env' as the value of this method.
+\end{enumerate}
 \end{minipage}
+\clearpage

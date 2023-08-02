@@ -2,33 +2,32 @@
 \slidenumber
 \LARGE
 {\bf Language V0} (continued)\exx
-The term {\em abstract syntax} might seem odd
-because it refers to a collection of very concrete Java classes.
-Instead, the term {\em abstract} here means that
-these classes keep only the information on the right-hand-side (RHS)
-of the grammar rules that can change,
-principally by ignoring RHS tokens.
-For example, the \verb'<exp>:PrimappExp' grammar rule
-has tokens \verb'LPAREN' and \verb'RPAREN' on its RHS,
-but the generated \verb'PrimappExp' class
-does not have fields corresponding to these tokens:
-they are ``abstracted away''.\exx
-Because the \verb'<exp>' and \verb'<prim>' nonterminals
-appear on the LHS of two or more grammar rules,
-their corresponding grammar rules are disambiguated
-by annotating their LHS nonterminals with appropriate class names.
-For these grammar rules, the LHS nonterminal corresponds to
-the name of an abstract (base) Java class
-whose name is obtained by capitalizing the first letter
-of the nonterminal name.
-The annotated classes \verb'LitExp', \verb'VarExp', and \verb'PrimappExp'
-extend the abstract base class \verb'Exp'.
-Similarly, the \verb'AddPrim', \verb'SubPrim',
-\verb'Add1Prim' and \verb'Sub1Prim'
-classes extend the abstract base class \verb'Prim'.\exx
-Once you have run \verb'plccmk' on the specification file,
-you can examine the Java code in the \verb'Java' subdirectory
-to see, for example,
-that the \verb'LitExp' class extends the \verb'Exp' class
-and that the \verb'AddPrim' class extends the \verb'Prim' class.
+Here is a mapping from the concrete (BNF) syntax
+of Language V0 to its Java representation
+as an abstract syntax.
+The Java class files are created automatically by PLCC.
+Each item in a \VerbBox{\fbox}{\verb'Box'} is the signature
+of the corresponding class constructor.\exx
+\Large
+\emm\begin{tabular}{@{}ll}
+\verb'<program>' & \verb'::= <exp>' \\
+  & \VerbBox{\fbox}{\verb'Program(Exp exp)'}\\
+\verb'<exp>:LitExp' & \verb'::= <LIT>'\\
+  & \VerbBox{\fbox}{\verb'LitExp(Token lit)'}\\
+\verb'<exp>:VarExp' & \verb'::= <VAR>'\\
+  & \VerbBox{\fbox}{\verb'VarExp(Token var)'}\\
+\verb'<exp>:PrimappExp' & \verb'::= <prim> LPAREN <rands> RPAREN'\\
+  & \VerbBox{\fbox}{\verb'PrimappExp(Prim prim, Rands rands')}\\
+\verb'<rands>' & \verb'**= <exp> +COMMA'\\
+  & \VerbBox{\fbox}{\verb'Rands(List<Exp> expList)'}\\
+\verb'<prim>:AddPrim' & \verb'::= ADDOP'\\
+  & \VerbBox{\fbox}{\verb'AddPrim()'}\\
+\verb'<prim>:SubPrim' & \verb'::= SUBOP'\\
+  & \VerbBox{\fbox}{\verb'SubPrim()'}\\
+\verb'<prim>:Add1Prim' & \verb'::= ADD1OP'\\
+  & \VerbBox{\fbox}{\verb'Add1Prim()'}\\
+\verb'<prim>:Sub1Prim' & \verb'::= SUB1OP'\\
+  & \VerbBox{\fbox}{\verb'Sub1Prim()'}\\
+\end{tabular}
 \end{minipage}
+\clearpage

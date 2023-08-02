@@ -2,27 +2,38 @@
 \slidenumber
 \LARGE
 {\bf Parsers} (continued)\exx
-%\Large
-%\emm\LightBox{\MYlon}\exx
-Here is a complete text file representation of the language,
-including its lexical specification and grammar rules,
-suitable for processing by \verb'plccmk'.
-Notice that we have included the annotations
-for the two \verb'<nums>' rules as described on the previous slide:\exx
-\begin{SaveVerbatim}{\MYlonGrammar}
-# Language specification for a list of numbers
-# Lexical spec
-skip WHITESPACE '\s+'
-NUM '\d+'
-LPAREN '\('
-RPAREN '\)'
-%
-# BNF rules
-<lon>           ::= LPAREN <nums> RPAREN
-<nums>:NumsNode ::= NUM <nums>
-<nums>:NumsNull ::= 
-%
-\end{SaveVerbatim}
-\emm\NormalBox{\MYlonGrammar}\exx
+\Large
+\emm\LightBox{\MYlon}\vspace{1.5ex}\\
+However, there are two grammar rules with \verb'<nums>'
+as the LHS nonterminal.
+PLCC generates the class name \verb'Nums' automatically
+(by converting the first character of the LHS nonterminal name to uppercase),
+but {\bf PLCC must generate a
+{\em unique} Java class name for each grammar rule.}
+We accomplish this by annotating the LHS nonterminal
+on each of these lines with a Java class name
+that is different from \verb'Nums'
+and that distinguishes one from the other.
+We modify these grammar rules with annotations as follows:
+\begin{qv}
+<nums>:NumsNode  ::= NUM <nums>
+<nums>:NumsNull  ::=
+\end{qv}
+(Any Java class names are OK for these annotations,
+but good naming conventions should prevail,
+and the names must be unique
+among the Java class names that PLCC generates.)
+A colon is used to separate the nonterminal
+from its annotated Java class name.
+The RHS entries of these grammar rules are unchanged.\exx
+With these modifications, PLCC generates
+two new classes, \verb'NumsNode' and \verb'NumsNull'.
+Both of these classes are declared to extend the \verb'Nums' class,
+so an instance of a \verb'NumsNode' class, for example,
+is also automatically an instance of its parent \verb'Nums' class.\exx
+The \verb'NumsNode' class has a field named \verb'nums',
+which is an instance of the \verb'Nums' class
+(capitalize the first letter of \verb'<nums>').
+The \verb'NumsNull' has no fields.
 \end{minipage}
 \clearpage

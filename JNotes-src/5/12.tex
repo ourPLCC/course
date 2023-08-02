@@ -2,28 +2,26 @@
 \slidenumber
 \LARGE
 {\bf Language OBJ} (continued)\exx
-A parentless class is an instance of the Java \verb'EnvClass' class,
-which has one instance variable:
-\Large
+A an instance of the Java \verb'EnvClass' class
+has one instance variable:
+{\Large
 \begin{qv}
     public Env staticEnv;
 \end{qv}
-\LARGE
-Here is the code for the constructor,
-which is called when processing the \verb'<ext>:Ext0' grammar rule.
-\Large
+}
+Here is the code for the \verb'EnvClass' constructor:
+{\Large
 \begin{qv}
 public EnvClass(Env env) {
     // the static environment of this class
     staticEnv = env;
 }
 \end{qv}
-\LARGE
-As noted earlier, the static environment
-of a parentless class is the top-level program environment,
-which is passed into the \verb'Env env' parameter
-when the class is created.
-(See the \verb'Ext0' class for details.)\exx
+}
+The \verb'EnvClass' defines a static \verb'envClass' Java object
+that is a ``singleton'' instance of an EnvClass.
+This \verb'envClass' object is the root of the class hierarchy tree
+whose \verb'staticEnv' is the top-level environment.\exx
 A standard class (an instance of the Java \verb'StdClass' class)
 has a similar constructor,
 except that it builds on the environment of its superclass

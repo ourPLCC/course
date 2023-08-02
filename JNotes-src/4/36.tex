@@ -20,8 +20,7 @@ AppExp
 %%%
     public Type evalType(TypeEnv tenv) {
         Type tt = exp.evalType(tenv);
-        tt.checkProcType(); // make sure tt is a ProcType
-        ProcType pt = (ProcType)tt;
+        ProcType pt = tt.procType(); // make sure tt is a ProcType
         List<Type> argTypeList = rands.evalTypeRands(tenv);
         Type.checkEqualTypes(pt.paramTypeList, argTypeList);
         return pt.returnType;

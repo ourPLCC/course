@@ -1,37 +1,43 @@
 \begin{minipage}[t]{\sw}
 \slidenumber
 \LARGE
-{\bf PLCC -- Semantics}\exx
-For a given ``program'' in the language defined by the grammar,
-the \verb'parse' method of the start symbol class
-(the first nonterminal in the language grammar rules)
-returns an instance of this class.
-This instance is the root of a parse tree for the program.
-For example, given the grammar
+{\bf PLCC -- Parsing (continued)}\exx
+The code samples shown above
+omit a \verb'Trace' parameter named \verb'trace$'
+that plays a role in calling the \verb'parse' methods.
+If this parameter is not \verb'null' --
+when the `\verb'-t'' command-line option is given
+to the \verb'Parse' or \verb'Rep' programs --
+parsing the program
+will display a visual ``parse trace'' to standard error (by default).
+In Language \verb'LON', an example parse trace
+for the program `\verb'(1 3 5)'' looks like this:
 {\Large
 \begin{qv}
-<tree>:Leaf     ::= <NUMBER>
-<tree>:Interior ::= LPAREN <SYMBOL> <tree>left <tree>right RPAREN
+   1: <lon>
+   1: | LPAREN "("
+   1: | <nums>:NumsNode
+   1: | | NUM "1"
+   1: | | <nums>:NumsNode
+   1: | | | NUM "3"
+   1: | | | <nums>:NumsNode
+   1: | | | | NUM "5"
+   1: | | | | <nums>:NumsNull
+   1: | RPAREN ")"
 \end{qv}
 }
-the \verb'parse' method returns an instance of a \verb'Tree' object.\exx
-The default semantics of a PLCC program is
-to return the \verb'toString' value of this instance.
-This means that, in this example,
-a \verb'toString' method must be defined
-in the \verb'Tree' class.
-Since this class appears more than once on the LHS of the grammar rules,
-each derived class \verb'Leaf' and \verb'Interior' must define
-its respective \verb'toString' method.\exx
-For example, the \verb'Leaf' class has a field \verb'num'
-of type \verb'Token'.
-The \verb'toString' method in this class can be easily written as follows:
-{\Large
-\begin{qv}
-public String toString() {
-    return num.toString();
-}
-\end{qv}
-}
+Each line in the parse trace displays
+either a nonterminal or a token.
+If it displays a nonterminal,
+this shows that the parser calls
+the \verb'parse' method for that nonterminal
+(possibly in the given subclass).
+If it displays a token,
+then the scanner also displays the token's lexeme.
+The decimal number at the beginning of each line
+is the line number in the source file where the parse found
+the nonterminal or token;
+the number of vertical bars indicates
+the recursive depth of the parse.
 \end{minipage}
 \clearpage

@@ -2,10 +2,17 @@
 \slidenumber
 \LARGE
 {\bf Types}\exx
-Every \verb'IntVal' has type \verb'int',
-and every \verb'BoolVal' has type \verb'bool'.
-The only other \verb'Val' object is a \verb'ProcVal'.
-We need a way to give a type to a \verb'ProcVal'.\exx
+Observe that the \verb'int' type in our (as yet unnamed) language
+is {\em not} the same as the \verb'int' type in Java,
+even though they are closely related and have the same name.
+There should be no confusion about \verb'bool', 
+since in Java the corresponding type is \verb'boolean'.\exx
+Our objective is to associate a type
+with every instance of the class \verb'Val'.
+An \verb'IntVal' has type \verb'int',
+and a \verb'BoolVal' has type \verb'bool'.
+The only other \verb'Val' object is a \verb'ProcVal',
+so we need a way to give a type to a \verb'ProcVal'.\exx
 When we define a procedure, we {\em declare} the types
 of each of the procedure's formal parameters
 and the procedure's return type.

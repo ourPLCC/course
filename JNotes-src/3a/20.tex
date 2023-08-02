@@ -2,34 +2,36 @@
 \slidenumber
 \LARGE
 {\bf Language REF} (continued)\exx
-The other change is in the \verb'Rands' code.
-In the \verb'SET' language,
-the \verb'evalRands' method was used in
-the implementation of \verb'eval'
-for both a \verb'LetExp' object and an \verb'AppExp' object,
-since both created new bindings to values.
-In the \verb'REF' langauge, 
-an \verb'AppExp' object needs new bindings to values
-except for actual parameters which are variables --
-a situation that is described in the previous slide.
-Therefore, to implement the correct \verb'eval' semantics
-for an \verb'AppExp' object,
-we need to collect \verb'evalRef' references
-instead of \verb'eval' values
-to bind them to the formal parameters.
-The method \verb'evalRandsRef' in the \verb'Rands' class
-does this work for us.
-The \verb'eval' method in the \verb'AppExp' class uses
-the \verb'evalRandsRef' method
-to create the bindings of the formal parameters
-to their appropriate references.
-The definition for \verb'evalRandsRef' follows:
+The term {\em L-value} refers
+to a semantic entity that can be considered as a reference.
+It's called an L-value because it is the sort of thing
+that can appear to the {\em left} of the `\verb'=''
+in a \verb'set' expression.
+In Languages SET and REF,
+a variable like \verb'x' can be considered as an L-value
+(because variables are always bound to references)
+but an expression like \verb'+(x,0)' can only be considered
+as a value, never a reference.\exx
+Whether we consider a semantic entity
+as an L-value depends on where it occurs.
+In the expression
+{\Large
 \begin{qv}
-    public List<Ref> evalRandsRef(Env env) {
-        List<Ref> refList = new ArrayList<Ref>();
-        for (Exp exp : expList)
-            refList.add(exp.evalRef(env));
-        return refList;
-    }
+set x = 3
 \end{qv}
+}
+the occurrence of \verb'x' is considered as an L-value.
+On the other hand, in the expression
+{\Large
+\begin{qv}
+set y = x
+\end{qv}
+}
+the occurrence of \verb'x' is not considered as an L-value.\exx
+In Languages SET and REF, only variables can be considered as L-values.
+In Language SET, actual parameter expressions (even variables)
+{\em in procedure applications} are never considered as L-values.
+In Language REF, only actual parameter expressions that are variables
+are considered as L-values.
 \end{minipage}
+\clearpage

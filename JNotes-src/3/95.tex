@@ -1,0 +1,30 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language V6} (continued)\exx
+Since a \verb'define' evaluates its RHS in the {\em current} environment,
+we can capture (and save) the value of a variable using a \verb'let',
+even though a subsequent definition may redefine the variable.
+Consider this example:
+\begin{qv}
+define x = 2
+define f = proc() x % x is the top-level x
+.f()                % evaluates to 2
+define x = 3        % redefine top-level x
+.f()                % now evaluates to 3
+\end{qv}
+Compare this to the following:
+\begin{qv}
+define x = 2
+define f =
+  let
+    x = x           % the RHS is the current value (2),
+                    % and the LHS is a local copy
+  in
+    proc() x        % the proc captures the local copy
+.f()                % evaluates to 2
+define x = 3        % redefine top-level x
+.f()                % local copy still evaluates to 2
+\end{qv}
+\end{minipage}
+\clearpage

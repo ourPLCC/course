@@ -2,21 +2,34 @@
 \slidenumber
 \LARGE
 {\bf Language V1} (continued)\exx
-Since we are using the \verb'apply' method with a \verb'Prim' object,
-we need to add a declaration for this method
-to the (abstract) \verb'Prim' class.
-Here is how we do this:
+We now have the pieces necessary to define the \verb'eval' method
+in the \verb'PrimappExp' class:
+{\Large
 \begin{qv}
-Prim
+PrimappExp
 %%%
-    // apply the primitive to the passed values
-    public abstract Val apply(Val [] va);
+    public Val eval(Env env) {
+        // evaluate the terms in the expression list
+        // and apply the prim to the array of Vals
+        List<Val> args = rands.evalRands(env);
+        Val [] va = Val.toArray(args);
+        return prim.apply(va);
+    }
 %%%
 \end{qv}
-A \verb'Prim' object (there are four instances of this class)
-has no instance variables.
-However, we can endow these objects with behavior,
-so that a \verb'AddPrim' object knows how to add things,
-a \verb'SubPrim' object knows how to subtract things,
-and so forth.\exx
+}
+In summary,
+to evaluate a primitive application expression (a \verb'PrimappExp'),
+we evaluate the operands (a \verb'Rands' object) in the given environment
+and pass the resulting argument array to the \verb'apply' method
+of the primitive (a \verb'Prim') object,
+which returns the appropriate value.\exx
+We are left to define the behavior of the \verb'apply' methods
+in the various \verb'Prim' classes.
+Observe that by the time a \verb'Prim'
+object gets its array of arguments,
+the environment no longer plays a role,
+since we have already evaluated all of the operand expressions:
+only values remain.
 \end{minipage}
+\clearpage

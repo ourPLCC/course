@@ -1,32 +1,18 @@
 \begin{minipage}[t]{\sw}
 \slidenumber
 \LARGE
-{\bf Continuations} (continued)
-\Large
-\begin{qv}
-// ... continued from previous slide
-
-    public ACont apply(Val val) {
-        if (val.isTrue())
-            return new EvalCont(trueExp, env, vcont);
-        else
-            return new EvalCont(falseExp, env, vcont);
-    }
-\end{qv}
-\LARGE
-In the \verb'IfExp' class, the \verb'eval' method
-creates an \verb'EvalCont' method that evaluates
-the test expression and passes its value
-to a suitably constructed \verb'IfCont' value continuation.
-\Large
-\begin{qv}
-IfExp
-%%%
-    public ACont eval(Env env, VCont vcont) {
-        return new EvalCont(testExp,
-                            env,
-                            new IfCont(trueExp,falseExp,env,vcont));
-    }
-%%%
-\end{qv}
+{\bf Logic Programming Puzzles}\exx
+Consider modifying the puzzle with the additional constraint
+that every crossing has at least one passenger.
+Is there a solution to this variant?
+To determine this, simply remove the \verb'cross' premises
+with an \verb'x' in the passenger slot (see Slide 7.14)
+and see if `\verb'path(s0000, s1111)?'' returns a result.\exx
+Another variant would have a boat with two places for passengers,
+but the solution in this case would be trivial to see
+``by inspection'', requiring no programming .\exx
+The Prolog language, upon which Datalog (and AbcDatalog) is based,
+has a much richer collection of data structures and operations
+that lends itself to expressing a larger set of problems,
+including those that require the use of lists and numeric operations.
 \end{minipage}

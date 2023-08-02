@@ -2,27 +2,34 @@
 \slidenumber
 \LARGE
 {\bf Language OBJ} (continued)\exx
-In method application, \verb'self' always refers to the base object,
-even if \verb'self' appears in the definition of a superclass method.
-This is what makes dynamic dispatch work!
+Consider the following \verb'OBJ' program:
 \Large
 \begin{qv}
-define c1 =
+define summer =
   class
-    method m1 = proc() 1
-    method m2 = proc() send self m1()
+    field sum
+    method init = proc() {set sum = 0 ; self}
+    method add = proc(t) {set sum = +(sum,t) ; self}
+    method show = proc() {display sum ; newline ; self}
   end
-define c2 =
-  class extends c1
-    method m1 = proc() 2
-  end
-define o1 = new c1
-define o2 = new c2
-
-send o1 m1()  % same as .<o1>m1() => 1
-send o2 m1()  % same as .<o2>m1() => 2
-send o2 m2()  % same as .<o2>m2() => 2!  
 \end{qv}
 \LARGE
-The following slide gives another example of dynamic dispatch.
+Here's an example of how this class might be used
+to find and display the sum of the integers 1, 3, 5, and 7:
+\Large
+\begin{qv}
+define o = .<new summer>init()
+.<o>add(1)
+.<o>add(3)
+.<o>add(5)
+.<o>add(7)
+.<o>show()
+\end{qv}
+\LARGE
+Since \verb'init' and \verb'add' both return \verb'self',
+the following ``one-liner'' would accomplish the same thing:
+\Large
+\begin{qv}
+.<.<.<.<.<.<new summer>init()>add(1)>add(3)>add(5)>add(7)>show()
+\end{qv}
 \end{minipage}

@@ -1,36 +1,27 @@
 \begin{minipage}[t]{\sw}
 \slidenumber
 \LARGE
-{\bf Language V2}\exx
-Language \verb'V2' is the same as language \verb'V1'
-with the addition of the syntax and semantics of an \verb'if' expression.
-Here is the relevant grammar rule and abstract syntax representation:\exx
-{\Large
-\emm\begin{tabular}{@{}ll}
-\verb'<exp>:IfExp' & \verb'::= IF <exp>testExp THEN <exp>trueExp ELSE <exp>falseExp' \\
-  & \VerbBox{\fbox}{\verb'IfExp(Exp testExp, Exp trueExp, Exp falseExp)'}\\
-\end{tabular}
-}
-
-Notice that we need to change our lexical specification
-to allow for token names \verb'IF', \verb'THEN', and \verb'ELSE'.\exx
-The RHS of this grammar rule has three occurrences
-of the \verb'<exp>' nonterminal.
-Since the \verb'<...>' items on the RHS of a grammar rule define
-the instance variables of the class,
-we have named these instance variables
-\verb'testExp', \verb'trueExp', and \verb'falseExp', respectively.
-Each of these objects refers to an instance of the \verb'Exp' class.
-Thus the \verb'IfExp' class has three instance variables:
-
+{\bf Language V1} (continued)\exx
+Here is the new \verb'$run()' method for the \verb'Program' object,
+along with the definition
+of the initial environment \verb'initEnv' in the \verb'Program' class:
 {\Large
 \begin{qv}
-Exp testExp;
-Exp trueExp;
-Exp falseExp;
+Program
+%%%
+    public static Env initEnv = Env.initEnv();
+
+    public void $run() {
+        System.out.println(exp.eval(initEnv).toString());
+    }
+%%%
 \end{qv}
 }
-[{\bf Exercise} (not to hand in):
-See what would happen if you used `\verb'<IF>''
-in the RHS of this grammar rule instead of `\verb'IF''.]
+To test this, run the \verb'Rep' program
+defined in the \verb'Java' subdirectory
+and enter expressions at the prompts:
+\begin{qv}
+java -cp Java Rep
+\end{qv}
 \end{minipage}
+\clearpage

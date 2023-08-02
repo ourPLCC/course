@@ -1,0 +1,38 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf PLCC -- Hooks}\exx
+PLCC creates Java source files
+from the BNF grammar rules in a language specification file.
+For a grammar rule whose LHS is a nonterminal such as \verb'<Formals>'
+PLCC creates a Java file named \verb'Formals.java'.
+The initial contents of this file appears as follows:
+{\large
+\begin{qv}
+//Formals:top//
+//Formals:import//
+import java.util.*;
+
+// <formals> **= <VAR> +COMMA // the original BNF rule 
+public class Formals /*Formals:class*/ {
+
+    public static final String $className = "Formals";
+    public static final String $ruleString = "<formals> **= <VAR> +COMMA";
+
+    public List<Token> varList; // the RHS field
+
+    public Formals(List<Token> varList) { // the Formals constructor
+//Formals:init//
+        this.varList = varList;
+    }
+
+    public static Formals parse(Scan scn$, Trace trace$) {
+        ... code to parse the RHS of the <formals> grammar rule
+    }
+
+//Formals//
+}
+\end{qv}
+}
+\end{minipage}
+\clearpage

@@ -2,19 +2,35 @@
 \slidenumber
 \LARGE
 {\bf Order of evaluation} (continued)\exx
-Another way to avoid order of evaluation problems
-is to require that all procedures have
-at most one formal parameter.
-In languages that use this approach
-coupled with with call-by-need,
-there is never an ``order of evaluation'' issue
-because there is never more than one actual parameter to evaluate.\exx
-While you may think that a language with procedures having
-only one formal parameter might be limited,
-it's possible for such a language
-to behave like having multiple formal parameters
-using an approach called ``Currying'',
-as employed in the Haskell programming language
--- named after Haskell Curry.
-The following slide gives an example.\exx
+You can see that both \verb'evalRands' and \verb'evalRandsRef'
+use \verb'for-each' loops (also called enhanced \verb'for' loops)
+to traverse and evaluate the expressions in the list of actual parameters.
+The traversal is guaranteed by the Java API specification to be ``natural'',
+in the sense that the elements of the list
+are visited in ascending item number order.
+Here is the code for \verb'evalRands' in the \verb'Rands' class:
+{\Large
+\begin{qv}
+public List<Val> evalRands(Env env) {
+    List<Val> valList = new ArrayList<Val>();
+    for (Exp e : expList)
+        valList.add(e.eval(env));
+    return valList;
+}
+\end{qv}
+}
+Our order of evaluation semantics depends
+on the behavior
+of Java's \verb'for-each' order of evaluation mechanism,
+which is guaranteed to be left-to-right.
+If we had chosen right-to-left semantics,
+we could, instead, explicitly traverse the \verb'expList'
+from last to first if we wished.\exx
+The point is that,
+to make any language semantics well-defined and unambiguous,
+it is necessary to specify the order of evaluation.
+Unless the language specification clearly addresses the issue
+of order of evaluation, the language implementor can choose
+any evaluation order. {\em Let the buyer beware!}
 \end{minipage}
+\clearpage

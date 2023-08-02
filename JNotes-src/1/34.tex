@@ -2,27 +2,38 @@
 \slidenumber
 \LARGE
 {\bf Parsers} (continued)\exx
-\Large
-As a result, the following grammar is acceptable to PLCC:\exx
-\emm\begin{tabular}{ll}
-\verb'<tree>:Leaf' & \verb'::= <NUM>'\\
-    & \VerbBox{\fbox}{\verb'Leaf(Token num)'}\\
-\verb'<tree>:Interior' & \verb'::= LPAREN <SYMBOL> <tree>left <tree>right RPAREN'\\
-    & \VerbBox{\fbox}{\verb'Interior(Token symbol, Tree left, Tree right)'}\\
-\end{tabular}\exx
-When processed by PLCC, we get the following interaction
-using the \verb'Rep' parser loop:
+To remedy this situation,
+we want to define a field
+in the \verb'NumsNode' class that captures
+the \verb'NUM' token obtained by the parser,
+which in turn allows us to retrieve the token's lexeme.
+We already use angle brackets
+for all {\em nonterminals} on the RHS of grammar rules,
+and these nonterminals automatically become fields in the Java class.
+So to capture {\em tokens} on the RHS,
+we use angle brackets for these tokens as well.
+This means that the \verb'NumsNode' line now looks like this:
 \begin{qv}
-$ java Rep
---> 3
-Leaf@15db9742
---> (foo 5 8) 
-Interior@6d06d69c
---> (foo (bar 13 23) 8)
-Interior@7852e922
---> (goo blah blah)
-java.lang.RuntimeException: Tree cannot begin with SYMBOL
---> 
+<nums>:NumsNode  ::= <NUM> <nums>
 \end{qv}
+The `\verb'<NUM>'' entry creates a field named \verb'num'
+(which is the token name `\verb'NUM'' converted to lowercase)
+of type \verb'Token' (since \verb'NUM' is the name of a token 
+in the \verb'grammar' file).\exx
+Observe that it's unnecessary
+to capture tokens that always have the same lexeme,
+like \verb'LPAREN':
+every instance of the \verb'LPAREN' token
+looks like every other instance,
+so there's no need to distinguish among them.
+This is not so with tokens that can take
+on multiple lexeme values, such as \verb'NUM'.
+Indeed, for a list of numbers,
+knowing exactly {\em what} numbers are in the list
+can be essential --
+for example, if you want to find the sum of the numbers in the list.
+If these items do not appear as fields in the PLCC-generated classes,
+their values do not appear in the parse tree,
+and so their values are not retrievable after the parse.
 \end{minipage}
 \clearpage

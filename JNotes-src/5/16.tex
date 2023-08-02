@@ -2,18 +2,31 @@
 \slidenumber
 \LARGE
 {\bf Language OBJ} (continued)\exx
-\Large
 ... continued from previous slide ...
+{\Large
 \begin{qv}
-    // bind all this object's methods as in letrec
-    if (methods.varList.size() > 0) {
-        LetrecDecls methodDecls =
-            new LetrecDecls(methods.varList, methods.procList);
-        env = methodDecls.addBindings(env);
-    }
+    // create the object
+    ObjectVal objectVal = new ObjectVal(env);
 
-    // create the object and return it
-    return new ObjectVal(env);
+    // bind 'super' field to the parent object
+    fieldBindings.add("super", new ValRef(parent)); // parent object
+    // bind 'self' field to the base object being created
+    // (to speed up lookups)
+    fieldBindings.add("self", objRef); // deep
+    // bind 'this' field to this object environment
+    fieldBindings.add("this", new ValRef(objectVal)); // shallow
+    return objectVal;
 }
 \end{qv}
+}
+Observe that this code binds \verb'self' to \verb'objRef' in every set
+of field bindings created recursively
+up to the top-level \verb'EnvClass' class.
+This is not necessary, since the top-level \verb'EnvClass' object
+is guaranteed to have a field binding of \verb'self' to \verb'objRef',
+so any reference to \verb'self' will eventually be found
+in the chain of environments.
+However, by putting the binding in every intermediate object,
+any reference to \verb'self' will be found sooner
+in \verb'applyEnv' lookups.
 \end{minipage}

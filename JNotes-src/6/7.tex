@@ -2,38 +2,37 @@
 \slidenumber
 \LARGE
 {\bf Language INFIX} (continued)\exx
-We borrow the syntax of \verb'let' expressions in language \verb'V4'
-to create a new syntactic category called a \verb'block',
-with the following grammar rules:
-\Large
+An additional problem with parsing infix arithmetic expressions
+is that there is nothing specific to mark the end of the expression.
+With prefix notation, the end of a primitive application is always
+a right parenthesis,
+but with infix notation, there is nothing similar.
+In most cases, it's easy to identify the end of an expression.
+Consider, for example, the following sort of infix expression
+that is similar to an expression in the \verb'SET' language,
+except that it uses infix arithmetic operations:
 \begin{qv}
-<factor>:BlockFactor ::= <block>
-<block>              ::= LBRACE <blockDecls> <exp> RBRACE
-<blockDecls>         **= DEF <VAR> EQUALS <exp> SEMI
+if sub1(x) then x+3 else x+4
 \end{qv}
-\LARGE
-As shown in the \verb'INFIX' code file,
-the evaluation semantics of a \verb'<blockDecls>' rule is
-to create bindings of the LHS variables (\verb'<VAR>')
-to the values of their RHS values (\verb'<exp>'),
-adding the bindings one-by-one as in top-level defines.
-Here is an example that evaluates to 8, once full evaluation
-semantics for the language has been implemented.
-\Large
+The end of the expression \verb'sub1(x)'
+is marked by the token \verb'then'
+and the end of the expression \verb'x+3'
+is marked by the token  \verb'else',
+since \verb'then' and \verb'else' cannot appear
+after a \verb'term' or a \verb'factor' in an arithmetic expression.
+But the final \verb'x+4' might have additional terms or factors
+that do not appear on the same line.
+To fix this, we change the syntax for \verb'if' expressions
+by adding an \verb'endif' at the end.
+The resulting \verb'INFIX' expression would look like this:
 \begin{qv}
-{
-  def x=3;
-  def y=5;
-  x+y
-}
+if sub1(x) then x+3 else x+4 endif
 \end{qv}
-\LARGE
-We use semicolons to terminate
-each of the block's variable definitions (using \verb'def').
-As shown on the next slide,
-\verb'block' is also used to define the body of a procedure.\exx
-The evaluation semantics of a \verb'block' is
-to add the \verb'def' bindings to a new environment
-and to evaluate the body of the block in this extended environment.
-This is similar to what a \verb'let' expression does in language \verb'V4'.
+Similarly, we use the special token `\verb';''
+to mark the the end of a program.
+Here's an example of a complete program in the language \verb'INFIX'
+\begin{qv}
+if sub1(x) then x+3 else x+4 endif ;
+\end{qv}
+that takes into account these observations.
 \end{minipage}

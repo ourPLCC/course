@@ -1,0 +1,36 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Concurrency} (continued)\exx
+Before creating a continuation
+to carry out concurrent evaluation
+of the list of expressions in a \verb'Rands' object,
+we need to create an array that holds
+the resulting values.
+The result of evaluating concurrent expressions
+must affect some sort of shared environment,
+possibly the top-level environmment or in \verb'let' variable bindings.
+Here's an example of such a situation:
+\Large
+\begin{qv}
+let
+  count = 0
+in
+  letrec
+    d = proc(t)
+      if t
+      then {set count=add1(count) ; .d(sub1(t))}
+      else 0
+  in
+    let % the RHS expressions are evaluated in parallel
+      _ = .d(1000)
+      _ = .d(10000)
+      _ = .d(100)
+    in
+      count
+\end{qv}
+\LARGE
+In this case, the value of count ends up being 10000
+and not 11100 as one would expect.
+(Note the use of `\verb'_'' as a dummy variable place-holder.)
+\end{minipage}

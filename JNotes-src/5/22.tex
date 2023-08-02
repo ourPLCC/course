@@ -2,42 +2,7 @@
 \slidenumber
 \LARGE
 {\bf Language OBJ} (continued)\exx
-The static environment of a class ultimately ends up extending
-the top-level program environment,
-not the environment in which the class is defined.
-Consider the following code:
-\Large
-\begin{qv}
-define x = 3
-let
-  x = 5
-in
-  <class end>x
-\end{qv}
-\LARGE
-In this example,
-the class is defined in the \verb'let' environment,
-but its static environment
-extends the top-level environment,
-not the \verb'let' environment,
-so the value of this expression is 3, not 5.\exx
-There are situations in which we may want
-to retrieve the value of a variable in the ``local'' environment
-in which the class is defined
-and not in the static environment of the class.
-To do so, we predefine a static ``variable'' \verb'!@'
-(called ``bang-at'') in every class
-and bind it to an object that captures the (local) environment
-in which the class is defined.
-This binding becomes part of the static environment of the class.
-The token `\verb'!@'' is not really a variable,
-so it cannot appear in the LHS of an assignment.
-Its principal use is in expressions of the form
-\Large
-\begin{qv}
-<!@>exp
-\end{qv}
-\LARGE
-which evaluates to the value of the expression \verb'exp'
-in the local environment.
+Step 3: Extend the parent object environment
+by the static bindings of the class:\exx
+\centerline{\psfig{figure=Dia/ObjectVal3.eps,width=.8\textwidth}}
 \end{minipage}

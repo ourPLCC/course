@@ -2,30 +2,29 @@
 \slidenumber
 \LARGE
 {\bf Tokens} (continued)\exx
-The \verb'isEOF()' method in the Scan class returns \verb'true'
-if there are no more tokens in the input stream,
-and \verb'false' otherwise.\exx
-Here is a simple loop that reads and prints all of the tokens
-from a \verb'Scan' object named \verb'scn'
-that has been constructed from some input stream:
-\begin{qv}
-while (true) {
-  if (scn.isEOF())
-    break;
-  Token t = scn.cur();
-  System.out.println(t.toString());
-  scn.adv();
-}
-\end{qv}
-This loop is similar to the \verb'printTokens()' method
-in the \verb'Scan' class.
-(Without the \verb'scn.adv()' call,
-this loop would perpetually print the first token
-in the input stream.)\exx
-One final note:
-If a call to \verb'cur()' encounters input characters
-that cannot be matched by any
-of the \verb'skip' or \verb'token' specifications,
-it returns an error ``token'' \verb'$ERROR'.
-
+The \verb'adv()' method advances the scanning process
+so that the token returned by the next call to \verb'cur()'
+is the next token in the input.
+Notice that multiple calls to \verb'cur()'
+without any intervening calls to \verb'adv()'
+all return the same token.\exx
+A \verb'Token' object has four public fields
+(also called {\em instance variables}):
+an \verb'enum Match' field named \verb'match'
+that is the token's symbolic name;
+a \verb'String str' field that is the token's lexeme derived
+from the input stream (and is returned by
+the \verb'toString()' method in this class);
+an \verb'int lno' field that is the line number,
+starting at one, of the input stream where the token appears;
+and a \verb'String line' field that is
+the source line of the input stream where the token appears.\exx
+For the purposes of compatibility,
+the \verb'Scan' class defines methods \verb'hasNext()' and \verb'next()'
+that behave exactly like their counterparts in the Java \verb'Scanner' class.
+The \verb'boolean hasNext()' method returns \verb'true'
+if and only if the input stream has additional tokens,
+in which case the \verb'Token next()' method returns (and consumes)
+the next \verb'Token' object from the input stream.
 \end{minipage}
+\clearpage

@@ -15,7 +15,7 @@ define g = let
 .g() % => 2
 .g() % => 3
 \end{qv}
-The value of \verb'count' is captured in the environment
+The value of \verb'count' is captured in the local \verb'let' bindings
 that defines the \verb'proc()'.
 Each time we evaluate \verb'.g()',
 the procedure increments the value of \verb'count'
@@ -27,8 +27,9 @@ in which it is defined,
 namely the one with the variable \verb'count'.\exx
 In this example,
 the \verb'count' variable is unbound in the top-level environment,
-so an attempt to evaluate it will throw an exception:
+so an attempt to evaluate it throws an exception:
 \begin{qv}
 count % unbound variable
 \end{qv}
 \end{minipage}
+\clearpage

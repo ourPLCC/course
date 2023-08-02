@@ -9,20 +9,21 @@
   \item
     If the leftmost unmatched term in the sentential form is a {\bf token name},
     match it with the leftmost string in the unmatched sentence.
-    [Here, {\em match} means that the token name describes exactly
-    the string to be matched.
+    [Here, {\em match} means that the token name
+    in the sentential form describes exactly
+    the leftmost string to be matched.
     For example, the token name {\tt LPAREN} matches the string `\verb'(''
-    and {\tt NUM} matches the string `\verb'42''.
-    The term {\em lexical analysis} refers to this process.]
+    and {\tt NUM} matches the string `\verb'42''.]
     If there is no match, return failure.
     If there is a match, replace the leftmost token name in the
-    sentential form with its matching string from the unmatched sentence
+    sentential form with its matching string (its lexeme)
+    from the unmatched sentence
     and remove the matched string from the unmatched sentence.
   \item
     If the leftmost unmatched term
     in the sentential form is a {\bf nonterminal},
     choose a rule from the grammar with this nonterminal as its LHS
-    and replace the nonterminal with the (possibly empty) RHS
+    and {\em replace} the nonterminal with the (possibly empty) RHS
     of the chosen rule.
     [Which rule to choose depends on
     finding a rule that is most likely to complete the derivation.

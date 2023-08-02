@@ -2,6 +2,8 @@
 \slidenumber
 \LARGE
 {\bf Environments} (continued)\exx
+If there is no binding for the symbol \verb'x' in the environment \verb'env',
+then \verb'env.applyEnv("x")' throws an exception.\exx
 In addition to getting the current value bound to a symbol,
 our environment implementation provides
 a way to create an empty environment (one with no bindings),
@@ -16,8 +18,5 @@ We will refine the notion of ``value'' later.
 If you're worried about this,
 just pretend that instances of the \verb'Val' class
 represent integers.
-[Don't confuse this use of \verb'Val'
-with the \verb'Token.Val' class we described earlier --
-these are not the same.]
 \end{minipage}
 \clearpage

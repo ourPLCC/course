@@ -1,42 +1,31 @@
 \begin{minipage}[t]{\sw}
 \slidenumber
 \LARGE
-{\bf Continuations} (continued)\exx
-As noted before,
-the continuation-based \verb'eval' method in the \verb'Exp' class
-has the following signature:
-\Large
+{\bf Logic Programming Puzzles}\exx
+The idea is to define what it means for there to be a {\em path}
+from one state to another.
+First, we consider every crossing
 \begin{qv}
-public abstract ACont eval(Env env, VCont vcont);
+cross(X,P,Y)
 \end{qv}
-\LARGE
-Let's consider the easiest subclasses of \verb'Exp',
-namely \verb'LitExp' and \verb'VarExp'.
-The \verb'eval' code for the \verb'LitExp' class is simple:
-convert the literal to an \verb'IntVal' value
-and return a \verb'ValCont' continuation
-that passes the value to the \verb'vcont' continuation.
-Similarly, for the \verb'VarExp' class,
-look up the variable in the given environment
-to get the value it is bound to,
-and return a \verb'ValCont' continuation
-that passes this value to the \verb'vcont' continuation.
-Here is the code for both:
-\Large
+as a path from \verb'X' to \verb'Y':
 \begin{qv}
-LitExp
-%%%
-    public ACont eval(Env env, VCont vcont) {
-        return new ValCont(new IntVal(lit.toString()), vcont);
-    }
-%%%
-
-VarExp
-%%%
-    public ACont eval(Env env, VCont vcont) {
-        return new ValCont(env.applyEnv(var.toString()), vcont);
-    }
-%%%
+path(X,Y) :- cross(X,_,Y).
 \end{qv}
-\Large
+Then we develop the transitive closure of the relation \verb'path'
+\begin{qv}
+path(X,Z) :- path(X,Y), cross(Y,_,Z).
+\end{qv}
+to get all paths.
+Notice that the second clause in the RHS just needs
+the \verb'cross' premise
+instead of the more general \verb'path(Y,Z)' (why?).\exx
+The query
+\begin{qv}
+path(s0000, s1111)?
+\end{qv}
+will produce a result if and only if there is a path
+from state \verb's0000' (everyone on the starting side)
+to state \verb's1111' (everyone on the ending side).
+You can check that this is the case!
 \end{minipage}

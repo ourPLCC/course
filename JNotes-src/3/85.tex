@@ -2,29 +2,38 @@
 \slidenumber
 \LARGE
 {\bf Language V5} (continued)\exx
-Here are the steps:
-\begin{enumerate}
-\item
-  Extend the enclosing environment with \verb'null' bindings.
-  This simply serves as a place-holder.
-  Call this new environment \verb'nenv'.
-\item
-  Create a \verb'Val' list (actually a \verb'ProcVal' list)
-  consisting of the closures of each \verb'proc' in \verb'procList'
-  (\verb'procList' is a field in the \verb'letrecDecls' object),
-  where these closures capture the environment \verb'nenv'.
-  Use this list to create a \verb'Bindings' object
-  that binds each of the values in this list
-  to its corresponding identifier in \verb'varList'
-  (\verb'varList' is a field in the \verb'letrecDecls' object).
-\item
-  Replace the \verb'null' place-holder in the \verb'nenv' object
-  with the bindings created in the previous step.
-\end{enumerate}
-Once the new bindings are part of the \verb'nenv' environment,
-all of the closures that captured this environment
-are able to access the other procedure identifiers defined
-in the \verb'letrec' (including themselves, recursively),
-and we evaluate the body of the \verb'letrec'
-in this modified environment.
+Here is the grammar rule and associated abstract syntax class:\exx
+\Large
+\begin{tabular}{@{}ll}
+\verb'<exp>:LetrecExp' & \verb'::= LETREC <letDecls> IN <exp>'\\
+  & \VerbBox{\fbox}{\verb'LetrecExp(LetDecls letDecls, Exp exp)'}\\
+\end{tabular}\exx
+\LARGE
+The RHS expressions in a \verb'letrec' are evaluated
+in the order in which they appear,
+using an envionment where {\em all}
+of the previous (LHS, RHS) bindings in the \verb'letrec'
+are acesssible.
+In addition, if the RHS is is a procedure,
+it captures the entire environment created
+by {\em all} of the (LHS, RHS) bindings in the \verb'letrec'.
+This means that procedures defined in a \verb'letrec'
+can refer to each other.
+In particular, they can call themselves recursively.\exx
+This is unlike a normal \verb'let',
+in which the RHS expressions are all evaluated
+in the {\em enclosing} environment,
+and the (LHS, RHS) bindings created by the \verb'let'
+are only accessible in the body of the \verb'let'.
+Moreover, in a \verb'let',
+the RHS expressions can be evaluated in any order,
+which is sometimes called {\em parallel evaluation}.\exx
+Notice that the syntax of a \verb'letrec' is the same
+as the syntax of a \verb'let'.
+The only difference between the semantics
+of \verb'let' and \verb'letrec' is in the way in which
+we build the environment in which
+the  \verb'letDecls' bindings are created.\exx
+We proceed to describe how \verb'letrec' evaluation is handled.
 \end{minipage}
+\clearpage

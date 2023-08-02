@@ -2,38 +2,37 @@
 \slidenumber
 \LARGE
 {\bf Language V0} (continued)\exx
-Each of the \verb'<prim>' rules
-has an RHS that corresponds to a \verb'Token'
-that is eaten by the parser.
-Just as we re-inserted the \verb'LPAREN' and \verb'RPAREN' tokens
-when we defined the \verb'toString' method
-in the \verb'PrimappExp' class,
-each of the \verb'<prim>' classes simply returns
-the corresponding string token:
-
-\large
+Examine the rule for a \verb'PrimappExp':\exx
+{\Large
+\emm\begin{tabular}{@{}ll}
+\verb'<exp>:PrimappExp' & \verb'::= <prim> LPAREN <rands> RPAREN'\\
+  & \VerbBox{\fbox}{\verb'PrimappExp(Prim prim, Rands rands')}\\
+\end{tabular}\exx
+}
+A \verb'PrimappExp' object has just two instance variables:
+{\Large
 \begin{qv}
-AddPrim
+Prim prim;
+Rands rands;
+\end{qv}
+}
+There aren't any instance variables corresponding
+to \verb'LPAREN' and \verb'RPAREN',
+because the \verb'PrimappExp' class abstracts away these tokens.
+The only thing we need to do, then,
+is to re-insert them back into the \verb'toString' result,
+in the same order as they appear on the RHS of the grammar rule.
+The \verb'toString()' methods for \verb'prim' and \verb'rands'
+are called implicitly.
+{\Large
+\begin{qv}
+PrimappExp
 %%%
     public String toString() {
-        return "+";
-    }
-%%%
-
-SubPrim
-%%%
-    public String toString() {
-        return "-";
-    }
-%%%
-
-Add1Prim
-%%%
-    public String toString() {
-        return "add1";
+        return prim + "(" + rands + ")";
     }
 %%%
 \end{qv}
-\LARGE
-The \verb'Sub1Prim' code is similar and has been omitted.
+}
 \end{minipage}
+\clearpage

@@ -2,23 +2,37 @@
 \slidenumber
 \LARGE
 {\bf Language V3} (continued)\exx
-In the first example, a new environment is created
-binding \verb'x' to 3 and \verb'y' to 8,
-so that the \verb'+(x,y)' expression evaluates to 11.
-Notice that this binding shadows the initial environment's binding
-of \verb'x' to 10.
-\begin{qv}
-let x = 3 y = 8
-in +(x,y)
-  % => 11
-\end{qv}
-In the second example, a new environment is created
-binding \verb'z' to 3 and \verb'y' to 8.
-The initial environment has \verb'x' bound to 10,
-so that the \verb'+(x,y)' expression evaluates to 18.
-\begin{qv}
-let z = 3 y = 8
-in +(x,y)
-  % => 18
-\end{qv}
+\Large
+\emm\VerbBox{\colorbox{light}}{\begin{tabular}{@{}ll}
+\verb'<exp>:LetExp' & \verb'::= LET <letDecls> IN <exp>'\\
+  & \VerbBox{\fbox}{\verb'LetExp(LetDecls letDecls, Exp exp)'}\\
+\verb'<letDecls>' & \verb'**= <VAR> EQUALS <exp>'\\
+  & \VerbBox{\fbox}{\verb'LetDecls(List<Token> varList, List<Exp> expList)'}\\
+\end{tabular}}\exx
+\LARGE
+To evaluate a \verb'LetExp', we perform the following steps:
+\begin{enumerate}
+\item[0.]
+  create a set of local bindings (a \verb'Bindings' object)
+  by binding each of the \verb'<VAR>' symbols
+  to the values of their corresponding \verb'<exp>' expressions
+  in the \verb'<letDecls>' part,
+  where the \verb'<exp>' expressions to the right
+  of the \verb'EQUALS' are all evaluated
+  in the enclosing environment;
+\item
+  extend the enclosing environment with these local bindings
+  to create a new environment; and
+\item
+  use this new environment to evaluate the \verb'<exp>' expression
+  in the \verb'LetExp', and return this value
+  as the value of the \verb'letExp' expression.
+\end{enumerate}
+The \verb'<exp>' part of a \verb'let' expression
+is called the {\em body} of the \verb'let' expression.\exx
+Examples of \verb'let' expressions are on the next slides,
+where \verb'=>' means ``evaluates to''.
+Remember: {\em a \verb'let' expression is an expression,
+and as such, it evaluates to something}!
 \end{minipage}
+\clearpage

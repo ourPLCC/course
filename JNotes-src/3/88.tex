@@ -2,27 +2,33 @@
 \slidenumber
 \LARGE
 {\bf Language V5} (continued)\exx
-\large
-This picture illustrates the three steps
-for creating the environment \verb'nenv'
-used to evaluate the body of the following \verb'letrec' example:
+{\Large
+\emm\VerbBox{\colorbox{light}}{%
+\begin{tabular}{@{}ll}
+\verb'<exp>:LetrecExp' & \verb'::= LETREC <letDecls> IN <exp>'\\
+  & \VerbBox{\fbox}{\verb'LetrecExp(LetDecls letDecls, Exp exp)'}\\
+\end{tabular}%
+}}\exx
+Recall that the \verb'LetDecls' constructor checks
+for duplicate LHS identifiers during parsing.
+Since the \verb'LetrecExp' grammar rule uses \verb'LetDecls',
+a \verb'letrec' expression also makes this check.\exx
+We can now evaluate a \verb'LetrecExp' object
+in exactly the same way as a \verb'LetExp' object:
+{\Large
 \begin{qv}
-letrec
-    f = proc(x) ...
-    g = proc(y) ...
-in
-    ...
+LetrecExp
+%%%
+    public Val eval(Env env) {
+        Env nenv = letDecls.addLetrecBindings(env);
+        return exp.eval(nenv);
+    }
+%%%
 \end{qv}
-\begin{enumerate}
-\item Create a new environment \verb'nenv'
-      by extending the old environment with \verb'null' bindings;
-\item Create a \verb'Bindings' object that binds
-      the LHS identifiers (\verb'f' and \verb'g' in this example)
-      to closures of the RHS procedures,
-      where these closures capture the extended environment \verb'nenv'
-      created in Step 1;
-\item Replace the \verb'null' bindings of \verb'nenv'
-      with the bindings created in Step 2.
-\end{enumerate}
-{\center\ \psfig{figure=letrec-steps.eps,width=.7\textwidth}\ \\}
+}
+The principal idea, then,
+is to evaluate the RHS expressions of a \verb'letrec'
+in an environment that (self-referentially) includes all of the bindings
+in the \verb'letrec'.
 \end{minipage}
+\clearpage

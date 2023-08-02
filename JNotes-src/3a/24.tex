@@ -1,29 +1,36 @@
 \begin{minipage}[t]{\sw}
 \slidenumber
 \LARGE
-{\bf Language NAME} (continued)\exx
-When side-effects are considered,
-call-by-reference and call-by-name
-may give different results.
-Consider:
+{\bf Language REF} (continued)\exx
+Remember that we always use value semantics for \verb'let' bindings.
+This means that a Language REF program such as
+{\Large
 \begin{qv}
 let
-  x = 1
-  f = proc(t,u)
-        {
-          set t = add1(t) ;
-          u
-        }
+  x = 3
 in
-  .f(x, +(x,5))
+  let
+    y = x
+  in
+    { set y = add1(y) ; x }
 \end{qv}
-In call-by-reference, the formal parameter \verb't' refers
-to the same cell that \verb'x' refers to (initially containing 1),
-but the formal parameter \verb'u' refers to a new cell
-that contains the value 6.
-When evaluating the expression \verb'.f(x, +(x,5))',
-modifying \verb't' in the body of \verb'f' changes the value
-of \verb't' (which is bound to the same reference as variable \verb'x')
-but does not change the value of \verb'u'.
-Thus this expression evaluates to 6.
+}
+evaluates to 3.\exx
+Our observation (see Slide 3.79) that any \verb'let' can be re-written
+as an equivalent procedure application no longer applies
+with languages that implement call-by-reference semantics.
+Specifically, if we attempt
+to re-write the inner \verb'let' in the above Language REF program
+as a procedure application using the algorithm given on Slide 3.79,
+we get
+{\Large
+\begin{qv}
+let
+  x = 3 
+in
+  .proc(y) {set y = add1(y) ; x } (x)
+\end{qv}
+}
+which evaluates to 4.
 \end{minipage}
+\clearpage

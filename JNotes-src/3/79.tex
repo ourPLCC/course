@@ -2,36 +2,43 @@
 \slidenumber
 \LARGE
 {\bf Language V4} (continued)\exx
-Though language V4 does not support direct recursion,
-its support of procedures as first-class entities --
-that is, they are values that are treated
-the same way as other values,
-so they can be passed as parameters and returned as values --
-is as powerful as recursion.
-Here is another example that recursively computes factorials
-using an ``accumulator'' and tail recursion
-(we will return to this topic later):
-\Large
+In general, a \verb'let' expression
+{\Large
 \begin{qv}
 let
-  fact = proc(x)
-    let
-      fact = proc(fact, x, acc)
-        if zero?(x)
-        then acc
-        else .fact(fact, sub1(x), *(x, acc))
-    in
-      .fact(fact, x, 1)
-  in
-    .fact(5)
+  v1 = e1
+  v2 = e2
+  ...
+in
+  e
 \end{qv}
-\LARGE
-Observe that the identifier \verb'fact' that appears
-in the \verb'proc(fact,...)' definition
-is a {\em formal parameter} name
-that binds all occurrences of \verb'fact'
-that appear in the procedure body.
-You may find it instructive to display all of the environments
-that get created during the evaluation of this expression.
-(Replace `5' by `2' to make things easier.)
+}
+can be re-written as an equivalent procedure application expression
+{\Large
+\begin{qv}
+.proc(v1, v2, ...) e (e1, e2, ...)
+\end{qv}
+}
+This conversion is {\em algorithmic}:
+it can be carried out unambiguously.
+So why not ditch the \verb'let' construct?
+The reason is simple:
+it's easier to think about a program with a \verb'let' in it
+than one without.
+The \verb'let' construct aligns
+the LHS variables \verb'v1', \verb'v2', {\em etc.}
+physically close to their corresponding RHS expressions
+\verb'e1', \verb'e2', {\em etc.},
+so it's cognitively easy for the reader
+to see how these LHS variables become bound
+to the values of their RHS expressions.
+In the equivalent procedure application,
+the formal parameters \verb'v1', \verb'v2', {\em etc.}
+are physically distant from their corresponding RHS expressions,
+making it difficult to visualize these bindings.
+A \verb'let' expression is an example of {\em syntactic sugar}:
+a syntactic and semantic construct
+that has another, equivalent way of expressing it in the language
+but that programmers find easier to read, understand, and use.
 \end{minipage}
+\clearpage

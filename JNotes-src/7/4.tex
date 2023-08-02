@@ -1,33 +1,35 @@
 \begin{minipage}[t]{\sw}
 \slidenumber
 \LARGE
-{\bf Continuations} (continued)\exx
-An \verb'ACont' continuation has an \verb'apply' method
-that takes no parameters.
-A \verb'VCont' continuation has an \verb'apply' method
-that takes a single \verb'Val' parameter,
-and an \verb'RCont' continuation has an \verb'apply' method
-that takes a single \verb'Ref' parameter.
-All of these continuations return an instance of \verb'ACont'.
-Here are the method signatures for each:
+{\bf Logic Programming}\exx
+\Large
+The \verb'<dfrq>' nonterminal suggests its four variants:
+\begin{itemize}
+\itemsep -0.1in
+\item[d] stands for {\em delete}
+\item[f] stands for {\em fact}
+\item[r] stands for {\em rule}
+\item[q] stands for {\em query}
+\end{itemize}
+Here are some examples of {\em facts}, written in the \verb'ABC' language:
 \begin{qv}
-ACont: public ACont apply();
-VCont: public ACont apply(Val val);
-RCont: public ACont apply(Ref val);
+planet(earth).
+planet(mercury).
+planet(jupiter).
+larger(jupiter,earth).
+larger(earth,mercury).
 \end{qv}
-The essential purpose of the \verb'apply' method
-for an \verb'ACont' continuation
-is to carry out some action that represents
-``what to do now''.
-Its return value, an instance of \verb'ACont',
-says ``what to do next''.\exx
-For a \verb'VCont' continuation,
-the purpose of the \verb'apply' method
-is to carry out some action that represents
-``what to do now with the value \verb'val'''.
-Its return value, again an instance of \verb'ACont',
-says ``what to do next''.
-Similar remarks apply to a \verb'RCont' continuation.
-You will see that the \verb'RCont' continuations are used only
-to implement call-by-reference parameter passing.
+If we want to find all of the planets that the current systems knows about,
+we would write the following {\em query}:
+\begin{qv}
+planet(X)?
+\end{qv}
+The system responds with the following result
+(the planets may appear in any order):
+\begin{qv}
+3 matches:
+planet(earth)
+planet(mercury)
+planet(jupiter)
+\end{qv}
 \end{minipage}

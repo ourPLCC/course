@@ -1,0 +1,23 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Concurrency} (continued)\exx
+The problem here is an example of the ``simultaneous update problem'',
+also called a ``race condition''.
+Evaluating an expression like \verb'set count=add1(count)'
+can result in the creation of multiple continuations --
+several, for example, just to evaluate \verb'add1(count)' --
+and when \verb'count' is in the process of being modified in one thread,
+there may be other threads that are in the process
+of attempting to modify it as well,
+with unpredictable results.\exx
+When concurrent expressions use side-effects to do their work,
+we need a way to guard against race conditions.
+We do this through an \verb'atomic' expression.
+The concrete and abstract syntax of such an expression is given here:\exx
+\Large
+\emm\begin{tabular}{@{}ll}
+\verb'<exp>:AtomicExp' & \verb'::= ATOMIC <exp>' \\
+  & \VerbBox{\fbox}{\verb'AtomicExp(Exp exp)'}\\
+\end{tabular}\exx
+\end{minipage}

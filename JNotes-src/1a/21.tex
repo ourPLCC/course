@@ -1,29 +1,34 @@
 \begin{minipage}[t]{\sw}
 \slidenumber
 \LARGE
-{\bf PLCC -- Semantics}\exx
-An \verb'include' feature allows a PLCC language specification file
-to include the contents of other files,
-making them part of a single specification.
-In this way, separately created files
-can be combined together to form a single language specification.
-The names of include files must be given in the semantics section
-of the specification file, and generally appear
-at the end of the specification.
-Here is an example from a \verb'grammar' file:
+{\bf PLCC -- Semantics (continued)}\exx
+The entire semantics section
+of the TREE language appears here:
+{\Large
 \begin{qv}
-...
-include code
-include env
-include prim
-include val
+Tree
+%%%
+    public void $run() {
+        System.out.println("Tree: " + this.toString());
+    }
+%%%
+
+Leaf # extends the Tree class
+%%%
+    public String toString() {
+        // 'num' is a Token field in the Leaf class
+        return num.toString();
+    }
+%%%
+
+Interior # extends the Tree class
+%%%
+    public String toString() {
+        // 'left' and 'right' are Tree fields in the Interior class
+        return "("+symbol.toString()+" "+left+" "+right+")"; 
+    }
+%%%
 \end{qv}
-In this example, the entire contents of the \verb'code' file will be
-considered as if appended to the \verb'grammar' file,
-then the \verb'env' file, and so forth.
-The names of the \verb'include' files
-will normally be representative of their purposes,
-but these names do not otherwise play a role
-in the generated Java files.
+}
 \end{minipage}
 \clearpage

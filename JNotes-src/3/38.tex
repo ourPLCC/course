@@ -1,36 +1,20 @@
 \begin{minipage}[t]{\sw}
 \slidenumber
 \LARGE
-{\bf Language V2} (continued)\exx
-We define an \verb'isTrue()' method for an \verb'IntVal' object as follows.
-This code is part of the \verb'IntVal' class that is defined
-in the \verb'val' file --
-only the definition of \verb'isTrue' is given here:
-{\Large
-\begin{qv}
-public boolean isTrue() {
-    return val != 0; // nonzero is true, zero is false
-}
-\end{qv}
-}
-Observe that the \verb'eval()' method in the \verb'IfExp' class applies
-the \verb'isTrue()' method to a \verb'Val' object,
-so we must include a declaration for the \verb'isTrue()' method
-in the \verb'Val' base class.
-Since we treat {\em any} \verb'Val' object as true
-if it's not an \verb'IntVal' of zero,
-our default \verb'isTrue()' method in the \verb'Val' class defaults
-to returning \verb'true'.
-{\Large
-\begin{qv}
-Val
-%%%
-...
-    public boolean isTrue() {
-        return true;
-    }
-...
-%%%
-\end{qv}
-}
+{\bf Language V2}\exx
+To evaluate an \verb'if' expression with a given environment,
+we first evaluate the \verb'testExp' expression.
+If this evaluates to true,
+we evaluate the \verb'trueExp' expression
+and return its result as the value of the entire expression.
+If this evaluates to false,
+we evaluate the \verb'falseExp' expression
+and return its result.
+Each of these expressions is evaluated
+in the given environment.\exx
+Since all instances of \verb'Val' are really \verb'IntVal's
+(for the time being),
+we regard the \verb'IntVal' object corresponding to \verb'0'
+to be false and {\em all others} to be true.
 \end{minipage}
+\clearpage

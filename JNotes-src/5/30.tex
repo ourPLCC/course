@@ -2,37 +2,29 @@
 \slidenumber
 \LARGE
 {\bf Language OBJ} (continued)\exx
-\Large
-Here are examples
-of how to use \verb'display', \verb'display#', and \verb'newline':
+In particular, observe that 
+the following two expressions are not equivalent:
 \begin{qv}
-let
-  x = 3
-  y = 5
-  z = 8
-in
-  { display x ; newline
-  ; display y ; newline
-  ; display z ; newline
-  ; nil
-  }
+.<c>f(...)
+<c>.f(...)
 \end{qv}
-Evaluating this expression results
-in displaying the following
-to standard output (omitting the final \verb'nil'):
+In the first expression, \verb'f' is evaluated
+in the static environment of \verb'c'.
+Then the procedure bound to \verb'f' is applied
+to the actual parameters \verb'(...)'
+which are evaluated in the current environment,
+{\em not} in the static environment of \verb'c'.\exx
+In the second expression, the entire expression
+\verb'.f(...)' is evaluated in the static environment of \verb'c',
+which means that the actual parameters \verb'(...)'
+are also evaluated in this static environment.\exx
+In the example on the previous slide,
+if the final expression was \verb'<c>.f(x)' instead of \verb'.<c>f(x)',
+it would evaluate to 3,
+since \verb'x' is bound to 3 in the static environment of \verb'c'.\exx
+To clarify, the above two expressions can be re-written as follows:
 \begin{qv}
-3
-5
-8
-\end{qv}
-If the \verb'newline' expressions are removed,
-the output appears as follows (omitting the final \verb'nil'):
-\begin{qv}
-358
-\end{qv}
-If \verb'display' is then replaced by \verb'display#',
-the output appears as follows:
-\begin{qv}
-3 5 8
+.{<c>f}(...)
+<c>{.f(...)}
 \end{qv}
 \end{minipage}

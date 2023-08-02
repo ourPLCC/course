@@ -2,23 +2,35 @@
 \slidenumber
 \LARGE
 {\bf Order of evaluation} (continued)\exx
-Here is an example without currying:
+Both Java and Python specify that actual parameter expressions
+are evaluated left-to-right.
+However, the C language specification
+explicitly states that the order
+in which actual parameter expressions are evaluated is {\em undefined} --
+which means that the evaluation order is implementation dependent.
+In the following C program, the output is 3
+(using the GCC compiler on the date this file was last modified),
+which shows that the the operand expressions
+\verb'foo(3)' and \verb'foo(5)' are evaluated right-to-left.
+Your mileage may vary!
+{\Large
 \begin{qv}
-let
-  x = 3
-  y = 5
-  p = proc(t,u) +(t,u)
-in
-  .p(x,y) % => 8
+#include <stdio.h>
+#include <stdlib.h>
+static int xx = 0;
+void foo2(int x1, int x2) {
+    return;
+}
+int foo(int x) {
+    xx = x;
+    return x;
+}
+int main(int argc, char ** argv) {
+    foo2(foo(3), foo(5));
+    printf("xx=%d\n", xx);
+    return 0;
+}
 \end{qv}
-Here is semantically equivalent code
-that has exactly one formal parameter per \verb'proc':
-\begin{qv}
-let
-  x = 3
-  y = 5
-  p = proc(t) proc(u) +(t,u)
-in
-  ..p(x)(y)
-\end{qv}
+}
 \end{minipage}
+\clearpage

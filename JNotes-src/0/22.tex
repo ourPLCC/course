@@ -1,0 +1,42 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Tokens} (continued)\exx
+For example, consider a \verb'grammar' file
+(directory {\color{red}\verb'IDNUM'})
+with the following lexical specification:
+{\Large
+\begin{qv}
+skip WHITESPACE '\s+'
+NUM '\d+'        # one or more decimal digits
+ID '[A-Za-z]\w*' # a letter followed by zero or more "word" chars
+\end{qv}
+}
+When you run \verb'plccmk' on this specification,
+it creates the file \verb'Token.java' in the Java subdirectory
+having a public inner \verb'enum' class named \verb'Match'
+whose elements consist of the following identifiers
+and associated patterns:
+{\Large
+\begin{qv}
+WHITESPACE ("\\s+", true) // the 'true' means it's a skip spec.
+NUM ("\\d+")
+ID ("[A-Za-z]\\w*")
+\end{qv}
+}
+Any Java file that needs
+to use the \verb'enum' values \verb'NUM' and \verb'ID' can refer
+to them symbolically as \verb'Token.Match.NUM' and \verb'Token.Match.ID'.\exx
+Running the \verb'Scan' program in the Java directory
+takes character stream input from standard input
+(typically your keyboard)
+and prints all of the resulting tokens to standard output
+(typically your screen),
+one token per line.
+Each printed line gives the line number where the token appears,
+the token name (\verb'NUM' or \verb'ID' in this example),
+and the lexeme (printed in single quotes).
+Any input that does not match one of the skip or token specifications
+prints the representation of an \verb'$ERROR' token.
+\end{minipage}
+\clearpage

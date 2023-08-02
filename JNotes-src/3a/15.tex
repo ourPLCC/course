@@ -1,22 +1,27 @@
 \begin{minipage}[t]{\sw}
 \slidenumber
 \LARGE
-{\bf Language REF} (continued)\exx
-To repeat:
+{\bf Language SET} (continued)
+\begin{qv}
+let
+  x = 3
+  p = proc(t) set t = add1(t)
+in
+  { .p(x) ; x }
+\end{qv}
+The following illustration shows
 \begin{itemize}
 \item
-  The parameter passing semantics
-  that we have been using up to now
-  is called {\em call-by-value}.
-  In call-by-value semantics,
-  when an actual parameter to a procedure is a variable,
-  the procedure's corresponding formal parameter is bound
-  to a new reference to the value of the variable.
+the environment immediately before
+the procedure application \verb'.p(x)' -- in particular,
+the binding of \verb'x' to a reference to the value 3, and
 \item
-  In {\em call-by-reference} semantics,
-  when an actual parameter to a procedure is a variable,
-  the procedure's corresponding formal parameter denotes
-  the {\em same reference} as the actual parameter,
-  not a new reference to the actual parameter value.
+the environment during the procedure application \verb'.p(x)',
+binding the formal parameter \verb't'
+to a {\em new} reference 
+containing a copy of the value of \verb'x'
+(as shown by the dashed line).
 \end{itemize}
+\cfigw{set.eps}{7in}
 \end{minipage}
+\clearpage

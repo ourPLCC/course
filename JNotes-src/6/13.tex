@@ -1,0 +1,30 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language INFIX} (continued)\exx
+Language \verb'INFIX' defines a unary minus primitive
+(defined in class \verb'NegPrim2' that extends the \verb'Prim2' class)
+that acts as a prefix operator.
+Its behavior is to (arithmetically) negate its \verb'Factor' operand.\exx
+Language \verb'INFIX' defines four non-infix primitives,
+all of which are instances of the \verb'Prim' class.
+Three of them are taken directly from Language \verb'SET':
+their syntax and semantics are unchanged from Language \verb'SET'.
+The \verb'PospPrim' implementation (\verb'pos?')
+is drawn from Assignment A8.\exx
+All of the \verb'<atom>' grammar rules
+and related semantics in Language \verb'INFIX' are similar
+to those in Language \verb'SET'.
+As shown in the \verb'ProcAtom' BNF rule on Slide 6.9,
+the body of a \verb'proc' definition must be a \verb'<block>'
+(in Language \verb'SET', it's an \verb'exp').
+The \verb'ProcVal' class is mostly unchanged
+from that of Language \verb'SET',
+the only exception being that its \verb'apply' method
+does not have an \verb'Env' formal parameter.
+The \verb'apply' method body is unchanged.\exx
+Language INFIX, as given in the Code directory,
+has skeleton definitions of the \verb'eval' semantics for expressions.
+In an assignment, you are asked to complete these definitions
+for a full implementation of Language \verb'INFIX'.
+\end{minipage}

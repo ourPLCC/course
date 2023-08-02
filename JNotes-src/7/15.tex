@@ -1,16 +1,29 @@
 \begin{minipage}[t]{\sw}
 \slidenumber
 \LARGE
-{\bf Continuations} (continued)\exx
-The \verb'eval' method in the \verb'ProcExp' class is even simpler,
-since creating a closure does not require any further evaluation.
-\Large
+{\bf Logic Programming Puzzles}\exx
+However, this doesn't show give an explicit soltuion to the puzzle.
+Unlike Prolog, the \verb'ABC' language doesn't have a way to build
+the solution using some sort of list structure.
+So we do it by brute force!\exx
+First, observe that a minimal length solution path
+(with fewest crossings)
+cannot have two crossings
+that repeat a start side state,
+otherwise you would be back to a previous state.
+Since there are exactly 5 start side states of the form \verb's0???'
+that can be used for a crossing
+(see Slide 7.14),
+a minimum-length path can have
+at most nine crossings with different start side states.
+(Remember that a solution must have an odd number of crossings
+because a solution will always have the boat on the ending side.)\exx
+Define a premise \verb'c1' for a single crossing:
 \begin{qv}
-ProcExp
-%%%
-    public ACont eval(Env env, VCont vcont) {
-        return new ValCont(proc.makeClosure(env), vcont);
-    }
-%%%
+c1(X,P1,Z) :- cross(X,P1,Z). % P1 is the passenger
+\end{qv}
+Then define a premise \verb'c2' for two consecutive crossings:
+\begin{qv}
+c2(X,P1,P2,Z) :- c1(X,P1,Y), cross(Y,P2,Z). % P1 then P2
 \end{qv}
 \end{minipage}

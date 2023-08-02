@@ -2,37 +2,34 @@
 \slidenumber
 \LARGE
 {\bf Language V4} (continued)\exx
-Now consider the following examples, all of which evaluate to 5:
+Here are some examples of Language V4 programs using procedures:
 \large
 \begin{qv}
 let
-  app = proc(f,x) .f(x)
-  add2 = proc(y) add1(add1(y))
+  f = proc(x,y) +(x,y)
 in
-  .app(add2,3)
+  .f(3,8)
+  % => 11
 
 let
-  app = proc(f,x) .f(x)
+  f = proc(z,y) +(10,y)
 in
-  .app(proc(y) add1(add1(y)), 3)
+  .f(3,8)
+  % => 18
 
-.proc(f,x) .f(x) (proc(y) add1(add1(y)), 3)
+let x = 10
+in
+  let
+    x = 7
+    f = proc(y) +(x,y)
+  in
+    .f(8)
+  % => 18
 \end{qv}
 \LARGE
-In the first example,
-observe that we can pass a procedure (in this case \verb'add2')
-as a parameter to another procedure.
-This \verb'app' procedure takes two parameters
-and returns the result of applying the first actual parameter
-to the second.
-Of course, the first parameter had better be bound to a procedure
-for this to work.
-(If it isn't, an attempt to apply it throws an exception.)\exx
-In the second example,
-we have eliminated the identifier \verb'add2'
-and instead simply replaced \verb'add2' in the application \verb'.app(add2,3)'
-with the nameless procedure \verb'proc(y) add1(add1(y))'
-that used to be called \verb'add2'.\exx
-In the third example,
-we have even eliminated the identifier \verb'app'.
+In the third example, the \verb'x' in the \verb'proc' definition
+refers to the enclosing \verb'x' (which is bound to \verb'10'),
+not to the inner \verb'x' (which is bound to \verb'7').
+Remember the rules for evaluating the \verb'letDecls'!
 \end{minipage}
+\clearpage

@@ -2,25 +2,39 @@
 \slidenumber
 \LARGE
 {\bf Tokens} (continued)\exx
-To test these, create a separate directory for each test,
-and create a \verb'grammar' file in this directory
-with the given contents.
-Then, in this directory, run the following commands:
-\begin{qv}
-plccmk
-cd Java
-java Scan
-\end{qv}
-The \verb'Scan' program expects input from standard input
-(your keyboard)
-and produces output lines that list the tokens as they are scanned,
-in the form
-\begin{qv}
-NAME: string
-\end{qv}
-where \verb'NAME' is replaced by the token name
-and \verb'string' is replaced by the token's corresponding lexeme
-from the input file
-that produced this token.
+To use the PLCC tool set, follow these steps:
+\begin{enumerate}
+\itemsep -0.2ex
+\item
+    Create a working directory.
+    This directory will be specific
+    to the language you want to implement.
+\item
+    In this working directory,
+    put your \verb'grammar' language specification file.
+    As we describe later,
+    you may also put additional \verb'grammar'-related files
+    in this directory.
+\item
+    If you wish, create subdirectories containing test files
+    that you can use to exercise your language implementation.
+\item
+    Run \verb'plccmk' in your working directory.
+    This will create a \verb'Java' subdirectory
+    containing Java source files for an interpreter
+    for your language.
+\item
+    If \verb'plccmk' produces any PLCC or Java compile errors,
+    edit your \verb'grammar' file to fix these errors
+    and repeat the above step.
+\end{enumerate}
+The \verb'grammar' file is a text file
+that defines the tokens of the language
+using skip specifications and token specifications
+as we have illustrated earlier.
+The language specification file can contain
+comments starting with a `\verb'#'' character
+and continuing to the end of the line.
+These comments are ignored by the PLCC tool set.
 \end{minipage}
 \clearpage

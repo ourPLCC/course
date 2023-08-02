@@ -2,6 +2,40 @@
 \slidenumber
 \LARGE
 {\bf Drawing Envinronments} (continued)\exx
-\emm\VerbBox{\colorbox{light}}{\theverbbox}\\[1.5ex]
-\centerline{\psfig{figure=proct5.eps,height=3in}}
+We described the rules for {\em applying} a procedure on Slide 3.60.
+In the \verb'apply' method in the \verb'ProcVal' class, 
+the key steps are:
+(2a) bind the procedure's formal parameters
+to the values of the actual parameter expressions
+(a \verb'Bindings' object);
+(2b)
+extend the captured environment
+with these bindings to create a new environment;
+(3) evaluate the procedure body
+using the new environment.
+The value obtained in step (3) is the value of the procedure application.\exx
+Consider the following expression,
+which is the same as the previous expression except
+that we apply the procedure to the actual parameter 5:\\[1.5ex]
+\Large
+\begin{verbbox}
+let
+  x = 3
+in
+  .proc(t) +(t,x) (5)
+\end{verbbox}
+\emm\theverbbox\\[1.5ex]
+\LARGE
+From the above discussion,
+this procedure application creates a local binding
+of the formal parameter \verb't' to the value 5
+(the actual parameter expression's value).
+This binding is used to extend the environment captured
+by the procedure,
+and this extended environment is used
+to evaluate the body of the procedure.
+The value of this application is 8.\exx
+The following page displays the environment created by this application,
+marked with an asterisk `\verb'*''.
 \end{minipage}
+\clearpage

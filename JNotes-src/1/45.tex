@@ -1,23 +1,26 @@
 \begin{minipage}[t]{\sw}
 \slidenumber
 \LARGE
-{\bf Static Properties of Variables} (continued)\exx
-Determing the value of an expression at run-time is at the heart
-of executing a program, particularly so in expression-based languages.
-Since most expressions involve variables,
-evaluating an expression requires determining the values
-of its constituent variables --
-in other words, finding the bindings of these variables.\exx
-At run-time, how can you find the binding of a variable?
-There are two basic approaches:
-if the binding of a variable can be found
-by code that is created at compile-time,
-we call it {\em static binding};
-otherwise we call it {\em dynamic binding}.
-Almost all programming languages commonly in use today
-use static bindings,
-principally because it is easier
-to reason (or prove things) about programs that use static bindings.
-
+{\bf Parsers} (continued)\exx
+\emm\LightBox{\MYlonGrammarKleene}\exx
+How exactly can we have the \verb'Rep' program access and display
+the values of the \verb'NUM' fields from the parse tree?
+The \verb'Rep' program first parses the program,
+yielding an instance of the start symbol class
+-- an instance of \verb'Lon', in this case.
+It then runs (evaluates) this instance,
+which as we have seen defaults
+to displaying something like `\verb'Lon@...''.\exx
+This default behavior resides in the Java class \verb'_Start'.
+This class defines a \verb'void' method named \verb'$run()'
+that simply displays the \verb'toString()' value of its instance
+(see the Java code for \verb'_Start.java'
+in the Java subdirectory of Language \verb'LON').
+Since the Java class \verb'Lon' extends the \verb'_Start' class,
+evauating the \verb'$run()' method of a \verb'Lon' object
+defaults to evaluating the \verb'$run()' method of its superclass,
+which gives us the behavior we have already seen.
+\verb'Rep' simply calls the \verb'$run()' method
+on the \verb'Lon' instance obtined by parsing the program.
 \end{minipage}
 \clearpage

@@ -6,8 +6,9 @@
 A skip specification is used
 to identify things in a program
 that are otherwise not meaningful
-to the behavioral structure of the program.
-We generally skip whitespace (spaces, tabs, and newlines) and comments.
+to the syntax structure of the program.
+We generally skip whitespace (spaces, tabs, and newlines)
+and language-defined comments.
 The format of a comment is language-dependent,
 but in our languages, a comment starts with a `\verb'%'' character
 and continues to the end of the line.
@@ -17,9 +18,9 @@ skip WHITESPACE '\s+'
 skip COMMENT '%.*'
 \end{qv}
 A token specification is used to identify things in a program
-that are meaningful to the behavioral structure of the program.
+that are meaningful to the syntax structure of the program.
 Examples are a language reserved word (such as \verb'if'),
-a punctuation mark (such as a left bracket `\verb'[''),
+a special character sequence (such as a left bracket `\verb'[''),
 a numeric literal (such as \verb'346'),
 or a variable symbol (such as \verb'xyz').
 Here are specifications that match these tokens.
@@ -33,6 +34,5 @@ For token specifications, the initial `\verb'token'' can be omitted.
 Notice that regular expression meta-characters such as `\verb'[''
 must be quoted with a backslash `\verb'\''
 if they are to be treated as ordinary characters.
-
 \end{minipage}
 \clearpage

@@ -2,28 +2,36 @@
 \slidenumber
 \LARGE
 {\bf Environments} (continued)\exx
-\Large
 Our environments are implemented as instances
-of a Java abstract class \verb'Env':
+of a Java abstract class \verb'Env',
+a simple version of which we show here:
+{\large
 \begin{qv}
 public abstract class Env {
-    // default method to return the value currently bound to sym.
-    // this method is overloaded in subclasses of Env,
-    // in particular, EnvNode
-    public Val applyEnv(String sym) {
-        throw new RuntimeException("no binding for "+sym);
+
+    public static final Env empty = new EnvNull();
+
+    public abstract Env add(Binding b);
+
+    public static Env initEnv() {
+        // initial environment with no bindings
+        return new EnvNode(new Bindings(), empty);
     }
-    
-    // extend the current environment by adding bindings
+
+    public abstract Binding lookup(String sym); // only local bindings
+
+    public abstract Val applyEnv(String sym);
+
+    public Val applyEnv(Token tok) {
+        return applyEnv(tok.toString());
+    }
+
     public Env extendEnv(Bindings bindings) {
         return new EnvNode(bindings, this);
     }
-    
-    // create an initial (empty) environment
-    public static Env initEnv() {
-        return new EnvNull();
-    }
+
 }
 \end{qv}
-We discuss the \verb'Bindings' class next.
+}
 \end{minipage}
+\clearpage

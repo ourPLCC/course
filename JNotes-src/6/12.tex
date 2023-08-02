@@ -1,0 +1,31 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language INFIX} (continued)\exx
+Consider the expression
+{\Large
+\begin{qv}
+x=y+5+x
+\end{qv}
+}
+Since \verb'INFIX' is still expression-based --
+every expression has a value --
+the above expression must have a value,
+just as we have required in languages like \verb'SET'.
+But the expression also has an assignment operation
+with a side-effect that modifies the value of \verb'x'.
+Since the RHS of an assignment must be an \verb'<atom>',
+this means that the above expression evaluates like this:
+{\Large
+\begin{qv}
+(x=y)+5+x % assign y to x, then return this value plus 5+x
+\end{qv}
+}
+If we wanted the entire RHS of the above expression
+to be assigned to \verb'x', we would need to re-write it as follows:
+{\Large
+\begin{qv}
+x=(y+5+x)
+\end{qv}
+}
+\end{minipage}

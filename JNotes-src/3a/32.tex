@@ -1,35 +1,19 @@
 \begin{minipage}[t]{\sw}
 \slidenumber
 \LARGE
-{\bf Language NEED}\exx
-The call-by-need parameter passing mechanism
-is the same as call-by-name,
-except that a thunk is called at most once,
-and its value is remembered ({\em memoized}).\exx
-Suppose a procedure with formal parameter \verb'x' is invoked
-with actual parameter \VerbBox{\fbox}{\verb'set z = add1(z)'},
-using call-by-need semantics.
-As with call-by-name, the formal parameter \verb'x' is bound to the thunk
-with \VerbBox{\fbox}{\verb'set z = add1(z)'} as its body,
-in an enclosing environment
-that we will assume has \verb'z' bound to (a reference to) the value 8.
-When \verb'x' is referenced in the body of calling procedure,
-its corresponding thunk is dereferenced,
-producing a result of 9 for \VerbBox{\fbox}{\verb'set z = add1(z)'}.
-The thunk now remembers ({\em memoizes}) the value 9,
-and any further references to the formal parameter \verb'x'
-in the body of the procedure will continue to evaluate to 9
-without making any further changes to the variable \verb'z'.\exx
-If call-by-name had been used in the above example,
-additional evaluations of \verb'x' in the body of the procedure would result
-in evaluating the body of the thunk for each such evaluation,
-further modifying \verb'z'
-and yielding values 10, 11, 12, and so forth.\exx
-In both call-by-need and call-by-name
-(and unlike call-by-reference),
-if the formal parameter is never referenced
-in the body of the procedure, the thunk is never evaluated.
-Compared to call-by-name,
-call-by-need reduces the overhead of repeatedly evaluating
-a thunk when evaluating the corresponding formal parameter.
+{\bf Language NAME} (continued)\exx
+A thunk amounts to a parameterless procedure
+that consists of an expression and an environment
+in which the expression is to be evaluated.
+It looks just like a closure,
+except that there is no formal parameter list.\exx
+\emm\Large\VerbBox{\fbox}{\verb'ThunkRef(Exp exp, Env env)'}\exx
+\LARGE
+A \verb'ThunkRef' is a \verb'Ref', since we want
+to de-reference (\verb'deRef') it
+whenever we refer to the corresponding actual parameter.
+We bind a formal parameter to a thunk reference
+only during procedure application.
+Thunks will otherwise not play a role in expression semantics.
 \end{minipage}
+\clearpage

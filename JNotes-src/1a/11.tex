@@ -1,7 +1,7 @@
 \begin{minipage}[t]{\sw}
 \slidenumber
 \LARGE
-{\bf PLCC -- Grammar}\exx
+{\bf PLCC -- Syntax (continued)}\exx
 A BNF grammar rule may have the same nonterminal name appearing
 more than once on its RHS, as in
 {\Large
@@ -9,13 +9,15 @@ more than once on its RHS, as in
 <tree>:Interior ::= LPAREN <SYMBOL> <tree> <tree> RPAREN
 \end{qv}
 }
+(see Slide 1.2).
 PLCC requies that there are no duplicates of class field names
-associated with the RHS of a given grammar rule.
-The above grammar rule would therefore not be acceptable to PLCC.
-We can annotate the duplicate field entries
+associated with the RHS of a given grammar rule,
+so the above grammar rule would not be acceptable to PLCC.
+To solve the problem of duplicate field names,
+we annotate the duplicate field entries
 by appending an alternate field name
-(any name will do, but the convention is to have it start
-with a lowercase letter)
+(any Java identifier will do, but the convention is
+to have it start with a lowercase letter)
 which becomes the name of the corresponding field.
 The following annotations fix the above example:
 {\Large
@@ -24,8 +26,8 @@ The following annotations fix the above example:
 \end{qv}
 }
 The same requirement that there be no duplicate field entries
-applies to fields associated with tokens instead of nonterminals --
-those of the form \verb'<TOKEN>'. So for a BNF rule such as
+applies to fields associated with tokens instead of nonterminals.
+So for a BNF rule such as
 {\Large
 \begin{qv}
 <hhmmss> ::= <TWOD> COLON <TWOD> COLON <TWOD> NL

@@ -2,30 +2,33 @@
 \slidenumber
 \LARGE
 {\bf Language OBJ} (continued)\exx
-Before an object builds the environment that is specific
-to the fields and methods of the class,
-it creates an instance of the superclass of the class
-and adopts the environment of the superclass object
-(bound to the variable \verb'super')
-before adding \verb'static', \verb'field', and \verb'method' bindings.
+Before we build an object from a base class,
+we first build an object that is an instance
+of the superclass of the base class.
+This superclass object has its own environment, namely \verb'objectEnv'.
+We then extend this superclass object environment
+by adding bindings to the statics, fields, and methods of the class,
+and use this extended environment
+to create the instance of the base class.\exx
 Since creating the superclass object may itself involve
 creating an instance of {\em its} superclass,
 object creation continues up the class hierarchy
-until a parentless class is found,
-at which point there is no further \verb'super' object to create.\exx
-At the top of the chain of \verb'super' objects,
-the identifier \verb'self' is bound
-to a reference to the object being created.
-In this way, the object can refer to itself
-through the \verb'self' identifier.
-(In Java, we call it \verb'this' instead of \verb'self'.)
+until the top-level \verb'EnvClass' class is found,
+at which point there is no further superclass object to create.\exx
+At the top of the chain of superclass objects,
+we add the identifier \verb'self'
+to the environment of this top-level superclass object,
+binding it to a reference to the (original)
+base class object being created.
+Since all of the objects created
+by going up the superclass chain have environments
+that ultimatelly extend the top-level object,
+all of these objects can refer to the base class object being created
+using the \verb'self' field identifier.
+(In Java, we do the same thing using \verb'this' instead of \verb'self'.)
 Methods declared in superclasses
-that refer to \verb'self' will ``see'' the original object,
+that refer to \verb'self' will ``see'' the base class object,
 allowing for dynamic dispatch of method calls,
 an important feature of object-oriented languages.
-We call this a {\em deep} binding.\exx
-As objects are created up the superclass chain,
-the identifier \verb'this' is bound
-to the object created by that class.
-We call this a {\em shallow} binding.
+We call this binding of \verb'self' a {\em deep} binding.
 \end{minipage}

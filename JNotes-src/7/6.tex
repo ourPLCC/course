@@ -1,19 +1,36 @@
 \begin{minipage}[t]{\sw}
 \slidenumber
 \LARGE
-{\bf Continuations} (continued)\exx
-It may appear that we have simply added recursive calls to \verb'apply'
-to the already recursive calls to \verb'eval'.
-The difference is that once we call \verb'apply',
-we do not need to preserve the current execution context.
-Languages that implement tail call elimination (look this up!)
-do this explicitly: see Lisp, Scheme, Haskell, and Scala.\exx
-If our implementation (defining) language supported tail call elimination,
-we wouldn't need to worry about this.
-In Java it's not as simple,
-since Java does not do tail call elimination --
-but we can accomplish essentially the same thing
-through a technique called {\em trampolining}.
-This technique de-couples the recursive calls to \verb'apply'
-by looping instead.  The next slide shows how this works:
+{\bf Logic Programming}\exx
+Once we have included this rule, our ``larger'' query reports this
+(in some order):
+{\Large
+\begin{qv}
+3 matches:
+larger(jupiter, earth)
+larger(earth, mercury)
+larger(jupiter, mercury)
+\end{qv}
+}
+Entering facts, rules, and queries can be done interactively
+at the `\verb'-->'' prompt.\exx
+What if we wanted to include the planet saturn in our list of planets?
+We would certainly add the fact
+{\Large
+\begin{qv}
+planet(saturn).
+\end{qv}
+}
+We know that saturn is larger than earth, so we might then add the fact
+{\Large
+\begin{qv}
+larger(saturn,earth).
+\end{qv}
+}
+But upon a query of the \verb'larger' relation,
+we would see no \verb'larger' relation between saturn and jupiter.
+Try it!\exx
+The important thing is that the query engine
+cannot deduce something that is not explicitly given in facts
+or explicitly deduced from rules.
 \end{minipage}

@@ -3,7 +3,8 @@
 \LARGE
 {\bf Language TYPE0} (continued)\exx
 \Large
-We can add a number of new primitives applied to integer arguments
+We can add a number of new primitives applied
+to \verb'IntVal' arguments
 that return \verb'BoolVal' values,
 such as the following, with obvious meanings:
 \large
@@ -25,16 +26,14 @@ to a \verb'BoolVal'.\exx
 The following expressions evaluate as indicated:
 \large
 \begin{qv}
-<?(3,3)
-  % => false (actually, a false BoolVal)
-<=?(3,3)
-  % => true
-<>?(x,y)
-  % => depends on the current bindings of x and y
-=?(proc(t) t, proc(u) u)
-  % => exception -- can't apply to procedures
-if 1 then 2 else 3
-  % => exception -- 1 is not a boolean
+<?(3,3)                  % => false (actually, a false BoolVal)
+<=?(3,3)                 % => true
+<>?(x,y)                 % => depends on the current bindings of x and y
+=?(proc(t) t, proc(u) u) % => exception -- a proc is not an IntVal
+if 1 then 2 else 3       % => exception -- 1 is not a boolean
+zero?(1)                 % => false
+zero?(0)                 % => true
+zero?(proc(t) t)         % => exception -- a proc is not an IntVal
 \end{qv}
 \Large
 \end{minipage}

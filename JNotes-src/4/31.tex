@@ -14,7 +14,7 @@ public Type evalType(TypeEnv tenv) {
     Type trueExpType = trueExp.evalType(tenv);
     Type falseExpType = falseExp.evalType(tenv);
     Type.checkEquals(trueExpType, falseExpType);
-    return trueExpType;
+    return trueExpType; // same as falseExpType if we get here
 }
 \end{qv}
 

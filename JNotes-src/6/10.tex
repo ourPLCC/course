@@ -1,23 +1,44 @@
 \begin{minipage}[t]{\sw}
 \slidenumber
 \LARGE
-{\bf Language ARRAY}\exx
-It is possible to turn an array into a list, and vice versa.
-For example, here is the code of a procedure \verb'array2list'
-that takes an array parameter and returns a corresponding list.
-The length of an array \verb'a' is written as \verb'len(a)'.
+{\bf Language INFIX} (continued)\exx
+The \verb'INFIX' language also supports the assignment
+of values to variables in a way that is similar
+to the \verb'set' expression in Language \verb'SET'
+but without using the token \verb'set'.
+The right-hand-side of a such an assignment
+must be an atom instead of an arbitrary expression.
+The \verb'<assign>' grammar rule defines its syntax
+(as shown on Slide 6.9).
+Because the RHS in an \verb'Assign1' rule is an atom,
+assignment has higher precedence than any infix arithmetic operations.
+{\Large
 \begin{qv}
-% turn an array into a list
-define array2list = proc(a)
-  let
-    i = len(a)
-    lst = []
-  in
-    while i do
-      { set i = sub1(i)
-      ; set lst = addFirst(\a[i], lst)
-      }
-    else
-      lst
+<atom>:VarAtom         ::= <VAR> <assign>
+<assign>:Assign0       ::=
+<assign>:Assign1       ::= EQUALS <atom>
 \end{qv}
+}
+For example, in the following code,
+the expression \verb'x*y' evaluates to 64:
+{\Large
+\begin{qv}
+define x=5;
+define y=11;
+x=(y-3);     % => 8
+y=x+5;       % => assigns 8 to y, evaluates to 13
+x*y;         % => 64
+\end{qv}
+}
+We borrow the syntax of \verb'letrec' expressions in Language V5
+to create a new atom called a \verb'<block>',
+with the following grammar rules:
+{\Large
+\begin{qv}
+<atom>:BlockAtom  ::= <block>
+<block>           ::= LBRACE <blockDecls> <exp> <exps> RBRACE
+<blockDecls>      **= DEF <VAR> EQUALS <exp> SEMI
+<exps>            **= SEMI <exp>
+\end{qv}
+}
 \end{minipage}

@@ -1,25 +1,38 @@
 \begin{minipage}[t]{\sw}
 \slidenumber
 \LARGE
-{\bf Language SET} (continued)
+{\bf Language SET} (continued)\exx
+To illustrate how \verb'set' expressions evaluate to something,
+consider the following \verb'let' expression in Language SET:
+{\Large
 \begin{qv}
 let
-  x = 3
-  p = proc(t) set t = add1(t)
+  t = 3
+  u = 42
+  v = 0
 in
-  { .p(x) ; x }
+  { set v = set u = set t = add1(t) ; +(t,+(u,v)) }
 \end{qv}
-The following illustration shows
-\begin{itemize}
-\item
-the environment immediately before
-the procedure application \verb'.p(x)' --
-in particular, the binding of \verb'x' to a reference to the value 3,
-\item
-and the environment during the procedure application \verb'.p(x)',
-binding the formal parameter \verb't'
-to a {\em new} reference to the value 3,
-not to \verb'x''s reference (which would be the dashed line).
-\end{itemize}
-\cfigw{set.eps}{7in}
+}
+This expression evaluates to 12.
+The first expression in the body of this \verb'let'
+(a sequence expression)
+gets evaluated like this:
+{\Large
+\begin{qv}
+    set v = { set u = { set t = add1(t) } }
+\end{qv}
+}
+The innermost \verb'set' expression sets \verb't' to 4
+and evaluates to 4.
+Proceeding outwards,
+the next \verb'set' expression sets \verb'u' to 4
+(the value of the innermost \verb'set')
+and evaluates to 4.
+Finally, the outermost \verb'set' expression sets \verb'v' to 4
+and evaluates to 4.
+This final value gets discarded by the sequence expression,
+but the last expression in the \verb'let' body uses
+the modified values of \verb't', \verb'u', and \verb'v'.
 \end{minipage}
+\clearpage

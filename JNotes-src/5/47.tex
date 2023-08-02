@@ -1,27 +1,28 @@
 \begin{minipage}[t]{\sw}
 \slidenumber
 \LARGE
-{\bf Language PROP} (continued)\exx
-If a variable \verb'z' [for example] is bound to a property
-whose \verb'set' expression has no side-effects [such as \verb'nil'],
-an expression such as \verb'set z = ...' does not modify anything --
-including \verb'z'.
+{\bf Language OBJ} (continued)\exx
+In method application, \verb'self' always refers to the base object,
+even if \verb'self' appears in the definition of a superclass method.
+This is what makes dynamic dispatch work!
 \Large
 \begin{qv}
-define c =
+define c1 =
   class
-    field x
-    method init = proc(x) {set <this>x = x ; self}
-    property y = prop x:set x=$
-    property z = prop x:nil
+    method m1 = proc() 1
+    method m2 = proc() <self>m1()
   end
-define o = .<new c>init(3)
-<o>[x,y,z]   % [3,3,3]
-<o>set x = 5
-<o>[x,y,z]   % [5,5,5]
-<o>set y = 11
-<o>[x,y,z]   % [11,11,11]
-<o>set z = 42
-<o>[x,y,z]   % [11,11,11]
+define c2 =
+  class extends c1
+    method m1 = proc() 2
+  end
+define o1 = new c1
+define o2 = new c2
+
+.<o1>m1() % => 1
+.<o2>m1() % => 2
+.<o2>m2() % => 2!  
 \end{qv}
+\LARGE
+The following slide gives another example of dynamic dispatch.
 \end{minipage}

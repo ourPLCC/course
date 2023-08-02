@@ -2,38 +2,26 @@
 \slidenumber
 \LARGE
 {\bf Parsers} (continued)\exx
-Continuing with our list-of-numbers example,
-suppose we want our parser to require that the numbers in our list
-are separated by commas, like this:
-\Large
-\begin{qv}
-(5, 8, 13, 21)
-\end{qv}
-\LARGE
-How can we devise a grammar that accommodates these separators?\exx
-PLCC provides a way to specify a token
-that serves as a separator between items
-in a repeating grammar rule.
-The separator name must appear at the end of the rule,
-preceded by a `\verb'+'' character.
-So if we want to separate the items in our lists by a comma
-(with token name \verb'COMMA'),
-here is what the specification looks like:
-\Large
-\begin{qv}
-skip WHITESPACE '\s+'
-NUM '\d+'
-LPAREN '\('
-RPAREN '\)'
-COMMA ','
-%
-<lon>  ::= LPAREN <nums> RPAREN
-<nums> **= <NUM> +COMMA
-%
-\end{qv}
-\LARGE
-While this grammar requires comma separators between \verb'NUM' items,
-the parser generates {\em exactly the same parse trees}
-for this language as for the previous specification.\exx
+This sort of looping occurs frequently
+in programming language specifications,
+and PLCC has a way to encode this.
+Instead of having two \verb'<nums>' rules,
+with the first being right-recursive and the second having an empty RHS,
+we can re-write these rules using a special `\verb'**='' notation:\exx
+\emm\begin{tabular}{ll}
+\verb'<nums>' & \verb' **= <NUM>' \\
+              & \VerbBox{\fbox}{\verb'Nums(List<Token> numList)'} \\
+\end{tabular}\exx
+The parser accumulates all of the \verb'NUM' tokens
+into a single \verb'numList' field.
+The \verb'numList' field name is obtained from the \verb'NUM' token name
+by converting all of its characters to lowercase
+and appending the string \verb'List'.\exx
+{\bf Note:} The use of `\verb'**'' in the notation we have just introduced
+should suggest the {\em Kleene star} repetition notation
+used in EBNF as well as in regular expressions.\exx
+The modified list-of-numbers grammar is in the directory \verb'LON2'
+as follows:\exx
+\emm\LightBox{\MYlonGrammarKleene}\exx
 \end{minipage}
 \clearpage

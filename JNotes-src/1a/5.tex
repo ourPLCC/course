@@ -2,13 +2,14 @@
 \slidenumber
 \LARGE
 {\bf PLCC -- Tokens}\exx
-In the \verb'cur()' method,
-the token and skip specifications are processed one-by-one,
+If there are characters remaining in the input stream,
+the \verb'cur()' method checks
+the token and skip regular expressions one-by-one,
 in the order in which they appear
 in the lexical specification.
 Each regular expression is matched
 against the current unmatched input,
-up to the end of the current line.
+up to (and including) the end of the current line.
 If no characters match the regular expression,
 the next specification is tried.\exx
 If the regular expression is a skip specification

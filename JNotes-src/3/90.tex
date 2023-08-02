@@ -1,33 +1,29 @@
 \begin{minipage}[t]{\sw}
 \slidenumber
 \LARGE
-{\bf Language V6}\exx
-So far, our defined language has no capability to define top-level
-variables that persist from one expression evaluation to another.
-A {\em top-level} variable is one that has a binding
-in the initial (``top-level'') environment.
-We would like to extend the language to allow for such definitions.\exx
-We already have the tools to do this,
-since the \verb'Env' class has methods
-\verb'add' and \verb'addFirst' that makes it 
-possible to add bindings to the current local environment
-without having to extend it.
-All we need to do is to add bindings
-to the {\em initial environment},
-the environment that all expressions
-in the defined language extend from.\exx
-The initial environment of our languages
-is a \verb'static Env env' variable
-in the \verb'Program' class,
-obtained from the \verb'initEnv' static method
-in the \verb'Env' class.
-Notice that this initial environment starts out having
-an empty list of bindings.
-Our strategy for making top-level definitions is
-to take advantage of the \verb'addFirst' method in the \verb'Env' class.
-This method takes a \verb'Binding' object and adds it
-at the beginning of the \verb'Bindings' object in the current environment.
-When applied to the initial environment,
-we can add bindings to the top-level environment that will be known
-in any subsequent expression evaluation.
+{\bf Language V5} (continued)\exx
+The \verb'letrec' construct allows us
+to define {\em mutually recursive procedures} --
+two or more procedures that call each other in a recursive fashion.
+Here's a classic example:
+{\Large
+\begin{qv}
+letrec
+  even? = proc(x) if zero?(x) then 1 else .odd?(sub1(x))
+  odd? = proc(x) if zero?(x) then 0 else .even?(sub1(x))
+in
+  .even?(11) % => 0 (false)
+\end{qv}
+}
+[{\bf Exercise} (not to hand in):
+See if you can define the \verb'odd?()/even?()'
+mutually recursive procedures
+in Language V4 without \verb'letrec'.]\exx
+Notice that we have used \verb'?'
+in the variable names for the \verb'even?' and \verb'odd?' procedures
+to suggest that these procedures should be considered
+as {\em predicates} that return true (1) or false (0).
+This is a lexical feature we have added
+to Languages V5 and beyond.
 \end{minipage}
+\clearpage

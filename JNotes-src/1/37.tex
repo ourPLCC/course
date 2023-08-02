@@ -2,30 +2,35 @@
 \slidenumber
 \LARGE
 {\bf Parsers} (continued)\exx
+Let's return to our tree example
+(directory {\color{red}\verb'TREE'}).
+Here is a modified grammar for a tree
+as originally given on slide 1.12
+that takes into account the PLCC requirements
+for unique class names and the introduction
+of fields for the \verb'NUM' and \verb'SYMBOL' tokens.
+Notice the Java signatures for the class constructors
+shown in boxes.\exx
 \Large
-\emm\LightBox{\MYlonGrammarKleene}\exx
+\emm\begin{tabular}{ll}
+\verb'<tree>:Leaf' & \verb'::= <NUM>'\\
+    & \VerbBox{\fbox}{\verb'Leaf(Token num)'}\\
+\verb'<tree>:Interior' & \verb'::= LPAREN <SYMBOL> <tree> <tree> RPAREN'\\
+    & \VerbBox{\fbox}{\verb'Interior(Token symbol, Tree tree, Tree tree)'}\\
+\end{tabular}\exx
 \LARGE
-Here is an (edited) example
-of a parse trace for the list of numbers \verb'(3 5 8 13)':
+But there is a problem
+with the \verb'Interior' constructor signature.
+Java does not allow multiple field names
+or constructor formal parameters
+with the same name:
+specifically, in this case, there cannot be two field names
+with the name \verb'tree'.
+Here is what PLCC has to say about this when given
+the above grammar (the line has been folded for clarity):
 \begin{qv}
---> (3 5 8 13)
-<lon>
-| LPAREN "("
-| <nums>
-| | NUM "3"
-| | NUM "5"
-| | NUM "8"
-| | NUM "13"
-| RPAREN ")"
+duplicate field name tree in rule RHS
+LPAREN <SYMBOL> <tree> <tree> RPAREN
 \end{qv}
-If you compare this with the parse trace using the previous grammar
-that does not use the \verb'**=' construct,
-you see that the earlier parse trace drifts to the right
-as additional \verb'NUM' entries are encountered.
-Using the \verb'**=' construct,
-the parse trace becomes flat.\exx
-PLCC grammar rules that use this construct
-are called {\em repeating grammar rules}.
-Repeating rules are useful in specifying most of our languages.
 \end{minipage}
 \clearpage

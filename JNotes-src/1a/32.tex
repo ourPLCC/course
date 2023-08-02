@@ -1,0 +1,40 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf PLCC -- Hooks (continued)}\exx
+You use the final hook in an automatically-generated Java source file
+to add method definitions (and sometimes field declarations)
+that will be appended to the class definition.
+We have already seen how this is used,
+for example, in Language LON2 on Slide 1.48,
+which we repeat here:
+{\Large
+\begin{qv}
+Lon
+%%%
+    public void $run() {
+        System.out.print("( ");
+        for (Token tok: nums.numList)
+            System.out.print(tok.toString() + " ");
+        System.out.println(")");
+    }
+%%%
+\end{qv}
+}
+For temporary testing purposes,
+you may disable adding the \verb'$run()' method definition
+into the \verb'Lon.java' source file
+by replacing the \verb'Lon' line with the following:
+\begin{qv}
+Lon:ignore!
+\end{qv}
+This is simpler (and easier to undo) than 
+``commenting out'' all of these lines
+(including the `\verb'%%%'' lines)
+by turning them into PLCC `\verb'#'' comments.
+In this case, PLCC reads the lines
+in the \verb'grammar' file bracketed by the `\verb'%%%'' lines
+but otherwise ignores them, making no changes
+to \verb'Lon.java'.
+\end{minipage}
+\clearpage

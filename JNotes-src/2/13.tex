@@ -1,31 +1,24 @@
 \begin{minipage}[t]{\sw}
 \slidenumber
 \LARGE
-{\bf Environments} (continued)\\[1.5ex]
-Class summary:
-\Large
+{\bf Environments} (continued)\exx
+In summary, an environment is a linked list of nodes,
+where a node is either an instance of \verb'EnvNode'
+(with its corresponding local bindings)
+or an instance of \verb'EnvNull',
+which terminates the list.\exx
+The \verb'extendEnv' procedure, defined in the \verb'Env' class,
+takes a set of local bindings and uses them
+to return a new \verb'EnvNode'
+that becomes the head of a new environment list,
+extending the current environment list.
+Here is the definition of \verb'extendEnv':
+{\Large
 \begin{qv}
-abstract class Env
-    public Val applyEnv(String sym)
-    public Env extendEnv(Bindings bindings)
-
-class EnvNull extends Env  // empty environment class, no fields
-
-class EnvNode extends Env
-    public Bindings bindings // local bindings
-    public Env env     // next environment
-
-class Bindings
-    public List<Binding> bindingList
-
-class Binding
-    public String sym
-    public Val val
-
-abstract class Val
-
-class IntVal extends Val
-    public int num
+public Env extendEnv(Bindings bindings) {
+    return new EnvNode(bindings, this);
+}
 \end{qv}
+}
 \end{minipage}
 \clearpage

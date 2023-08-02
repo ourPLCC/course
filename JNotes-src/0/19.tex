@@ -2,27 +2,30 @@
 \slidenumber
 \LARGE
 {\bf Tokens} (continued)\exx
-The \verb'adv()' method advances the scanning process
-so that the token returned by the next call to \verb'cur()'
-is the next token in the input.
-Notice that multiple calls to \verb'cur()'
-without any intervening calls to \verb'adv()'
-all return the same token.\exx
-A \verb'Token' object has three public fields
-(also called {\em instance variables}):
-an \verb'enum Val' field named \verb'val' that is the token enum value,
-one for each of the token specifiers (except for the skip tokens);
-a string \verb'str' field that is the token's lexeme derived
-from the input stream (and is returned by
-the \verb'toString()' method in this class);
-and an integer \verb'lno' field that is the line number,
-starting at one, of the input stream where the token appears.\exx
-For the purposes of compatibility,
-the \verb'Scan' class also defines methods \verb'hasNext()' and \verb'next()'
-that behave exactly like their counterparts in the Java \verb'Scanner' class.
-The \verb'boolean hasNext()' method returns \verb'true'
-if and only if the input stream has additional tokens,
-in which case the \verb'Token next()' method returns (and consumes)
-the next \verb'Token' object from the input stream.\exx
-
+In your working directory, run your scanner
+with the following command
+{\Large
+\begin{qv}
+java -cp Java Scan
+\end{qv}
+}
+and enter strings from your terminal
+to see what tokens are recognized by the scanner.
+The `\verb'-cp Java'' command-line arguments
+sets the Java \verb'CLASSPATH' environment to the \verb'Java' directory;
+this, in turn, tells the Java interpreter
+where to find the \verb'Scan' program.\exx
+The \verb'Scan' program expects input from standard input
+(your keyboard)
+and produces output lines that list the tokens as they are scanned,
+in the form
+\begin{qv}
+lno: NAME 'string'
+\end{qv}
+where \verb'lno' is replaced
+by the input line number where the token is found,
+\verb'NAME' is replaced by the token's symbolic name,
+and \verb'string' is replaced by the token's corresponding lexeme
+from the input that matched the \verb'NAME' token specification.
 \end{minipage}
+\clearpage

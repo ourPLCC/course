@@ -2,9 +2,26 @@
 \slidenumber
 \LARGE
 {\bf Language NAME} (continued)\exx
-The following illustration may help you to understand
-how these bindings work.  The example shows all four
-possible cases of actual parameter expressions:
-literal, variable, procedure, and other:\exx
-\centerline{\psfig{figure=name-example.eps,width=6in}}
+We proceed to implement call-by-name.
+We take our Language REF (call-by-reference)
+implementation as a starting point.\exx
+If an actual parameter is a literal expression (such as \verb'4'),
+we bind the formal parameter to (a reference to) the literal value.
+If an actual parameter is a procedure,
+we bind the formal parameter
+to (a reference to) the procedure's closure in the calling environment.
+If an actual parameter is an identifier,
+we bind the formal parameter
+to the same reference as the actual parameter,
+using reference semantics.\exx
+If an actual parameter is any other kind of expression,
+we bind the formal parameter
+to a \verb'Ref' object that captures the expression
+in the environment in which it was called
+and that can be evaluated, when needed, by the called procedure.
+We call such an object a {\em thunk}.\exx
+Following our terminology
+for defining {\em value semantics} and {\em reference semantics}
+discussed earlier, we call this {\em name semantics}.
 \end{minipage}
+\clearpage

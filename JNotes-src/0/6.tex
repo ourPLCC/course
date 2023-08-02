@@ -1,25 +1,37 @@
 \begin{minipage}[t]{\sw}
 \slidenumber
 \LARGE
-{\bf Syntax and semantics} (continued)\exx
-This course is about programming languages,
-and particularly about {\em specifying} programming languages.
-A programming language {\em specification} is a document that describes:
+{\bf Syntax and semantics}\exx
+You can use a language {\em compiler} to tell you
+if a program you write is syntactically correct,
+but it's much more difficult to determine
+if your program always produces the behavior you {\em want} --
+that is, if a program is semantically ``correct.''
+There are two basic problems:\\[-1.5em]
 \begin{enumerate}
-\item the lexical structure of the language: its tokens;
-\item the rules that dictate how to write a program in the language
-      so that it is syntactically correct; and
-\item the behavior of a program when it is run.
+\itemsep -0.3em
+\item how to specify formally the behavior you want, and
+\item how to translate that specification into a program
+      that actually behaves according to the specification.
 \end{enumerate}
-Along the way, we show how to implement
-programming language behaviors (semantics)
-with regard to specifics such as
-how variables are bound to values,
-how functions are defined,
-and how parameters are passed when functions are called.\exx
-Because a program in a language must be syntactically correct
-before its semantic behavior can be determined,
-part of this course is about syntax.
-But in the final anaysis, semantics is paramount.
-
+Of course, {\bf a program is its own specification}:
+it behaves exactly the way its instructions say it should behave!
+But nobody knows exactly how to create a
+{\em behavioral specification}
+that precisely and unambiguously describes
+what you {\em want} --
+in part because what you want is often imprecise and ambiguous --
+and then translate this behavioral specification
+into a program whose semantics {\em provably behaves}
+according to the specification.
+Because of this, programming will always be problematic.
+(Creating behavioral specifications is a topic
+of interest in its own right and properly belongs
+in the discipline of software engineering.)\exx
+In this course, we are interested in defining precisely and unambiguously
+how a program {\em behaves}: its semantics.
+After all, if {\em you} don't know how a program behaves,
+it's hopeless to put that program into a production environment
+where other users expect it to behave in a certain way.
 \end{minipage}
+\clearpage

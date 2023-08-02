@@ -1,0 +1,25 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf PLCC -- Hooks (continued)}\exx
+You can use the \verb':import' hook
+to add Java \verb'import' lines to source files for classes
+that need to import Java packages
+other than the default \verb'java.util.*'.
+You can see this used, for example, in Language ABC:
+{\Large
+\begin{qv}
+Program:import
+%%%
+import abcdatalog.engine.bottomup.sequential.*;
+%%%
+\end{qv}
+}
+Similar comments apply to the \verb':top' hook,
+which can be used
+to add a copyright comment or such.\exx
+The \verb':class' hook can be used to declare
+any interfaces that should be added
+to the class definition.
+\end{minipage}
+\clearpage

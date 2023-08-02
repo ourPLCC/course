@@ -2,29 +2,9 @@
 \slidenumber
 \LARGE
 {\bf Language OBJ} (continued)\exx
-For example, consider again the expression
-\begin{qv}
-define x = 3
-let
-  x = 5
-in
-  <class end>x
-\end{qv}
-where we observed that this expression evaluates to 3.
-If we replace
-\begin{qv}
-<class end>x
-\end{qv}
-in the above expression with
-\begin{qv}
-<class end><!@>x
-\end{qv}
-then this expression evaluates to 5
-because the \verb'class' expression is defined
-in the \verb'let' environment,
-and so the environment captured by \verb'!@'
-has \verb'x' bound to 5.\exx
-Observe that the expression \verb'!@' is only meaningful
-in the context of the static environment of a class.
-If used anywhere else, it will throw an ``unbound variable'' exception.
+Step 4: Extend the environment of Step 3 with new field bindings\exx
+\centerline{\psfig{figure=Dia/ObjectVal4.eps,width=.8\textwidth}}
+Fields are initialized to \verb'nil'.
+Add bindings for \verb'this', \verb'self', and \verb'super'.
+
 \end{minipage}

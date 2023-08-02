@@ -2,35 +2,39 @@
 \slidenumber
 \LARGE
 {\bf Parsers} (continued)\exx
-To remedy this situation, we need to have a field
-in the \verb'NumsNode' class that captures the value
-of the \verb'NUM' token.
-We use angle brackets for all nonterminals on the RHS of grammar rules,
-and these nonterminals automatically become fields in the Java class.
-To capture values of the tokens on the RHS,
-we use angle brackets for these token names as well.
-This means that the \verb'NumsNode' line now looks like this:
+Here's a sample interaction using this trace feature
+for Language \verb'LON',
+with the output edited for the sake of readability:
+{\Large
 \begin{qv}
-<nums>:NumsNode  ::= <NUM> <nums>
+$ java -cp Java Rep -t
+--> (14 6)
+<lon>
+| LPAREN "("
+| <nums>:NumsNode
+| | NUM "42"
+| | <nums>:NumsNode
+| | | NUM "6"
+| | | <nums>:NumsNull
+| RPAREN ")"
+Lon@372f7a8d
 \end{qv}
-The `\verb'<NUM>'' entry creates a field named \verb'num'
-(which is the name `\verb'NUM'' converted to lowercase)
-of type \verb'Token' (since \verb'NUM' is the name of a token 
-in the \verb'grammar' file).\exx
-Observe that it's unnecessary
-to capture tokens that always have the same string representation,
-like \verb'LPAREN'.
-Every instance of the \verb'LPAREN' token
-looks like every other instance,
-so there's no need to distinguish among them.
-This is not so with tokens that can take on multiple string values,
-such as \verb'NUM'.
-Indeed, for a list of numbers,
-knowing exactly {\em what} numbers are in the list
-can be essential --
-for example, if you want to find the sum of the numbers in the list.
-If these items do not appear as fields in the PLCC-generated classes,
-their values do not appear in the parse tree,
-and so their values are not retrievable after the parse.
+}
+In this example,
+the root of the parse tree is a \verb'Lon' object
+whose \verb'nums' field is an instance of \verb'NumsNode'.
+This instance in turn has a \verb'nums' field that is also
+an instance of \verb'NumsNode'.
+And finally, this instance has a \verb'nums' field
+that is an instance of \verb'NumsNull'.
+A \verb'NumsNull' object has no fields.
+The trace also shows how each token is matched by the parser,
+along with the lexeme
+from the input program that matched the token.
+The line `\verb'Lon@372f7a8d'' shows the result
+of the parse, which is a \verb'Lon' object
+representing the root of the parse tree.
+The `\verb'@372f7a8d'' part represents the location
+in memory where the \verb'Lon' object resides.
 \end{minipage}
 \clearpage

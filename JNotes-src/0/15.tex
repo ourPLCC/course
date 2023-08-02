@@ -2,41 +2,39 @@
 \slidenumber
 \LARGE
 {\bf Tokens} (continued)\exx
-Here are some example specification files that you can try.
-Each of these examples can be put in a file named \verb'grammar'
-for processing by \verb'plccmk'.
-These examples define what input should be skipped
-and what input should be treated as tokens.
-Comments in a language specification file begin
-with the \verb'#' character and go to the end of a line.
-\Large
-\begin{itemize}
-\item
+Writing a scanner is somewhat involved,
+so our PLCC tool set produces
+a Java scanner \verb'Scan.java' automatically
+from a \verb'grammar' language specification file.
+The PLCC tool set consists
+of the program \verb'plcc.py' written in Python 3
+along with a collection of Java support files.
+This tool set works with with any system
+that supports Python 3 and Java.\exx
+The \verb'plcc.py' Python program
+and the \verb'Std' subdirectory that contains its support files
+are on the RIT Ubuntu lab systems in this directory:
+{\Large
 \begin{qv}
-# Every character in the file is a token, including whitespace
-token CHAR '.'
+/usr/local/pub/plcc/src
 \end{qv}
-\item
-\begin{qv}
-# Every line in the file is a token
-token LINE '.*'
-\end{qv}
-\item
-\begin{qv}
-# Tokens in the file are 'words' consisting of one or more
-# letters, digits or underscores -- skip everything else
-skip NONWORD '\W+'  # skip non-word characters
-token WORD '\w+'    # keep one or more word characters
-\end{qv}
-\item
-\begin{qv}
-# Tokens in the file consist of one or more non-whitespace
-# characters, skipping all whitespace.
-# Gives the same output as Java's 'next()' Scanner method.
-skip WHITESPACE '\s+'  # skip whitespace characters
-token NEXT '\S+'       # keep one or more non-space characters
-\end{qv}
-\end{itemize}
-\Large
+}
+This directory also contains a shell script called \verb'plccmk'
+that invokes the \verb'plcc.py' program with input
+from a \verb'grammar' language specification file.
+Normally you will run \verb'plccmk' in a directory
+that contains this specification file.
+The \verb'plcc.py' program produces a collection of Java programs
+in a subirectory named \verb'Java'.
+The \verb'plccmk' script then compiles these Java programs
+(using the Java compiler).
+When you are working on one of our Ubuntu lab systems,
+you can simply run \verb'plccmk'
+to process the various languages we will specify in this course.\exx
+See the \verb'HOWTO.html' file in \verb'/usr/local/pub/plcc/tvf'
+for {\em important information} about how
+to set up your CS account environment
+so that PLCC will be able to access the required program files
+and library routines on CS servers and lab workstations.
 \end{minipage}
 \clearpage

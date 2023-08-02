@@ -7,14 +7,25 @@ illustrated by the expression
 \begin{qv}
 1+2*3
 \end{qv}
-If the \verb'plcc' tool chose left associativity
+If we were to chose left associativity
 (which is what it might have done, correctly, in the previous example),
 this would be interpreted as \verb'arg1' being \verb'1+2'
 with \verb'arg2' being \verb'3',
 but then the result would be interpreted as 9,
-whereas the correct (mathematical) interpretation would be 7.
-The problem is that in infix notation,
-multiplication has a higher precedence than addition.\exx
-We correct this by introducing grammar rules
-that make it easy to implement semantics for associativity and precedence.
+whereas the correct (mathematical) interpretation is 7.
+The problem is that in mathematifcal infix notation,
+multiplication has a higher precedence than addition.
+(Note that virtually all programming languages that use infix notation
+use the mathematical interpretation of these kinds of expressions.)\exx
+We solve these problems in PLCC by introducing grammar rules
+that properly handle the mathematical interpretation
+of expressions -- including associativity and precedence --
+and that make it easy to implement semantics.
+Our grammar rules also permit using parentheses
+to treat a group of terms as a single semantic unit,
+so that
+\begin{qv}
+(1+2)*3
+\end{qv}
+evaluates to 9.
 \end{minipage}

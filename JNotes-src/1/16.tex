@@ -14,7 +14,7 @@ To use PLCC, you only need to be comfortable
 reading and writing programs in Java.\exx
 To say that a parser returns only success or failure
 is cold comfort,
-since in most cases you will want to ``run'' a program
+since in most cases you want to ``run'' a program
 once it parses successfully.
 So a parser generally does one of two things:
 it ``runs'' the program {\em as it carries out the parse algorithm}
@@ -25,10 +25,11 @@ PLCC uses the latter approach,
 since generating a parser is simpler
 if it is divorced from any attempts to carry out
 run-time behavior during the parse.\exx
-The output of a PLCC parse is a {\em parse tree} of a program:
+The input to a PLCC parser is a token stream --
+specifically, the tokens produced by an instance of the \verb'Scan' class
+(see Slide Set 0).
+The output of a PLCC parser is a {\em parse tree} of a program:
 more specifically, it is a Java object
 that is the root of the parse tree.
-We show how this works by elaborating
-on the list-of-numbers example.\exx
 \end{minipage}
 \clearpage

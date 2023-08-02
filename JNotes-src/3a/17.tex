@@ -2,28 +2,38 @@
 \slidenumber
 \LARGE
 {\bf Language REF} (continued)\exx
-What about actual parameters that are not themselves variables?
-For example, what is the value returned by the following program?
-\begin{qv}
-let
-  x = 3
-  p = proc(t) set t = add1(t)
-in
-  { .p(+(x,0)) ; x }
-\end{qv}
-Clearly the {\em value} of \verb'+(x,0)' is the same
-as that of \verb'x',
-but does it make sense to modify the value of an expression?
-In other words, if you replace \verb't' with the expression \verb'+(x,0)'
-in the body of the procedure,
-does it make sense to perform the following?
-\begin{qv}
-set +(x,0) = add1(+(x,0))
-\end{qv}
-Clearly the RHS of this assignment is perfectly OK --
-it evaluates to 4.
-But the LHS is not an L-value --
-{\em e.g.}, something that can occur
-on the LHS of a \verb'set' operation:
-the only thing that can appear on the LHS of a \verb'set' is a variable.\exx
+To repeat:
+\begin{itemize}
+\item
+  The parameter passing semantics
+  that we have been using up to now
+  is called {\em call-by-value}.
+  In call-by-value semantics --
+  which we have referred to as {\em value semantics},
+  when an actual parameter expression
+  in a procedure application is a variable,
+  the procedure's corresponding formal parameter denotes
+  a new reference to the expressed value
+  of the actual parameter.
+\item
+  In {\em call-by-reference} semantics --
+  which we have referred to as {\em reference semantics},
+  when an actual parameter expression
+  in a procedure application is a variable,
+  the procedure's corresponding formal parameter denotes
+  the {\em same reference} as the actual parameter.
+\end{itemize}
+The differences between call-by-value and call-by-reference semantics
+only apply when the actual parameter expression is a variable.
+When the actual parameter expression is not a variable,
+the corresponding formal parameter denotes
+a {\em new} reference to the expressed value
+of the actual parameter, just as in Language SET.\exx
+Observe that in \verb'let' and \verb'letrec' expressions,
+we always use value semantics for the variable bindings.
+This means that each LHS variable
+in a \verb'let/letrec' expression always denotes
+a new reference to the expressed value
+of its corresponding RHS expression.
 \end{minipage}
+\clearpage

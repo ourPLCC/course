@@ -21,21 +21,21 @@ where we also define the top-level expression environment.
     static TypeEnv tenv = TypeEnv.initTypeEnv();
 \end{qv}
 \LARGE
-In the \verb'Eval' class's \verb'toString' method,
+In the \verb'Eval' class's \verb'$run' method,
 we type-check by applying the \verb'evalType' on the \verb'exp' object
 -- the ``program'' that we are to evaluate.
 The actual return value of this is irrelevant,
 since its purpose is simply to carry out type checking
 prior to expression evaluation.
 If the type checking succeeds,
-the \verb'toString' method returns the string representation
+the \verb'$run' method displays the string representation
 of the value of the expression.
 \Large
 \begin{qv}
-    public String toString() {
-        exp.evalType(Program.tenv); // type check, then ...
-        return exp.eval(Program.env).toString(); // ... evaluate
-    }
+public void $run() {
+    exp.evalType(Program.tenv); // type check first
+    Val val = exp.eval(Program.env);
+    System.out.println(val);
 }
 \end{qv}
 \end{minipage}

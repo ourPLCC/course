@@ -1,32 +1,38 @@
 \begin{minipage}[t]{\sw}
 \slidenumber
 \LARGE
-{\bf Lexical Analysis, Syntax, and Semantics}\exx
-The {\em syntax} of a programming language refers
-to the rules governing the structure
+{\bf Lexical Analysis, Syntax analysis, and Semantic analysis}\exx
+The {\em syntax} (from a Greek word meaning ``arrangement'')
+of a programming language refers
+to the rules used to determine the structure
 of a program written in the language.
-A program is said to be {\em syntactically correct}
+{\em Syntax analysis} is the process
+of applying these rules to determine the structure of a program.
+A program is {\em syntactically correct}
 if it follows the syntax rules defining the language.
-Every programming language has syntax rules,
-and these rules are part of the programming language specification.\exx
-Before the syntax of a programming language can be given,
-the language specification must define the {\em tokens} of the language --
-its ``atomic structure''.
+Every programming language has syntax rules
+(these rules differ from one programming language to another)
+that are part of the programming language specification.\exx
+Before we can specify the syntax rules of a programming language,
+we must specify the {\em lexical} (from a Greek word meaning ``word'')
+structure of the language:
+the symbols used to construct a program in the language.
+These symbols are called {\em tokens}.
+{\em Lexical analysis} is the process of applying these rules
+by reading program input and isolating its tokens.
+Tokens comprise the ``atomic structure'' of a program.\exx
+Lexical analysis is also called {\em scanning}.
+You can think of scanning as what you do
+when you ``scan'' a line of printed text on a page
+for the words (tokens) in the text.
 Programming language tokens normally consist
 of things such as numbers (``23'' or ``54.7''),
 identifiers (``foo'' or ``x''),
 reserved words (``for'', ``while''),
 and punctuation symbols (``.'', ``['').
-{\bf A language specification always starts with defining its tokens}.\exx
-The process of reading input text
-to isolate its tokens is called {\em lexical analysis}.
-The term {\em scanning} refers to the activity of lexical analysis;
-think of this as what you do
-when you ``scan'' a line of printed text on a page
-for the words (tokens) in the text.
-A program or procedure that carries out lexical analysis
-is called a {\em lexical analyzer}.
-The terms {\em lexer} and {\em scanner}
-are also used to refer to a lexical analyzer.
-We will have more to say about these concepts later in this section.\exx
+Every programming language has rules that define
+the tokens in the language
+(these rules differ from one programming language to another)
+that are part of the programming language specification.\exx
 \end{minipage}
+\clearpage

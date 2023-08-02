@@ -7,13 +7,13 @@ to replace our \verb'PrimappExp' grammar rule with something like this:
 \begin{qv}
 <exp>:PrimappExp  ::= <exp>arg1 <prim> <exp>arg2
 \end{qv}
-Unfortunately, this won't even pass the PLCC grammar rules checker,
-since the grammar rule is left recursive:
+Unfortunately, this won't pass the PLCC grammar rules checker,
+since this grammar rule is left recursive:
 the rule has the nonterminal \verb'<exp>' on its LHS,
 and the same nonterminal \verb'<exp>' appears
 on the left of its RHS.
-Left recursive grammar rules are not allowed in LL1 grammars,
-and PLCC expects only LL1 grammars.\exx
+Left recursive grammar rules are not allowed in LL(1) grammars,
+and PLCC expects only LL(1) grammars (look this up!).\exx
 Even if we were to ignore the left recursive issue,
 there's a basic semantic problem with infix expressions
 called {\em associativity}.
@@ -30,6 +30,6 @@ with \verb'arg2' being \verb'3'
 In other words, if we were to fully parenthesize this expression,
 should it be `\verb'1-(2+3)'' or `\verb'(1-2)+3''?
 Mathematically, these two interpretations are not the same,
-but both interpretations would satisfy our grammar rule,
-and PLCC would not know which interpretation to choose.
+but both interpretations satisfy our grammar rule.
+Which interpretation should we choose?
 \end{minipage}

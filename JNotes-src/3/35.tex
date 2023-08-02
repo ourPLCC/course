@@ -2,20 +2,30 @@
 \slidenumber
 \LARGE
 {\bf Language V1} (continued)\exx
-Here is the new \verb'toString' method for the \verb'Program' object:
+In our final implementation step,
+we will define the \verb'$run()' method
+of a \verb'Program' object that displays
+the string representation of the {\em value} of its expression.
+See the next slide for how we implement this.\exx
+An empty environment would only allow for integer expressions
+with no variables, since every variable would be unbound.
+To test Language V1, we create an initial environment \verb'initEnv'
+specific to this language that has the following variable bindings
+(think Roman numerals!):
 \begin{qv}
-Program
-%%%
-    public static Env initEnv = Env.initEnv();
-
-    public String toString() {
-        return exp.eval(initEnv).toString();
-    }
-%%%
+i => 1
+v => 5
+x => 10
+l => 50
+c => 100
+d => 500
+m => 1000
 \end{qv}
-To test this, run the \verb'Rep' program in the \verb'Java' directory
-and enter expressions at the prompt:
-\begin{qv}
-(cd Java ; java Rep)
-\end{qv}
+For Language V1, this environment can be obtained
+by a call to \verb'Env.initEnv()'.
+In the \verb'Program' class, we set the static \verb'initEnv' 
+variable to this value.
+These bindings give us some variables to play with,
+though, as you will see, we will dispense with them later.
 \end{minipage}
+\clearpage

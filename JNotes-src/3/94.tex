@@ -1,0 +1,32 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language V6} (continued)\exx
+Notice that for top-level procedure definitions,
+\verb'define' works similar to \verb'letrec'
+in terms of being able to support direct recursion.
+This is because every top-level procedure definition captures
+(in a closure) the initial environment,
+which gets modified every time another top-level definition is encountered.
+When we add a new binding to the top-level environment,
+the binding gets added to the {\em local bindings}
+instead of extending the top-level environment.
+In this way, all of the top-level closures can access this binding,
+as well as any others that may crop up later!
+Thus the following works:
+\begin{qv}
+define even? = proc(x)
+  if zero?(x) then 1 else .odd?(sub1(x))
+.even?(11) % => Error: unbound procedure odd?
+define odd? = proc(x)
+  if zero?(x) then 0 else .even?(sub1(x))
+.even?(11) % => 0 
+.odd?(11)  % => 1
+\end{qv}
+\LARGE
+Observe that a top-level define can {\em redefine} a previous definition.
+We do this by looking up the LHS identifier in the top-level environment.
+If a binding to this identifier already exists in the top-level environment,
+we replace the binding's value with the value of the new RHS.
+\end{minipage}
+\clearpage

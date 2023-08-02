@@ -2,22 +2,8 @@
 \slidenumber
 \LARGE
 {\bf Language OBJ} (continued)\exx
-Some examples:
-\begin{qv}
-define x = 11
-define y = 42
-define z = 666
-define xyenv =
-  let
-    x = 3
-    y = 5
-  in
-    @
-<@>x     % => 11
-<@>y     % => 42
-<@>z     % => 666
-<xyenv>x % => 3
-<xyenv>y % => 5
-<xyenv>z % => 666 (the 'let' extends the top-level env)
-\end{qv}
+Step 6: Set \verb'objRef' to refer to the newly created object\exx
+\centerline{\psfig{figure=Dia/ObjectVal6.eps,width=.8\textwidth}}
+The \verb'ObjectVal' instance is the value returned
+by the \verb'new' operator.
 \end{minipage}

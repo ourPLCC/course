@@ -2,21 +2,25 @@
 \slidenumber
 \LARGE
 {\bf Tokens} (continued)\exx
-To specify a particular token,
-we give the token a name and define the structure of the token
-using a regular expression.
-For example, the following lines might specify a {\em number}:
-\begin{qv}
-token NUM '\d+'
-\end{qv}
--- or the {\em reserved word} \verb'proc':
-\begin{qv}
-token PROC 'proc'
-\end{qv}
--- or an {\em identifier}:
-\begin{qv}
-token ID '[A-Za-z]\w*'
-\end{qv}
-You can find the documentation for regular expressions
-such as these in the Java \verb'Pattern' class.\exx
+\centerline{\psfig{figure=scanning.eps,width=5in}}
+In this course, we describe a tool set called PLCC,
+which stands for ``Programming Language Compiler Compiler''.
+The PLCC tool set takes a programming language {\em specification}
+and ``compiles'' it into a set of Java programs.
+These Java programs implement the three phases of program interpretation:
+lexical, syntax, and semantic analysis.\exx
+A programming language specification in PLCC
+is a text file normally named \verb'grammar'.
+Each language that we describe in this course
+has its own \verb'grammar' file.
+A \verb'grammar' file has three sections:
+the lexical specification,
+the syntax specification,
+and the semantic specification.
+These sections appear in the \verb'grammar' file in this order:
+first lexical, then syntax, and finally semantic.
+A line consisting of a single '\verb'%'' separate the sections.\exx
+We start by describing the structure
+of the lexical specification section.
 \end{minipage}
+\clearpage

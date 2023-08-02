@@ -2,15 +2,21 @@
 \slidenumber
 \LARGE
 {\bf Language REF} (continued)\exx
-We can solve this dilemma by making sure that
-if an actual parameter is an identifier
-(and therefore is bound to a reference),
-then the corresponding formal parameter is bound to the same reference.
-If an actual parameter is something other than an identifier --
-such as an expression like \verb'+(x,0)',
-then the corresponding formal parameter is bound
-to a {\em new} temporary reference
-containing the value of the expression.
-Thus {\em variables are passed by reference},
-but {\em any other expressions are passed by value}.
+Using call-by-reference semantics,
+the program
+\begin{qv}
+let
+  x = 3
+  p = proc(t) set t = add1(t)
+in
+  { .p(x) ; x }
+\end{qv}
+returns the value 4, since \verb't' denotes
+the same reference as \verb'x'.
+The environments created by the \verb'let'
+and then during evaluation of the application \verb'.p(x)'
+(just prior to evaluating the procedure body)
+are illustrated in the following figure:
+\cfigw{ref.eps}{9in}
 \end{minipage}
+\clearpage

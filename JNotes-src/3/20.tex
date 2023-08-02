@@ -2,31 +2,35 @@
 \slidenumber
 \LARGE
 {\bf Language V0} (continued)\exx
-Examine the rule for a \verb'PrimappExp':\exx
-\emm\begin{tabular}{@{}ll}
-\verb'<exp>:PrimappExp' & \verb'::= <prim> LPAREN <rands> RPAREN'\\
-  & \VerbBox{\fbox}{\verb'PrimappExp(Prim prim, Rands rands')}\\
-\end{tabular}\exx
-A \verb'PrimappExp' object has just two instance variables:
+To finish our implementation,
+we show how to implement the \verb'toString()' method
+for an \verb'Exp' object so that it returns
+a \verb'String' representation of itself.\exx
+There are three \verb'Exp' classes:
+\verb'LitExp', \verb'VarExp', and \verb'PrimappExp'.
+Defining a \verb'toString()' method
+for the first two classes is particularly easy,
+since they both have right-hand sides
+that are just token strings:
+their \verb'toString' methods simpy return
+the \verb'String' value of the corresponding \verb'Token' instance variables
+(see Slide 3.7):
+{\Large
 \begin{qv}
-Prim prim;
-Rands rands;
-\end{qv}
-\LARGE
-There aren't any instance variables corresponding
-to \verb'LPAREN' and \verb'RPAREN',
-because the \verb'PrimappExp' class abstracts away these tokens.
-The only thing we need to do, then,
-is to re-insert them back into the \verb'toString' result,
-in the same order as they appear on the RHS of the grammar rule.
-The \verb'toString()' methods for \verb'prim' and \verb'rands'
-are called implicitly.
-\begin{qv}
-PrimappExp
+LitExp
 %%%
     public String toString() {
-        return prim + "(" + rands + ")";
+        return lit.toString();
+    }
+%%%
+
+VarExp
+%%%
+    public String toString() {
+        return var.toString();
     }
 %%%
 \end{qv}
+}
 \end{minipage}
+\clearpage

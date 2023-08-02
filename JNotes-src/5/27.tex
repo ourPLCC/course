@@ -2,33 +2,39 @@
 \slidenumber
 \LARGE
 {\bf Language OBJ} (continued)\exx
-Unlike the \verb'new' operator in Java,
-Our \verb'new' operator does not take any arguments,
-and all of the fields are initialized to \verb'nil'.
-We can, of course, initialize fields by calling a method.
-Here's an example:
-\Large
+The RHS expressions in static definitions are evaluated
+in the static environment of the class,
+which extends the static environment of its superclass (and so on...).
+For example, consider the following definitions and expression:
+{\Large
 \begin{qv}
-let
-  c = class
-        field x
-        field y
-        method init = proc(a,b) { set x=a ; set y=b ; self }
-      end
-  in
-    let
-      o = .<new c>init(3,4)
-    in
-      <o>+(x,y) % => 7
+define c = class static x=5 end
+define x = 3
+<class extends c static y=x end>y
 \end{qv}
-\LARGE
-Since the \verb'init' method returns \verb'self',
-the value of the expression \verb'.<new c>init(3,4)'
-is the {\em same} object as the one created by the expression \verb'new c',
-except that its fields \verb'x' and \verb'y' are set
-to values 3 and 4, respectively.\exx
-You might be inclined to think that \verb'.<new c>init(a,b)'
-is the same as \verb'<new c>{ set x=a ; set y=b ; self}',
-but the bindings for a and b may be different in these two expresions.
-
+}
+In the class that extends \verb'c', 
+the value of \verb'x' on the RHS of the \verb'static y=x' expression
+can be found in the static environment of the superclass \verb'c',
+where \verb'x' is bound to 5.
+Thus the variable \verb'y' is bound to 5, not 3,
+so the expression evaluates to 5.\exx
+Now consider a variant of the expression:
+{\Large
+\begin{qv}
+define c = class static xx=5 end
+define x = 3
+<class extends c static y=x end>y
+\end{qv}
+}
+In the class that extends \verb'c', 
+the value of \verb'x' on the RHS of the \verb'static y=x' expression
+can be found in the static environment of superclass \verb'c'.
+But \verb'c' does not define a variable \verb'x',
+so the value of \verb'x' must be found
+in the static environment of {\em its} superclass,
+the singleton \verb'EnvClass' that captures the top-level environment.
+Since \verb'x' in the top-level environment is bound to 3,
+the variable \verb'y' is bound to 3 as well,
+so this expression evaluates to 3.
 \end{minipage}

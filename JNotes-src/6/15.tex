@@ -1,0 +1,23 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language ARRAY}\exx
+It is possible to turn an array into a list, and vice versa.
+For example, here is the code of a procedure \verb'array2list'
+that takes an array parameter and returns a corresponding list.
+The length of an array \verb'a' is written as \verb'len(a)'.
+\begin{qv}
+% turn an array into a list
+define array2list = proc(a)
+  let
+    i = len(a)
+    lst = []
+  in
+    while i do
+      { set i = sub1(i)
+      ; set lst = addFirst(\a[i], lst)
+      }
+    else
+      lst
+\end{qv}
+\end{minipage}

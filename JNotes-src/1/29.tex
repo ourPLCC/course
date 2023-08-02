@@ -2,15 +2,18 @@
 \slidenumber
 \LARGE
 {\bf Parsers} (continued)\exx
+\LARGE
 \emm\LightBox{\MYlonGrammarOnly}\exx
-The parse tree for a program in this language
-accurately represents the length
-of the list of numbers given as input -- 
-count the number of instances of \verb'NUM'
-in the parse trace given on slide 1.27 above --
-but the actual values of the \verb'NUM' tokens
-are not preserved in the parse tree.
-The problem is that the parse tree instances of \verb'NumsNode' objects
-do not have fields corresponding to their token values.\exx
+By default, the value of a parse tree
+is simply the \verb'toString()' value of the parse tree Java instance.
+For Language \verb'LON',
+this value is a Java \verb'String' of the form \verb'Lon@xxxx',
+where the \verb'xxxx' part is the hexadecimal address
+of where the object resides in memory.
+Observe that \verb'Lon' is the Java class that defines
+the start symbol of the \verb'LON' BNF rules.\exx
+The `\verb'-t'' command-line argument turns on a parse trace
+when used with the \verb'Parse' or \verb'Rep' programs.
+The next slide shows the output using this feature.
 \end{minipage}
 \clearpage

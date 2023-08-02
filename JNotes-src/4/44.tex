@@ -10,9 +10,9 @@ the first part is where the variable hasn't been declared/defined before:
 \begin{qv}
 Define
 %%%
-    // calling toString may trigger a modification
+    // calling $run may trigger a modification
     // of the initial type and value environments
-    public String toString() {
+    public void $run() {
         Env env = Program.env;       // top-level environment
         TypeEnv tenv = Program.tenv; // top-level type environment
         Type rhst; // RHS expression type
@@ -29,7 +29,8 @@ Define
             tenv.add(new TypeBinding(sym, rhst));        // type binding
             rhsv = exp.eval(env);
             env.add(new Binding(sym, new ValRef(rhsv))); // value binding
-            return sym + ":" + rhst; // return *something*
+            System.out.println(sym + ":" + rhst);
+            return
         }
         ...
 %%%

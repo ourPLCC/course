@@ -2,29 +2,33 @@
 \slidenumber
 \LARGE
 {\bf Language INFIX} (continued)\exx
-One final problem with using infix notation for arithmetic expressions
-is that there is nothing specific to mark the end of the expression.
-With prefix notation, the end of a primitive application is always
-a right parenthesis,
-but with infix notation, there is nothing similar.
-In most cases, it's easy to identify the end of an expression.
-Consider, for example, the following:
+Here is a parse trace of the arithmetic expression '1-2*3':
+{\Large
 \begin{qv}
-if sub1(x) then x+3 else x+4
+<exp>
+| | <term>
+| | | <factor>:LitFactor
+| | | | LIT "1"
+| | | <factors>
+| | <terms>
+| | | <prim0>:SubPrim0
+| | | | SUBOP "-"
+| | | <term>
+| | | | <factor>:LitFactor
+| | | | | LIT "2"
+| | | | <factors>
+| | | | | <prim1>:MulPrim1
+| | | | | | MULOP "*"
+| | | | | <factor>:LitFactor
+| | | | | | LIT "3"
 \end{qv}
-The end of the expression \verb'sub1(x)'
-is marked by the token \verb'then',
-and the end of the expression \verb'x+3'
-is marked by the token  \verb'else',
-since \verb'then' and \verb'else' cannot appear
-after a \verb'term' or a \verb'factor'.
-But the final \verb'x+4' might have additional terms or factors
-that do not appear on the same line.
-To fix this, we add an \verb'endif' at the end of \verb'if'
-expressions.\exx
-We use the special token \verb';' to mark the the end of a program.
-Here's an example of a complete program in the language \verb'INFIX':
-\begin{qv}
-if sub1(x) then x+3 else x+4 endif ;
-\end{qv}
+}
+Notice how the second occurrence of \verb'<factors>' appears
+more deeply nested in the parse trace,
+suggesting that the multiplication operation \verb'MULOP'
+will be carried out
+before performing the subtraction operation \verb'SUBOP'.
+This is consistent with the mathematical convention
+that multiplication and division have higher precendece
+than additional and subtraction.
 \end{minipage}

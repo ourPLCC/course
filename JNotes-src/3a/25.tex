@@ -1,37 +1,45 @@
 \begin{minipage}[t]{\sw}
 \slidenumber
 \LARGE
-{\bf Language {\color{red} NAME}} (continued)
-\Large
+{\bf Language REF} (continued)\exx
+We want literals (\verb'LIT's) always to have value semantics.
+For example, a `4' that appears in an expression should always evaluate
+to the integer 4. Consider the following code in Language REF:
+{\Large
 \begin{qv}
-let
-  x = 1
-  f = proc(t,u)
-        {
-          set t = add1(t) ;
-          u
-        }
-in
-  .f(x, +(x,5))
+define square = proc(x) set x=*(x,x)
+define four = 4
+{ .square(four) ; four }
 \end{qv}
-\LARGE
-In call-by-name, the formal parameter \verb't' still refers
-to the same cell that \verb'x' refers to (initially containing 1),
-but the formal parameter \verb'u' is bound
-to the (un-evaluated) expression \verb'+(x,5)'.\exx
-Consider now what happens when \verb'.f(x, +(x,5))' is invoked.
-The \verb'set' operation in the body of this procedure
-increments the formal parameter \verb't';
-but since \verb't' refers to the same cell as \verb'x',
-the value of \verb'x' is changed, too, to two.
-When the formal parameter u is referenced at the end of the \verb'proc',
-the expression \verb'+(x,5)' is evaluated
-{\em in the environment of the caller},
-where \verb'x' was originally bound to 1.
-Since this expression is evaluated after the \verb'set',
-and the value of \verb'x' is now 2,
-the value of the expression \verb'+(x,5)'
-(and thus the value returned by the procedure)
-is \verb'+(2,5)' or 7.
-Thus this expression evaluates to 7.
+}
+By the time the variable \verb'four' gets evaluated the second time
+in the sequence expression, its value has changed to 16,
+because Language REF uses reference semantics
+for the actual parameter \verb'four'.
+Thus the value of the sequence expression is 16.
+Consider now what happens if we replace the sequence expression above
+with the following:
+{\Large
+\begin{qv}
+{ .square(4) ; 4 }
+\end{qv}
+}
+Of course, this sequence expression evalautes to 4,
+because Language REF uses value semantics for everything but variables.
+However, languages such as FORTRAN IV (in the 1970s)
+treated numeric literals (like `4')
+as variables and used reference semantics
+when passing them to procedures.
+The equivalent sequence expression, if written FORTRAN IV,
+would evaluate to 16.
+Furthermore, subsequent statements such as
+{\Large
+\begin{qv}
+IF 4 = 16 THEN CALL YIKES 
+\end{qv}
+}
+(not really a legal FORTRAN IV statement)
+would end up calling \verb'YIKES'. 
+Yikes!
 \end{minipage}
+\clearpage

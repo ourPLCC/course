@@ -2,24 +2,23 @@
 \slidenumber
 \LARGE
 {\bf Language V0} (continued)\exx
-Recall that repeating grammar rules
-have fields that are Java lists.
-For example, our \verb'V0' grammar has the following repeating rule:
+Consider the following grammar rule in Language V0:
 \begin{qv}
-<rands> **= <exp> +COMMA
+<exp>:LitExp ::= <LIT>
 \end{qv}
-This rule says that the \verb'<rands>' nonterminal
-can derive zero or more \verb'<exp>' entries,
-separated by commas.
-The following sentences would match the \verb'<rands>' nonterminal:
-\begin{qv}
-a,b,c     <-- <exp> COMMA <exp> COMMA <exp>
-1, +(2,3) <-- <exp> COMMA <exp>
-add1(x)   <-- <exp>
-          <-- empty string
-\end{qv}
-The class defined by this rule is named \verb'Rands'.
-Its RHS shows only one nonterminal \verb'<exp>',
-so its corresponding Java class \verb'Rands'
-has a field \verb'expList' of type \verb'List<Exp>'.\exx
+This rule creates a Java class \verb'LitExp'
+having a single field named \verb'lit' of type \verb'Token'.
+The lexical specification defines a \verb'LIT' token
+to be a sequence of one or more decimal digits.\exx
+Continuing in this way,
+each of the BNF grammar rules of Language V0 (Slide 3.7)
+defines a class given by its LHS
+with a well-defined set of instance variables corresponding
+to the \verb'<'{\em angle bracket}\verb'>' entries in its RHS.\exx
+As we have already observed,
+when we encounter situations where two RHS entries
+have the same (Token or nonterminal) name in angle brackets,
+we disambiguate the entries
+by providing different instance variable names.
 \end{minipage}
+\clearpage

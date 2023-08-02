@@ -29,14 +29,9 @@ The \verb'Formals' class defines the \verb'formalTypeList' method:
 Formals
 %%%
     public List<Type> formalTypeList() {
-        List<String> stringVarList = new ArrayList<String>();
-        for(Token t : varList) {
-            stringVarList.add(t.toString());
-        }
-        TypeEnv.checkDuplicates(stringVarList);
-        List<Type> typeList = new ArrayList<Type>();
-        for (TypeExp te : typeExpList)
-            typeList.add(te.toType());
+        List<Type> typeList = new ArrayList<Type>(typeExpList.size());
+        for (TypeExp texp : typeExpList)
+            typeList.add(texp.toType());
         return typeList;
     }
 %%%

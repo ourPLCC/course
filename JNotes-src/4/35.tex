@@ -7,14 +7,15 @@ and built the extended type environment with bindings
 for the LHS variables,
 we can evaluate the type of the \verb'letrec' body
 using this extended environment.
-\Large
+{\Large
 \begin{qv}
 LetrecExp
 %%%
     public Type evalType(TypeEnv tenv) {
-        TypeEnv ntenv = letrecDecls.addTypeBindings(tenv);
+        TypeEnv ntenv = letDecls.addLetrecTypeBindings(tenv);
         return exp.evalType(ntenv);
     }
 %%%
 \end{qv}
+}
 \end{minipage}

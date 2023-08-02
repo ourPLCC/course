@@ -2,34 +2,28 @@
 \slidenumber
 \LARGE
 {\bf Parsers} (continued)\exx
-\Large
-%\emm\LightBox{\MYlonGrammarOnly}\exx
-In order to make the connection clear
-between a grammar rule and its PLCC-generated Java class,
-we often display the grammar rules in the following way:\exx
-\emm\begin{tabular}{ll}
-\verb'<lon>' & \verb'::= LPAREN <nums> RPAREN'\\
-    & \VerbBox{\fbox}{\verb'Lon(Nums nums)'}\\
-\verb'<nums>:NumsNode' & \verb'::= NUM <nums>'\\
-    & \VerbBox{\fbox}{\verb'NumsNode(Nums nums)'}\\
-\verb'<nums>:NumsNull' & \verb'::= '\\
-    & \VerbBox{\fbox}{\verb'NumsNull()'}\\
-\end{tabular}\exx
-The item in the box following a grammar rule
-is the {\em Java signature of the Java class constructor}
-corresponding to the class PLCC generates from the grammar rule.
-So the box\exx
-\emm\VerbBox{\fbox}{\verb'Lon(Nums nums)'}\exx
-means that the constructor for the PLCC-generated class \verb'Lon'
-has a single parameter \verb'nums' of type \verb'Nums'.\exx
-{\em There is a one-to-one correspondence
-between the types and formal parameters in the constructor
-and the types and field names in the class.}
-More specifically, when the constructor is invoked,
-the constructor body simply copies the values of its parameters
-into the corresponding field names of the instance being constructed.\exx
-As you can see from above,
-the \verb'NumsNull' constructor takes no parameters,
-and the \verb'NumsNull' class has no fields.
+\LARGE
+\emm\LightBox{\MYlonGrammarOnly}\exx
+PLCC also generates an interactive parser/evaluator
+called \verb'Rep' that resides in the \verb'Java' subdirectory
+along with the \verb'Parse' program.
+\verb'Rep' executes a ``Read-Eval-Print'' loop
+that displays a prompt,
+{\em Reads} program input from standard input and parses it --
+producing a parse tree,
+{\em Evaluates} the parse tree ({\em i.e.}, ``runs'' the program),
+and {\em Prints} the result obtained
+from ``running'' the program.
+Normally, this result is a representation
+of the ``value'' of the program's parse tree:
+an instance of the Java class defined
+by the start symbol of the language's BNF grammar.\exx
+How to determine the ``value'' of a parse tree
+is the essence of {\em semantic analysis},
+which we describe in detail
+for each of the languages we consider in these notes.
+In some cases, this value may be just
+a re-cast version of the program text;
+in others, it may be the numeric value of a function application.\exx
 \end{minipage}
 \clearpage

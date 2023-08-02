@@ -5,8 +5,8 @@
 As described on slides 9 and 10,
 as an object is created,
 the \verb'self' identifier is bound
-to a reference to the object
-in the \verb'makeObject' method in the parentless class.
+to the \verb'objRef' reference that is passed to
+the \verb'makeObject' method in \verb'EnvClass'.
 But how can this binding take place
 when the object has not yet been completely created?
 We do this by creating a Java \verb'ValRef' object named \verb'objRef',
@@ -14,7 +14,7 @@ with a dummy initial value (\verb'nil', to be precise),
 and pass this to the \verb'makeObject' method.\exx
 The \verb'objRef' is passed up the superclass chain
 through successive \verb'makeObject' calls.
-When \verb'makeObject' reaches a parentless class,
+When \verb'makeObject' reaches the \verb'EnvClass' Java class,
 the \verb'self' identifier is put into the object environment,
 bound to \verb'objRef'.
 After the original object has been completely created --

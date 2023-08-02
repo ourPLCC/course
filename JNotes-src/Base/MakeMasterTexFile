@@ -46,8 +46,6 @@ cat << EOF >> $SFILE
 
 \begin{document}
 
-\special{! TeXDict begin /landplus90{true}store end }
-
 \raggedright
 EOF
 

@@ -4,28 +4,33 @@
 {\bf Language INFIX} (continued)\exx
 Here is a set of grammar rules
 for arithmetic expressions that does the trick.
-The \verb'INFIX' language is based on the V4 language with procedures.
-For the sake of simplicity, we only give grammar rules
-for the primitive operations,
-avoiding \verb'let'-like expressions, \verb'proc' definitions,
-and \verb'proc' applications for now.
-A full grammar and skeleton semantics are provided
-in the \verb'INFIX' directory.
-Note that the \verb'LitExp' and \verb'VarExp' rules
-have been replaced by \verb'LitFactor' and \verb'VarFactor'.
+The \verb'INFIX' language is based on the SET language,
+with call-by-value semantics and variable assignment.
+We start with grammar rules for expressions involving
+the primitive arithmetic operations
+of addition, subtraction, multiplication, and division.
+We will discuss additional \verb'INFIX' grammar rules later.
+(A full grammar and skeleton semantics appear
+in the \verb'INFIX' directory.)
+In this simplified version of \verb'INFIX' grammar rules
+for an expression \verb'<exp>',
+we show the \verb'<factor>' nonterminal
+as representing a numeric literal.
+Later we will introduce ways in which
+the \verb'<factor>' nonterminal represents
+variables, \verb'if' expressions,
+procedure definitions, and such.
+{\Large
 \begin{qv}
 <exp>                ::= <term> <terms>
 <terms>              **= <prim0> <term>
 <term>               ::= <factor> <factors>
 <factors>            **= <prim1> <factor>
-<factor>:LitFactor   ::= <LIT>
-<factor>:VarFactor   ::= <VAR>
-<factor>:ParenFactor ::= LPAREN <exp> RPAREN
-<factor>:Prim2Factor ::= <prim2> <factor>
+<factor>:LitFactor   ::= LIT
 <prim0>:AddPrim      ::= ADDOP
 <prim0>:SubPrim      ::= SUBOP
 <prim1>:MulPrim      ::= MULOP
 <prim1>:DivPrim      ::= DIVOP
-<prim2>:UminusPrim   ::= SUBOP
 \end{qv}
+}
 \end{minipage}

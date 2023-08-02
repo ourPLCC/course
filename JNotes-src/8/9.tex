@@ -1,0 +1,36 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Continuations} (continued)\exx
+\Large
+One useful continuation, \verb'EvalCont',
+has fields for an expression, an environment, and a value continuation.
+When an \verb'EvalCont' continuation is applied,
+the expression is evaluated in the given environment
+and its value is passed to the saved value continuation.
+\Large
+\begin{qv}
+public class EvalCont extends ACont {
+
+    public Exp exp;
+    public Env env;
+    public VCont cont;
+
+    public EvalCont(Exp exp, Env env, VCont vcont) {
+        this.exp = exp;
+        this.env = env;
+        this.vcont = vcont;
+    }
+
+    public ACont apply() {
+        return exp.eval(env, vcont);
+    }
+}
+\end{qv}
+\Large
+The continuation field \verb'vcont'
+has an \verb'apply(Val)' method
+that receives the expression value
+and that returns an \verb'ACont' continuation
+that dictates ``what to do next''.
+\end{minipage}

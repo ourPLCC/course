@@ -2,38 +2,34 @@
 \slidenumber
 \LARGE
 {\bf Tokens} (continued)\exx
-For example, consider a \verb'grammar' file with the following lines:
-{\Large%
+When specifying tokens in a \verb'grammar' file,
+you can omit the \verb'token' term (but not the \verb'skip' term).
+This means that both
+{\Large
 \begin{qv}
-skip WHITESPACE '\s+'
-NUM '\d+'        # one or more decimal digits
-ID '[A-Za-z]\w*' # a letter followed by zero or more "word" chars
+WORD '\S+'
 \end{qv}
 }
-In this case, a token that matches the \verb'ID' pattern
-has token enum value named \verb'ID',
-and a token that matches the \verb'NUM' pattern
-has token enum value named \verb'NUM'.
-Once the \verb'plcc' program is run on this specification,
-the \verb'Token.java' file in the Java directory
-will have a public inner \verb'enum' class named \verb'Val'
-whose elements consist of the following identifiers
-and associated patterns:
-{\Large%
+and
+{\Large
 \begin{qv}
-NUM ("\\d+")
-ID ("[A-Za-z]\\w*")
+token WORD '\S+'
 \end{qv}
 }
-Any Java file that needs to use either of these \verb'enum' values can refer
-to them symbolically as \verb'Token.Val.ID' and \verb'Token.Val.NUM'.\exx
-The \verb'Scan' class method \verb'cur()' is designed to be {\em lazy}:
-If a token needs to be gotten from the input stream,
-calling \verb'cur()' gets the token and returns it.
-If you call \verb'cur()' again, it returns the {\em same token}.
-The \verb'adv()' method tells the \verb'Scan' object
-to force the next \verb'cur()' call
-to get and return the {\em next} token instead of returning the same token.
-The \verb'cur()' call returns a special token \verb'$EOF'
-if there are no more tokens left in the input stream.
+are considered as equivalent.
+We follow this convention in all of our subsequent examples.\exx
+The important pieces of the \verb'Scan' class
+are the constructor and two methods: \verb'cur()' and \verb'adv()'.
+The \verb'Scan' constructor must be passed
+a \verb'BufferedReader',
+which is the input stream of characters to be read by the scanning process.
+A \verb'BufferedReader' can be constructed from a \verb'File' object,
+from \verb'System.in', or from a filename given in a \verb'String'.
+The \verb'Scan' program reads characters
+from this \verb'BufferedReader' object
+line-by-line, extracts tokens from these lines
+(skipping characters if necessary),
+and delivers the current token with the \verb'cur()' method --
+\verb'cur' stands for {\em cur}rent.\exx
 \end{minipage}
+\clearpage

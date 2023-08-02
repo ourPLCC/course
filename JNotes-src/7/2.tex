@@ -1,33 +1,32 @@
 \begin{minipage}[t]{\sw}
 \slidenumber
 \LARGE
-{\bf Continuations}\exx
-An \verb'eval' method call is intended
-to carry out some computation --
-one that may be used, for example,
-to evaluate an actual parameter expression in a procedure application
-or a test expression in an \verb'if' expression.
-A stack frame gets created implicitly
-by the Java Runtime Environment (JRE)
-upon each \verb'eval' method call.
-This stack frame consists of information
-including the method arguments,
-where to find non-local variables ({\em i.e.}, an environment),
-and a ``return address'' that indicates
-where the JRE should execute next when the method finishes.
-This information can be considered as an ``execution context''.
-Once the method finishes, this context is discarded
-(popped off the stack)
-and the execution context of the caller takes over.\exx
-One way to avoid stack overflow
-is to maintain execution context explicitly.
-Instead of using the stack to hold this information,
-we pass along an execution context to the \verb'eval' method
-that is used by the method
-to determine what should be executed next
-when the method finishes.
-Such an execution context is called a {\em continuation}.
-The idea is that a continuation determines
-how the overall compution should continue
-once the current computation is finished.
+{\bf Logic Programming}\exx
+Our implementation of AbcDatalog resides
+in the \verb'ABC' language subdirectory of the \verb'Code' directory.
+The \verb'README.txt' file in this subdirectory provides
+some information about where to find the AbcDatalog source files
+and details about implementation specifics.\exx
+The tokens of the \verb'ABC' language are given here:
+{\Large
+\begin{qv}
+skip WHITESPACE '\s+'
+skip COMMENT '%.*'
+PRINT 'Print'
+CLEAR 'Clear'
+DOT '\.'
+NOT 'not'
+EQ '='
+NE '!='
+IF ':-'
+QUERY '\?'
+DEL '~'
+COMMA ','
+RPAREN '\)'
+LPAREN '\('
+US '_'
+VAR '[A-Z_][_\w]*'
+LIT '[a-z][_\w]*'
+\end{qv}
+}
 \end{minipage}

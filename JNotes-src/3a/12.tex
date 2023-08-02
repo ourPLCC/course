@@ -2,28 +2,38 @@
 \slidenumber
 \LARGE
 {\bf Language SET} (continued)\exx
-What happens if you try to mutate the value
-of an identifier that is one of the formal parameters
-to a procedure?
-For example, what value is returned by the following program?
+{\em A variable that occurs on the LHS
+of a \verb'set' expression is not an expression}.
+In particular, observe that the grammar rule
+for a \verb'set' expression uses \verb'<VAR>', not \verb'VarExp',
+to the left of \verb'EQUALS',
+and we use reference semantics, not value semantics,
+for such an occurrence,
+because we are not treating the LHS variable as an expression.\exx
+When we evaluate a \verb'VarExp'
+(this {\em is} an expression),
+either by itself or as part of another expression,
+we use value semantics in Language SET.
+This is clear once you examine the \verb'eval' semantics
+for a \verb'VarExp':
+{\Large
 \begin{qv}
-let
-  x = 3
-  p = proc(t) set t = add1(t)
-in
-  { .p(x) ; x }
+public Val eval(Env env) {
+    return env.applyEnv(var); // value semantics!
+}
 \end{qv}
-In our procedure application semantics
-(see the \verb'AppExp' code),
-the formal parameters are bound
-to (references to) the {\em values} of the actual parameters.
-Since the value of the actual parameter \verb'x'
-in the expression \verb'.p(x)' is 3,
-this means that the variable \verb't' in the body of the procedure
-is bound to (a reference to) the value 3,
-and evaluating the body of the procedure
-modifies this binding to the value 4,
-but it's the variable \verb't', not the variable \verb'x',
-that gets modified.
-Thus the value of this entire expression is 3.
+}
+Even though all variables are bound to references in an \verb'Env',
+the \verb'applyEnv' method de-references the reference bound to \verb'var'
+to return its value semantics.\exx
+Observe that expressed values (instances of \verb'Val')
+get wrapped into references (instances of \verb'Ref')
+when they are bound to variables in creating environments:
+for example, when evaluating the RHS expressions in a \verb'let/letrec'
+or when evaluating the actual parameter expressions
+during a procedure application.
+We evaluate these expressions
+using value semantics in Language SET
+before wrapping them into \verb'ValRef' objects.
 \end{minipage}
+\clearpage

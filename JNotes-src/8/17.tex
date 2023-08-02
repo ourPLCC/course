@@ -1,0 +1,32 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Continuations} (continued)
+\Large
+\begin{qv}
+// ... continued from previous slide
+
+    public ACont apply(Val val) {
+        if (val.isTrue())
+            return new EvalCont(trueExp, env, vcont);
+        else
+            return new EvalCont(falseExp, env, vcont);
+    }
+\end{qv}
+\LARGE
+In the \verb'IfExp' class, the \verb'eval' method
+creates an \verb'EvalCont' method that evaluates
+the test expression and passes its value
+to a suitably constructed \verb'IfCont' value continuation.
+\Large
+\begin{qv}
+IfExp
+%%%
+    public ACont eval(Env env, VCont vcont) {
+        return new EvalCont(testExp,
+                            env,
+                            new IfCont(trueExp,falseExp,env,vcont));
+    }
+%%%
+\end{qv}
+\end{minipage}

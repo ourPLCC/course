@@ -25,7 +25,8 @@ Define
             rhsv = exp.eval(env);
             // and bind it to the variable
             env.add(new Binding(sym, new ValRef(rhsv)));
-            return sym + ":" + lhst;
+            System.out.println(sym + ":" + lhst);
+            return;
         } 
         // the variable has a value, so must be a duplicate
         throw new RuntimeException(sym + ": duplicate variable definition");

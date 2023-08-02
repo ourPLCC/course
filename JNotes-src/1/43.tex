@@ -2,8 +2,30 @@
 \slidenumber
 \LARGE
 {\bf Parsers} (continued)\exx
-{\bf Slide set 1a provides a summary of PLCC features.
-You should familiarize yourself with this section
-in preparation for material in subsequent parts of this course.}
+\Large
+\emm\LightBox{\MYlonGrammarKleene}\exx
+\LARGE
+Here is an (edited) example
+of a parse trace for the list of numbers \verb'(3 5 8 13)':
+\begin{qv}
+--> (3 5 8 13)
+<lon>
+| LPAREN "("
+| <nums>
+| | NUM "3"
+| | NUM "5"
+| | NUM "8"
+| | NUM "13"
+| RPAREN ")"
+\end{qv}
+Compare this with the parse trace using the previous grammar
+that does not use the \verb'**=' construct.
+The previous parse trace drifts to the right
+as additional \verb'NUM' entries are encountered.
+Using the \verb'**=' construct,
+the parse trace becomes flat.\exx
+PLCC grammar rules that use this construct
+are called {\em repeating grammar rules}.
+Repeating rules are useful in specifying most of our languages.
 \end{minipage}
 \clearpage

@@ -1,0 +1,31 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language PROP} (continued)\exx
+It turns out that a read-only \verb'prop' behaves just like a thunk
+in call-by-name (which, you may recall, is also read-only),
+so we have the benefit of call-by-name semantics when we want it!
+\Large
+\begin{qv}
+let
+  while = proc(test?, do, ans)
+    letrec
+      loop = proc()
+        if test? then {do ; .loop()} else ans
+    in
+      .loop()
+  sum = 0
+  count = 10
+  i = 1
+in
+  letprop
+    test? = prop count
+    do = prop { set sum = +(sum, i)
+              ; set i = add1(i)
+              ; set count = sub1(count)
+              }
+    ans = prop sum
+  in
+    .while(test?, do, ans) % => 55 = 1+2+...+10
+\end{qv}
+\end{minipage}

@@ -2,32 +2,31 @@
 \slidenumber
 \LARGE
 {\bf Language V0} (continued)\exx
-Here is a mapping from the concrete (BNF) syntax
-of the language to its Java representation
-as an abstract syntax.
-The Java class files are created automatically
-by the \verb'plcc' translator.
-Each item in a \VerbBox{\fbox}{\verb'Box'} is the signature
-of the corresponding class constructor.\exx
-\Large
-\emm\begin{tabular}{@{}ll}
-\verb'<program>' & \verb'::= <exp>' \\
-  & \VerbBox{\fbox}{\verb'Program(Exp exp)'}\\
-\verb'<exp>:LitExp' & \verb'::= <LIT>'\\
-  & \VerbBox{\fbox}{\verb'LitExp(Token lit)'}\\
-\verb'<exp>:VarExp' & \verb'::= <VAR>'\\
-  & \VerbBox{\fbox}{\verb'VarExp(Token var)'}\\
-\verb'<exp>:PrimappExp' & \verb'::= <prim> LPAREN <rands> RPAREN'\\
-  & \VerbBox{\fbox}{\verb'PrimappExp(Prim prim, Rands rands')}\\
-\verb'<rands>' & \verb'**= <exp> +COMMA'\\
-  & \VerbBox{\fbox}{\verb'Rands(List<Exp> expList)'}\\
-\verb'<prim>:AddPrim' & \verb'::= ADDOP'\\
-  & \VerbBox{\fbox}{\verb'AddPrim()'}\\
-\verb'<prim>:SubPrim' & \verb'::= SUBOP'\\
-  & \VerbBox{\fbox}{\verb'SubPrim()'}\\
-\verb'<prim>:Add1Prim' & \verb'::= ADD1OP'\\
-  & \VerbBox{\fbox}{\verb'Add1Prim()'}\\
-\verb'<prim>:Sub1Prim' & \verb'::= SUB1OP'\\
-  & \VerbBox{\fbox}{\verb'Sub1Prim()'}\\
-\end{tabular}
+Example ``programs'' in this language:
+\begin{qv}
+3
+x
++(3, x)
+add1( +(3,x) )
++(4, -(5,2))
+\end{qv}
+Observe that in Language V0 --
+and in most of the other languages
+you will see in these class notes --
+we write arithmetic expressions in {\em prefix form},
+where the arithmetic operator (such as `\verb'+'' or `\verb'-'')
+precedes its operands.
+(A prefix form expression like `\verb'+(3,x)'' would normally be written
+mathematically as `\verb'3+x'', using {\em infix form}.
+It turns out that prefix form expressions are easier
+to parse and evaluate
+than infix form expressions,
+which is why we use prefix form in our languages.
+See the \verb'INFIX' language in Slide Set 6
+for a further discussion of infix form.)\exx
+Prefix form is not entirely unusual:
+languages in the Lisp family (including Scheme) use prefix form.
+Contrast this to languages such as C, Java, and Python,
+where arithmetic operators appear principally in infix form.
 \end{minipage}
+\clearpage

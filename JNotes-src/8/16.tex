@@ -1,0 +1,33 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Continuations} (continued)\exx
+An \verb'if' expression requires that the test expression be evaluated
+before evaluating exactly one
+of \verb'trueExp' or \verb'falseExp'.
+So after evaluating the test expression,
+an \verb'IfCont' continuation uses the result
+of the test (it's a \verb'VCont'!) to determine which
+of these two expressions must be evaluated next.
+The resulting value is then passed
+on to the original value continuation.
+The \verb'IfCont' class appears as follows:
+\Large
+\begin{qv}
+public class IfCont extends VCont {
+
+    public Exp trueExp;
+    public Exp falseExp;
+    public Env env;
+    public VCont vcont;
+
+    public IfCont(Exp trueExp, Exp falseExp, Env env, VCont vcont) {
+        this.trueExp = trueExp;
+        this.falseExp = falseExp;
+        this.env = env;
+        this.vcont = vcont;
+    }
+
+// continued on next slide ...
+\end{qv}
+\end{minipage}

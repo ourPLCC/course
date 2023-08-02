@@ -2,34 +2,31 @@
 \slidenumber
 \LARGE
 {\bf Parsers} (continued)\exx
-\Large
-\emm\LightBox{\MYlon}\vspace{1.5ex}\\
-However, there are two grammar rules with \verb'<nums>'
-as the LHS nonterminal.
-PLCC generates the class name \verb'Nums' automatically
-(by converting the first character of the LHS nonterminal name to uppercase),
-but PLCC must generate a
-{\em unique} Java class name for each grammar rule.
-We accomplish this by annotating the LHS nonterminal
-on each of these lines with a Java class name
-that is different from \verb'Nums'
-and that distinguishes one from the other.
-We modify these grammar rules with annotations as follows:
+\emm\LightBox{\MYlon}\exx
+{\bf From each BNF grammar rule for a language,
+PLCC generates Java class.}
+A rule such as
 \begin{qv}
-<nums>:NumsNode  ::= NUM <nums>
-<nums>:NumsNull  ::=
+<lon> ::= LPAREN <nums> RPAREN
 \end{qv}
-(Any Java class names are OK for these annotations,
-but good naming conventions should prevail,
-and the names must be unique
-among the Java class names that PLCC generates.)
-A colon is used to separate the nonterminal
-from its annotated Java class name.
-The RHS entries of these grammar rules are unchanged.\exx
-With these modifications, PLCC generates
-two new classes, \verb'NumsNode' and \verb'NumsNull'.
-Both of these classes are declared to extend the \verb'Nums' class,
-so an instance of a \verb'NumsNode' class, for example,
-is also automatically an instance of its parent \verb'Nums' class.
+generates the Java class \verb'Lon'.
+PLCC gets the name \verb'Lon'
+from the LHS nonterminal \verb'<lon>' of this grammar rule
+by converting the first letter of this nonterminal name to uppercase.\exx
+PLCC determines the {\em fields}
+of a Java class generated from a BNF grammar rule
+from the RHS terms of the rule --
+specifically, the terms that are enclosed in angle brackets \verb'<...>'.
+The RHS of the \verb'lon' grammar rule given above
+has one term in angle brackets:
+\verb'<nums>'.
+The corresponding field name in the \verb'Lon' class
+is \verb'nums' (Java field names always begin with a lowercase letter).
+The {\em type} of this field is \verb'Nums',
+because \verb'Nums' is the name of the Java class corresponding
+to the nonterminal \verb'<nums>'.\exx
+Since \verb'<nums>' appears as the LHS nonterminal
+on the second and third grammar rules for this language,
+PLCC generates a corresponding \verb'Nums' class.
 \end{minipage}
 \clearpage

@@ -2,31 +2,32 @@
 \slidenumber
 \LARGE
 {\bf Language V4} (continued)\exx
-The only thing we have left is to implement
-the behavior of the \verb'apply' method in the \verb'Val' class.
-Since we want \verb'apply' only to be meaningful for a \verb'ProcVal' object,
-we define a default behavior in the (abstract) \verb'Val' class
-to throw an exception for anything but a \verb'ProcVal':
+\Large
+\emm\VerbBox{\colorbox{light}}{\begin{tabular}{@{}ll}
+\verb'<exp>:AppExp' & \verb'::= DOT <exp> LPAREN <rands> RPAREN'\\
+  & \VerbBox{\fbox}{\verb'AppExp(Exp exp, Rands rands)'}\\
+\end{tabular}}
 \Large
 \begin{qv}
-public Val apply(List<Val> args, Env e) {
-    throw new RuntimeException("Cannot apply " + this): 
-}
+AppExp
+%%%
+    public Val eval(Env env) {
+        // evaluate exp in the current environment (step 0)
+        Val v = exp.eval(env); // should be a ProcVal
+        // evaluate rands in the current environment
+        // to get the arguments (step 1)
+        List<Val> args = rands.evalRands(env);
+        // let v (step 0) determine what to do next (steps 2 and 3)
+        v.apply(args, env);
+    }
+%%%
 \end{qv}
 \LARGE
-For a \verb'ProcVal', here's the implementation of \verb'apply'.
-Notice that this implementation carries out steps 2a, 2b, and 3
-in the semantics for evaluating a procedure application
-(slide 3.39):
-\Large
-\begin{qv}
-public Val apply(List<Val> args, Env e) {
-    // bind the formals to the arguments (step 2a)
-    Bindings bindings = new Bindings(formals.varList, args);
-    // extend the captured environment with these bindings (step 2b)
-    Env nenv = env.extendEnv(bindings);
-    // and evaluate the body in this new environment (step 3)
-    return body.eval(nenv);
-}
-\end{qv}
+Notice that {\em the operand expressions (the \verb'rands')
+are evaluated in the environment in which the expression is applied}.
+Also, the current environment \verb'env' is passed as the second parameter
+to the \verb'apply' method in the \verb'Val' class, 
+even though you can see that the \verb'apply' method
+in the \verb'ProcVal' class does not acually use this value.\exx
 \end{minipage}
+\clearpage

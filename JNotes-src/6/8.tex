@@ -2,31 +2,42 @@
 \slidenumber
 \LARGE
 {\bf Language INFIX} (continued)\exx
-Unlike \verb'let' expressions,
-the environments created by \verb'def' variable definitions in a block
-are implemented as in top-level defines.
-This makes it possible for the RHS of a \verb'def'
-to refer to variables defined in the same block.\exx
-A \verb'proc' definition in \verb'INIFX' is similar to \verb'V4',
-except that the body of the procedure is a block instead of an \verb'exp',
-meaning that it can have its own ``local'' variables using \verb'def's.
-Here's an example:
+Slide 6.4 is a simplified version
+of the actual grammar for Language \verb'INFIX'.
+For example,
+we want to include a ``unary minus'' primitive
+that acts like the \verb'NEG' primitive in Assignment A3
+but that uses the traditional unary minus prefix operator
+and that has precedence higher than addition/subtraction
+and multiplication/division.
+Here are grammar rules that support this,
+where \verb'SUBOP' is the token '\verb'-''
+{\Large
 \begin{qv}
-proc(x) {def y=3; def z=add1(y); x+y+z}
+<factor>:Prim2Factor  ::= <prim2> <factor>
+<prim2>:NegPrim2      ::= SUBOP
 \end{qv}
-A procedure application in \verb'INIFX' is expressed
-in exactly the same way as in \verb'V4'.
-The following program evaluates to 120:
+}
+An expression like
+{\Large
 \begin{qv}
-{
-  def f = 
-    proc(x) {if x then x*.f(sub1(x)) else one endif};
-  def one = 1;
-  .f(5)
-} ;
+-3+5;
 \end{qv}
-Observe that \verb'f' can refer to itself recursively,
-and even refer to the variable \verb'one' before it is defined,
-since the \verb'def' semantics of a \verb'block'
-behave as in top-level \verb'define's.
+}
+evaluates to 2.\exx
+In the full \verb'INFIX' language,
+a \verb'<factor>' BNF rule also has a RHS \verb'<atom>',
+which defines rules for 
+\verb'if' expressions,
+procedure definitions,
+procedure applications,
+blocks,
+variables,
+and literals
+(which we showed in simplified form as a \verb'<factor>'
+on Slide 6.4).
+We call these {\em atoms}
+because they are at the top of the precedence hierarchy.
+The \verb'<atom>' nonterminal in our \verb'INFIX' grammar rules
+serves to define their syntax.
 \end{minipage}

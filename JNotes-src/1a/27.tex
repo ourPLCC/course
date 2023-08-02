@@ -1,0 +1,34 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf PLCC -- Flags (continued)}\exx
+Names bound to a boolean value can be set to True
+on the command line as in the following example:
+{\Large
+\begin{qv}
+... --nowrite ...
+\end{qv}
+}
+or at the beginning of the language specification file:
+{\Large
+\begin{qv}
+!nowrite
+\end{qv}
+}
+Names bound to a boolean value can be set to False
+on the command line as in the following example:
+{\Large
+\begin{qv}
+... --LL1= ...
+\end{qv}
+}
+or at the top of the language specification file:
+{\Large
+\begin{qv}
+!LL1=
+\end{qv}
+}
+Bindings given in the language specification file always override
+bindings given on the command line.
+\end{minipage}
+\clearpage

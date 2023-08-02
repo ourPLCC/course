@@ -2,26 +2,30 @@
 \slidenumber
 \LARGE
 {\bf Language V0} (continued)\exx
+The \verb'Program' class has one instance variable named \verb'exp'
+of type \verb'Exp'.
+Since \verb'Exp' is an abstract class,
+an object of type \verb'Exp' must be an instance of a class
+that extends \verb'Exp': namely, an instance
+of \verb'LitExp', \verb'VarExp', or \verb'PrimappExp'.
+Note that \verb'Exp' does not have a constructor,
+so you can't instantiate an object of type \verb'Exp' directly.\exx
+The directory \verb'/usr/local/pub/plcc/Code/V0'
+contains the specification file, named \verb'grammar', for this language.\exx
 The \verb'grammar' file in Language V0
 has three parts, separated by lines with a single `\verb'%'':
-the lexical specification,
-the grammar rules,
-and the code (semantics) section.\exx
-If only the lexical specification is given,
-the \verb'plccmk' tool only produces Java code
-for a scanner (class \verb'Scan'),
+the {\bf lexical specification section},
+the {\bf syntax specification section},
+and the {\bf code (semantics) section}.\exx
+Recall that if your \verb'grammar' file has only
+the lexical specification section,
+the \verb'plccmk' tool produces Java code
+for a scanner (\verb'Scan'),
 but nothing else.
-If only the lexical specification and grammar rules are given,
-the \verb'plccmk' tool
-produces a scanner and a parser for the grammar,
-but nothing else.\exx
-The code section is the heart of the language semantics.
-In this section, the Java classes defined by the grammar rules
-are given life in terms of defining behavior --
-for example, by defining \verb'toString' methods.
-We will presently see how a \verb'toString' method can be used
-to print the arithmetic value of an expression,
-but for now we are content with simply printing
-a copy of the expression itself.\exx
-{\em The code section defines the language semantics.}
+If your \verb'grammar' file has only
+the lexical specification and syntax specification sections,
+the \verb'plccmk' tool produces Java code
+for a scanner (\verb'Scan') and a parser (\verb'Parse') for the grammar,
+but nothing else.
 \end{minipage}
+\clearpage

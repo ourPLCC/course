@@ -2,33 +2,35 @@
 \slidenumber
 \LARGE
 {\bf Parsers} (continued)\exx
-Let's return to our tree example.
-Here is a modified grammar for a tree
-as originally given on slide 1.12
-that takes into account the PLCC requirements
-for unique class names and the introduction
-of fields for the \verb'NUM' and \verb'SYMBOL' tokens:
-The Java signatures for the constructors are also given.\exx
 \Large
+%\emm\LightBox{\MYlonGrammarOnly}\exx
+To make the connection clear
+between a grammar rule and its PLCC-generated Java class,
+in these class notes we display the grammar rules
+in the following way:\exx
 \emm\begin{tabular}{ll}
-\verb'<tree>:Leaf' & \verb'::= <NUM>'\\
-    & \VerbBox{\fbox}{\verb'Leaf(Token num)'}\\
-\verb'<tree>:Interior' & \verb'::= LPAREN <SYMBOL> <tree> <tree> RPAREN'\\
-    & \VerbBox{\fbox}{\verb'Interior(Token symbol, Tree tree, Tree tree)'}\\
+\verb'<lon>' & \verb'::= LPAREN <nums> RPAREN'\\
+    & \VerbBox{\fbox}{\verb'Lon(Nums nums)'}\\
+\verb'<nums>:NumsNode' & \verb'::= NUM <nums>'\\
+    & \VerbBox{\fbox}{\verb'NumsNode(Nums nums)'}\\
+\verb'<nums>:NumsNull' & \verb'::= '\\
+    & \VerbBox{\fbox}{\verb'NumsNull()'}\\
 \end{tabular}\exx
-\LARGE
-But there is a problem
-with the \verb'Interior' constructor signature.
-Java does not allow multiple field names
-or constructor formal parameters
-with the same name:
-specifically, in this case, there cannot be two field names
-with the name \verb'tree'.
-Here is what PLCC has to say about this when given
-the above grammar (the line has been folded for clarity):
-\begin{qv}
-duplicate field name tree in rule
-RHS LPAREN <SYMBOL> <tree> <tree> RPAREN
-\end{qv}
+The item in the box following a grammar rule
+is the {\em Java signature of the Java class constructor}
+corresponding to the class PLCC generates from the grammar rule.
+So the box\exx
+\emm\VerbBox{\fbox}{\verb'Lon(Nums nums)'}\exx
+means that the constructor for the PLCC-generated class \verb'Lon'
+has a single parameter \verb'nums' of type \verb'Nums'.\exx
+{\bf There is a one-to-one correspondence
+between the types and formal parameters in the constructor
+and the types and field names in the class.}
+More specifically, when the constructor is invoked,
+the constructor body simply copies the values of its parameters
+into the corresponding field names of the instance being constructed.\exx
+As you can see from above,
+the \verb'NumsNull' constructor takes no parameters,
+and the \verb'NumsNull' class has no corresponding fields.
 \end{minipage}
 \clearpage

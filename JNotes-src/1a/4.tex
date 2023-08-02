@@ -2,17 +2,20 @@
 \slidenumber
 \LARGE
 {\bf PLCC -- Tokens}\\
-The PLCC toolset uses the skip and token specifications
+The PLCC tool set uses the skip and token specifications
 to create source files \verb'Token.java' and \verb'Scan.java'.\exx
-The \verb'Token.java' file defines the \verb'Token.Val' \verb'enum' class --
+The \verb'Token.java' file defines the \verb'Token.Match' \verb'enum' class --
 one \verb'enum' for each skip and token specification name.
 It also defines the structure of a \verb'Token' object
-consisting of a \verb'val' field of type \verb'Token.Val',
+consisting of a \verb'match' field of type \verb'Token.Match',
 a \verb'str' field of type \verb'String',
-and a \verb'lno' field of type \verb'int'.
+a \verb'lno' field of type \verb'int',
+and a \verb'line' field of type \verb'String'.
 The \verb'str' field consists of the characters in the input stream
-that match the token specification -- the token's {\em lexeme} --
-and the \verb'lno' field contains the line number on the input stream
+that match the token specification -- the token's {\em lexeme},
+the \verb'lno' field contains the line number on the input stream
+where the token appears,
+and the \verb'line' field contains the input stream line
 where the token appears.
 The \verb'str' field always contains at least one character.\exx
 The \verb'Scan.java' file defines an object
@@ -22,9 +25,10 @@ The \verb'cur()' method delivers the current \verb'Token' object to its client
 and the \verb'adv()' method advances to the next token.
 Multiple calls to \verb'cur' without any intervening calls to \verb'adv'
 returns the same token repeatedly.\exx
-Upon end of input, \verb'cur' returns a special \verb'Token' object
-whose \verb'val' field is \verb'$EOF'
-and whose \verb'str' field is \verb'EOF'.\exx
+Upon encountering the end of the input stream,
+\verb'cur' returns a special \verb'Token' object
+whose \verb'match' field is \verb'$EOF'
+and whose \verb'toString()' representation is \verb'!EOF'.
 The \verb'cur' method is {\em lazy},
 meaning that the \verb'Scan' class does not read any characters
 from the input stream until necessary

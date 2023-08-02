@@ -1,0 +1,33 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Continuations} (continued)\exx
+An \verb'ACont' continuation has an \verb'apply' method
+that takes no parameters.
+A \verb'VCont' continuation has an \verb'apply' method
+that takes a single \verb'Val' parameter,
+and an \verb'RCont' continuation has an \verb'apply' method
+that takes a single \verb'Ref' parameter.
+All of these continuations return an instance of \verb'ACont'.
+Here are the method signatures for each:
+\begin{qv}
+ACont: public ACont apply();
+VCont: public ACont apply(Val val);
+RCont: public ACont apply(Ref val);
+\end{qv}
+The essential purpose of the \verb'apply' method
+for an \verb'ACont' continuation
+is to carry out some action that represents
+``what to do now''.
+Its return value, an instance of \verb'ACont',
+says ``what to do next''.\exx
+For a \verb'VCont' continuation,
+the purpose of the \verb'apply' method
+is to carry out some action that represents
+``what to do now with the value \verb'val'''.
+Its return value, again an instance of \verb'ACont',
+says ``what to do next''.
+Similar remarks apply to a \verb'RCont' continuation.
+You will see that the \verb'RCont' continuations are used only
+to implement call-by-reference parameter passing.
+\end{minipage}

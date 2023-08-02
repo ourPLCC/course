@@ -2,30 +2,43 @@
 \slidenumber
 \LARGE
 {\bf Language OBJ} (continued)\exx
-Since we often find ourselves encountering expressions like the following:
-\Large
+For example, consider again the expression
+{\Large
 \begin{qv}
-.<.<.<.<.<.<new summer>init()>add(1)>add(3)>add(5)>add(7)>show()
+define x = 3
+let
+  x = 5
+in
+  <class end>x
 \end{qv}
-\LARGE
-we introduce a short-hand way of writing this:
-\Large
+}
+where we observed that this expression evaluates to 3.
+If we replace
+{\Large
 \begin{qv}
-!<new summer>init()>add(1)>add(3)>add(5)>add(7)>show()!>
+<class end>x
 \end{qv}
-\LARGE
-The token \verb'LLANGLE', defined as the string `\verb'!<'',
-introduces an expression --
-which must evaluate to an environment (class or object) --
-followed by a sequence of zero or more procedure applications,
-each preceded by `\verb'>''.
-Each procedure is evaluated in the environment
-of the previous class or object,
-and the procedure application itself must return another object,
-whose environment is then used to evaluate the next procedure,
-and so on.
-The entire expression is terminated
-by a \verb'RRANGLE' token, defined as `\verb'!>''.
-Note that the actual parameter expressions are evaluated
-in the environment in which the entire expression appears.\exx
+}
+in the above expression with
+{\Large
+\begin{qv}
+<class end><!@>x
+\end{qv}
+}
+then this expression evaluates to 5
+because the \verb'class' expression is defined
+in the \verb'let' environment,
+and so the environment captured by \verb'!@'
+has \verb'x' bound to 5.
+The above expression can also be written as follows:
+{\Large
+\begin{qv}
+<<class end>!@>x
+\end{qv}
+}
+Observe that the ``variable'' \verb'!@' is only defined
+in the static environment of a class
+and is bound to an object that captures
+the environment in which the class is defined.
+If used anywhere else, it will throw an ``unbound variable'' exception.
 \end{minipage}

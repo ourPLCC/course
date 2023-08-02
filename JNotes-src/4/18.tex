@@ -15,11 +15,11 @@ Here is the \verb'apply' code for an \verb'AndPrim' object:
 public Val apply(Val [] va) {
     if (va.length != 2)
         throw new RuntimeException("two arguments expected");
-    boolean b0 = va[0].boolVal();
-    boolean b1 = va[1].boolVal();
+    boolean b0 = va[0].boolVal().val;
+    boolean b1 = va[1].boolVal().val;
     return new BoolVal(b0 && b1);
 }
 \end{qv}
 It's easy to see how the \verb'apply' code should be implemented
-for the other two primitives.
+for the other two primitives \verb'or' and \verb'not'.
 \end{minipage}

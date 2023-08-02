@@ -2,31 +2,37 @@
 \slidenumber
 \LARGE
 {\bf Language SET}\exx
-In this version of our defined language,
+In this version of our source language,
 we allow for the assignment of values to variables.
 Languages that allow for the mutation of variables
-are called {\em side-effecting}; such languages
+are called {\em side-effecting}.
+Compared to functional programming (\verb'V6' is an example),
+such languages
 are inherently more difficult to reason about,
 which accounts for why functional programming has received
 so much attention and also for why
 it is so difficult to produce high-quality software
 in most side-effecting programming languages.\exx
-So far, our language has treated
+So far, Languages \verb'V1' through \verb'V6' have treated
 denoted values (the things that variables are bound to)
 as being the same as expressed values
-(the values that an expression can have).
-This is because a variable \verb'x', for example,
-will always mean the same thing no matter where it appears
+(the values that expressions can have).
+For example, a variable \verb'x' in one of these languages
+always evaluates to the same thing no matter where it appears
 in its scope.\exx
-When we add assignment, such as with
+When we add variable mutation (also called ``assignment''),
+such as with
 \begin{qv}
 set x = add1(x)
 \end{qv}
 the meaning of \verb'x' on the LHS is different
-from its meaning on the RHS of the assignment.
-The RHS of this ``assignment'' represents an expressed value,
-whereas the LHS represents a change in the denoted value.
+from its meaning on the RHS.
+The expression \verb'x' in the RHS of this ``assignment''
+represents an expressed value,
+whereas \verb'x' on the LHS
+represents a denoted value that can be modified.
 In order to implement variable assignment,
 we need to find a way
 to disconnect denoted values from expressed values.
 \end{minipage}
+\clearpage

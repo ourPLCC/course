@@ -7,15 +7,18 @@ we need to modify all of the instances
 of \verb'Binding' or \verb'Bindings' objects
 so that they use references instead of values.
 To create a ``binding'' of a variable to a value,
-first convert the value into a reference
-and then bind the variable to the reference.
-Here's an example of how to create a binding of the variable \verb'x'
-to a reference to an integer \verb'10':
+first wrap the value into a new reference
+and then bind the variable to the newly created reference.
+Here's an example of how to create a binding
+of the variable named \verb'x'
+to (a reference to) an integer \verb'10':
+{\Large
 \begin{qv}
 String var = "x";
 Val val = new IntVal(10);
 Binding b = new Binding(var, new ValRef(val));
 \end{qv}
+}
 The \verb'valsToRefs' static method
 in the \verb'Ref' class takes a list of \verb'Val's
 and returns a corresponding list of \verb'Ref's.
@@ -26,12 +29,15 @@ to references to their actual parameter values)
 and for \verb'LetExp' objects
 (which need to bind their LHS variable symbols
 to reference to their RHS expression values).
+{\Large
 \begin{qv}
 public static List<Ref> valsToRefs(List<Val> valList) {
-    List<Ref> refList = new ArrayList<Ref>();
+    List<Ref> refList = new ArrayList<Ref>(valList.size());
     for (Val v : valList)
         refList.add(new ValRef(v));
     return refList;
 }
 \end{qv}
+}
 \end{minipage}
+\clearpage

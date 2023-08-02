@@ -1,20 +1,39 @@
 \begin{minipage}[t]{\sw}
 \slidenumber
 \LARGE
-{\bf Language PROP} (continued)\exx
-The \verb'set' part of a \verb'prop' is optional.
-If the \verb'set' part is omitted,
-any attempt to apply the \verb'set' operator to the variable
-results in a runtime exception.
-In this way, we can implement ``read-only'' properties.
+{\bf Language PROP}\exx
+In many object-oriented programming languages,
+the fields of an object can be made {\em private} --
+that is, inaccessible outside of the object's methods.
+For private fields, special publically accessible methods
+can be used to retrieve the field values
+or to modify them.
+These methods are often called {\em getters} and {\em setters},
+respectively.\exx
+Suppose, for example, we provided a special designator called \verb'private'
+that served to identify a field whose value was inaccessible outside
+of the class methods.
+Consider the following code:
 \Large
 \begin{qv}
-let
-  x = 3 
-in
-  letprop
-    x = prop x %% no 'set' part, so x is read only
-  in
-    {set x = 42 ; x} % => runtime exception
+define c =
+  class
+    private x
+    method get_x = proc() x
+    method set_x = proc(v) set x = v
+  end
+define cc = new c
+.<cc>set_x(5) % ok - sets value of x to 5
+.<cc>get_x()  % ok - returns 5
+<cc>x            % illegal - x is private
 \end{qv}
+\LARGE
+While this sort of code is common,
+there are two problems with this approach.
+The first is that every private field we want to access
+needs a getter and a setter.
+The second is that code such as
+\verb'<cc>set x = 5'
+does not work, but is easier to write and understand than
+\verb'.<cc>set_x(5)'.
 \end{minipage}

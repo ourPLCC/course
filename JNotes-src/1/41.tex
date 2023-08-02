@@ -2,31 +2,18 @@
 \slidenumber
 \LARGE
 {\bf Parsers} (continued)\exx
-Here is the complete \verb'grammar' file
-in code directory \verb'LON2' with these changes:
-\Large
+The parse tree for the following list-of-numbers
 \begin{qv}
-# Lexical specification
-skip WHITESPACE '\s+'
-NUM '\d+'
-LPAREN '\('
-RPAREN '\)'
-%
-# Grammar
-<lon>  ::= LPAREN <nums> RPAREN
-<nums> **= <NUM>
-%
-
-Lon
-%%%
-    public String toString() {
-        String ret = "( ";
-        for (Token tok: nums.numList) {
-            ret += tok + " ";
-        }
-        return ret + ")";
-    }
-%%%
+( 1 2 3 4 5 )
 \end{qv}
+is shown here:\exx
+\centerline{\psfig{figure=lon-1thru5-num.eps,width=5in}}\exx
+Because of this right-recursive looping,
+the nodes in the parse tree drift to the right
+as the number of elements in the list grows.
+Clearly a list of numbers with 100 entries would have
+100 \verb'NumsNode' nodes in the tree,
+weighted significantly to the right.
+How can we structure our tree nodes to avoid this?
 \end{minipage}
 \clearpage

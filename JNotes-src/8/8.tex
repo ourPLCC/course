@@ -1,0 +1,41 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Continuations} (continued)\exx
+Things start off by creating an initial
+expression evaluation continuation \verb'acont'
+and then jumping onto the trampoline:
+\Large
+\begin{qv}
+acont.trampoline();
+\end{qv}
+\LARGE
+In this code, the trampoline loops
+until one of the calls to \verb'apply' throws a \verb'ContException'.
+In order for expression evaluation to terminate,
+some continuation must therefore throw a \verb'ContException'
+that jumps off the trampoline.
+Since the purpose of expression evaluation is
+to produce a value, 
+this exception needs to have a \verb'Val' field
+that can be used to return a value to the top-level REP loop.\exx
+We choose a special ``halt continuation'' \verb'HaltCont' to do this. 
+\verb'HaltCont' extends the \verb'VCont' class,
+so its \verb'apply' method takes a \verb'Val' parameter.
+The \verb'apply' method in this class --
+the one that actually jumps off the trampoline --
+is now trivial.
+\Large
+\begin{qv}
+public class HaltCont extends VCont {
+
+    public ACont apply(Val val) {
+        throw new ContException(val);
+    }
+
+}
+\end{qv}
+\LARGE
+This continuation is created once,
+at the top level of expression evaluation.
+\end{minipage}

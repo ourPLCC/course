@@ -1,30 +1,37 @@
 \begin{minipage}[t]{\sw}
 \slidenumber
 \LARGE
-{\bf Drawing Envinronments}\exx
-On slide 2.15, we showed how to display an environment as a linked list.
-Each node in the list is a pair (\verb'EnvNode')
-consisting of a reference to a \verb'Bindings' object
-(which we have called {\em local bindings})
-and a reference to the next node in the list.
-The end of the list is an empty environment,
-an \verb'EnvNull' object,
-which appears as a box with a slash through it.
-We usually display the linked list nodes {\em from left to right},
-with the head of the list at the left
-and the empty environment at the right.
-We display the local bindings as an array
-(it's actually an \verb'ArrayList') of bindings stacked vertically.
-Each binding is a pair consisting of an identifier string
-and a value.\exx
-The {\em initial environment} in language \verb'V4'
-is a linked list consisting of an \verb'EnvNode'
-with an empty local environment (no bindings)
-and a reference to an \verb'EnvNull' object.
-Here is how we display the initial environment:
-\centerline{\psfig{figure=init.eps,width=2in}}
-To simplify things in languages \verb'V4' and \verb'V5',
-we omit displaying the node with the empty local environment,
-so we display the initial environment as follows:\exx
-\centerline{\psfig{figure=init0.eps,width=0.4in}}
+{\bf Language V4} (continued)\exx
+The only thing we have left is to implement
+the behavior of the \verb'apply' method in the \verb'Val' class.
+Since we want \verb'apply' only to be meaningful for a \verb'ProcVal' object,
+we define a default behavior in the (abstract) \verb'Val' class
+to throw an exception for anything but a \verb'ProcVal':
+{\Large
+\begin{qv}
+public Val apply(List<Val> args, Env e) {
+    throw new PLCCException("Cannot apply " + this): 
+}
+\end{qv}
+}
+For a \verb'ProcVal', here's the implementation of \verb'apply'.
+Notice that this implementation carries out steps 2a, 2b, and 3
+in the semantics for evaluating a procedure application (Slide 3.60).
+{\Large
+\begin{qv}
+public Val apply(List<Val> args, Env e) {
+    // bind the formals to the arguments (step 2a)
+    Bindings bindings = new Bindings(formals.varList, args);
+    // extend the captured environment with these bindings (step 2b)
+    Env nenv = env.extendEnv(bindings);
+    // and evaluate the body in this new environment (step 3)
+    return body.eval(nenv);
+}
+\end{qv}
+}
+Language V4 also checks for duplicate identifiers
+while parsing the \verb'Formals' in a procedure definition.
+This code is inserted into the \verb'Formals' class constructor
+using the \verb':init' hook.
 \end{minipage}
+\clearpage

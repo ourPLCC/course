@@ -1,19 +1,34 @@
 \begin{minipage}[t]{\sw}
 \slidenumber
 \LARGE
-{\bf Continuations}\exx
-All of our non-side-effecting languages (\verb'V1' through \verb'V6')
-have relied on recursion to implement iterative behavior.
-See, for example, the procedure \verb'updown'
-used to define the \verb'pos?' procedure in one of our assignments.
-In our Java language implementations,
-any \verb'eval' call requires setting up a Java stack frame
-to hold the arguments to \verb'eval'.
-If evaluating the arguments requires additional calls to \verb'eval',
-additional stack frames are required.
-So if a procedure calls itself recursively,
-its underlying Java \verb'eval' methods call themselves recursively, 
-and it is possible that stack frames can build up
-to exhaust available stack memory.
-Even relatively small programs can result in stack overflow.\exx
+{\bf Logic Programming}\exx
+The term {\em logic programming} refers to
+a programming paradigm
+that principally embodies the rules of {\em first-order logic}
+(also known as {\em predicate logic}).
+In first-order logic,
+you can express {\em facts} involving non-logical objects,
+and {\em relations},
+where the relations involve facts, standard logical operations,
+variables, and (universal and existential) quantifiers.
+Logic programming uses {\em rules of inference}
+to ``reason'' about a collection of facts and relations.\exx
+In the imperative and functional example programming languages
+we have studied so far,
+we wanted the result
+of applying (or ``running'') a program with a given input.
+In logic programming,
+we want to determine whether a particular logic statement
+evaluates to {\em true} or {\em false};
+or, more generally,
+to determine all of the values of the variables in a logic expression
+that make the expression true.\exx
+{\bf Prolog} remains the dominant logic programming language implementation,
+though there exist variants that extend (or restrict)
+Prolog's functionality and purpose:
+{\bf Datalog} is one such variant.
+{\bf AbcDatalog}, developed at Harvard University,
+is a Java-based implementation of Datalog that we use in these notes.
+AbcDatalog is covered by the BSD License
+(see \verb'http://abcdatalog.seas.harvard.edu/license.txt').
 \end{minipage}

@@ -2,20 +2,24 @@
 \slidenumber
 \LARGE
 {\bf Parsers} (continued)\exx
-Your script output should appear as follows:
-\Large
+\emm{\Large\LightBox{\MYlonGrammar}}\exx
+Observe that the \verb'LPAREN' and \verb'RPAREN' token specifications
+use regular expressions having a backslash `\verb'\''.
+This is because parentheses have a special meaning in regular expressions,
+and the backslash turns off this special meaning.
+So, for example, the regular expression \verb.'\('.
+really matches the left parenthesis symbol.
+(You should take this opportunity
+to review how to write and interpret regular expressions
+in the Java \verb'Pattern' class.)\exx
+To complete this example, 
+assume that you have created a directory named \verb'LON',
+and that in this directory you have created a file named \verb'grammar'
+that contains lines appearing above.
+In your \verb'LON' directory,
+run the \verb'plccmk' script as follows:
 \begin{qv}
-Nonterminals (* indicates start symbol):
- *<lon>
-  <nums>
-
-Abstract classes:
-  Nums
-
-Source files created:
-  NumsNode.java
-  ...
+plccmk
 \end{qv}
-
 \end{minipage}
 \clearpage

@@ -1,41 +1,40 @@
 \begin{minipage}[t]{\sw}
 \slidenumber
 \LARGE
-{\bf Static Properties of Variables} (continued)\exx
-\Large
-Here is the \verb'Foo' class given on slide 1.46.
-\large
-\begin{qv}
-public class Foo {
-   public static int y;
-   public int z;
-   public static void main(String [] args) {
-     Foo f = new Foo(); // f is local to main
-     int x = 1; // x is local in main
-     y = 2; // y is static throughout in Foo
-     f.z = 3; // z is known only within instances of Foo
-   }
+{\bf Parsers} (continued)\exx
+{\Large
+\emm\LightBox{\MYlonGrammarKleene}\exx
 }
-\end{qv}
-\Large
-Consider just the \verb'main' procedure in this class:
-\large
+Recall that we want to define the \verb'$run()' method
+in the \verb'Lon' class
+so it displays the values of the tokens in the \verb'numList' field.
+This field, an object of type \verb'List<Token>',
+is accessible in the  \verb'Lon' class as follows:
+{\Large
 \begin{qv}
-   public static void main(String [] args) {
-     Foo f = new Foo(); // f is local to main
-     int x = 1; // x is local in main
-     y = 2; // y is static throughout in Foo
-     f.z = 3; // z is known only within instances of Foo
-   }
+nums.numList
 \end{qv}
-\Large
-In this method, the identifiers
-\verb'f' and \verb'x' are explicitly defined.
-In these cases, we say that these identifiers {\em occur bound}
-in the \verb'main' procedure.\exx
-However, the variable \verb'y' is not defined anywhere
-in the procedure \verb'main'.
-In this case, we say that the identifier \verb'y' {\em occurs free}
-in the \verb'main' method, but it {\em occurs bound} in the class \verb'Foo'.
+}
+So we can display the \verb'NUM' entries by iterating over this list,
+displaing the tokens (as Java \verb'String's) as we do so.
+Here is the completed version of the PLCC specification
+that adds the \verb'$run()' method to the \verb'Lon.java' file
+to achieve our desired result.
+Since the parse tree does not include the tokens for parentheses,
+this code adds back the parentheses in the output
+to make the output look ``pretty''.
+{\Large
+\begin{qv}
+Lon
+%%%
+    public void $run() {
+        System.out.print("( ");
+        for (Token tok: nums.numList)
+            System.out.print(tok.toString() + " ");
+        System.out.println(")");
+    }
+%%%
+\end{qv}
+}
 \end{minipage}
 \clearpage

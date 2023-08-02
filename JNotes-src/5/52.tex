@@ -2,30 +2,31 @@
 \slidenumber
 \LARGE
 {\bf Language PROP} (continued)\exx
-It turns out that a read-only \verb'prop' behaves just like a thunk
-in call-by-name (which, you may recall, is also read-only),
-so we have the benefit of call-by-name semantics when we want it!
+The \verb'C#' language championed by Microsoft
+solves these problems using the notion of a {\em property}.
+A property acts like a field
+but it provides built-in getter and setter code.
+When the field is {\em accesssed}, the getter code is executed;
+when the field is {\em assigned to} with a \verb'set' statement,
+the setter code is executed.\exx
+Here is the same class as described on the previous slide,
+with a property instead of a getter and setter:
 \Large
 \begin{qv}
-let
-  while = proc(test?, do, ans)
-    letrec
-      loop = proc()
-        if test? then {do ; .loop()} else ans
-    in
-      .loop()
-  sum = 0
-  count = 10
-  i = 1
-in
-  letprop
-    test? = prop count
-    do = prop { set sum = +(sum, i)
-              ; set i = add1(i)
-              ; set count = sub1(count)
-              }
-    ans = prop sum
-  in
-    .while(test?, do, ans) % => 55 = 1+2+...+10
-\end{qv}
+define c = 
+  class
+    field x
+    property x = prop x:set x=$
+  end
+define cc = new c
+<cc>set x = 5 % ok - sets the field value to 5
+<cc>x         % returns 5
+\end{qv} %%$
+\LARGE
+The property \verb'x' shadows the field \verb'x'.
+This means that the field \verb'x' cannot be accessed directly
+except through the property.\exx
+The \verb'PROP' language is based on the \verb'OBJ' language
+with the addition of call-by-reference semantics
+and {\em properties}, as we proceed to describe.
 \end{minipage}

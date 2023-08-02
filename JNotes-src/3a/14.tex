@@ -1,26 +1,30 @@
 \begin{minipage}[t]{\sw}
 \slidenumber
 \LARGE
-{\bf Language REF}\exx
-A parameter passing semantics that evaluates actual parameters
-and that binds the formal parameters
-to these actual parameter values
-is called {\em call-by-value}.
-This is what is used in languages \verb'V1' to \verb'V6'.
-In the language \verb'SET',
-where bindings are to references instead of values,
-the actual parameter values are turned
-into {\em new} references,
-and these references are bound to the formal parameters.\exx
-Suppose we {\em want} the behavior illustrated
-by the dashed line in the previous slide.
-That is, if a variable that is passed
-as an actual parameter to procedure,
-the corresponding formal parameter is bound
-to the {\em same} reference as the actual parameter variable,
-not a new reference with a copied value.\exx
-Such a parameter passing semantics is called
-{\em call-by-reference}.
-We explore call-by-reference next,
-along with variants on this theme.
+{\bf Language SET} (continued)\exx
+What happens if you try to mutate the value
+of an identifier that is one of the formal parameters
+to a procedure?
+For example, what value is returned by the following program?
+\begin{qv}
+let
+  x = 3
+  p = proc(t) set t = add1(t)
+in
+  { .p(x) ; x }
+\end{qv}
+In our procedure application semantics
+(see the \verb'AppExp' code),
+the formal parameters are bound
+to (references to) the {\em values} of the actual parameters.
+Since the value of the actual parameter \verb'x'
+in the expression \verb'.p(x)' is 3,
+this means that the variable \verb't' in the procedure application
+is bound to {\em a new reference} to this value,
+and evaluating the body of the procedure
+modifies this reference to the value 4.
+But it's the reference to variable \verb't', not the variable \verb'x',
+that gets modified.
+Thus the value of this entire expression is 3.
 \end{minipage}
+\clearpage

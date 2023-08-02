@@ -5,20 +5,23 @@
 We introduce the notion of a {\em reference},
 something that {\em refers to} a mutable location in memory.
 Instead of binding a variable directly to an expressed value,
-we bind the variable to a reference,
-which will contain the expressed value.\\
+we bind the variable to a reference containing an expressed value.
+From a computer architecture point of view,
+a reference is simply the address of a memory location:
+the address never changes,
+but the memory contents at the address can change.
 \begin{quote}
 \begin{tabular}{@{}l@{ $=$ }l}
-Denoted value & Ref(Val) \\
 Expressed value & Val $=$ IntVal+ProcVal \\
+Denoted value & Ref(Expressed) \\
 \end{tabular}
 \end{quote}
-If we want to mutate a variable,
-we must change the contents of the memory location
-the variable refers to,
-not the value (reference) the variable is bound to.
+To mutate a variable bound to a reference,
+we change the {\em contents} of the reference;
+the variable is still bound to the same reference.
 \cfig{3a.2.eps}
 \vspace{2ex}
 The two right-hand diagrams depict the same environment.
 The rightmost one uses a more compact representation.
 \end{minipage}
+\clearpage

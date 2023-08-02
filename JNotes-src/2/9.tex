@@ -1,19 +1,32 @@
 \begin{minipage}[t]{\sw}
 \slidenumber
 \LARGE
-{\bf Environments} (continued)\exx
-The \verb'extendEnv' procedure, defined in the \verb'Env' class,
-creates a new environment by adding local bindings
-to the current environment,
-returning this new environment.
-Here is the definition of \verb'extendEnv':
+{\bf Environments} (continued)
+{\Large
 \begin{qv}
-public Env extendEnv(Bindings bindings) {
-    return new EnvNode(bindings, this);
+public class EnvNode extends Env {
+
+    public Bindings bindings; // list of local bindings
+    public Env env;           // enclosing scope
+    
+    public EnvNode(Bindings bindings, Env env) {
+        this.bindings = bindings;
+        this.env = env;
+    }
+
+    public Binding lookup(Symbol sym) {
+        return bindings.lookup(sym);
+    } 
+
+    public Val applyEnv(String sym) {
+        Binding b = bindings.lookup(sym);
+        if (b == null)
+            return env.applyEnv(sym);
+        return b.val;
+    }
+
 }
 \end{qv}
-You can think of an environment as a linked list
-of local bindings,
-where a node in the list is an instance of \verb'EnvNode'
-and the end of the list is an instance of \verb'EnvNull'.
+}
 \end{minipage}
+\clearpage

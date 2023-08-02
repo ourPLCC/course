@@ -2,41 +2,45 @@
 \slidenumber
 \LARGE
 {\bf Tokens} (continued)\exx
-After running the \verb'plccmk' command,
-a \verb'Java' subdirectory is created,
-populated with the following Java source files
-\Large
+Our first \verb'grammar' file examples contain only
+token specifications.
+Later, we will use \verb'grammar' files
+to define language syntax, and then semantics.
+For now, we concentrate only on token specifications.\exx
+Each of these examples can be put in a file named \verb'grammar'
+for processing by \verb'plccmk'.
+These examples define what input should be skipped
+and what input should be treated as tokens.
+Comments in a language specification file begin
+with the \verb'#' character and go to the end of a line.
+{\Large
+\begin{itemize}
+\item
 \begin{qv}
-Token.java
-Scan.java
+# Every character in the file is a token, including whitespace
+token CHAR '.'
 \end{qv}
-\LARGE
-as well as a few other Java support files.
-The \verb'plccmk' command also compiles these source files,
-so when you change to the \verb'Java' subdirectory,
-you can run the \verb'Scan' program directly to test your scanner:
-enter strings from your terminal
-and see what tokens are recognized by the scanner.\exx
-Examine the \verb'Token.java' file to see
-how the token specifications in your \verb'grammar' file are translated
-into Java code that associates
-the token names with their corresponding token patterns,
-and similarly for skip patterns.\exx
-When specifying tokens in a \verb'grammar' file,
-you can omit the \verb'token' term (but not the \verb'skip' term).
-This means that both
-\Large
+\item
 \begin{qv}
-WORD '\S+'
+# Every line in the file is a token
+token LINE '.*'
 \end{qv}
-\LARGE
-and
-\Large
+\item
 \begin{qv}
-token WORD '\S+'
+# Tokens in the file are 'words' consisting of one or more
+# letters, digits or underscores -- skip everything else
+skip NONWORD '\W+'  # skip non-word characters
+token WORD '\w+'    # keep one or more word characters
 \end{qv}
-\LARGE
-are considered as equivalent.
-We follow this convention in all of our subsequent examples.\exx
+\item
+\begin{qv}
+# Tokens in the file consist of one or more non-whitespace
+# characters, skipping all whitespace.
+# Gives the same output as Java's 'next()' Scanner method.
+skip WHITESPACE '\s+'  # skip whitespace characters
+token NEXT '\S+'       # keep one or more non-space characters
+\end{qv}
+\end{itemize}
+}
 \end{minipage}
 \clearpage

@@ -2,37 +2,37 @@
 \slidenumber
 \LARGE
 {\bf Language V0} (continued)\exx
-We follow the method described in Slide set 1
-to modify the default behavior of the \verb'toString()' method
-in the \verb'Program' class.
-{\em In all of our languages,
-the observable {\bf semantics} of a program
-is the output produced by the \verb'toString()' method
-applied to the root of the parse tree of the program.}\exx
-Recall that to add methods to a class such as \verb'Program',
-use the following template:
-\Large
+The \verb'Rep' program defaults to running
+the \verb'$run()' method in the \verb'Program' class,
+which prints the \verb'Program' object as a \verb'String'.
+(Actually, it prints the \verb'_Start' object as a \verb'String',
+but since the \verb'Program' class extends the \verb'_Start' class,
+these behaviors are the same.)
+The default \verb'$run' behavior -- 
+which would be used if \verb'$run' is not redefined in the \verb'Program' class --
+displays a string that looks like this:
+{\Large
 \begin{qv}
-Program
-%%%
-<method definitions>
-%%%
+Program@....
 \end{qv}
-\LARGE
-Since these methods become part of the code for the \verb'Program' class,
-they can access any of the instance variables in the class.
-So for the \verb'Program' object,
-the methods can refer to the \verb'exp' instance variable
-of type \verb'Exp'.
-Since the RHS of the \verb'<program>' grammar rule is just \verb'<exp>',
-the \verb'toString' method of the \verb'Program' class is simple:
-\Large
+}
+We want to show how to override the default \verb'$run()' method
+in the \verb'Program' class
+so that it prints the same text as the program input
+with extra white\-space removed!\exx
+This means that we should see the following when interacting
+with the \verb'Rep' program from Language V0:
+{\Large
 \begin{qv}
-Program
-%%%
-    public String toString() {
-        return exp.toString();
-    }
-%%%
+--> add1( +(2, 3   ))
+add1(+(2,3))
+--> x
+x
+--> +  ( p  ,
+- ( q,r)  )
++(p,-(q,r))
+--> ...
 \end{qv}
+}
 \end{minipage}
+\clearpage

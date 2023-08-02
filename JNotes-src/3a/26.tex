@@ -1,34 +1,38 @@
 \begin{minipage}[t]{\sw}
 \slidenumber
 \LARGE
-{\bf Language NAME} (continued)\\[1.5ex]
-Consider the following definition:
-\Large
-\begin{qv}
-define while = proc(test?, do, ans)
-  letrec loop = proc()
-    if test? then {do ; .loop()} else ans
-  in .loop()
-\end{qv}
-\LARGE
-Using call-by-name, the expression
-\Large
-\begin{qv}
-let x = 0 sum = 0 in
-  .while(
-    <=?(x,10),
-    { set sum=+(sum,*(x,x)) ; set x = add1(x) },
-    sum
-  )
-\end{qv}
-\LARGE
-returns the sum
-\[\sum_{x=1}^{10} x^2 = 385\]\\
-Using call-by-reference as in the language \verb'REF',
-the expression never terminates
-because the actual parameter expression \verb'<=?(x,10)'
-is evaluated only once, to 1 (true) when \verb'x' is initially 0,
-and so the \verb'test?' parameter is bound permanently to (a reference to) 1.
-Evaluating \verb'test?' repeatedly always returns 1 (true),
-so the ``loop'' never terminates.
+{\bf Language NAME}\exx
+We now turn to a different parameter passing mechanism,
+{\em call-by-name}.
+In call-by-name procedure application,
+we bind each procedure's formal parameter
+to its corresponding {\em un-evaluated actual parameter expression}.
+Each time we evaluate a formal parameter in the procedure body,
+we evaluate its corresponding actual parameter expression
+{\em in the environment where the procedure was called}
+-- the {\em calling environment},
+and this value becomes the expressed value of the formal parameter.\exx
+Call-by-name has behaviors that differ from call-by-reference:
+(1)
+if we never reference the formal parameter in the procedure body,
+we never evaluate the actual parameter expression; and
+(2)
+every time we evaluate the formal parameter in the procedure body,
+we re-evaluate the actual parameter expression.\exx
+In the presence of side-effects, call-by-name has interesting
+properties that make it very powerful
+but often difficult to reason about.
+The language ALGOL 60 had call-by-value and call-by-name
+as its parameter passing mechanisms.
+ALGOL 60 had its greatest influence on languages
+such as Pascal, C/C++, and Java.
+Although call-by-name has been all but abandoned
+by modern imperative (side-effecting) programming languages --
+mostly because of its inefficiency,
+it still plays a role in functional programming:
+Scheme supports a variant, {\em call-by-need},
+by means of \verb'promise/force';
+Haskell also supports call-by-need.
+We proceed to implement both call-by-name and call-by-need.
 \end{minipage}
+\clearpage

@@ -4,7 +4,7 @@
 {\bf Language TYPE1} (continued)\exx
 For a \verb'ProcTypeExp', we\
 \begin{enumerate}
-\item determine the types (using the \verb'toType' method)
+\item[0.] determine the types (using the \verb'toType' method)
 of the (formal parameter) type expressions
 that appear to the left of the `\verb'=>'' token
 and insert them into a \verb'List<Type>' object,
@@ -13,17 +13,20 @@ to the right of the `\verb'=>'' token, and then
 \item
 construct the appropriate \verb'ProcType' object.
 \end{enumerate}
-\Large
+{\Large
 \begin{qv}
 ProcTypeExp
 %%%
     public Type toType() {
-        List<Type> paramTypeList = new ArrayList<Type>();
-        for (TypeExp e : typeExps.typeExpList)
-            paramTypeList.add(e.toType());
+        List<Type> paramTypeList = typeExps.toTypes();
         Type returnType = typeExp.toType();
         return new ProcType(paramTypeList, returnType);
     }
 %%%
 \end{qv}
+}
+The \verb'toTypes()' method in the \verb'TypeExps' class
+is straight-forward,
+iterating over its \verb'typeExpList'
+and calling \verb'toType' on each of its type expressions.
 \end{minipage}

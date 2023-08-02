@@ -1,20 +1,42 @@
 \begin{minipage}[t]{\sw}
 \slidenumber
 \LARGE
-{\bf Continuations} (continued)
+{\bf Logic Programming}\exx
+A {\em binary relation} on a set $A$
+is defined to be a subset of the cartesian product $A \times A$.
+In the \verb'ABC' language, we can represent a binary relation
+as a set of facts.
+For example, consider the set \verb'A = {a,b,c,d}'.
+Define a binary relation called \verb'rel' on \verb'A'
+in the \verb'ABC' language as follows,
+which you would enter as facts using the Java \verb'Rep' program:
+{\Large
 \begin{qv}
-public abstract class ACont {
-
-    public Val trampoline() {
-        ACont acont = this;
-        while(true)
-            try {
-                acont = acont.apply();
-            } catch (ContException e) {
-                return e.val;
-            }
-    }
-
-}
+rel(a,b).
+rel(a,d).
+rel(d,a).
+rel(c,c).
 \end{qv}
+}
+If you were to enter the query \verb'rel(X,Y)?',
+you would get a response back consisting
+of exactly the same four facts (in some order).\exx
+We use the term {\em reflexive}
+to describe a binary relation \verb'rel' on \verb'A' having the property
+that if \verb'x' is any element in the set \verb'A',
+then \verb'rel(x,x)' is true ({\em i.e.}, is a fact).
+You can see that the \verb'rel' binary relation
+is definitely not reflexive,
+but we can add a rule to \verb'rel' to make it reflexive,
+as follows:
+{\Large
+\begin{qv}
+rel(X,X) :- rel(X,_).
+rel(X,X) :- rel(_,X).
+\end{qv}
+}
+We call the resulting modification to the relation \verb'rel'
+its {\em reflexive closure}.
+Note that we are using the `\verb'_'' variable as a place holder
+that can match anything already in the \verb'rel' relation.
 \end{minipage}

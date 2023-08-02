@@ -2,21 +2,39 @@
 \slidenumber
 \LARGE
 {\bf Language V2} (continued)\exx
-\Large
+{\Large
 \VerbBox{\colorbox{light}}{\begin{tabular}{@{}ll}
 \verb'<exp>:IfExp' & \verb'::= IF <exp>testExp THEN <exp>trueExp ELSE <exp>falseExp' \\
   & \VerbBox{\fbox}{\verb'IfExp(Exp testExp, Exp trueExp, Exp falseExp)'}\\
 \end{tabular}}\exx
-\LARGE
-In the code for \verb'IfExp',
-observe that {\em only one}
-of the \verb'trueExp' or \verb'falseExp' expressions
-gets evaluated, not both.
-This is a semantic feature -- not a syntax feature --
-of the definition of \verb'eval' for this object.
-The term {\em special form} refers
-to semantic structures that look like expressions
-but that, when evaluated, don't evaluate all of their constituent parts.
-An \verb'if' expression is an example of a special form.\exx
-Some examples of \verb'if' expressions are on the next slide.
+}
+Here is the \verb'eval' code for the \verb'IfExp' class:
+{\Large
+\begin{qv}
+IfExp
+%%%
+    public Val eval(Env env) {
+        Val v = testExp.eval(env);
+        if (v.isTrue())
+            return trueExp.eval(env);
+        else
+            return falseExp.eval(env);
+    }
+%%%
+\end{qv}
+}
+The \verb'isTrue()' boolean method applies
+to any instance of \verb'Val'.
+It is a Java helper method used only
+to implement the semantics of the \verb'if...then...else' expression;
+it is {\em not} part of the source language.
+On the other hand, \verb'zero?' is a {\em primitive}
+in the source language (starting with Language V1),
+not a method in Java.
+The \verb'zero?' primitive applies only to integer values
+in the source language.
+We define the {\em semantics} of the \verb'zero?' primitive
+using the \verb'apply' Java method in the \verb'ZeropPrim' class.
+You may find this somewhat confusing.
 \end{minipage}
+\clearpage

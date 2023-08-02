@@ -1,24 +1,40 @@
 \begin{minipage}[t]{\sw}
 \slidenumber
 \LARGE
-{\bf Language NEED} (continued)\exx
-Implementing call-by-need is easy, starting
-from the call-by-name interpreter.
-The principal change is to have a \verb'Val' field named \verb'val'
-in the \verb'ThunkRef' class
-that is used to memoize the value of the body of the thunk.
-This field is initialized to \verb'null' when the thunk is created.
-When the thunk's \verb'deRef' method is invoked,
-it checks to see if the \verb'val' field has been memoized
-({\em i.e.}, is non-null).
-If so, the \verb'deRef' method simply returns the memoized value.
-Otherwise, it evaluates the body of the thunk,
-saves the value in the \verb'val' field (thereby memoizing it),
-and then returns that value;
-subsequent \verb'deRef' calls simply use the resulting memoized value.\exx
-{\em In the NEED language,
-the \verb'ThunkRef' constructor initializes
-the \verb'val' field to \verb'null',
-indicating that the thunk has not been memoized.
-This field is modified when the thunk's \verb'deRef' method is called.}
+{\bf Language NAME} (continued)\exx
+To change from call-by-reference to call-by-name,
+we need to change the default \verb'evalRef' behavior
+of the \verb'Exp' objects
+so that \verb'evalRef' returns a thunk
+for most expressions {\em except for}
+\verb'LitExp', \verb'ProcExp', and \verb'VarExp'.
+This means that we define \verb'evalRef'
+in the \verb'Exp' class with its default behavior as follows:
+{\Large
+\begin{qv}
+public Ref evalRef(Env env) {
+    return new ThunkRef(this, env);
+}
+\end{qv}
+}
+For a \verb'LitExp' and a \verb'ProcExp',
+a thunk is not necessary,
+so we return an ordinary \verb'ValRef' as in the \verb'REF' language:
+{\Large
+\begin{qv}
+public Ref evalRef(Env env) {
+    return new ValRef(eval(env));
+}
+\end{qv}
+}
+Finally, for a \verb'VarExp', we simply use reference semantics
+as in the \verb'REF' language:
+{\Large
+\begin{qv}
+public Ref evalRef(Env env) {
+    return env.applyEnvRef(var);
+}
+\end{qv}
+}
 \end{minipage}
+\clearpage

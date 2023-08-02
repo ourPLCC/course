@@ -2,27 +2,28 @@
 \slidenumber
 \LARGE
 {\bf Tokens} (continued)\exx
-The purpose of lexical analysis is to take program input
-as a stream of characters and to produce output consisting
-of a stream of tokens that conform
-to the {\em lexical specification} of the language.\exx
-By a {\em stream}, we mean an object that allows us
-to examine the current item in the stream,
-to advance to the next item in the stream,
-and to determine if there are no more items in the stream.
-This is similar to what we do with \verb'hasNext()' and \verb'next()'
-for Scanner objects in Java's \verb'java.util.Scanner' library,
-where the tokens are \verb'String's that do not contain whitespace.\exx
-By a {\em stream of characters}
-we mean a stream of items consisting of individual characters
-in a character set such as ASCII or UTF-8.
-By {\em stream of tokens} we mean
-a stream of items that are tokens defined by a token specification.
-Our lexical analysis process provides a \verb'hasNext()/next()' mechanism
-for accessing the stream of tokens,
-but it also provides a similar \verb'cur()/adv()' mechanism
-described in more detail below.\exx
-Lexical analysis is sometimes referred to as {\em scanning},
-and a {\em scanner} is a program that carries out this process.\exx
-
+Lexical analysis takes character stream input
+and produces token stream output.
+For example, if a language knows only about integers
+and the dot symbol `\verb'.'',
+an input stream consisting of characters
+\begin{qv}
+23.587
+\end{qv}
+might produce three tokens as output, with the following lexemes:
+\begin{qv}
+23
+.
+587
+\end{qv}
+while a language that knows about floats and doubles
+might produce just a single token, with the following lexeme:
+\begin{qv}
+23.587
+\end{qv}
+In what follows, we will often use the term
+``token'' (an abstraction) when it might be more appropriate
+to use the term ``lexeme'' (an instance of the abstraction). 
+The context should make our intent clear.
 \end{minipage}
+\clearpage

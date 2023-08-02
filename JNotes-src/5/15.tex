@@ -2,30 +2,27 @@
 \slidenumber
 \LARGE
 {\bf Language OBJ} (continued)
-\Large
+{\Large
 \begin{qv}
 public ObjectVal makeObject(Ref objRef) {
-    // create the parent object (recursively)
+    // create the parent object first (recursively)
     ObjectVal parent = superClass.makeObject(objRef);
-    // this object's environment extends the parent object's env
+
+    // this object's environment extends the parent's environment
     Env env = parent.objectEnv;
-    // add this class's static bindings (including myclass, etc.)
+
+    // add this class's static bindings
     env = env.extendEnvRef(staticBindings);
-    // bind 'super' to the parent object
-    // bind 'self' to the base object (deep)
-    // bind 'this' to this object (shallow)
-    // 'self' is unnecessary here, except that it speeds up lookups
+
+    // the fields come next
     Bindings fieldBindings = new Bindings();
     env = env.extendEnvRef(fieldBindings);
-    fieldBindings.add("super", new ValRef(parent)); // parent object
-    fieldBindings.add("self", objRef); // deep
-    fieldBindings.add("this", new ValRef(objectVal)); // shallow
-    // next bind all of this object's instance fields to nil
-    for (Token t : fields.varList) {
-        String s = t.toString();
-        fieldBindings.add(s, new ValRef(Val.nil));
-    }
-    env = env.extendEnvRef(fieldBindings);
+    // bind all of this object's instance fields to nil
+    fields.addFieldBindings(fieldBindings);
+
+    // bind all this object's methods as in letrec
+    env = methods.addMethodBindings(env);
 \end{qv}
+}
 ... continued on next slide ...
 \end{minipage}

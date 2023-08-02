@@ -1,7 +1,7 @@
 \begin{minipage}[t]{\sw}
 \slidenumber
 \LARGE
-{\bf PLCC -- Parsing}\exx
+{\bf PLCC -- Parsing (continued)}\exx
 Here's a simple example grammar:
 {\Large
 \begin{qv}
@@ -9,20 +9,24 @@ Here's a simple example grammar:
 <tree>:Interior ::= LPAREN <SYMBOL> <tree>left <tree>right RPAREN
 \end{qv}
 }
-The abstract \verb'Tree' class looks like this:
+The abstract \verb'Tree' class looks similar to this:
 {\Large
 \begin{qv}
 public abstract class Tree {
 
-    public Tree parse(Scan scn) {
-        Token t = scan.cur();
-        switch (t.val) {
-        case NUMBER:
-            return Leaf.parse(scn);
+    public static Tree parse(Scan scn$) {
+        Token t$ = scn$.cur();
+        Token.Match match$ = t$.match;
+        switch(match$) {
+        case NUM:
+            return Leaf.parse(scn$);
         case LPAREN:
-            return Interior.parse(scn);
+            return Interior.parse(scn$);
         default:
-            throw new RuntimeException("parse error");
+            throw new PLCCException(
+                "Parse error",
+                "Tree cannot begin with " + t$.errString()
+            );
         }
     }
 }

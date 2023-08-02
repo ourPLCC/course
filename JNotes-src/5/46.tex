@@ -1,27 +1,16 @@
 \begin{minipage}[t]{\sw}
 \slidenumber
 \LARGE
-{\bf Language PROP} (continued)\exx
-Here are the grammar rules for defining properties in a class defintion:\exx
-\emm\begin{tabular}{ll}
-\verb'<props>' & \verb'**= PROPERTY <VAR> EQUALS <prop>'\\
-    & \VerbBox{\fbox}{\verb'Props(List<Token> varList, List<Prop> propList)'}\\
-\verb'<prop>' & \verb'::= PROP <exp>getExp COLON <exp>setExp'\\
-    & \VerbBox{\fbox}{\verb'Prop(Exp getExp, Exp setExp)'}\\
-\end{tabular}\exx
-\LARGE
-When a variable bound to a property is evaluated,
-its \verb'getExp' code is executed
-using the environment captured where the property is defined,
-and the expressed value of the variable is the result
-of evaluating the \verb'getExp' expression.\exx
-When a variable bound to a property is assigned to
-in a \verb'set' expression,
-the RHS of the expression is evaluated in the current environment.
-The environment where the property is defined
-is then extended by binding
-the special symbol `\verb'$'' to the value of the RHS.
-The property's \verb'setExp' expression is then evaluated
-in this extended environment,
-and the resulting value is the value of the \verb'setExp' expression.\exx
+{\bf Language OBJ} (continued)\exx
+It turns out that exposing the environment of a procedure
+can be used to implement, with procedures alone,
+a simplified approach to objects and methods.
+See the file
+\begin{qv}
+OBJ/Prog/pobj
+\end{qv}
+for an example.
+On the other hand, exposing the environment of a procedure
+can result in modifying that environment,
+which can lead to unintended consequences.
 \end{minipage}

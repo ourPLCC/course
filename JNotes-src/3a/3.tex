@@ -11,12 +11,13 @@ for variable mutation:\exx
     & \VerbBox{\fbox}{\verb'SetExp(Token var, Exp exp)'}\\
 \end{tabular}\exx
 We can now write the following program in our newly extended
-defined language:
+source language:
 \begin{qv}
 let
   x = 42
 in
-  set x = add1(x)
+  { set x = add1(x) ; x }
 \end{qv}
 This evaluates to 43.\exx
 \end{minipage}
+\clearpage

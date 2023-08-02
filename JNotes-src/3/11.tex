@@ -2,13 +2,43 @@
 \slidenumber
 \LARGE
 {\bf Language V0} (continued)\exx
-We get more than a yes or no answer from our parser:
-{\em the \verb'plcc' parser returns a Java object
-that is an instance of the class determined by the grammar start symbol.}
-This object is the root of the {\em parse tree} of the program
-that captures all of the elements of the parsed program.\exx
-In our \verb'V0' grammar,
-the start symbol is \verb'<program>',
-so the root of the parse tree is an instance
-of the \verb'Program' class.\exx
+Assuming that we have created the \verb'grammar' file
+in a directory named \verb'V0',
+running the \verb'plccmk' tool creates a \verb'Java' subdirectory
+with source files named \verb'Program.java',
+\verb'LitExp.java', and so forth,
+that correspond to the abstract syntax classes shown in Slide 3.7.
+In the \verb'Java' directory,
+you can also see Java source files named \verb'Token.java',
+\verb'Scan.java',
+\verb'Parse.java',
+and \verb'Rep.java'.\exx
+The \verb'Rep' program
+repeatedly prompts you for input (with `\verb'-->''),
+parses the input,
+and prints the result:
+a \verb'String' representation of the expression
+with extra white\-space removed.
+If you want to run this program
+from the directory that has the \verb'grammar' file --
+\verb'V0' in this case --
+you can run it as follows:
+{\Large
+\begin{qv}
+$ java -cp Java Rep
+--> add1( + (2
+  , 3))
+add1(+(2,3))
+--> ...
+\end{qv}
+}
+As we discussed in Chapter 1,
+parsing is the process by which a sequence of tokens
+(a {\em program}) can be determined
+to belong to the language defined by the grammar.
+We showed examples of leftmost derivations
+and how the derivation process can detect whether or not
+the program is syntactically correct.
+
 \end{minipage}
+\clearpage

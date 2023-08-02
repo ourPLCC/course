@@ -1,21 +1,37 @@
 \begin{minipage}[t]{\sw}
 \slidenumber
 \LARGE
-{\bf Order of evaluation} (continued)\exx
-A similar situation exists
-when evaluating actual parameter expressions,
-as shown by this example, assuming call-by-value semantics.
+{\bf Language NEED} (continued)\exx
+You might have noticed in the \verb'code' file that an instance
+of the class \verb'ValRORef' is constructed
+by the \verb'evalRef' methods
+in the \verb'LitExp' and \verb'ProcExp' classes.
+This is a slight change from the \verb'NAME' language,
+where the instances were \verb'ValRef's.
+The \verb'RO' part stands for ``Read Only''.
+We do this because it doesn't make sense
+for a literal or procedure to be modified.\exx
+Consider, for example, the following code:
+{\Large
 \begin{qv}
 let
-  x = 3
-  p = proc(t,u) t
+  f = proc(x) set x=add1(x)
 in
-  .p(set x = add1(x), set x = add1(x))
+  .f(3)
 \end{qv}
-If the actual parameters are evaluated left-to-right --
-which would be the ``natural'' evaluation order,
-\verb't' would be bound to 4 and \verb'u' to 5,
-so the entire expression would evaluate to 4.
-If the evaluation order were right-to-left,
-the entire expression would evaluate to 5.\exx
+}
+One's intuition would be to think
+of the procedure application \verb'.f(3)' as saying:
+{\Large
+\begin{qv}
+set 3=add1(3)
+\end{qv}
+}
+But of course this doesn't make any sense.\exx
+We have already seen that the \verb'setRef' method
+in the \verb'ThunkRef' class throws an exception.
+What we are now doing is to have this same behavior
+for {\em any} actual parameter expression
+except for a variable (where call-by-reference is the default).
 \end{minipage}
+\clearpage

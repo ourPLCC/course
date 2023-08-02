@@ -2,24 +2,24 @@
 \slidenumber
 \LARGE
 {\bf Language NEED} (continued)\exx
-Here's another example illustrating the difference
-between call-by-reference and call-by-name/need.
-Examine the definition of \verb.seq., which seems
-to recurse infinitely but doesn't with call-by-name (why?).
-\begin{qv}
-define pair = proc(x,y)
-  proc(t) if t then y else x
-define first = proc(p) .p(0)
-define rest = proc(p) .p(1)
-define nth = proc(n,lst) % zero-based
-  if n then .nth(sub1(n),.rest(lst)) else .first(lst)
-define seq = proc(n) .pair(n,.seq(add1(n)))
-define natno = .seq(0)  %% all the natural numbers!!
-%% The above never terminates with call-by-reference.
-%% With call-by-name or call-by-need, we get:
-.first(natno)             % => 0 
-.first(.rest(natno))       % => 1
-.first(.rest(.rest(natno))) % => 2, and so forth ...
-.nth(100,natno)         % => 100
-\end{qv}
+Implementing call-by-need is easy, starting
+from the call-by-name interpreter.
+The principal change is to have a \verb'Val' field named \verb'val'
+in the \verb'ThunkRef' class
+that is used to memoize the value of the body of the thunk.
+This field is initialized to \verb'null' when the thunk is created.
+When the thunk's \verb'deRef' method is invoked,
+it checks to see if the \verb'val' field has been memoized
+({\em i.e.}, is non-null).
+If so, the \verb'deRef' method simply returns the memoized value.
+Otherwise, it evaluates the body of the thunk,
+saves the value in the \verb'val' field (thereby memoizing it),
+and then returns that value;
+subsequent \verb'deRef' calls simply use the resulting memoized value.\exx
+{\em In the NEED language,
+the \verb'ThunkRef' constructor initializes
+the \verb'val' field to \verb'null',
+indicating that the thunk has not been memoized.
+This field is modified when the thunk's \verb'deRef' method is called.}
 \end{minipage}
+\clearpage

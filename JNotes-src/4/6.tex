@@ -2,9 +2,11 @@
 \slidenumber
 \LARGE
 {\bf Types} (continued)\exx
-{\em Every expression has a type.
+{\bf Every expression has a type.
 The type of a variable (\verb'VarExp')
-is the type that is bound to the variable in the current environment.}\exx
+is the type that is bound to the variable
+in the current type environment.}
+All variables must have a type binding.\exx
 A {\em type error} is one of the following:
 \begin{itemize}
 \itemsep -0.5ex
@@ -16,11 +18,11 @@ A {\em type error} is one of the following:
 \item an attempt to apply a procedure to actual parameters whose types
       do not match the declared types
       of the corresponding formal parameters;
-\item an attempt to use a non-boolean as the test in an \verb'if' statement;
+\item an attempt to use a non-boolean as the test in an \verb'if' expression;
 \item an attempt to have expressions of different types
-      in the \verb'then' and \verb'else' parts of an \verb'if' statement;
+      in the \verb'then' and \verb'else' parts of an \verb'if' expression;
 \item an attempt to assign a value
-      to a variable with a \verb'set' statement
+      to a LHS variable in a \verb'set' expression
       where the type of the variable does not match the type
       of the RHS expression.
 \end{itemize}

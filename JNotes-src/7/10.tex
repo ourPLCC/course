@@ -1,26 +1,32 @@
 \begin{minipage}[t]{\sw}
 \slidenumber
 \LARGE
-{\bf Continuations} (continued)\exx
-In the \verb'Exp' class,
-we start things out by defining
-a simple top-level \verb'eval' method as follows:
-\Large
+{\bf Logic Programming Puzzles}\exx
+Notice that each river crossing will toggle the \verb'b' position.
+(The word {\em toggle} means switching from a \verb'0' to a \verb'1'
+or {\em vice versa}.)
+At most one of the other \verb'fgc' positions will also get toggled,
+depending on which passenger (or none) the farmer takes on the boat.\exx
+Some of the states do not satisfy the constraints.
+For example, \verb's011?' is not possible,
+since otherwise the boat (and the farmer) will be on the starting side
+and the fox and goose will be on the ending side.
+(the \verb'?' just means it doesn't matter).
+Here are all of the impossible states:
 \begin{qv}
-public Val eval(Env env) {
-    ACont acont = new EvalCont(this, env, new HaltCont());
-    Val val = acont.trampoline();
-    return val;
-}
+s011? -- fox and goose unsupervised
+s100? -- fox and goose unsupervised
+s0?11 -- goose and corn unsupervised
+s1?00 -- goose and corn unsupervised
 \end{qv}
-\LARGE
-As described on slide 7.7,
-The \verb'HaltCont' continuation created here has the default behavior
-of jumping off the trampoline
-by throwing a \verb'ContException',
-so once the top-level evaluation is complete
-and its value is passed to the \verb'apply' method
-in the \verb'HaltCont' object,
-the trampoline loop stops
-and this value is returned.
+Notice that the total number of states (possible and impossible) is 16
+($2^4$) and the number of impossible states is 6,
+so there are exactly 10 possible states to deal with.
+Five of these have the boat (and the farmer) on the start side.\exx
+A river {\em crossing} will consist of a transition
+from one state to another by toggling the \verb'b' position
+(the farmer takes the boat from one side to the other,
+possibly with a passenger)
+and toggling at most one of the \verb'fgc' positions
+(the passenger).
 \end{minipage}

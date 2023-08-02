@@ -1,33 +1,34 @@
 \begin{minipage}[t]{\sw}
 \slidenumber
 \LARGE
-{\bf Continuations} (continued)\exx
-An \verb'if' expression requires that the test expression be evaluated
-before evaluating exactly one
-of \verb'trueExp' or \verb'falseExp'.
-So after evaluating the test expression,
-an \verb'IfCont' continuation uses the result
-of the test (it's a \verb'VCont'!) to determine which
-of these two expressions must be evaluated next.
-The resulting value is then passed
-on to the original value continuation.
-The \verb'IfCont' class appears as follows:
-\Large
+{\bf Logic Programming Puzzles}\exx
+Continue in this way to define three and more consecutive crossings:
+{\Large
 \begin{qv}
-public class IfCont extends VCont {
-
-    public Exp trueExp;
-    public Exp falseExp;
-    public Env env;
-    public VCont vcont;
-
-    public IfCont(Exp trueExp, Exp falseExp, Env env, VCont vcont) {
-        this.trueExp = trueExp;
-        this.falseExp = falseExp;
-        this.env = env;
-        this.vcont = vcont;
-    }
-
-// continued on next slide ...
+c3(X,P1,P2,P3,Z) :- c2(X,P1,P2,Y), cross(Y,P3,Z).
+c4(X,P1,P2,P3,P4,Z) :- c3(X,P1,P2,P3,Y), cross(Y,P4,Z).
+c5(X,P1,P2,P3,P4,P5,Z) :- c4(X,P1,P2,P3,P4,Y), cross(Y,P5,Z).
+c6(X,P1,P2,P3,P4,P5,P6,Z) :- c5(X,P1,P2,P3,P4,P5,Y), cross(Y,P6,Z).
+c7(X,P1,P2,P3,P4,P5,P6,P7,Z) :- c6(X,P1,P2,P3,P4,P5,P6,Y),
+                                cross(Y,P7,Z).
 \end{qv}
+}
+We can determine (by brute force)
+that less than seven crossings (always an odd number)
+will not get everything to the ending side.
+(For example, the query
+\begin{qv}
+c5(s0000,P1,P2,P3,P4,P5,s1111)?
+\end{qv}
+gives no results.)
+However, \verb'c7' has two matches:
+\begin{qv}
+c7(s0000, g, x, f, g, c, x, g, s1111)
+c7(s0000, g, x, c, g, f, x, g, s1111)
+\end{qv}
+Reading the letters from left to right
+gives the list of passengers (\verb'g'=goose, \verb'x'=no passenger, etc.)
+of a solution path from the start to the end state.\exx
+Observe that both solution paths have the goose as a passenger three times,
+but the fox only once.
 \end{minipage}

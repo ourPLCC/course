@@ -2,13 +2,38 @@
 \slidenumber
 \LARGE
 {\bf Language SET} (continued)\exx
-For example, the following expression evaluates to 12:
+Let's look the three lines in the \verb'eval' method shown
+on the previous slide:
+{\Large
 \begin{qv}
-let
-  t = 3
-  u = 42
-  v = 0
-in
-  { set v = set u = set t = add1(t) ; +(t,+(u,v)) }
+        Val val = exp.eval(env); // the RHS expression value
+        Ref ref = env.applyEnvRef(var); // the LHS reference
+        return ref.setRef(val);  // sets the ref and returns val
 \end{qv}
+}
+Notice that the \verb'exp.eval(env)' expression
+returns a \verb'Val' object (a {\em value}),
+whereas the \verb'env.applyEnvRef(var)' expression
+returns a \verb'Ref' object (a {\em reference}).
+We use the terms {\bf value semantics} to refer
+to obtaining the value of something
+and {\bf reference semantics} to refer
+to obtaining a reference to something.
+The code above shows that {\em we use value semantics
+for the RHS of a \verb'set' expression
+and reference semantics for its LHS}.\exx
+Because we need to modify the value denoted by
+the LHS variable using \verb'setRef' (as shown above),
+we must use reference semantics for the LHS.
+Value semantics would have been useless here,
+since we regard ``values'' -- instances of the \verb'Val' class --
+as immutable: things that cannot be modified.\exx
+In a \verb'set' expression, the LHS variable must exist
+in the environment where the \verb'set' expression occurs,
+otherwise we could find no reference to modify.
+Contrast this to the LHS variables occurring in \verb'let' expressions.
+A \verb'let' expression creates {\em new} bindings
+to the LHS variables:
+we don't {\em modify} these variables, we {\em create} them!
 \end{minipage}
+\clearpage

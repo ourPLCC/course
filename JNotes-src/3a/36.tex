@@ -1,36 +1,36 @@
 \begin{minipage}[t]{\sw}
 \slidenumber
 \LARGE
-{\bf Language NEED} (continued)\exx
-The following example illustrates the difference
-between call-by-name and call-by-need:
-\begin{qv}
-let
-  x = 3
-  p = proc(t) {t;t;t}
-in
-  .p(set x=add1(x))
-\end{qv}
-\LARGE
-With call-by-name,
-when the procedure \verb'p' is applied,
-its formal parameter \verb't' is bound to a thunk
-containing the expression \VerbBox{\fbox}{\verb'set x=add1(x)'}.
-Each time the formal parameter \verb't' is evaluated
-in the body of the procedure \verb'p',
-its thunk is dereferenced, resulting
-in evaluation of the expression \VerbBox{\fbox}{\verb'set x=add1(x)'}.
-So since \verb't' is evaluated three times in the body of \verb'p',
-the expression \VerbBox{\fbox}{\verb'set x=add1(x)'} is evaluated three times,
-incrementing \verb'x' from 3 to 6.
-Consequently, the entire expression evaluates to 6.\exx
-With call-by-need,
-the first time \verb't' is evaluated in the body of \verb'p',
-its corresponding actual parameter expression \VerbBox{\fbox}{\verb'set x=add1(x)'}
-is evaluated,
-which has the side-effect of incrementing the value of \verb'x' to 4
-and evaluates to 4.
-However, the thunk memoizes the expressed value of 4,
-so any further references to \verb't' evaluate to 4.
-Consequently, the entire expression evaluates to 4.
+{\bf Language NEED}\exx
+The call-by-need parameter passing mechanism
+is the same as call-by-name,
+except that a thunk is called at most once,
+and its value is remembered ({\em memoized}).\exx
+Suppose a procedure with formal parameter \verb'x' is invoked
+with actual parameter \VerbBox{\fbox}{\verb'set z = add1(z)'},
+using call-by-need semantics.
+As with call-by-name, the formal parameter \verb'x' is bound to the thunk
+with \VerbBox{\fbox}{\verb'set z = add1(z)'} as its body,
+in an enclosing environment
+that we will assume has \verb'z' bound to (a reference to) the value 8.
+When \verb'x' is referenced in the body of calling procedure,
+its corresponding thunk is dereferenced,
+producing a result of 9 for \VerbBox{\fbox}{\verb'set z = add1(z)'}.
+The thunk now remembers ({\em memoizes}) the value 9,
+and any further references to the formal parameter \verb'x'
+in the body of the procedure will continue to evaluate to 9
+without making any further changes to the variable \verb'z'.\exx
+If call-by-name had been used in the above example,
+additional evaluations of \verb'x' in the body of the procedure would result
+in evaluating the body of the thunk for each such evaluation,
+further modifying \verb'z'
+and yielding values 10, 11, 12, and so forth.\exx
+In both call-by-need and call-by-name
+(and unlike call-by-reference),
+if the formal parameter is never referenced
+in the body of the procedure, the thunk is never evaluated.
+Compared to call-by-name,
+call-by-need reduces the overhead of repeatedly evaluating
+a thunk when evaluating the corresponding formal parameter.
 \end{minipage}
+\clearpage

@@ -1,33 +1,35 @@
 \begin{minipage}[t]{\sw}
 \slidenumber
 \LARGE
-{\bf Language PROP} (continued)\exx
-So far, a property is only defined in the conext of a class definition,
-where it plays a role in object instantiantion.
-It turns out that the behavior of properties could be useful even outside
-of the context of an object,
-especially to manage access to variables defined in a \verb'let' expression.
-To make this explicit, we create a \verb'letprop' construct
-that has the following concrete syntax and abstract class structure:\exx
+{\bf Language OBJ} (continued)
 \large
-\emm\begin{tabular}{ll}
-\verb'<exp>:LetpropExp' & \verb'::= LETPROP <letpropDecls> IN <exp>'\\
-    & \VerbBox{\fbox}{\verb'LetpropExp(LetpropDecls letpropDecls, Exp exp)'}\\
-\verb'<letpropDecls>' & \verb'**= <VAR> EQUALS <prop>'\\
-    & \VerbBox{\fbox}{\verb'LetpropDecls(List<Token> varList, List<Prop> propList)'}\\
-\end{tabular}\exx
-\LARGE
-Consider this (somewhat strange) example:
-\Large
 \begin{qv}
+define a = class
+    field i field j
+    method setup = proc() {set i=15; set j=20; 50}
+    method f = proc() .<self>g()
+    method g = proc() +(i,j)
+  end
+define b = class extends a
+    field j field k
+    method setup =
+      proc() {set j=100; set k=200; .<super>setup(); .<self>h()}
+    method g = proc() [i,j,k]
+    method h = proc() .<super>g()
+  end
+define c = class extends b
+    method g = proc() .<super>h()
+    method h = proc() +(j,k)
+  end
 let
-  x = 3 
-in
-  letprop
-    x = prop x : set x = 5
-  in
-    {set x = 42 ; x} % => 5
+   p = proc(o)
+     let
+       u = .<o>setup()
+     in
+       [u, .<o>g(), .<o>f()]
+in 
+  [.p(new a), .p(new b), .p(new c)]
+
+% returns [[50,35,35],[35,[15,100,200],[15,100,200]],[300,35,35]]
 \end{qv}
-\LARGE
-This expression evaluates to 5.\exx
 \end{minipage}

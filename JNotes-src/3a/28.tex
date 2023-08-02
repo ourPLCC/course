@@ -2,18 +2,30 @@
 \slidenumber
 \LARGE
 {\bf Language NAME} (continued)\exx
-A thunk amounts to a parameterless procedure
-that consists of an expression and an environment
-in which the expression is to be evaluated.
-It looks just like a closure,
-except that there is no formal parameter list.\exx
-\emm\Large\VerbBox{\fbox}{\verb'ThunkRef(Exp exp, Env env)'}\exx
-\LARGE
-A \verb'ThunkRef' is a \verb'Ref', since we want
-to de-reference (\verb'deRef') it
-whenever we refer to the corresponding actual parameter.
-A formal parameter is bound to a thunk reference
-only during procedure application.
-Thunks will otherwise not play a role in expression semantics.
+In the presence of side-effects,
+call-by-reference and call-by-name
+may give different results.
+Consider evaluating the following expression in Language REF:
+{\Large
+\begin{qv}
+let
+  x = 1
+  f = proc(t,u)
+        { set t = add1(t) ; u }
+in
+  .f(x, +(x,5))
+\end{qv}
+}
+With call-by-reference,
+when we evaluate the application \verb'.f(x, +(x,5))',
+the formal parameter \verb't' in the definition of \verb'f' denotes
+the same reference that \verb'x' denotes (initially containing 1),
+whereas the formal parameter \verb'u' denotes a new reference
+to the value 6 (using value semantics for the \verb'+(x,5)' expression).
+Modifying \verb't' in the body of \verb'f' changes
+the expressed value of \verb'x'
+(because \verb't' and \verb'x' denote the same reference)
+but does not change the expressed value of \verb'u'.
+Thus this expression evaluates to 6.
 \end{minipage}
-
+\clearpage

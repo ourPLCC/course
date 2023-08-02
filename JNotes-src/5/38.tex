@@ -2,16 +2,30 @@
 \slidenumber
 \LARGE
 {\bf Language OBJ} (continued)\exx
-In the \verb'OBJ' language,
-the \verb'send' operator provides syntactic sugar
-that is specific to method calls on a object.
-Specifically, for an object \verb'o' and method \verb'm',
-the following expressions are equivalent:
+The \verb'OBJ' language has three additional expressions,
+with the following grammar rules:\exx
+\emm\begin{tabular}{ll}
+\verb'<exp>:DisplayExp' & \verb'::= DISPLAY <exp>'\\
+    & \VerbBox{\fbox}{\verb'DisplayExp(Exp exp)'}\\
+\verb'<exp>:Display1Exp' & \verb'::= DISPLAY1 <exp>'\\
+    & \VerbBox{\fbox}{\verb'Display1Exp(Exp exp)'}\\
+\verb'<exp>:NewlineExp' & \verb'::= NEWLINE' \\
+    & \VerbBox{\fbox}{\verb'NewlineExp()'}\\
+\end{tabular}\exx
+The \verb'DISPLAY', \verb'DISPLAY1', and \verb'NEWLINE' tokens are defined by
 \begin{qv}
-send o m(...)
-.<o>m(...)
+DISPLAY 'display'
+DISPLAY1 'display#'
+NEWLINE 'newline'
 \end{qv}
-You can think of a \verb'send' expression such as above
-as sending a message \verb'm' to the object \verb'o'.
-Some examples appear on the following slide.
+Evaluating a \verb'DisplayExp' expression
+results in evaluation of its \verb'<exp>' part
+in the current environment;
+this value's \verb'toString()' representation
+is then displayed on standard output,
+and the value is returned as the value of the \verb'DisplayExp' expression.
+\verb'Display1Exp' is like \verb'DisplayExp'
+except that the displayed value is followed by a single space.
+The value of a \verb'NewlineExp' expression is \verb'nil',
+and a newline is displayed on standard output.
 \end{minipage}

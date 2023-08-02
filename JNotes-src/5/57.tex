@@ -1,0 +1,33 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Language PROP} (continued)\exx
+So far, a property is only defined in the conext of a class definition,
+where it plays a role in object instantiation.
+It turns out that the behavior of properties could be useful even outside
+of the context of an object,
+especially to manage access to variables defined in a \verb'let' expression.
+To make this explicit, we create a \verb'letprop' construct
+that has the following concrete syntax and abstract class structure:\exx
+\large
+\emm\begin{tabular}{ll}
+\verb'<exp>:LetpropExp' & \verb'::= LETPROP <letpropDecls> IN <exp>'\\
+    & \VerbBox{\fbox}{\verb'LetpropExp(LetpropDecls letpropDecls, Exp exp)'}\\
+\verb'<letpropDecls>' & \verb'**= <VAR> EQUALS <prop>'\\
+    & \VerbBox{\fbox}{\verb'LetpropDecls(List<Token> varList, List<Prop> propList)'}\\
+\end{tabular}\exx
+\LARGE
+Consider this (somewhat strange) example:
+\Large
+\begin{qv}
+let
+  x = 3 
+in
+  letprop
+    x = prop x : set x = 5
+  in
+    {set x = 42 ; x} % => 5
+\end{qv}
+\LARGE
+This expression evaluates to 5.\exx
+\end{minipage}

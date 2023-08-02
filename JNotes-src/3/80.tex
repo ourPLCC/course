@@ -2,35 +2,37 @@
 \slidenumber
 \LARGE
 {\bf Language V4} (continued)\exx
-Finally, language \verb'V4' includes
-the ability to evaluate a sequence of expressions,
-returning the value of the last expression.
-The component expressions in a sequence expression are always evaluated
-left-to-right.
-Sequence expressions do not have any particular usefulness now
-because our language is not {\em side-effecting},
-but they will turn out to be useful in later languages
-that do support side-effects.\exx
-{\Large
-\emm\begin{tabular}{@{}ll}
-\verb'<exp>:SeqExp' & \verb'::= LBRACE <exp> <seqExps> RBRACE'\\
-  & \VerbBox{\fbox}{\verb'SeqExp(Exp exp, SeqExps seqExps)'}\\
-\verb'<seqExps>' & \verb'**= SEMI <exp>'\\
-  & \VerbBox{\fbox}{\verb'SeqExps(List<Exp> expList)'}\\
-\end{tabular}\exx
-}
-The semantics of evaluating a \verb'SeqExp' are given here:
-{\Large
+Though Language V4 does not support direct recursion,
+its support of procedures as first-class entities --
+that is, they are values that are treated
+the same way as other values,
+so they can be passed as parameters and returned as values --
+is as powerful as direct recursion.
+Here is another example that recursively computes factorials
+using an ``accumulator'' and tail recursion
+(we will return to this topic later):
+\Large
 \begin{qv}
-SeqExp
-%%%
-    public Val eval(env) {
-        Val v = exp.eval(env);
-        for (Exp e : seqExps.expList)
-            v = e.eval(env);
-        return v;
-    }
-%%%
+let
+  fact = proc(x)
+    let
+      factx = proc(f, x, acc)
+        if zero?(x)
+        then acc
+        else .f(f, sub1(x), *(x, acc))
+    in
+      .factx(factx, x, 1)
+  in
+    .fact(5)
 \end{qv}
-}
+\LARGE
+Observe that the identifier \verb'f' that appears
+in the \verb'proc(f, x, acc)' definition
+is a {\em formal parameter} name
+that binds all occurrences of \verb'f'
+that appear in the procedure body.
+You may find it instructive to display all of the environments
+that get created during the evaluation of this expression.
+(Replace `5' by `2' to make things easier.)
 \end{minipage}
+\clearpage

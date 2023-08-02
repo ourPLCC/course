@@ -1,29 +1,41 @@
 \begin{minipage}[t]{\sw}
 \slidenumber
 \LARGE
-{\bf Language PROP} (continued)\exx
-The \verb'C#' language championed by Microsoft
-solves these problems using the notion of a {\em property}.
-A property acts like a field
-but it provides built-in getter and setter code.
-When the field is {\em accesssed}, the getter code is executed;
-when the field is {\em assigned to} with a \verb'set' statement,
-the setter code is executed.\exx
-Here is the same class as described on the previous slide,
-with a property instead of a getter and setter:
+{\bf Language OBJ} (continued)\exx
+%\Large
+%\emm\begin{tabular}{ll}
+%\verb'<mangle>:Mangle' & \verb'**= RANGLE <exp> LPAREN <rands> RPAREN' \\
+%    & \VerbBox{\fbox}{\verb'Mangle(List<Exp> expList, List<Rands> randsList)'}\\
+%\end{tabular}\exx
+\LARGE
+Here is the code for \verb'eval(Val v, Env env)' in the \verb'Mangle' class:
 \Large
 \begin{qv}
-define c = 
-  class
-    field x
-    property x = prop x:set x=$
-  end
-define cc = new c
-<cc>set x = 5 % ok - sets the field value to 5
-<cc>x         % returns 5
-\end{qv} %%$
+public Val eval(Val v, Env env) {
+    Iterator<Exp> expIter = expList.iterator();
+    Iterator<Rands> randsIter = randsList.iterator();
+    while (expIter.hasNext()) {
+        // expIter.next() ProcExp to apply
+        // v.env() is the environment in which to build the ProcVal
+        Val p = expIter.next().eval(v.env());
+        // evaluate this method's rands in env
+        List<Val> valList = randsIter.next().evalRands(env);
+        v = p.apply(valList);
+    }
+    return v;
+}
+\end{qv}
 \LARGE
-The property \verb'x' shadows the field \verb'x'.
-This means that the field \verb'x' cannot be accessed directly
-except through the property.\exx
+Each \verb'Exp' is evaluated in the environment defined
+by the value \verb'v' (which must, perforce, be a class or object),
+and this must evaluate to a \verb'ProcVal' (named \verb'p' in this code).
+The \verb'valList' arguments to \verb'p' are 
+evaluated in the outside environment \verb'env'
+({\em not} in the environment defined by \verb'v')
+from the corresponding \verb'Rands' object.
+The procedure \verb'p' is then applied to these arguments,
+and the resulting application becomes the new \verb'v'.
+This is repeated until all of the \verb'Mangle' applications are performed.
+The final value \verb'v' is returned
+as the result of the \verb'EenvExp' expression.
 \end{minipage}

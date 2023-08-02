@@ -1,24 +1,30 @@
 \begin{minipage}[t]{\sw}
 \slidenumber
 \LARGE
-{\bf Static Properties of Variables} (continued)\\[2ex]
-{\bf Lexical and Grammar specification for the Lambda Calculus:}
-\begin{verbatim}
-# Lexical specification
-skip WHITESPACE '\s+'
-LPAREN '\('
-RPAREN '\)'
-LBRACE '\{'
-RBRACE '\}'
-DOT '\.'
-PROC 'proc'
-SYM '\w+'
-%
-# Grammar
-<exp>:Var  ::= <SYM>
-<exp>:Proc ::= PROC LPAREN <SYM> RPAREN LBRACE <exp> RBRACE
-<exp>:App  ::= DOT <exp>rator LPAREN <exp>rand RPAREN
-%
-\end{verbatim}
+{\bf Static Properties of Variables} (continued)\exx
+Determing the value of an expression at run-time is at the heart
+of executing a program, particularly so in expression-based languages.
+Since most expressions involve variables,
+evaluating an expression requires determining the values
+of its constituent variables --
+in other words, finding the values bound to these variables.\exx
+At run-time, how can you find the value bound to a variable?
+There are two basic approaches:
+\begin{itemize}
+\item
+if the location of the value bound to a variable can be determined
+by {\em where} that variable appears {\em in the text of a program},
+we call it {\em static binding}.
+\item
+if the location of the value bound to a varible can only be determined
+by {\em when} the variable is accessed {\em during program execution},
+we call it {\em dynamic binding}.
+\end{itemize}
+Almost all programming languages commonly in use today
+use static bindings,
+principally because it is easier
+to reason (or prove things) about programs that use static bindings.
+You will have the opportunity
+to explore dynamic binding in your homework.\exx
 \end{minipage}
 \clearpage

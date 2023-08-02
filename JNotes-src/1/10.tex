@@ -15,21 +15,25 @@ as the sentential form:\exx
     \underline{\bf unmatched sentence} &\
     \underline{\bf algorithm step taken}\\ 
 \multicolumn{1}{l}{\tt {\bf <lon>}} & {\tt ( 14 6 )} & 1 \\ 
-{\tt {\bf LPAREN} <nums> RPAREN} & {\tt ( 14 6 )} & 3b \\
-{\tt ( {\bf <nums>} RPAREN} & {\tt 14 6 )} & 3a \\
-{\tt ( {\bf NUM} <nums> RPAREN} & {\tt 14 6 )} & 3b \\
-{\tt ( 14 {\bf <nums>} RPAREN} & {\tt 6 )} & 3a \\
-{\tt ( 14 {\bf NUM} <nums> RPAREN} & {\tt 6 )} & 3b \\
-{\tt ( 14 6 {\bf <nums>} RPAREN} & {\tt )} & 3a \\
-{\tt ( 14 6 {\bf RPAREN}} & {\tt )} & 3b \\
-{\tt ( 14 6 )} &  & 3a \\
+{\tt \underline{{\bf LPAREN} <nums> RPAREN}} & {\tt ( 14 6 )} & 3b \\
+{\tt \underline{(} {\bf <nums>} RPAREN} & {\tt 14 6 )} & 3a \\
+{\tt ( \underline{{\bf NUM} <nums>} RPAREN} & {\tt 14 6 )} & 3b \\
+{\tt ( \underline{14} {\bf <nums>} RPAREN} & {\tt 6 )} & 3a \\
+{\tt ( 14 \underline{{\bf NUM} <nums>} RPAREN} & {\tt 6 )} & 3b \\
+{\tt ( 14 \underline{6} {\bf <nums>} RPAREN} & {\tt )} & 3a \\
+{\tt ( 14 6 \underline{ } {\bf RPAREN}} & {\tt )} & 3b ({\bf <nums>} $\Rightarrow$ empty) \\
+{\tt ( 14 6 \underline{)}} &  & 3a \\
 {\em success!} & & 4 \\
 \end{tabular}\exx
 In the above derivation,
 the leftmost unmatched token name or nonterminal
-is shown in {\tt\bf boldface}.\exx
+is shown in {\tt\bf boldface}.
+The underlined parts are the matched lexemes
+for the unmatched token name as described in rule 3a,
+or the chosen substitutions
+for the LHS nonterminals as described in rule 3b.\exx
 A derivation ends successfully
 when there are no token names or nonterminals
-in the sentential form and no unmatched tokens. 
+in the sentential form and no unmatched lexemes. 
 \end{minipage}
 \clearpage

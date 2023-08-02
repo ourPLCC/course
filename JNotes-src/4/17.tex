@@ -29,7 +29,7 @@ checking pairwise for type equality.
 \begin{qv}
 public static void checkEqualTypes(List<Type> t1List, List<Type> t2List) {
     if (t1List.size() != t2List.size())
-        throw new RuntimeException("argument number mismatch");
+        throw new PLCCException("Type error", "argument number mismatch");
     Iterator<Type> t1i = t1List.iterator();
     Iterator<Type> t2i = t2List.iterator();
     while (t1i.hasNext()) {

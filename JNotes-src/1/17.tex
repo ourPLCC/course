@@ -2,29 +2,19 @@
 \slidenumber
 \LARGE
 {\bf Parsers} (continued)\exx
-\emm\LightBox{\MYlon}\exx
-From each BNF grammar rule for a language,
-PLCC generates Java class.
-A rule such as
-\begin{qv}
-<lon> ::= LPAREN <nums> RPAREN
-\end{qv}
-generates the Java class \verb'Lon'.
-PLCC gets the name \verb'Lon'
-from the LHS nonterminal \verb'<lon>' of this grammar rule
-by converting the first letter of this nonterminal name to uppercase.\exx
-PLCC determines the {\em fields}
-of a Java class generated from a BNF grammar rule
-from the RHS terms of the rule --
-specifically, the terms that are enclosed in angle brackets \verb'<...>'.
-The RHS of the \verb'lon' grammar rule given above
-has one term in angle brackets:
-\verb'<nums>'.
-The corresponding field name in the \verb'Lon' class
-is \verb'nums' (Java field names always begin with a lowercase letter).
-The {\em type} of this field is \verb'Nums'.\exx
-Since \verb'<nums>' appears as the LHS nonterminal
-on the second and third grammar rules for this language,
-PLCC generates a corresponding \verb'Nums' class.
+The following diagram shows how the output of a scanner
+(a program that implements lexical analysis)
+becomes input to a parser
+(a program that implements syntax analysis).
+The output of a parser is a {\em parse tree} --
+which we describe in more detail later.\exx
+\centerline{\psfig{figure=parsing.eps,width=8in}}\exx
+{\bf For a particular language whose PLCC \verb'grammar' file
+specifies the language tokens and BNF grammar,
+the \verb'plccmk' program generates and compiles Java source files
+that implement a scanner and parser for the language
+directly from the \verb'grammar' file.}\exx
+We start with the list-of-numbers (\verb'LON') example
+to show how this works.
 \end{minipage}
 \clearpage

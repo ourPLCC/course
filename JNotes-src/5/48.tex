@@ -1,17 +1,35 @@
 \begin{minipage}[t]{\sw}
 \slidenumber
 \LARGE
-{\bf Language PROP} (continued)\exx
-We implement properties in the same way we implement call-by-name:
-a property evalutes to a thunk-like object
-called a \verb'PropRef' (which extends the \verb'Ref' class);
-this object captures the environment in which the property is defined,
-along with the property's \verb'get' and \verb'set' expressions.\exx
-The expressed value of a variable bound to a property
-is the value obtained by evaluating the property's \verb'get' expression
-in the captured environment by calling the thunk's \verb'deRef' method.\exx
-Similarly, when assigning a value to a variable bound to a property,
-the thunk's \verb'setRef' method is called,
-with the assigned value bound to the special variable `\verb'$''
-and returning the value of the property's \verb'set' expression.\exx
+{\bf Language OBJ} (continued)
+\large
+\begin{qv}
+define shape =
+  class
+    method area = proc() 0 % shapeless
+  end
+
+define rectangle =
+  class extends shape
+    field len % length
+    field wid % width
+    method init = proc(len,wid) {set <this>len=len ; set <this>wid=wid ; self}
+    method area = proc() *(len,wid)
+  end
+
+define circle =
+  class extends shape
+    field rad % radius
+    method init = proc(rad) {set <this>rad=rad ; self}
+    method area = proc() *(3,*(rad,rad)) % a bit of an underestimate
+  end
+
+define r = .<new rectangle>init(4,5) % a rectangle with length 4 and width 5
+define c = .<new circle>init(2)      % a circle with radius 2
+define s = new shape
+
+.<r>area() % => 20
+.<c>area() % => 12
+.<s>area() % => 0
+\end{qv}
 \end{minipage}

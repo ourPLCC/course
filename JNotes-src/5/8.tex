@@ -9,25 +9,27 @@ to (a reference to) this class itself,
 and another binds the identifier \verb'superclass'
 to (a reference to) the superclass of this class.\exx
 If the class expression does not have an \verb'extends' part, 
-its superclass defaults to an unnamed ``parentless'' class
-(an \verb'EnvClass' object in the Java implementation)
-whose static environment is is the top-level program environment --
+its superclass defaults to the unnamed ``parentless'' class
+(a static \verb'EnvClass' Java object)
+whose static environment is the top-level program environment --
 so top-level variables that have been \verb'define'd are visible.
 In this way, all of the RHS expressions in the \verb'static' definitions
-of such a class have access to the other static bindings in the class
-and to the top-level bindings.\exx
+of such a class have access
+to the other static bindings in the class itself
+as well as to the top-level bindings.\exx
 A class expresion that specifies an explicit superclass
+(using \verb'extends')
 has an environment that extends
 the static environment of that superclass,
 and -- going up the superclass chain --
 has access to the bindings in all
 of the superclass static environments
-and the top-level bindings.\exx
+as well as to the top-level bindings.\exx
 If a class expression has a static definition for a variable
 that also appears as a static variable in a superclass,
 that definition shadows the superclass variable.
 We disallow duplicate LHS variable names
-in a given class expression's static definitions,
-including redefinitions for \verb'myclass' or \verb'superclass',
-although our implementation does not check for this.
+in a given class expression's static definitions.
+We also disallow static redefinitions
+for \verb'myclass' or \verb'superclass'.
 \end{minipage}

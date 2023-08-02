@@ -1,30 +1,30 @@
 \begin{minipage}[t]{\sw}
 \slidenumber
 \LARGE
-{\bf Language V5}\exx
-We normally prefer to use direct recursion instead
-of using the contrived (but workable) tricks on slides 3.55 and 3.79.
-For example, we would like to write
-\Large
+{\bf Language V4} (continued)\exx
+Observe that we evaluate every expression in the list
+but only return the last value.
 \begin{qv}
-let
-  fact = proc(x) if zero?(x) then 1 else *(x,.fact(sub1(x)))
-in
-  .fact(5)
+{1;3;5}
+  % => 5
+
+{42}
+  % => 42
 \end{qv}
-\LARGE
-But this does not work!  Why??\exx
-Remember that in a \verb'let',
-the RHS expressions
-(the expressions to the right of the `\verb'='' tokens)
-are all evaluated
-in the environment that encloses the \verb'let';
-only after all the RHS expressions have been evaluated
-do we bind each of the LHS symbols to their RHS values.\exx
-In the definition of the \verb'proc' above,
-the \verb'proc' body refers to the identifier \verb'fact',
-but this identifier is not bound to a value
-in the enclosing environment.
-Thus an attempt to apply the \verb'proc'
-fails because of an unbound identifier.
+We can use the sequence construct to enclose a single expression
+that might otherwise look too unwieldy.
+Here's an example:
+\begin{qv}
+.{proc(t,u) +(t,u)} (3,4)
+\end{qv}
+The braces in this expression are not required,
+but they may help to visualize the extent
+of the \verb'proc' definition.
+Don't get into the habit
+of doing this on a regular basis, however:
+throwing in extra braces can result
+in an expression that is unnecessarily {\em noisy}
+and that is actually more difficult to read
+than one without.
 \end{minipage}
+\clearpage

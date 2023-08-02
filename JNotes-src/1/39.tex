@@ -2,27 +2,39 @@
 \slidenumber
 \LARGE
 {\bf Parsers} (continued)\exx
-\emm\LightBox{\MYlonGrammarKleene}\exx
-For example, if we want to add a \verb'toString()' method
-to the \verb'Lon.java' source file, we put the following lines
-into the \verb'grammar' file in the section {\em following the BNF section}.
-This section is separated from the BNF section
-by a line containing a single `\verb'%''.
+As a result, the following grammar is acceptable to PLCC:\\
+{\Large
+\emm\begin{tabular}{ll}
+\verb'<tree>:Leaf' & \verb'::= <NUM>'\\
+    & \VerbBox{\fbox}{\verb'Leaf(Token num)'}\\
+\verb'<tree>:Interior' & \verb'::= LPAREN <SYMBOL> <tree>left <tree>right RPAREN'\\
+    & \VerbBox{\fbox}{\verb'Interior(Token symbol, Tree left, Tree right)'}\\
+\end{tabular}\exx
+}
+When processed by PLCC, we get the following interaction
+using the \verb'Rep' parser loop:
+{\Large
 \begin{qv}
-Lon
-%%%
-    public String toString() {
-        ...
-    }
-%%%
+$ java -cp Java Rep
+--> 3
+Leaf@15db9742
+--> (foo 5 8) 
+Interior@6d06d69c
+--> (foo (bar 13 23) 8)
+Interior@7852e922
+--> (goo blah 99) % blah is the culprit here
+%%% Parse error: Tree cannot begin with SYMBOL
+--> 
 \end{qv}
-The \verb'Lon' line tells PLCC that we are adding a method
-to the \verb'Lon.java' file,
-and the lines containing \verb'%%%'
-bracket the Java code to be added.
-This technique can be used to add Java code
-to {\em any} PLCC-generated Java file arising from the BNF grammar lines.
-The added code appears at the end of the class definition
-in the Java code generated automatically by PLCC for the class.\exx
+}
+Examine the Java code for the \verb'Interior' class.
+You will see the following fields:
+{\Large
+\begin{qv}
+public Token symbol;
+public Tree left;
+public Tree right;
+\end{qv}
+}
 \end{minipage}
 \clearpage

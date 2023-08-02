@@ -1,20 +1,41 @@
 \begin{minipage}[t]{\sw}
 \slidenumber
 \LARGE
-{\bf Language ARRAY}\exx
-Here's a recursive version of \verb'array2list':
+{\bf Language INFIX} (continued)\exx
+We use semicolons in the syntax of a block to terminate
+each of the block's variable definitions (using \verb'def').
+As shown in Slide 6.9, 
+a \verb'block' is also used to define the body of a procedure.
+This means that the body of a procedure can define its own
+local variables using \verb'def'.
+Since the variable bindings in a block create an extended environment
+using the \verb'letrec' strategy,
+the RHS expressions in a \verb'def'
+can refer to variables defined in the same block,
+and procedures can be self-recursive.\exx
+As noted above, procedure applications in \verb'INIFX' are expressed
+using traditional mathematical notation.
+For example, 
+the following program evaluates to 120:
+{\Large
 \begin{qv}
-% turn an array into a list
-define array2list = proc(a)
-  let
-    alen = len(a)
-  in
-    letrec
-      loop = proc(i)
-        if <?(i, alen)
-        then addFirst(\a[i], .loop(add1(i)))
-        else []
-    in
-      .loop(0)
+{ def f = proc(x) {if x then x*f(x-1) else one endif};
+  def one = 1;
+  f(5)
+} ;
 \end{qv}
+}
+Observe that body of the the procedure \verb'f' can refer
+to itself recursively,
+and can even refer to the free variable \verb'one'
+before it is defined in the same block,
+since the semantics of a \verb'block'
+behave as in \verb'letrec'.\exx
+Also observe that function calls can be nested, as shown in this example
+(which evaluates to 19):
+{\Large
+\begin{qv}
+proc(x) {proc(y) {3*x+y}}(4)(7);
+\end{qv}
+}
 \end{minipage}

@@ -1,7 +1,7 @@
 \begin{minipage}[t]{\sw}
 \slidenumber
 \LARGE
-{\bf PLCC -- Parsing}\exx
+{\bf PLCC -- Parsing (continued)}\exx
 PLCC generates the \verb'Interior' class as follows:
 {\Large
 \begin{qv}
@@ -18,12 +18,12 @@ public class Interior extends Tree {
         this.right = right;
     }
 
-    public static Interior parse(Scan scn) {
-        scn.match(Token.Val.LPAREN);
-        Token symbol = scn.match(Token.Val.SYMBOL);
-        Tree left = Tree.parse(scn);
-        Tree right = Tree.parse(scn);
-        scn.match(Token.Val.RPAREN);
+    public static Interior parse(Scan scn$) {
+        scn$.match(Token.Match.LPAREN);
+        Token symbol = scn$.match(Token.Match.SYMBOL);
+        Tree left = Tree.parse(scn$);
+        Tree right = Tree.parse(scn$);
+        scn$.match(Token.Match.RPAREN);
         return new Interior(symbol, left, right);
     }
 }

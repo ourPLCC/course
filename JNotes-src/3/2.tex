@@ -3,9 +3,8 @@
 \LARGE
 {\bf Environment-Passing Interpreters} (continued)\exx
 \Large
-Most programming language grammars
-have a special syntactic category (a nonterminal)
-representing an {\em expression}.
+Most programming languages
+have grammar rules defining an {\em expression}.
 In Java, for example, an expression typically involves values
 (like variables, integers, and the results of method calls) and operators
 (like addition and multiplication).
@@ -32,12 +31,14 @@ is the object itself.
 This may seem like a subtle distinction,
 but you will see its importance later.\exx
 In summary, for a symbol,
-its expressed value is what gets displayed
-when you print it (its \verb'toString' representation),
-and its denoted value is what gets stored internally
-in the symbol's binding.
+its expressed value is what gets displayed when you print it
+(using its \verb'toString' representation, for example),
+and its denoted value is the value bound
+to the symbol in its environment.
 In our early languages, the denoted values and expressed values
 will be the same.
-In our later languages, we will see why we need to separate denoted values
+In our later languages,
+we will see why we need to separate denoted values
 from expressed values to implement language features such as mutation.
 \end{minipage}
+\clearpage

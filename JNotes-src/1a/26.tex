@@ -1,0 +1,41 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf PLCC -- Flags}\exx
+PLCC has several internal name/value bindings that control its behavior.
+For example, the value of \verb'LL1' defaults to \verb'True';
+if it is changed to \verb'False',
+then PLCC will not check the grammar for being LL1.
+Here are some of the default bindings:
+{\Large
+\begin{qv}
+name      value  meaning
+----      -----  -------
+Token     True   (boolean) create a Token.java file
+debug     0      (integer) larger values give more verbose output
+destdir   'Java' (string)  Java source file destination directory
+pattern   True   (boolean) create a scanner that uses re. patterns
+LL1       True   (boolean) check for LL(1)
+parser    True   (boolean) create a parser
+semantics True   (boolean) create semantics routines
+nowrite   False  (boolean) when True, produce *no* file output
+PP        ''     (string)  cmd to filter (preprocess) generated files
+\end{qv}
+}
+Names bound to integer or string values can be changed
+using command line arguments:
+{\Large
+\begin{qv}
+... --debug=3 --destdir=JJJ ...
+\end{qv}
+}
+or at the top of the specification file
+on lines beginning with `\verb'!'':
+{\Large
+\begin{qv}
+!debug=3
+!destdir=JJJ
+\end{qv}
+}
+\end{minipage}
+\clearpage

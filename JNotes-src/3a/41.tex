@@ -1,28 +1,26 @@
 \begin{minipage}[t]{\sw}
 \slidenumber
 \LARGE
-{\bf Order of evaluation} (continued)\exx
-If we wished to traverse the \verb'expList' in descending item order number,
-we would need to do something like this:
+{\bf Language NEED} (continued)\exx
+Here's another example illustrating the difference
+between call-by-reference and call-by-name/need.
+Examine the definition of \verb.seq., which seems
+to recurse infinitely but doesn't with call-by-name (why?).
 \begin{qv}
-public List<Val> evalRands(Env env) {
-    List<Val> valList = new LinkedList<Val>();
-    int n = expList.size();
-    while (n > 0) {
-        n--;
-        Exp e = expList.get(n);
-        valList.add(0, e.eval(env));
-    }
-    return valList;
-}
+define pair = proc(x,y)
+  proc(t) if t then y else x
+define first = proc(p) .p(0)
+define rest = proc(p) .p(1)
+define nth = proc(n,lst)    % zero-based
+  if n then .nth(sub1(n),.rest(lst)) else .first(lst)
+define seq = proc(n) .pair(n,.seq(add1(n)))
+define natno = .seq(0)      % all the natural numbers!!
+%% The above never terminates with call-by-reference.
+%% With call-by-name or call-by-need, we get:
+.first(natno)               % => 0 
+.first(.rest(natno))        % => 1
+.first(.rest(.rest(natno))) % => 2, and so forth ...
+.nth(100,natno)             % => 100
 \end{qv}
-The reason for using \verb'add' with the extra parameter of zero
-in this second version is because
-we want the elements in the \verb'valList' to appear
-in the same order that their corresponding expressions appear
-in the \verb'expList'.
-Also, we use a \verb'LinkedList' here instead of an \verb'ArrayList'
-because adding to the beginning of a \verb'LinkedList' object
-is much more efficient than adding to the beginning
-of an \verb'ArrayList' object.
 \end{minipage}
+\clearpage

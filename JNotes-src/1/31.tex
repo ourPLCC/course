@@ -2,19 +2,17 @@
 \slidenumber
 \LARGE
 {\bf Parsers} (continued)\exx
-The revised grammar now looks like this:\exx
-\emm{\Large\NormalBox{\MYlonGrammarTOK}}\exx
-Since we now have two fields in the \verb'NumsNode' class,
-we need to modify the signature of the \verb'NumsNode' constructor,
-as shown here (compare with slide 1.28):\exx
-\emm\begin{tabular}{ll}
-\verb'<lon>' & \verb'::= LPAREN <nums> RPAREN'\\
-    & \VerbBox{\fbox}{\verb'Lon(Nums nums)'}\\
-\verb'<nums>:NumsNode' & \verb'::= <NUM> <nums>'\\
-    & \VerbBox{\fbox}{\verb'NumsNode(Token num, Nums nums)'}\\
-\verb'<nums>:NumsNull' & \verb'::= '\\
-    & \VerbBox{\fbox}{\verb'NumsNull()'}\\
-\end{tabular}\exx
-
+Using this trace feature,
+we can construct a visual representation of the parse tree
+whose root is an object of type \verb'Lon'.
+The diagrams below show the parse trace output on the left
+and the resulting parse tree on the right.
+Nodes in the tree are represented by boxes.
+The dashed lines point to tokens
+that are part of the conceptual parse tree
+but that do {\em not} correspond to fields in the node.
+(Normally this is the case when the BNF entries on its RHS
+are tokens that are fixed -- such as LPAREN.)\exx
+\centerline{\psfig{figure=lon-14-6.eps,width=7in}}\exx
 \end{minipage}
 \clearpage

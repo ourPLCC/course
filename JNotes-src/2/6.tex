@@ -2,20 +2,18 @@
 \slidenumber
 \LARGE
 {\bf Environments} (continued)\exx
-Given a local environment,
-we may want to add a new binding to this environment
-either as a \verb'Binding' object
-or as a pair consisting of an identifier and its corresponding value.
-The following methods are part of the \verb'Bindings' class:
-\begin{qv}
-    // add a Binding object to this local environment
-    public void add(Binding b) {
-        bindingList.add(b);
-    }
-
-    // add a binding (s, v) to this local environment
-    public void add(String s, Val v) {
-        add(new Binding(s, v));
-    }
-\end{qv}
+A local environment should not have two different bindings with the same symbol,
+although our simple implementation does not enforce this.
+We will see later how to we can achieve this restriction
+when we build our local environments.\exx
+The following diagram gives an example
+of a \verb'Binding' object
+that binds the symbol \verb'"x"' to the integer (\verb'IntVal') value \verb'3',
+and a \verb'Bindings' object
+with a \verb'bindingList' of size three.\exx
+\centerline{\psfig{figure=bindings.eps,width=6in}}
+For the sake of simplicity,
+we omit drawing the extra box
+around the \verb'bindingList' in future \verb'Bindings' diagrams.
 \end{minipage}
+\clearpage

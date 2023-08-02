@@ -1,40 +1,36 @@
 \begin{minipage}[t]{\sw}
 \slidenumber
 \LARGE
-{\bf Language V3}\exx
-Language \verb'V3' is the same as language \verb'V2'
-with the addition of a \verb'let' expression.
-Here are the relevant grammar rules and abstract syntax representations:\exx
-{\Large
-\emm\begin{tabular}{@{}ll}
-\verb'<exp>:LetExp' & \verb'::= LET <letDecls> IN <exp>'\\
-  & \VerbBox{\fbox}{\verb'LetExp(LetDecls letDecls, Exp exp)'}\\
-\verb'<letDecls>' & \verb'**= <VAR> EQUALS <exp>'\\
-  & \VerbBox{\fbox}{\verb'LetDecls(List<Token> varList, List<Exp> expList)'}\\
-\end{tabular}
-}\exx
-Notice that we need to change our lexical specification
-to allow for token names \verb'LET', \verb'IN', and \verb'EQUALS'.
-Here are the relevant lexical specifications:
-{\Large
-\begin{qv}
-LET    'let'
-IN     'in'
-EQUALS '='
-\end{qv}
-\LARGE
-Here is an example program in language \verb'V3'
-that evaluates to \verb'7':
+{\bf Language V2} (continued)
 \Large
 \begin{qv}
-let
-  three = 2
-  four  = 5
-in
-  +(three, four)
+if 1 then 3 else 4
+  % => 3
+
+if 0 then 3 else 4
+  % => 4
+
+if
+  if 1 then 0 else 11
+then
+  42
+else
+  15
+  % => 15
+
++(3, if -(x,x) then /(5,0) else 8)
+  % => 11 (note that the /(5,0) expression is not evaluated!
 \end{qv}
-}
-The purpose of a \verb'let' expression is to create an environment
-with new variable bindings and to evaluate an expression
-using these variable bindings.
+\LARGE
+You must understand that
+{\em an \verb'if' expression is an expression
+and therefore it evaluates to a value.}
+It is entirely unlike \verb'if' statements
+in imperative languages such as Java and C++,
+where the purpose of an \verb'if' statement
+is to {\em do} one thing or another, not to return a value.
+Also observe that an \verb'if' expression in our source languages
+must have both a \verb'then' part and an \verb'else' part,
+even though only one of these expressions ends up being evaluated.
 \end{minipage}
+\clearpage

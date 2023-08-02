@@ -2,21 +2,26 @@
 \slidenumber
 \LARGE
 {\bf Environment-Passing Interpreters} (continued)\exx
-You should also distinguish between
-the {\em defined language} (or the {\em source language})
-and the {\em defining language} (or the {\em host language}).\exx
-The defined language is the language to be interpreted,
-and the defining language is the language
-in which the interpreter is written.\exx
+You should also distinguish
+between a {\em source language}
+and its {\em implementation language}.
+A source language is a language to be interpreted,
+and its implementation language is the language
+in which the interpreter is written.
+(The term {\em defined language} is often used
+to refer to a source language.
+Similarly, the term {\em defining language} is often used
+to refer to its implementation language.)\exx
 In the rest of this course,
-the defined languages will be a collection of artificial languages used
+our source languages will be a collection of artificial languages used
 to illustrate the various stages of language design,
-and the defining language will be Java.
+and our implementation language will be Java.
 Don't be disappointed by the term `artificial' here:
 the languages we define have significant computational power,
 and they serve to illustrate
 a number of core ideas that are present in all programming languages.\exx
-We start with a language we call \verb'V0' --
-think of this as `Version zero'.
+We start with a language we call ``Language V0'' --
+think of this as ``Language Version Zero''.
 Its \verb'grammar' specification file appears on the next slide.
 \end{minipage}
+\clearpage

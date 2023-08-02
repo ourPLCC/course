@@ -2,27 +2,15 @@
 \slidenumber
 \LARGE
 {\bf Language OBJ} (continued)\exx
-Other examples on this slide and the next ...
+Here are the associated grammar rules:\exx
 \Large
-\begin{qv}
-define c1 =
-  class
-    method m1 = proc() send self m2()
-    method m2 = proc() 13
-  end
-define c2 =
-  class extends c1
-    method m1 = proc() 22
-    method m2 = proc() 23
-    method m3 = proc() send super m1()
-  end
-define c3 =
-  class extends c2
-    method m1 = proc() 32
-    method m2 = proc() 33
-  end
-define o3 = new c3
-
-send o3 m3()  % returns 33
-\end{qv}
+\emm\begin{tabular}{ll}
+\verb'<exp>:EenvExp' & \verb'::= LLANGLE <exp> <mangle> RRANGLE'\\
+    & \VerbBox{\fbox}{\verb'EenvExp(Exp exp, Mangle mangle)'}\\
+\verb'<mangle>' & \verb'**= RANGLE <exp> LPAREN <rands> RPAREN' \\
+    & \VerbBox{\fbox}{\verb'Mangle(List<Exp> expList, List<Rands> randsList)'}\\
+\end{tabular}\exx
+\LARGE
+The BNF identifier \verb'mangle' should suggest ``multiple angle (brackets)'',
+but it also could also appropriately be interpreted as a twisted mess.
 \end{minipage}

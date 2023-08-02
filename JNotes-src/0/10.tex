@@ -2,33 +2,29 @@
 \slidenumber
 \LARGE
 {\bf Tokens} (continued)\exx
-For the languages we deal with in this course,
-we specify the structure of tokens
-by means of {\em regular expressions}.
-(Other approaches use {\em deterministic finite automata},
-also called {\em finite state machines}, to do the same thing.)
-A regular expression is a formal description of a pattern
-that can match a sequence of characters in a character stream.
-For example, the regular expression `\verb'd'' matches the letter \verb'd',
-the regular expression `\verb'\d'' matches any decimal digit,
-and the regular expression `\verb'\d+'' matches
-one or more decimal digits.
-You should read the Java documentation for the \verb'Pattern' class
-for information about how to specify patterns.\exx
-When specifying tokens,
-one of the first things we do is to specify
-what characters do {\em not} appear in a token.
-Typically, tokens do not have whitespace -- spaces, tabs, and newlines --
-so these characters must be skipped.
-We express these skipped characters using a notation such as
-\begin{qv}
-skip WHITESPACE '\s+'
-\end{qv}
-The regular expression `\verb'\s'' stands for ``space''
-(the space character, a tab, or a newline),
-and the regular expression `\verb'\s+'' stands for one or more spaces.\exx
-We adopt one simplifying rule for the languages we discuss in this class:
-{\em tokens cannot cross line boundaries}.
-Be warned, however, that not all programming languages conform to this rule.
-
+The purpose of lexical analysis is to take program input
+as a stream of characters and to produce output consisting
+of a stream of tokens that conform
+to the {\em lexical specification} of the language.\exx
+By a {\em stream}, we mean an object that allows us
+to examine the current item in the stream,
+to advance to the next item in the stream,
+and to determine if there are no more items in the stream.
+We accomplish something similar to this in Java
+with \verb'hasNext()' and \verb'next()' for Scanner objects
+in Java's \verb'java.util.Scanner' library.\exx
+By a {\em stream of characters}
+we mean a stream of items consisting of individual characters
+in a character set such as ASCII or UTF-8.
+By {\em stream of tokens} we mean
+a stream of items that are tokens defined by a token specification.
+Our lexical analysis process provides
+a \verb'hasNext()/next()' interface
+for accessing the stream of tokens,
+but it also provides a similar \verb'cur()/adv()' interface
+described in more detail below.\exx
+As we noted earlier,
+lexical analysis is referred to as {\em scanning},
+and a {\em scanner} is a program that carries out this process.\exx
 \end{minipage}
+\clearpage

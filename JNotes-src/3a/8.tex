@@ -5,15 +5,16 @@
 Our denoted values (the things that variables are bound to)
 are now references instead of values,
 so we need to change our \verb'Binding' objects
-to bind an identifier variable to a reference.
+to bind an identifier to a reference.
 (Notice that we use the terms ``variable'', ``identifier'', and ``symbol''
 interchangeably.)\exx
-\emm\VerbBox{\fbox}{\verb'Binding(String id, Ref ref)'}\exx
+{\Large\emm\VerbBox{\fbox}{\verb'Binding(String id, Ref ref)'}}\exx
 In the \verb'Env' class,
 we want \verb'applyEnv' to continue
-to return a \verb'Val' object,
-whereas the bindings now associate identifiers with references,
-so we split up the responsibilities as follows:
+to return the \verb'Val' object (indirectly) bound to a symbol.
+Since we now bind identifiers to references,
+we split up the responsibilities as follows:
+{\Large
 \begin{qv}
 // returns the reference bound to sym
 public abstract Ref applyEnvRef(String sym);
@@ -22,11 +23,15 @@ public Val applyEnv(String sym) {
     return applyEnvRef(sym).deRef();
 }
 \end{qv}
-The \verb'applyEnvRef' method behaves exactly like the previous
-\verb'applyEnv' method (but returns a \verb'Ref' instead)
-and throws an exception if there is no reference bound
+}
+The \verb'applyEnvRef' method behaves exactly
+like the \verb'V6' \verb'applyEnv' method,
+returning the thing (now a \verb'Ref') bound to the symbol
+and throwing an exception if there is nothing bound
 to the given symbol.
-The \verb'applyEnv' method simply gets the \verb'Ref' object
+The \verb'applyEnv' method must still return a \verb'Val':
+it simply gets the \verb'Ref' object
 using \verb'applyEnvRef' and dereferences it
-to return the corresponding value.
+to return its corresponding value.
 \end{minipage}
+\clearpage

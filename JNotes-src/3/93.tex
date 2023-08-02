@@ -2,33 +2,34 @@
 \slidenumber
 \LARGE
 {\bf Language V6} (continued)\exx
-Notice that for top-level procedure definitions,
-\verb'define' works the same way as \verb'letrec'
-in terms of being able to support direct recursion.
-This is because every top-level procedure definition captures
-(in a closure)
-the initial environment,
-which gets modified every time another top-level definition is encountered.
-When a new binding is added to the top-level environment,
-all of the top-level closures can access this binding
-(these closures all capture the top-level environment),
-as well as any others that may crop up later!
-Thus the following works:
+Here is an example of expressions
+that use the \verb'define' feature
+in our source language:
+\Large
 \begin{qv}
-define even? = proc(x)
-  if zero?(x) then 1 else .odd?(sub1(x))
-.even?(11) % => Error: unbound procedure odd?
-define odd? = proc(x)
-  if zero?(x) then 0 else .even?(sub1(x))
-.even?(11) % => 0
-.odd?(11)  % => 1
+define i = 1
+define ii = add1(i)
+define iii = add1(ii)
+define v = 5
+define x = 10
+define f = proc(x) if zero?(x) then 1 else *(x,.f(.g(x)))
+.f(v)   % ERROR: g is unbound
+define g = proc(x) sub1(x)
+.f(v)   % => 120 -- g is now bound
+.f(iii) % => 6
 \end{qv}
 \LARGE
-Observe that a top-level define can {\em shadow} a previous definition,
-since new bindings are added at the head of the list of top-level bindings
-using the \verb'addFirst' method.
-A previous definition still appears in the list of bindings,
-but because of the way \verb'applyEnv' works,
-the one that appears closer to the head of the list will always be returned
-when looking up the identifier.
+As long as you stay in the \verb'Rep' loop,
+the \verb'define'd variable bindings are remembered.\exx
+Notice that, in the definition for \verb'f',
+the body of the procedure refers to a procedure named \verb'g',
+but \verb'g' hasn't been defined yet.
+The attempt, in the next line, to evaluate \verb'.f(v)' fails.
+After defining \verb'g' on the following line,
+evaluating \verb'.f(v)' works.
+This is because
+by the time you attempt to apply \verb'f' the second time,
+the \verb'g' procedure has been defined,
+and the body of \verb'f' now recognizes its definition.
 \end{minipage}
+\clearpage

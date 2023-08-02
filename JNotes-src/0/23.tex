@@ -1,0 +1,32 @@
+\begin{minipage}[t]{\sw}
+\slidenumber
+\LARGE
+{\bf Tokens} (continued)\exx
+The \verb'printTokens()' method in the \verb'Scan' class
+produces the output described on the previous slide.
+Here is the code for this method:
+{\Large
+\begin{qv}
+public void printTokens() {
+    while (hasNext()) {
+        Token t = next();
+        String s;
+        switch(t.match) {
+        case $ERROR:
+            s = t.toString();
+            break;
+        default:
+            s = String.format("%s '%s'", t.match.toString(), t.str);
+        }
+        System.out.println(String.format("%4d: %s", lno, s));
+    }
+}
+\end{qv}
+}
+When invoked with no command-line arguments,
+the \verb'main()' method in the \verb'Scan' class
+calls the \verb'printTokens()' method
+on a \verb'Scan' object constructed
+from standard input: \verb'System.in'.
+\end{minipage}
+\clearpage

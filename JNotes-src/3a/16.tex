@@ -1,20 +1,32 @@
 \begin{minipage}[t]{\sw}
 \slidenumber
 \LARGE
-{\bf Language REF} (continued)\exx
-Using call-by-reference semantics,
-the program
-\begin{qv}
-let
-  x = 3
-  p = proc(t) set t = add1(t)
-in
-  { .p(x) ; x }
-\end{qv}
-returns the value 4, since \verb't' refers
-to the same cell as the one \verb'x' refers to.
-The environments created by the \verb'let' declarations
-and then during evaluation of the expression \verb'.p(x)'
-are illustrated in the following figure:
-\cfigw{ref.eps}{9in}
+{\bf Language REF}\exx
+A parameter passing approach
+that evaluates actual parameters using value semantics
+and that binds the formal parameters
+to these actual parameter values
+is called {\em call-by-value}.
+This is what we use in languages \verb'V1' to \verb'V6'.\exx
+In the language \verb'SET',
+where bindings are to references instead of values,
+we wrap the actual parameter values
+into {\em new} references,
+and these references are bound to the formal parameters.
+Though denoted values are references in Language SET,
+the parameter passing approach is still call-by-value.\exx
+Considering the illustration in the previous slide,
+Suppose we {\em want} a behavior
+that binds the formal parameter \verb't'
+to the {\em same} reference that is bound to \verb'x'
+instead of a new reference containing a copy of the value.
+The following diagram shows how the bindings
+in the previous diagram change
+when \verb't' is bound to the same reference as \verb'x':
+\cfigw{3a.14.eps}{6in}
+Such a parameter passing semantics is called
+{\em call-by-reference}.
+We explore call-by-reference next,
+along with variants on this theme.
 \end{minipage}
+\clearpage

@@ -1,6 +1,7 @@
 # Makefile for slides
 
-DVIPSFLAGS = -Ppdf -G0 -t letter -t landscape
+#DVIPSFLAGS = -Ppdf -G0 -t letter -t landscape
+DVIPSFLAGS = -Ppdf -G0 -t landscape
 
 SET = unknown
 SLIDES = slides-$(SET)

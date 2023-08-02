@@ -2,38 +2,30 @@
 \slidenumber
 \LARGE
 {\bf Drawing Envinronments} (continued)\exx
-Since a \verb'let' expression is an expression,
-it must evaluate to a value,
-so a \verb'let' expression can occur
-as the RHS of a binding in another \verb'let' expression.
-Consider this example:\exx
+Now consider the following expression,
+with nested \verb'let's.
+The inner \verb'let' extends the environment defined
+by the outer let (with one node, as shown on the previous page),
+so the envinroment of the inner \verb'let' is a linked
+list with two nodes.
 \Large
-\begin{verbbox}
-let % outer
+\begin{qv}
+let
   x = 3
   y = 5
 in
-  let % inner
-    x = let y=x in +(x,y) % LHS x is bound to 6
-    y = let x=y in +(x,y) % LHS y is bound to 10
+  let
+    x = +(x,y) % the RHS evaluates to 8
+    z = x      % the RHS evaluates to 3 (why?)
   in
-    +(x,y) % evaluates to 16
-\end{verbbox}
-\emm\theverbbox\\
+    +(x,y)
+\end{qv}
 \LARGE
-The environment defined by the outer \verb'let'
-has one node with bindings for \verb'x' and \verb'y'
-(to 3 and 5, respectively).
-The inner let extends the environment of the outer let,
-so the inner environment has two nodes.
-The RHS expressions for the bindings of the inner \verb'let'
-are evaluated in the environment defined by the outer \verb'let'.
-Since each of these RHS expressions are themselves \verb'let' expressions,
-each of them extends the environment defined by the outer \verb'let'.
-A total of four environments get created:
-the outer \verb'let' (extending the initial null environment),
-the inner \verb'let' (extending the outer \verb'let'),
-and one for each of the RHS expressions in the inner \verb'let'
-(extending the outer \verb'let').
-The next slide shows all of these environments.
+In the following diagram,
+the leftmost node is the environment created by the inner \verb'let':\\
+\Large
+\centerline{\psfig{figure=xyz.eps,height=2in}}
+\LARGE
+The inner \verb'let' body expression evaluates to 13 (why?).
 \end{minipage}
+\clearpage

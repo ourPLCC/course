@@ -1,32 +1,29 @@
 \begin{minipage}[t]{\sw}
 \slidenumber
 \LARGE
-{\bf Language PROP} (continued)\exx
-If a field named \verb'x' in a class has a property also named \verb'x',
-referring to \verb'x' in the contect of this object
-uses the \verb'PropRef' instead of the variable.
-Consider this example:
+{\bf Language OBJ} (continued)\exx
+Other examples on this slide and the next ...
+{\Large
 \begin{qv}
-define c =
+define c1 =
   class
-    static p = proc(t) set t=add1(t)
-    field x
-    method init = proc(x) {set <this>x=x ; self}
-    property x = prop x : set x=$
-    property y = prop x : set x=+($,$)
+    method m1 = proc() <self>m2()
+    method m2 = proc() 13
   end
-define o = .<new c>init(3)
-<o>{.p(x) ; x} % evaluates to 4
-<o>{.p(y) ; x} % evaluates to 10
-\end{qv} %%$
-In the expression \verb'.p(x)', \verb'x' refers
-to the property \verb'x'.
-Since we are using call-by-reference parameter passing semantics,
-the variable \verb't' is bound to this property,
-and the expression \verb'set t=add1(t)' is evaluated
-using this binding.
-Remember that the RHS parts of property definitions
-are all evaluated in the environment that includes
-only statics, fields, and methods,
-but not properties.
+define c2 =
+  class extends c1
+    method m1 = proc() 22
+    method m2 = proc() 23
+    method m3 = proc() <super>m1()
+  end
+define c3 =
+  class extends c2
+    method m1 = proc() 32
+    method m2 = proc() 33
+  end
+define o3 = new c3
+
+<o3>m3()  % => 33
+\end{qv}
+}
 \end{minipage}

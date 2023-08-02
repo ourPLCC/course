@@ -2,25 +2,32 @@
 \slidenumber
 \LARGE
 {\bf Tokens} (continued)\exx
-Whenever we are faced with two possible token specifications (rules)
-that match a string upon input,
-we {\em always choose the longest possible match}.
-So if the input stream contained the string
+The lexical specification section of a \verb'grammar' file
+uses {\em regular expressions} to specify language tokens.
+A regular expression is a formal description of a pattern
+that can match a sequence of characters in a character stream.
+For example, the regular expression `\verb'd'' matches the letter \verb'd',
+the regular expression `\verb'\d'' matches any decimal digit,
+and the regular expression `\verb'\d+'' matches one or more decimal digits.
+{\bf You should read the Java documentation for the \verb'Pattern' class
+for information about how to write regular expressions.}\exx
+When specifying tokens, we must identify
+what input stream characters do {\em not} belong to tokens
+and should be skipped.
+Typically, we skip whitespace: spaces, tabs, and newlines.
+We identify these skipped characters in the \verb'grammar' file
+using a {\em skip specification} line like this :
 \begin{qv}
-procedure
+skip WHITESPACE '\s+'
 \end{qv}
-the above specifications would produce an \verb'ID' token
-with string value \verb'procedure' instead of a \verb'PROC' token
-with string value \verb'proc':
-both of these patterns match the beginning of input,
-but the \verb'ID' match is longer.\exx
-If two or more token specifications
-match the same input (longest match), we always
-{\em choose the first specification in our list that matches}.\exx
-In summary, for a given input string, we always
-\begin{enumerate}
-\item choose the token specification with the longest match, and
-\item among those with the longest match, 
-      choose the first token specification in the list of rules.
-\end{enumerate}
+The regular expression `\verb'\s'' stands for ``space''
+(the space character, a tab, or a newline),
+and the regular expression `\verb'\s+'' stands for one or more spaces.
+We use the symbolic name ``WHITESPACE''
+to identify this particular collection of characters to be skipped.
+(Any symbolic name would suffice,
+but it makes sense to use one that describes its purpose.)
+We also typically skip comments.\exx
+{\bf Characters to be skipped during lexical analysis are not tokens.}
 \end{minipage}
+\clearpage

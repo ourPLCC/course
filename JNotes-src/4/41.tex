@@ -30,7 +30,7 @@ define fact = proc(x:int):int
 \begin{qv}
 declare fact : [int=>int]
 define fact = proc(x:int):int
-  if zero?(x) then 1 else *(x,.fact(sub1(x))) %ok
+  if zero?(x) then 1 else *(x,.fact(sub1(x))) % ok
 \end{qv}
 
 \item
@@ -38,7 +38,7 @@ define fact = proc(x:int):int
 declare f : [=>bool]
 define y = 2
 define f = proc():int y
-  % error - defined type does not match declared type
+  % error - defined type of f does not match declared type
 \end{qv}
 
 \item
@@ -46,7 +46,7 @@ define f = proc():int y
 declare f : [=>bool]
 define y = 2
 define f = proc():bool y
-  % error - body type does not match return type
+  % error - body type y does not match declared return type
 \end{qv}
 
 \end{enumerate}

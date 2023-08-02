@@ -2,25 +2,38 @@
 \slidenumber
 \LARGE
 {\bf Language V1} (continued)\exx
-The definition of \verb'apply' for the \verb'SubPrim'
-is entirely similar.\exx
-For the \verb'Add1Prim' class,
-the \verb'apply' method expects only one value,
-which is passed as element zero of the \verb'va' array.
+Four of the \verb'Prim' objects need two arguments
+(`\verb'+'', `\verb'-'', `\verb'*'', and `\verb'/''),
+and three of them need one argument
+(\verb'add1', \verb'sub1', and \verb'zerop').
+Since \verb'va' is an array of \verb'Val' arguments,
+we can grab the appropriate items from this array --
+one or two of them, depending on the operation --
+to evaluate the result.
+Here is the code for the \verb'AddPrim' class:
+{\Large
 \begin{qv}
-Add1Prim
+AddPrim
 %%%
     public Val apply(Val [] va) {
-        if (va.length != 1)
-            throw new RuntimeException(
-                "one argument expected"
-            );
+        if (va.length != 2)
+            throw new PLCCException("two arguments expected");
         int i0 = va[0].intVal().val;
-        return new IntVal(i0 + 1);
+        int i1 = va[1].intVal().val;
+        return new IntVal(i0 + i1);
     }
 %%%
 \end{qv}
-\LARGE
-Again, the definition of \verb'apply' for the \verb'Sub1Prim' class
-is entirely similar.
+}
+The \verb'intVal()' method calls shown in this
+code convert \verb'Val' objects (such as \verb'Va[0]')
+into \verb'IntVal' objects -- essentially like ``downcasting''.
+These objects, in turn, have Java \verb'int' fields named \verb'val'.
+So both \verb'i0' and \verb'i1' are legitimate Java \verb'int's
+that can be added together to return the resulting \verb'IntVal' object.
+The \verb'Val' class defines the \verb'intVal()' method behavior:
+an attempt to apply the \verb'intVal()' method
+to a \verb'Val' object that is {\em not} an \verb'IntVal'
+throws an exception.
 \end{minipage}
+\clearpage

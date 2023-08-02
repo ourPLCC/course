@@ -1,27 +1,26 @@
 \begin{minipage}[t]{\sw}
 \slidenumber
 \LARGE
-{\bf PLCC -- Grammar}\exx
+{\bf PLCC -- Syntax (continued)}\exx
 The RHS entries in a grammar rule are used
 to declare public fields in the (non-abstract) class
 associated with the grammar rule.
-Only those RHS entries that are enclosed in angle brackets `\verb'<...>''
+Only those RHS entries enclosed in angle brackets `\verb'<...>''
 correspond to fields in the class.\exx
-An RHS field can correspond to a token
-({\em e.g.} \verb'<NUMBER>', shown on the previous slide)
-or a nonterminal ({\em e.g.} \verb'<formals>', shown on slide 1a.6).\exx
-If the RHS field corresponds to a token,
+A field can correspond to an RHS token ({\em e.g.} \verb'<NUM>')
+or an RHS nonterminal ({\em e.g.} \verb'<nums>').\exx
+If the field corresponds to an RHS {\em token},
 its field {\em name} defaults to the token name
 with all of its letters in lowercase.
-For example, the RHS field name corresponding
-to \verb'<NUMBER>' would be \verb'number',
+For example, the field name corresponding
+to the RHS token \verb'<NUM>' is \verb'num',
 and its field {\em type} is \verb'Token'.
-If the RHS field corresponds to a nonterminal,
+If the field corresponds to an RHS {\em nonterminal},
 its field {\em name} defaults to the nonterminal name (without change).
-For example, the RHS field name coressponding
-to \verb'<formals>' would be \verb'formals',
+For example, the field name coressponding
+to the RHS nonterminal \verb'<nums>' would be \verb'nums',
 and its field {\em type} is the underlying type of the nonterminal --
-in this case, \verb'Formals' --
+in this case, \verb'Nums' --
 obtained by converting the first character
 of the nonterminal name to uppercase.\exx
 \end{minipage}
