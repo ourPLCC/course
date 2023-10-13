@@ -1,4 +1,0 @@
-let
-  g = let count = 0 in proc() set count = add1(count)
-in
-  { .g() ; .g() ; .g() }

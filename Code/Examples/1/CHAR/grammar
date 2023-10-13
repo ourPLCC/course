@@ -1,2 +1,0 @@
-# Every character in the file is a token, including whitespace
-token CHAR '.'
