@@ -1,0 +1,23 @@
+
+skip WHITESPACE ...
+token LPAREN '\('
+token RPAREN '\)'
+token IF 'if'
+token ELSE 'else'
+
+%
+
+<prog> ::= <stmt>
+
+<expr> ::= ...
+
+<stmt>:... ::= ...
+<stmt>:... ::= ...
+<stmt>:... ::= ...
+
+
+<stmt>:IfStmt ::= IF LPAREN <expr> RPAREN <stmt> <elsePart>
+
+<elsePart>:Else ::= ELSE <stmt>
+<elsePart>:NoElse ::= 
+

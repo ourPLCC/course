@@ -1,0 +1,16 @@
+define ADD = 1
+define CLEAR = 2
+define GET = 3
+define Accum = proc()
+                   letrec
+                        acc = 0
+                        add = proc( n ) set acc = +(acc,n)
+                        clear = proc() set acc = 0
+                        get = proc() acc
+                    in
+                        proc(action)
+                            if zero?(-(action,1)) then add
+                            else if zero?(-(action,2)) then clear
+                            else if zero?(-(action,3)) then get
+                            else -(0,1)
+

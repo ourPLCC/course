@@ -33,5 +33,17 @@ LetDecls
         return oldEnv.extendEnv( new Bindings( bindings ) );
     }
 
+    @Override
+    public String toString() {
+        String result = "";
+        Iterator< Token > varIter = varList.iterator();
+        Iterator< Exp > expIter = expList.iterator();
+        String sep = "";
+        while ( varIter.hasNext() ) {
+            result += sep +  varIter.next().str + '=' + expIter.next();
+            sep = " ";
+        }
+        return result;
+    }
 
 %%%

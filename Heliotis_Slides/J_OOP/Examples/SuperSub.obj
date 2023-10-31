@@ -1,0 +1,25 @@
+define Super = class
+                static x = 10
+                static y = 11
+                field a
+                field b
+                method init = proc( m, n ) {
+                    set a = m;
+                    set b = n;
+                    self
+                }
+            end
+
+define Sub = class extends Super
+                static x = 20
+                static z = 22
+                field a
+                field c
+                method init = proc( p, q, r ) {
+                    .<super>init(*(p,2),q);
+                    set a = p;
+                    set c = r;
+                    self
+                }
+            end
+

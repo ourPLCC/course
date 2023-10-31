@@ -1,0 +1,16 @@
+--> define x = .prepend( 2, .prepend( 3, .prepend( 5, NULL ) ) )
+x set to λ(which){return which ? tail : head}
+--> .head(x)
+2
+--> .tail(x)
+λ(which){return which ? tail : head}
+--> .head(.tail(x))
+3
+--> .head(.tail(.tail(x)))
+5
+--> .tail(.tail(.tail(x)))
+NULL
+--> .emptyList?(.tail(.tail(.tail(x))))
+1
+--> .emptyList?(x)
+0

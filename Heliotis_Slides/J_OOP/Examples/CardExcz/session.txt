@@ -1,0 +1,35 @@
+$ rep Card.obj 
+int2str
+i2s_rec
+print_str
+Card
+--> define h12 = .<new Card>init( 'H, 12 )
+h12
+--> .<h12>asString()
+[72,49,50]
+--> .print_str( .<h12>asString() )
+H12
+nil
+--> define h8 = .<new Card>init( 'H, 8 )
+h8
+--> define c13 = .<new Card>init( 'C, 13 )
+c13
+--> .print_str( .<h8>asString() )
+H8
+nil
+--> .print_str( .<c13>asString() )
+C13
+nil
+--> .<c13>less( h8 )
+1
+--> .<h12>less( h8 )
+0
+--> define h8a = .<new Card>init( 'H, 8 )
+h8a
+--> .<h8a>equal( c13 )
+0
+--> .<h8a>equal( h8 )
+1
+--> .<h8a>equal( h12 )
+0
+--> ^D

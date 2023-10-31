@@ -1,0 +1,48 @@
+Does 'Well hello world!' completely match 'hell'? NO.
+Does 'Well hello world!' match 'hell' anywhere? YES.
+
+Does 'Well hello world!' completely match 'Hell'? NO.
+Does 'Well hello world!' match 'Hell' anywhere? NO.
+
+Does 'Well hello world!' completely match 'hello|goodbye'? NO.
+Does 'Well hello world!' match 'hello|goodbye' anywhere? YES.
+
+Does 'When I'm 64 ...' completely match '[0-9]'? NO.
+Does 'When I'm 64 ...' match '[0-9]' anywhere? YES.
+
+Does 'When I'm 64 ...' completely match '^[0-9]$'? NO.
+Does 'When I'm 64 ...' match '^[0-9]$' anywhere? NO.
+
+Does '64' completely match '^[0-9]$'? NO.
+Does '64' match '^[0-9]$' anywhere? NO.
+
+Does '6' completely match '^[0-9]$'? YES.
+Does '6' match '^[0-9]$' anywhere? NO.
+
+Does '6' completely match '^\d$'? YES.
+Does '6' match '^\d$' anywhere? NO.
+
+Does '6' completely match '^\d$'? YES.
+Does '6' match '^\d$' anywhere? NO.
+
+Does '2525' completely match '^\d*$'? YES.
+Does '2525' match '^\d*$' anywhere? NO.
+
+Does '2525a' completely match '^\d*$'? NO.
+Does '2525a' match '^\d*$' anywhere? NO.
+
+Does '2525a' completely match '\d*'? NO.
+Does '2525a' match '\d*' anywhere? YES.
+
+Does 'a' completely match '\d*'? NO.
+Does 'a' match '\d*' anywhere? YES.
+
+Does 'a' completely match '\d+'? NO.
+Does 'a' match '\d+' anywhere? NO.
+
+Does '2525a' completely match '\D+'? NO.
+Does '2525a' match '\D+' anywhere? YES.
+
+Does '2525' completely match '\D+'? NO.
+Does '2525' match '\D+' anywhere? NO.
+

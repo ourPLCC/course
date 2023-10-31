@@ -12,7 +12,7 @@ EQpPrim
 
     @Override
     public String toString() {
-	return "+";
+	return "==?";
     }
 %%%
 

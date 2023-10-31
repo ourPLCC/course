@@ -1,0 +1,61 @@
+
+
+
+
+
+
+# Language V4: procs
+%
+%
+<exp>:AppExp     ::= DOT <exp> LPAREN <operands> RPAREN
+<exp>:IfExp      ::= IF <exp>test THEN <exp>thenPart ELSE <exp>elsePart
+<exp>:LetExp     ::= LET <letDecls> IN <exp>
+<exp>:LetrecExp  ::= LETREC <letrecDecls> IN <exp>
+<exp>:LitExp     ::= <LIT>
+<exp>:PrimAppExp ::= <prim> LPAREN <operands> RPAREN
+<exp>:ProcExp    ::= PROC LPAREN <formals> RPAREN <exp>
+<exp>:SeqExp     ::= LBRACE <exp> <seqExps> RBRACE
+<exp>:SetExp     ::= SET <VAR> ASSIGN <exp>
+<exp>:VarExp     ::= <VAR>
+<formals>        **= <VAR> +COMMA
+<letDecls>       **= <VAR> ASSIGN <exp>
+<letrecDecls>    **= <VAR> ASSIGN <exp>
+<operands>       **= <exp> +COMMA
+<prim>:Add1Prim  ::= ADD1OP
+<prim>:AddPrim   ::= ADDOP
+<prim>:DivPrim   ::= DIVOP
+<prim>:MulPrim   ::= MULOP
+<prim>:Sub1Prim  ::= SUB1OP
+<prim>:SubPrim   ::= SUBOP
+<prim>:ZeropPrim ::= ZEROP
+<program>:Define ::= DEFINE <VAR> ASSIGN <exp>
+<program>:Eval   ::= <exp>
+<seqExps>        **= SEMI <exp>
+ADD1OP 'add1'
+ADDOP '\+'
+ASSIGN '='
+COMMA ','
+DEFINE 'define'
+DIVOP '/'
+DOT '\.'
+ELSE 'else'
+IF 'if'
+IN 'in'
+LBRACE '\{'
+LET 'let'
+LETREC 'letrec'
+LIT '\d+'
+LPAREN '\('
+MULOP '\*'
+PROC 'proc'
+RBRACE '\}'
+RPAREN '\)'
+SEMI ';'
+SET 'set'
+SUB1OP 'sub1'
+SUBOP '\-'
+THEN 'then'
+VAR '[A-Za-z]\w*\??'
+ZEROP 'zero\?'
+skip COMMENT '%.*'
+skip WHITESPACE '\s+'

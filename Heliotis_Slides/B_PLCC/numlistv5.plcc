@@ -24,6 +24,7 @@ COMMA ','
 NumSeq
 %%%
 
+    @Override
     public String toString() {
         return nums.toString();
     }
@@ -33,6 +34,7 @@ NumSeq
 Nums
 %%%
 
+    @Override
     public String toString() {
         String ret = "( ";
         for (Number number: numberList) {
@@ -46,6 +48,7 @@ Nums
 Number
 %%%
 
+    @Override
     public String toString() {
         return num.str;
     }

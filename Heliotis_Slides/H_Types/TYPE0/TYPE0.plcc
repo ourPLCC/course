@@ -132,7 +132,6 @@ include PrimSource/LTpPrim-i.java
 include PrimSource/LEpPrim-i.java
 include PrimSource/GTpPrim-i.java
 include PrimSource/GEpPrim-i.java
-include PrimSource/EQpPrim-i.java
 
 include EnvSource/BoolVal-i.java
 include EnvSource/Binding-i.java

@@ -1,0 +1,38 @@
+$ rep list.setl 
+cons set to λ(head,tail){return λ(which) { return which ? tail : head }}
+head set to λ(list){return CALL [list](0)}
+tail set to λ(list){return CALL [list](1)}
+prepend set to λ(head,tail){return λ(which) { return which ? tail : head }}
+emptyList? set to λ(lst){return sub1(lst)}
+--> []
+NULL
+--> isNull?( NULL )
+1
+--> isNull?( [] )
+1
+--> isNull?( [2] )
+0
+--> .emptyList?( NULL )
+1
+--> define single = [2]
+single set to λ(which){return which ? tail : head}
+--> .head(single)
+2
+--> .tail(single)
+NULL
+--> define lst = [2, 5, 11]
+lst set to λ(which){return which ? tail : head}
+--> .head(lst)
+2
+--> .head(.tail(lst))
+5
+--> .head(.tail(.tail(lst)))
+11
+--> .tail(.tail(.tail(lst)))
+NULL
+--> .emptyList?( single )
+0
+--> .emptyList?( lst )
+0
+--> .emptyList?( .tail(.tail(.tail(lst))) )
+1

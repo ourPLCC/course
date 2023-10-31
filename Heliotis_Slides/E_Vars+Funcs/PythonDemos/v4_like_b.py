@@ -11,3 +11,7 @@ def sort( data, comp ):
     return functools.reduce( insert, DATA, [] )
 
 DATA = [ 1, 3, 5, 7, 8, 6, 4, 2, 9, 0 ]
+
+print( sort( DATA, lambda x,y: x < y ) )
+print( sort( DATA, lambda x,y: x > y ) )
+

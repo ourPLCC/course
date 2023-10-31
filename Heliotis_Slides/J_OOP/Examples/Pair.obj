@@ -1,0 +1,10 @@
+define Pair =
+    class
+        field x
+        field y
+        method sum =
+                proc() +(x,y)
+    end
+
+define p = new Pair
+

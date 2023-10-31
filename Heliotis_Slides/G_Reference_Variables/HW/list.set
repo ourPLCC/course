@@ -1,0 +1,5 @@
+
+define cons = proc(head,tail) proc(which) if which then tail else head
+define head = proc(list) .list(0)
+define tail = proc(list) .list(1)
+

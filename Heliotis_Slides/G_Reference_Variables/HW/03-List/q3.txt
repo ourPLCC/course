@@ -1,0 +1,399 @@
+Homework 5
+Due Wednesday, 7 October 2020
+
+These problems all start with the SET language, available as a zip file
+in Handouts/Languages.
+
+Problem 1
+
+In this problem you will see how procs with closures make OO programming
+look like syntactic sugar.
+
+You will write a proc called Accum that behaves like a class of accumulator
+objects. When you call it, it returns a proc with an internal variable
+that has been set to 0 and three nested procs that we use like "methods".
+When the outer proc is called you must provide a method number: 1, 2, or 3.
+That proc then returns one of the three
+methods that can be applied to do something with the variable stored
+in the Accum procVal's closure.
+
+Method 1 takes an argument. It adds its argument's value to the internal
+         variable.
+
+Method 2 has no parameters. It clears the internal variable to 0.
+
+Method 3 returns the value of the internal variable.
+
+If this proc is given any other argument, return -1.
+
+For readability and convenience, define "ADD" to be 1, "CLEAR" to be 2,
+and "GET" to be 3.
+
+Put your definitions into a file named accum.set.
+
+Here is a sample session of use of this proc.
+
+$ rep accum.set 
+ADD set to 1
+CLEAR set to 2
+GET set to 3
+Accum set to ...
+--> define a = .Accum()  
+
+--> ..a(GET)()
+0
+--> ..a(ADD)(14)
+14
+--> ..a(ADD)(16)
+30
+--> ..a(GET)()
+30
+--> ..a(CLEAR)()
+0
+--> ..a(ADD)(100)
+100
+--> ..a(ADD)(10)
+110
+--> ..a(ADD)(1)
+111
+--> ..a(GET)()
+111
+--> define b = .Accum()
+
+--> ..b(GET)()
+0
+--> ..b(ADD)(3)
+3
+--> ..b(GET)()
+3
+--> ..a(GET)()
+111
+--> ..a(10)(1)
+class IntVal is not a proc.
+--> .a(10)
+-1
+
+Design
+
+The following is a good way to go.
+
+The Accum proc body is a letrec expression.  That expression defines
+the accumulator variable and the three method procs.  The value of
+the letrec expression is a proc that takes one argument, the method
+number.  That proc contains a nested if statement that chooses the
+correct method proc to return based on its own parameter value.
+
+Again, save your code in a file named accum.set.
+
+Problem 2
+
+This problem is mainly setup for Problem 3.
+
+Create a copy of the SET language directory. Call it SETN.
+
+Add the notion of a null value to the SET language. Here is what is involved.
+
+Add a new default method to the Val interface called isNull.
+
+Add a new Val subclass called NullVal and override the default implementation..
+
+Define the token "NULL".
+
+Define a new expression type (subclass of Exp) called NullExp.
+
+Create a new primitive isNull that returns an IntVal (0 for not
+null, 1 for null) This involves a new token "isNull?", the name of
+the primitive.
+
+Here are the files you will change:
+
+SETN.plcc (Change name from SET.plcc.)
+EnvSource/Val-i.java
+
+Here are the files you will create.
+
+PrimSource/NullpPrim-i.java
+EnvSource/NullVal-i.java
+ExpSource/NullExp-i.java
+
+Make sure you include all these files to SETN.plcc
+
+Create a zip file hw05-2.zip containing those five files.
+
+You should not have to have added or change any other files. Talk
+to your instructor if you feel you must.
+
+Problem 3
+
+We are now going to use the null value to help create linked
+lists, but in an unusual, and somewhat controversial, way.
+This assignment builds on what you did in Question 2.
+
+First, through this exercise we expand on the idea from problem 1.
+We demonstrate the ability to use closures to provide some of the
+same capability as pointers. A proc's closure can be used as a kind
+of cell to store a value, that can be fetched by applying (calling)
+the proc. Here is a simple example. Technically the fetcher proc
+creates a new proc, but we can look at it as creating a cell, setting
+its contents, and returning a reference to the cell.
+
+define fetcher = proc( n ) proc() n
+define myStorage = .fetcher( 5 )
+.myStorage() % => 5
+
+The language to be created here is "SETL", or "SET + Lists".  This
+involves the unusual scenario where something is added to the syntax
+of the language that requires support from SETL "library" code.
+That library code provides the ability to create and manipulate
+linked lists.
+
+A cons cell is a two-value structure, or 2-tuple. The reasons for
+the names of the two values will become evident in a moment.
+
+define cons = proc( head,tail ) proc( which ) if which then tail else head
+
+The body of the proc is more complicated than that of fetcher because two
+values are stored. We need to tell the proc which value we want: the first
+(0) or the second (1).
+
+--> define cell = .cons( 14, 91 )
+cell set to λ(which){return which ? tail : head}
+--> .cell(0)
+14
+--> .cell(1)
+91
+
+A list is a single node, a cons cell, that contains the head value
+in the list and a "reference" to the rest of the list.
+
+We define two more procs that make list manipulation code more
+readable:
+
+define head = proc( list ) .list( 0 )
+define tail = proc( list ) .list( 1 )
+
+Now the linked list. Observe that nested cons cells are actually a
+list.  We will use the NULL value from problem 2 to terminate the
+list.
+
+--> define primes = .cons( 2, .cons( 3, .cons( 5, NULL ) ) )
+primes set to λ(which){return which ? tail : head}
+--> .head( primes )
+2
+--> .head( .tail( primes ) )
+3
+--> .head( .tail( .tail ( primes ) ) )
+5
+--> .tail( .tail( .tail( primes ) ) )
+NULL
+
+Finally we observe that the cons proc can be used to stick a new
+value at the head of a list. Let's make an alias and use a more
+obvious name.
+
+define prepend = cons
+
+Continuing with the above example,
+
+--> define bigger = .prepend( 1, primes )
+bigger set to λ(which){return which ? tail : head}
+--> .head( bigger )
+1
+--> .head( .tail( bigger ) )
+2
+
+We now have everything we need to make our own procs that work with lists.
+
+define emptyList? = proc(lst) isNull?( lst ) % again, just an alias
+
+define length = proc( lst )
+                    if .emptyList?( lst )
+                        then 0
+                        else add1( .length( .tail( lst ) ) )
+
+Here are these procs in action.
+
+--> .emptyList?( primes )
+0
+--> .emptyList?( bigger )
+0
+--> .emptyList?( NULL )
+1
+--> .length( primes )
+3
+--> .length( bigger )
+4
+--> .length( NULL )
+0
+
+So this library is handy, but building lists is awkward -- all those
+nested proc calls and parentheses! Your assignment here is to add new
+syntax to the SETL language that supports a simpler syntax for lists,
+the same one used by Python: a comma-separated list of expressions,
+surrounded by square brackets.
+
+-->  define evens = [ 0, 2, 4, 6 ]
+evens set to λ(which){return which ? tail : head}
+--> define odds = [ 1, 3, 5 ]
+odds set to λ(which){return which ? tail : head}
+--> .length( evens )
+4
+--> .length( odds )
+3
+--> .length( [] )
+0
+--> []
+NULL
+
+Adding the new syntax for what you should call a ListExpr is easy.
+A few token definitions and a grammar rule and you're all set.
+You can even leverage the existing Operands grammar variable if
+you want.
+
+The hard part is that, to convert the syntax of the list expression
+into a list as we have described it, you must access the NULL
+constant (not too bad) and the prepend proc from inside the semantic
+code. To build your list you will have to look up prepend in the
+environment and then apply it, repeatedly, to what is initially NULL
+until all the values have been added. Only then will you have the
+ProcVal that represents the list.
+
+Normally you apply a proc by encountering an AppExp in V4 or later
+source code and evaluating it. In this exercise, the eval function
+you write for ListExp must look up (apply) "prepend" in the
+environment, then apply the resulting ProcVal over and over again
+to make the list.
+
+Of course, this will totally fail if the user has not already loaded
+the necessary library functions, including prepend, or if prepend
+has been defined as something else.
+
+$ rep
+--> [ 1, 2, 3 ]
+no binding for prepend
+--> ^D
+
+$ rep list.setl 
+cons set to λ(head,tail){return λ(which) { return which ? tail : head }}
+head set to λ(list){return CALL [list](0)}
+tail set to λ(list){return CALL [list](1)}
+prepend set to λ(head,tail){return λ(which) { return which ? tail : head }}
+emptyList? set to λ(lst){return isNull?(lst)}
+length set to λ(lst){return CALL [emptyList?](lst) ? 0 : add1(CALL [length](CALL [tail](lst)))}
+--> [ 1, 2, 3 ]
+λ(which){return which ? tail : head}
+--> ^D
+
+Here are your instructions for question 3. They build on what you
+did in question 2.
+
+Create a new directory for this problem, to keep from destroying
+your previous work should something happen. Copy everything from
+the directory for question 2 to it.
+
+Rename SETN.plcc as SETL.plcc.
+
+Copy the code for cons, head, tail, prepend, length, and emptyList?
+into a file called list.setl. Their definitions are all in this
+document. Add this proc definition as well:
+
+define i_th = proc( lst, i ) if i then .i_th( .tail(lst), sub1(i) ) else .head(lst)
+
+It will help you look at the contents of lists, since we have no output
+function for them.
+
+Make sure everything works making lists manually, as shown in the
+examples above.
+
+Modify SETL.plcc so that there is a new expression ListExp that is
+a bracketed, comma-separated, list of other expressions.
+
+Create the ListExp-i.java file in the ExpSource subdirectory. This
+will contain the evaluation code described above to use NULL and
+prepend to build the list.
+
+Make a zip file hw05-3.zip containing ExpSource/ListExp-i.java,
+SETL.plcc, session1.txt, and list.setl You should not have to have
+added or change any other files. Talk to your instructor if you
+feel you must.
+
+Problem 4
+
+You will write three new list functions.
+
+Although this problem is most easily done with the results of problem
+3, it is possible to just use the SETN language and build your lists
+more manually with NULL and prepend (or cons) for testing purposes.
+
+Another problem is the lack of a good way to output lists. For now,
+use i_th and length to check the results of your list functions.
+
+Here are the functions.
+
+append: list X value -> list
+
+Return a new list that is the same as the argument list but with
+value added to the end.
+
+--> define append = proc( lst, val ) ...
+
+--> .append( [], 5 )
+λ(which){return which ? tail : head}
+--> .head(.append( [], 5 ) )
+5
+--> define four = .append([1,2,3],4)
+four set to λ(which){return which ? tail : head}
+--> .i_th( four, 0 )
+1
+--> .i_th( four, 1 )
+2
+--> .i_th( four, 2 )
+3
+--> .i_th( four, 3 )
+4
+
+extend: list X list -> list
+
+Return a new list that is the concatenation of the two argument lists.
+
+--> define extend = proc( lst1, lst2 ) ...
+
+--> define five = .extend( [10,20,30], [40,50] )
+
+--> .i_th( five, 0 )
+10
+--> .i_th( five, 1 )
+20
+--> .i_th( five, 2 )
+30
+--> .i_th( five, 3 )
+40
+--> .i_th( five, 4 )
+50
+--> .length( five )
+5
+
+map: ( val -> val ) X list -> list
+
+Return a list that contains the members of the argument list with the
+supplied function applied to them.
+
+--> define map = proc( fn, lst ) ...
+
+--> define three = .map( proc(x) add1(x), [1,2,3] )
+
+--> .i_th( three, 0 )
+2
+--> .i_th( three, 1 )
+3
+--> .i_th( three, 2 )
+4
+--> .length( three )
+3
+
+Put your function definitions in a file called hw05-4.setl.
+
+Submission
+
+TBD
+

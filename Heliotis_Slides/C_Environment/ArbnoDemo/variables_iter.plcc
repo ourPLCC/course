@@ -1,0 +1,116 @@
+# variables_iter.plcc, iterative version
+#
+# Recognize "programs" that simply assign values to named variables,
+# and then display those values when requested.
+# Syntax is as follows.
+
+# { a 1 b 2 c 3 ? a ? c { a 5 ? a } ? a ? b ? c ? d }
+#
+# Output would be
+# 1 3 5 1 2 3 ... RuntimeException
+
+
+skip WHITESPACE '\s+'
+
+token OPENENV '\{'
+token CLOSEENV '\}'
+token QUESTION '\?'
+token NUMBER '\d+'
+token IDENT '[a-zA-Z]\w*'
+
+%
+
+<start> ::= OPENENV <declarations> <statements> CLOSEENV
+
+<declarations> **= <declaration>
+<declaration> ::= <IDENT> <NUMBER>
+
+<statements> **= <statement>
+
+<statement>:Display ::= QUESTION <IDENT>
+<statement>:Block ::= <start>
+
+%
+
+Start
+%%%
+
+    @Override
+    public String toString() {
+        run( Env.ENV_NULL );
+        return System.lineSeparator();
+    }
+
+    public void run( Env env ) {
+        Env innerEnv = env.extendEnv( declarations.addBindings() );
+        statements.execute( innerEnv );
+    }
+%%%
+
+Declarations:import
+%%%
+import java.util.stream.Collectors;
+%%%
+
+Declarations
+%%%
+
+    public Bindings addBindings() {
+        return new Bindings(
+                    declarationList.stream()
+                        .map( Declaration::asBinding )
+                        .collect( Collectors.toList() )
+                    );
+    }
+%%%
+
+Declaration
+%%%
+
+    public Binding asBinding() {
+        return new Binding(
+                    ident.str,
+                    new Val( Integer.parseInt( number.str ) )
+        );
+    }
+%%%
+
+Statements
+%%%
+
+    public void execute( Env env ) {
+        statementList.forEach( stmt -> stmt.execute( env ) );
+    }
+%%%
+
+Statement
+%%%
+
+    public abstract void execute( Env env );
+%%%
+
+Display
+%%%
+
+    @Override
+    public void execute( Env env ) {
+        System.out.print( env.applyEnv( ident.str ) + " " );
+    }
+%%%
+
+Block
+%%%
+
+    @Override
+    public void execute( Env env ) {
+        start.run( env );
+    }
+%%%
+
+include EnvSource/Env-i.java
+include EnvSource/EnvNode-i.java
+include EnvSource/Bindings-i.java
+include EnvSource/Binding-i.java
+include EnvSource/Val-i.java
+
+

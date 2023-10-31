@@ -1,0 +1,12 @@
+define Accumulator = class
+        field acc
+        method init = proc() { set acc = 0; self }
+        method add = proc( x ) { set acc = +(acc,x) }
+        method sum = proc() acc
+    end
+define acc = .<new Accumulator>init()
+.<acc>add(5)
+.<acc>add(7)
+.<acc>add(32)
+display# <acc>.sum()
+

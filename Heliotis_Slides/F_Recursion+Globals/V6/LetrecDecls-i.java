@@ -17,7 +17,7 @@ LetrecDecls
 
         // Create an empty environment
         
-        Env newEnv = oldEnv.extendEnv( null ); // ! no Bindings object
+        Env newEnv = oldEnv.extendEnv( new Bindings() ); // will go away
 
         // For each var-proc pair, make a new Binding
         // out of the corresponding token "lexeme" and expr evaluation.
@@ -38,5 +38,17 @@ LetrecDecls
         return newEnv;
     }
 
+    @Override
+    public String toString() {
+        String result = "";
+        Iterator< Token > varIter = varList.iterator();
+        Iterator< Exp > expIter = expList.iterator();
+        String sep = "";
+        while ( varIter.hasNext() ) {
+            result += sep +  varIter.next().str + '=' + expIter.next();
+            sep = " ";
+        }
+        return result;
+    }
 
 %%%

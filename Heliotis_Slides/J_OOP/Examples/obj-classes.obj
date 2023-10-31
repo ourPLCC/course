@@ -1,0 +1,16 @@
+define c1 =
+    class % extends an unnamed class
+        field x
+        field y end
+define c2 =
+    class extends c1
+        field z
+        field x end
+define obj1 = new c1
+define obj2 = new c2
+<obj1>set x = 3
+<obj2>set x = 5
+<obj2>@@           % Print out the environment chain for obj2.
+<<obj2>!@>@@       % Print out the environment chain for !@ (global env).
+define blob = 77
+<<obj2>!@>@@       % Print out the environment chain for !@ (new global env).

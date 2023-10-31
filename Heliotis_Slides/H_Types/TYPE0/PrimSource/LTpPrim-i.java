@@ -12,7 +12,7 @@ LTpPrim
 
     @Override
     public String toString() {
-	return "+";
+	return "<?";
     }
 %%%
 

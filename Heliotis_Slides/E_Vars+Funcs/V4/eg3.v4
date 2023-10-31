@@ -1,10 +1,13 @@
+% Nested functions
 
 let
-  add3 = proc(x,y,z)
-           let
-             partial = +(x,y)
-           in
-             +(partial,z)
+  square = proc( x ) *( x, x )
 in
-  .add3(a,b,c)
-
+  let 
+    sqdiff = proc( a, b ) -( .square( a ), .square( b ) )
+  in
+    let
+      v1 = 25
+      v2 = 5
+    in
+      sqdiff

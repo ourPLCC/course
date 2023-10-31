@@ -1,8 +1,11 @@
+% A very important property of closures, laid bare.
+
 let
-  add3and57 =
+  who = 5
+  reveal = proc()
     let
-      u = 57
+      who = 99
     in
-      proc( x, y, z ) +( +( x, u ), +( y, z ) )
-in
-  .add3and57( 8, 13, 21 )
+      who
+  in
+    .reveal()

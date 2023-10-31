@@ -1,0 +1,57 @@
+let
+  glob = 7
+in
+  let
+    p1 = proc() let glob = 8 in set glob = *(2,glob)
+    p2 = proc( g ) set g = *(2,g)
+    p3 = proc( g ) set glob = *(2,g)
+  in
+    % {.p1(); glob}
+    % {.p2( glob ); glob}
+    {.p3( glob ); glob}
+
+
+define z = 12
+let
+    y = 4
+in
+    let
+        y = let y = z in add1(y)
+        z = add1(y)
+    in
+        +(y,z)
+
+
+define reflx = proc( f, a, b ) -( .f(a,b), .f(b,a) )
+.reflx( proc(x,y) *(x,y), 2, 10 )
+.reflx( proc(x,y) -(x,y), 2, 10 )
+
+let
+  binop = proc( i, j ) +( i, j )
+in
+  let
+    x = 2
+    z = 11
+  in
+    -( .binop( x, z ), .binop( z, x ) )
+
+
+.proc( binop ) .proc( x, z ) -( .binop( x, z ), .binop( z, x ) ) ( 2, 11 ) ( proc( i, j ) +( i, j ) )
+
+
+define until = proc( test, action )
+                if test
+                    then 9999
+                    else { action; .until( test, action ) }
+
+let x = 5 in .until( zero?(x), set x = sub1( x ) )
+
+let x = 5 in { .until( zero?(x), set x = sub1( x ) ); x }
+
+define untilth = proc( test, action )
+                   if .test()
+                        then 9999
+                        else { .action(); .untilth( test, action ) }
+
+let x = 5 in { .untilth( .proc() zero?(x), .proc() set x = sub1(x) ); x }
+

@@ -1,0 +1,20 @@
+
+% Build a string in decimal out of the argument integer.
+%
+define int2str = proc( n ) if =?( n, 0 ) then "0" else .i2s_rec( n, "" )
+
+define i2s_rec = proc( n, tail )
+                    if =?( n, 0 )
+                        then tail
+                        else
+                            letrec
+                                quot = /( n, 10 )
+                                digit = +( -( n, *( quot, 10 ) ), '0 )
+                            in
+                                .i2s_rec( quot, addFirst( digit, tail ) )
+
+% (To print the string as a string instead of as a list of integer codes,
+% use the putc expression.)
+
+
+define Card = class ........

@@ -55,7 +55,8 @@ public class EnvNode extends Env {
         }
         // not found in the local bindings,
         // so look in the next (enclosing) environment
-        return enclosing.applyEnvRef(sym);
+        Ref result = enclosing.applyEnvRef(sym);
+        return result;
     }
 
     /**

@@ -1,0 +1,11 @@
+
+let
+    a = 3
+    b = 4
+in
+    let
+        c = add1( +( a, b ) )
+        d = add1( +( +( a, b ), +( a, b ) ) )
+    in
+        +( +( c, d ), +( a, b ) )
+

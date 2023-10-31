@@ -1,0 +1,10 @@
+letrec
+    odd? = proc(t:int):bool if zero?(t) then false else .even?(sub1(t))
+    even? = proc(t:int):bool if zero?(t) then true else .odd?(sub1(t))
+    fact =
+    proc( x: int ): int
+        if zero?( x )
+            then 1
+            else *( x, .fact( sub1( x ) ) )
+in
+   .odd?( .fact( 5 ) )

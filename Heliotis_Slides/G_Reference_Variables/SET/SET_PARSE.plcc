@@ -1,0 +1,61 @@
+# Language V4: procs
+
+skip WHITESPACE '\s+'
+skip COMMENT '%.*'
+
+ADD1OP 'add1'
+ADDOP '\+'
+ASSIGN '='
+COMMA ','
+DEFINE 'define'
+DIVOP '/'
+DOT '\.'
+ELSE 'else'
+IF 'if'
+IN 'in'
+LBRACE '\{'
+LET 'let'
+LETREC 'letrec'
+LPAREN '\('
+MULOP '\*'
+PROC 'proc'
+RBRACE '\}'
+RPAREN '\)'
+SEMI ';'
+SET 'set'
+SUB1OP 'sub1'
+SUBOP '\-'
+THEN 'then'
+ZEROP 'zero\?'
+
+LIT '\d+'
+VAR '[A-Za-z]\w*\??'
+%
+<program>:Define ::= DEFINE <VAR> ASSIGN <exp>
+<program>:Eval   ::= <exp>
+
+<exp>:AppExp     ::= DOT <exp> LPAREN <operands> RPAREN
+<exp>:IfExp      ::= IF <exp>test THEN <exp>thenPart ELSE <exp>elsePart
+<exp>:LetExp     ::= LET <letDecls> IN <exp>
+<exp>:LetrecExp  ::= LETREC <letrecDecls> IN <exp>
+<exp>:LitExp     ::= <LIT>
+<exp>:PrimAppExp ::= <prim> LPAREN <operands> RPAREN
+<exp>:ProcExp    ::= PROC LPAREN <formals> RPAREN <exp>
+<exp>:SeqExp     ::= LBRACE <exp> <seqExps> RBRACE
+<exp>:SetExp     ::= SET <VAR> ASSIGN <exp>
+<exp>:VarExp     ::= <VAR>
+<letDecls>       **= <VAR> ASSIGN <exp>
+<letrecDecls>    **= <VAR> ASSIGN <exp>
+<operands>       **= <exp> +COMMA
+<seqExps>        **= SEMI <exp>
+
+<prim>:AddPrim   ::= ADDOP
+<prim>:SubPrim   ::= SUBOP
+<prim>:Add1Prim  ::= ADD1OP
+<prim>:Sub1Prim  ::= SUB1OP
+<prim>:MulPrim   ::= MULOP
+<prim>:DivPrim   ::= DIVOP
+<prim>:ZeropPrim ::= ZEROP
+
+<formals>        **= <VAR> +COMMA
+%

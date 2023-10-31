@@ -1,0 +1,29 @@
+define x = .<new Lower> init()
+<x>waldo
+<x>top
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Chain order follows object parts, but      %
+% each object part first checks its class    %
+% before searching up the object part chain. %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+<x>lower_field
+<x>upper_field
+<x>just_lower
+<x>just_upper
+<<x>super>waldo
+<<x>super>top
+<<x>super>upper_field
+<<x>super>just_upper
+<<x>super>lower_field
+<<x>super>just_lower
+<<x>myclass>waldo
+<<x>myclass>just_lower
+<<x>myclass>top
+<<<x>myclass>superclass>waldo
+<<<x>myclass>superclass>top
+<<<x>myclass>superclass>just_upper
+<<<x>myclass>superclass>upper_field
+@@
+<x>@@

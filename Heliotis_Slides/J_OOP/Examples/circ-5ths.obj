@@ -1,0 +1,76 @@
+
+% Circle of fifths
+
+% Modulo arithmetic
+%
+define modulo = proc( num, denom ) -( num, *( /( num, denom ), denom ) )
+
+% List indexing
+%
+define i_th = proc( list, i )
+                if =?( i, 0 )
+                    then first( list )
+                    else .i_th( rest( list ), sub1( i ) )
+
+define Circle5 = class
+                    static NOTES = [
+                                    [ 'C, '  ], [ 'D, 'b ],
+                                    [ 'D, '  ], [ 'E, 'b ],
+                                    [ 'E, '  ], [ 'F, '  ],
+                                    [ 'F, '# ], [ 'G, '  ],
+                                    [ 'A, 'b ], [ 'A, '  ],
+                                    [ 'B, 'b ], [ 'B, '  ]
+                                ]
+                    static LEN = len( NOTES )
+                    field key % indexes the above list
+
+                    % Initialize a Circle 5 object.
+                    % Convert the argument note# into the range of NOTES.
+                    %
+                    method init = proc( note ) {
+                                        set key = .modulo( note, LEN );
+                                        self
+                                    }
+
+                    % Show the note this object represents.
+                    %
+                    method show = proc() {
+                                        putc .i_th( .i_th( NOTES, key ), 0 );
+                                        putc .i_th( .i_th( NOTES, key ), 1 );
+                                        newline
+                                    }
+
+                    % Make a new note that is a fifth up from this one.
+                    %
+                    method next = proc()
+                                        let
+                                            up = +( key, 7 )
+                                        in
+                                            .<new Circle5>init( up )
+                end
+
+% ===================================================================
+% 
+% --> define note = .<new Circle5>init(2)
+% note
+% --> .<note>show()
+% D 
+% nil
+% --> { set note = .<note>next(); .<note>show() }
+% A 
+% nil
+% --> { set note = .<note>next(); .<note>show() }
+% E 
+% nil
+% --> { set note = .<note>next(); .<note>show() }
+% B 
+% nil
+% --> { set note = .<note>next(); .<note>show() }
+% F#
+% nil
+% --> { set note = .<note>next(); .<note>show() }
+% Db
+% nil
+% --> { set note = .<note>next(); .<note>show() }
+% Ab
+% nil

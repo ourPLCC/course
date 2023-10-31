@@ -1,15 +1,10 @@
+
 let
-  a = 1
-  b = 10
-  c = 100
-  u = 1000
+  add3 = proc(x,y,z)
+           let
+             partial = +(x,y)
+           in
+             +(partial,z)
 in
-  let
-    add3 = proc(x,y,z)
-      let
-        partial = +(x,y)
-      in
-        +(partial,u)
-  in
-    .add3(a,b,c)
+  .add3(a,b,c)
 

@@ -1,0 +1,30 @@
+
+
+let x = 12 y = 5 in $( x, y )
+
+proc(w,x,y,z) if w then x else if y then z
+
+let a = 10 b = +(a,a) in -(b,a)
+
+letrec sum = proc(x) if x then +(x,.sum(sub1(x))) else 0 in .sum(5)
+
+let add3 = proc(x,y,z) +(x,y,z) in .add3(1,2,3)
+
+let add3 = proc(x,y,z) +(x,+(y,z)) in add3(1,2,3)
+
+let add3 = proc(x,y,z) +(x,+(y,z)) in add3
+
+let add3 = proc(x,y,z) +(x,+(y,z)) in .add3(1,2,3)
+
+{
+     1;
+     2;
+     3;
+}
+
+let
+    a = 1
+    b = 2
+in
+    set c = +(2,1)
+

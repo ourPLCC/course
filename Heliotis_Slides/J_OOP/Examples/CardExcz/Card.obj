@@ -1,0 +1,44 @@
+
+% Build a string in decimal out of the argument integer.
+%
+define int2str = proc( n ) if =?( n, 0 ) then "0" else .i2s_rec( n, "" )
+
+define i2s_rec = proc( n, tail )
+                    if =?( n, 0 )
+                        then tail
+                        else
+                            letrec
+                                quot = /( n, 10 )
+                                digit = +( -( n, *( quot, 10 ) ), '0 )
+                            in
+                                .i2s_rec( quot, addFirst( digit, tail ) )
+
+% Print the string as a string instead of as a list of integer codes.
+%
+define print_str = proc( s ) if =?( len( s ), 0 )
+                                then newline
+                                else {
+                                    putc first( s );
+                                    .print_str( rest( s ) )
+                                }
+
+define Card = class
+                field suit
+                field rank
+                method init = proc( s, r ) { set suit = s; set rank = r; self }
+                method equal = proc( card )
+                        =?(
+                            +(
+                                =?( <self>suit, <card> suit ),
+                                =?( <self>rank, <card> rank )
+                            ),
+                            2
+                        )
+                method less = proc( card )
+                        if =?( <self>suit, <card>suit )
+                            then <?( <self>rank, <card>rank )
+                            else <?( <self>suit, <card>suit )
+                method asString = proc()
+                        addFirst( <self>suit, .int2str( <self>rank ) )
+                end
+

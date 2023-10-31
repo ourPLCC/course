@@ -1,7 +1,19 @@
 let
-  u = 57
+  add3and57 =
+    let
+      u = 57
+    in
+      proc( x, y, z ) +( +( x, u ), +( y, z ) )
 in
-  let
-    add3and57 = proc( x, y, z ) +( +( x, u ), +( y, z ) )
-  in
-    .add3and57( 8, 13, 21 )
+  .add3and57( 8, 13, 21 )
+
+% Alternative is below
+
+let
+  add3and57 = proc( x, y, z )
+    let
+      u = 57
+    in
+      +( +( x, u ), +( y, z ) )
+in
+  .add3and57( 8, 13, 21 )

@@ -10,4 +10,4 @@ in
       v1 = 25
       v2 = 5
     in
-      sqdiff
+      .sqdiff( v1, v2 )

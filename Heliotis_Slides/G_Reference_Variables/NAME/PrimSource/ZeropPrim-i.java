@@ -10,7 +10,7 @@ ZeropPrim
 
     @Override
     public String toString() {
-	return "sub1";
+	return "zero?";
     }
 %%%
 

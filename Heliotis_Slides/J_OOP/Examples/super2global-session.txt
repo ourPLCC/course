@@ -1,0 +1,24 @@
+--> define p = proc() { putc 'G; newline; nil }
+p
+--> .p()
+G
+nil
+--> define c = class method p = proc() { putc 'L; newline; nil }
+                     method ql = proc() .<self>p()  
+                     method qg = proc() .<super>p()
+               end
+c
+--> define x = new c   
+x
+--> .p()
+G
+nil
+--> .<x>p()
+L
+nil
+--> .<x>ql()
+L
+nil
+--> .<x>qg()
+G
+nil

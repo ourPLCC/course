@@ -1,0 +1,20 @@
+define sum_factory = proc():[int=>int]
+  let
+    sum = 0
+  in
+    proc(n:int):int set sum = +(sum,n)
+
+define reset_sum = proc(s:[int=>int]):int .s(-(0,.s(0)))
+
+define sum = .sum_factory()
+.sum(1)
+.sum(3)
+.sum(5)
+.sum(7)
+.sum(9)
+.reset_sum(sum)
+.sum(1)
+.sum(3)
+.sum(5)
+.sum(7)
+.sum(9)

@@ -12,7 +12,7 @@ GTpPrim
 
     @Override
     public String toString() {
-	return "+";
+	return ">?";
     }
 %%%
 

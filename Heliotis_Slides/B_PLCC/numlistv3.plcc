@@ -16,6 +16,7 @@ RPAREN '\)'
 NumSeq
 %%%
 
+    @Override
     public String toString() {
         String ret = "( ";
         for (Token tok: nums.numList) {

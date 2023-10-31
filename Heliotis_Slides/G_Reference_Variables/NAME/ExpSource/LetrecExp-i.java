@@ -1,7 +1,7 @@
 
 LetrecExp
 %%%
-    // <exp>:LetrecExp     ::= LET <letrecDecls> IN <exp>
+    // <exp>:LetrecExp     ::= LETREC <letrecDecls> IN <exp>
 
     @Override
     public Val eval( Env env ) {

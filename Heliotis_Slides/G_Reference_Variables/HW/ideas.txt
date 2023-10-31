@@ -1,0 +1,6 @@
+
+Write a set of list manipulation procs.
+
+Add a list literal to the SET language.
+
+Write some common list manipulation functions.

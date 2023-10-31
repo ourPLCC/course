@@ -1,0 +1,39 @@
+$ rep accum.set 
+ADD set to 1
+CLEAR set to 2
+GET set to 3
+Accum set to λ(){return LetrecExp@119d7047}
+--> define a = .Accum()  
+a set to λ(action){return sub1(-(action,1)) ? add : sub1(-(action,2)) ? clear : sub1(-(action,3)) ? get : -(0,1)}
+--> ..a(GET)()
+0
+--> ..a(ADD)(14)
+14
+--> ..a(ADD)(16)
+30
+--> ..a(GET)()
+30
+--> ..a(CLEAR)()
+0
+--> ..a(ADD)(100)
+100
+--> ..a(ADD)(10)
+110
+--> ..a(ADD)(1)
+111
+--> ..a(GET)()
+111
+--> define b = .Accum()
+b set to λ(action){return sub1(-(action,1)) ? add : sub1(-(action,2)) ? clear : sub1(-(action,3)) ? get : -(0,1)}
+--> ..b(GET)()
+0
+--> ..b(ADD)(3)
+3
+--> ..b(GET)()
+3
+--> ..a(GET)()
+111
+--> ..a(10)(1)
+class IntVal is not a proc.
+--> .a(10)
+-1

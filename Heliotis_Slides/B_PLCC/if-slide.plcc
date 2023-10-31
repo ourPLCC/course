@@ -1,0 +1,33 @@
+# IF Exercise
+# J Heliotis
+# 5 February 2021
+
+# This one does not work because of the nested "else" problem.
+
+skip WHITESPACE '\s+'
+
+token LPAREN '\('
+token RPAREN '\)'
+token IF 'if'
+token ELSE 'else'
+token EXPR 'EXPR'
+token STMT 'STMT' # a placeholder for other statements
+
+%
+
+<prog> ::= <stmt>
+<stmt>:Default ::= <STMT>
+<expr> ::= <EXPR>
+# <stmt>:IfStmtElse ::= IF LPAREN <expr> RPAREN <stmt> ELSE <stmt>
+# <stmt>:IfStmt ::= IF LPAREN <expr> RPAREN <stmt>
+
+<stmt>:IfStmt ::= IF LPAREN <expr> RPAREN <stmt> <elsePart>
+<elsePart>:RealElse ::= ELSE <stmt>
+<elsePart>:NoElse ::=
+
+# if (...) ... else if (...)  <-- OK
+# if (...) if (...) ... else ...  <-- not OK
+#
+# "Dangling else problem"
+%
+

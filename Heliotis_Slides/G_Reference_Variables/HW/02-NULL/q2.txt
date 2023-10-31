@@ -1,0 +1,27 @@
+
+Add the notion of a null value to the SET language. Here is what is involved.
+
+Add a new default method to the Val interface called isNull.
+
+Add a new Val subclass called NullVal and override the default implementation..
+
+Define the token "NULL".
+
+Define a new expression type (subclass of Exp) called NullExp.
+
+
+new primitive for isNull that returns an IntVal (0 for not null, 1 for null)
+This involves a new token "isNull?".
+
+Here are the files you will change:
+
+SETL.plcc (Change name from SET.plcc.)
+EnvSource/Val-i.java
+
+Here are the files you will create.
+
+PrimSource/NullpPrim-i.java
+EnvSource/NullVal-i.java
+ExpSource/NullExp-i.java
+
+Make sure you add all these files to SETL.plcc

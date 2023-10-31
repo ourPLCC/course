@@ -46,6 +46,7 @@ public class Bindings {
 
     /**
      * Add a Binding object to this local environment.
+     * (Only used locally, in one of the constructors.)
      */
     public void add( Binding b ) {
         bindingList.add( b );
@@ -53,6 +54,7 @@ public class Bindings {
 
     /**
      * Add a binding (s, v) to this local environment.
+     * (Not currently used.)
      */
     public void add( String s, Val v ) {
         add( new Binding( s, v ) );

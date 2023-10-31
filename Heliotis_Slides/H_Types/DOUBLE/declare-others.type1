@@ -1,0 +1,5 @@
+declare x: int
+declare subx: [ int => int ]
+define subx = proc( i: int ): int -( i, x )
+define x = false
+.subx( 4 )

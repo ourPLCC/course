@@ -1,0 +1,68 @@
+% Procs And More Procs examples
+% The same basic calculation, reduced over and over again
+% All examples yield the same answer: 5000
+
+% -------------------------------------------------------------------
+% #1 A typical let expression that defines a proc, wrapped in
+%    another let environment that has something the proc needs.
+%    We even wrote a comment!
+
+let
+    KILO = 1000
+in
+    let
+        example = proc ( x, y )
+                % Add two numbers then multiply answer by KILO.
+                *( KILO, +( x, y ) )
+    in
+        .example( 2, 3 )
+
+% -------------------------------------------------------------------
+% #2 Let's split it up so that we build a proc that knows how to do
+%    the calculation but needs the factor of 1000 before it can be
+%    applied.
+
+let
+    KILO = 1000
+in
+    let
+        example = proc ( factor )
+                % Return a proc that adds two numbers together
+                % and then multiplies the answer by factor.
+                proc( x, y ) *( factor, +( x, y ) )
+    in
+        let
+            myproc = .example( KILO )
+        in
+            .myproc( 2, 3 )
+
+% -------------------------------------------------------------------
+% #3 Do we really need to name myproc? No, just chain the two
+%    applications together
+
+let
+    KILO = 1000
+in
+    let
+        example = proc ( factor )
+                % Return a proc that adds two numbers together
+                % and then multiplies the answer by factor.
+                proc( x, y ) *( factor, +( x, y ) )
+    in
+        ..example( KILO )( 2, 3 )
+
+% -------------------------------------------------------------------
+% #4 Do we really need to name example? No, just insert its definition
+%    into where the name 'example' is referenced.
+
+let
+    KILO = 1000
+in
+    ..proc( factor ) proc( x, y ) *( factor, +( x, y ) )( KILO )( 2, 3 )
+
+% -------------------------------------------------------------------
+% #5 Well, we've gone this far, let's get rid of the outer let expression,
+%    too, by replacing the reference to 'KILO' with its value.
+
+..proc( factor ) proc( x, y ) *( factor, +( x, y ) )( 1000 )( 2, 3 )
+

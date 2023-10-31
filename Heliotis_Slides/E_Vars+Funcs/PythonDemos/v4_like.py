@@ -10,7 +10,8 @@ def less_than( a, b ):
 
 lt = lambda a,b : a < b
 
-# Just to be complete, here is a little inefficient insertion sort function.
+# A little inefficient insertion sort function to demonstrate function args
+#
 def sort( data, comp ):
     def insert( value, data ):
         if len( data ) == 0 or comp( value, data[ 0 ] ):
@@ -48,13 +49,7 @@ def add_curried( x ):
 print()
 print( "add_curried( 3 ) =", add_curried( 3 ) )
 print()
-try:
-    print( "add_curried( 3, 5 ) =", end=" " )
-    sys.stdout.flush()
-    print( add_curried( 3, 5 ) )
-except Exception as e:
-    print( e, file=sys.stderr )
-print()
+
 f = add_curried( 3 )
 print( "f = add_curried( 3 ); f( 5 ) =", f( 5 ) )
 print()

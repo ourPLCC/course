@@ -12,7 +12,7 @@ GEpPrim
 
     @Override
     public String toString() {
-	return "+";
+	return ">=?";
     }
 %%%
 

@@ -1,3 +1,7 @@
+SeqExp:import
+%%%
+import java.util.stream.Collectors;
+%%%
 SeqExp
 %%%
 public Val eval( Env env ) {
@@ -5,6 +9,13 @@ public Val eval( Env env ) {
     for ( Exp e : seqExps.expList ) {
         v = e.eval( env );
     }
-return v;
-    }
+    return v;
+}
+
+@Override
+public String toString() {
+    return "{" + seqExps.expList.stream()
+                                .map( Exp::toString )
+                                .collect( Collectors.joining(";") ) + "}";
+}
 %%%

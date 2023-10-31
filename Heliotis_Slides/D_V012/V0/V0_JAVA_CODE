@@ -1,0 +1,115 @@
+
+
+Sep 14 10:12 2018 Add1Prim.ijava Page 1
+
+
+Add1Prim
+%%%
+    public String toString() {
+	return "add1";
+    }
+%%%
+
+Sep 14 10:13 2018 AddPrim.ijava Page 1
+
+
+AddPrim
+%%%
+    public String toString() {
+	return "+";
+    }
+%%%
+
+Sep 14 10:13 2018 LitExp.ijava Page 1
+
+
+LitExp
+%%%
+    public String toString() {
+	return lit.toString();
+    }
+%%%
+
+Jan 31 10:23 2020 Operands.ijava Page 1
+
+
+Operands:import
+%%%
+import java.util.stream.Collectors;
+%%%
+
+
+Operands
+%%%
+    public String toString() {
+        return expList.stream()
+                        .map( Exp::toString )
+                        .collect( Collectors.joining( "," ) );
+    }
+%%%
+
+
+
+Jan 31 10:19 2020 PrimAppExp.ijava Page 1
+
+
+PrimAppExp
+%%%
+    public String toString() {
+	return prim + "(" + operands + ")";
+    }
+
+    /**
+     * Alternative format that puts the operator in between
+     * the operands
+     */
+    public String toStringAlternate() {
+        int primLen = prim.toString().length();
+        String result = "(";
+        for ( Exp e: operands.expList ) {
+            result += " " + e + ' ' + prim;
+        }
+        return result.substring( 0, result.length() - primLen ) + ')';
+    }
+%%%
+
+Sep 14 10:24 2018 Program.ijava Page 1
+
+
+Program
+%%%
+    public String toString() {
+	return exp.toString();
+    }
+%%%
+
+Sep 14 10:25 2018 Sub1Prim.ijava Page 1
+
+
+Sub1Prim
+%%%
+    public String toString() {
+	return "sub1";
+    }
+%%%
+
+Sep 14 10:25 2018 SubPrim.ijava Page 1
+
+
+SubPrim
+%%%
+    public String toString() {
+	return "-";
+    }
+%%%
+
+Sep 14 10:25 2018 VarExp.ijava Page 1
+
+
+VarExp
+%%%
+    public String toString() {
+        return var.toString();
+    }
+%%%
+

@@ -2,10 +2,11 @@
 
 let
   who = 5
-  reveal = proc()
+in
+  let
+    reveal = proc() who
+  in
     let
       who = 99
     in
-      who
-  in
-    .reveal()
+      .reveal()

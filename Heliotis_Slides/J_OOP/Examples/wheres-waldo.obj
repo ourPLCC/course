@@ -1,0 +1,47 @@
+% The purpose of this example is to determine the environment chain
+% when fields, static variables, and superclasses are involved.
+%
+%    class Upper                                object part
+%  +-------------------+                +--------------------+
+%  | just_upper = 100  |        3       | upper_field = 200  |
+%  | top = 1000        |<---------------| top = 1001
+%  | waldo = 0         |                | waldo = 10         |
+%  | init method       |                +--------------------+
+%  +-------------------+                       ^
+%                ^                             |
+%                |                             |2
+%    class Lower |                             |
+%  +-------------------+                       | object part
+%  | just_lower = 101  |        1       +--------------------+
+%  | waldo = 1         |<---------------| lower_field = 201  |
+%  | init method       |                +--------------------+
+%  +-------------------+
+
+define
+Upper = class
+        static just_upper = 100
+        static waldo = 0
+        static top = 1000
+        field upper_field
+        field waldo
+        field top
+        method init = proc() {
+            set upper_field = 200;
+            set waldo = 10;
+            set top = 1001;
+            self
+        }
+end
+
+define
+Lower = class extends Upper
+        static just_lower = 101
+        static waldo = 1
+        field lower_field
+        method init = proc() {
+            .<super>init();
+            set lower_field = 201;
+            self
+        }
+end
+

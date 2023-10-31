@@ -18,6 +18,7 @@ NUM '\d+'
 # add a toString method to the NumSeq class
 NumSeq
 %%%
+    @Override
     public String toString() {
         int minSoFar = Integer.parseInt(num.str);
         int m = nums.min(minSoFar); // get the overall minimum

@@ -1,0 +1,25 @@
+% The super class
+%
+define C =
+  class
+    field x
+    method init=proc() {set x=3 ; self}
+    method foo = proc() <self>x
+    method bar = proc() <this>x
+  end
+
+% The subclass
+%
+define D =
+  class extends C
+    field x
+    method init=proc() {set x=5 ; .<super>init()}
+  end
+  
+define p = .<new C>init() % instance of C
+define q = .<new D>init() % instance of D
+
+.<p>foo()
+.<p>bar()
+.<q>foo()
+.<q>bar()

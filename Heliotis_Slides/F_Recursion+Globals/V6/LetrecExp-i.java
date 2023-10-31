@@ -8,4 +8,8 @@ LetrecExp
         return exp.eval( newEnv );
     }
 
+    @Override
+    public String toString() {
+        return "let " + letrecDecls + " in " + exp;
+    }
 %%%

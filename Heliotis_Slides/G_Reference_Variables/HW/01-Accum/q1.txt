@@ -1,0 +1,78 @@
+
+In this problem you will see how procs with closures make OO programming
+look like syntactic sugar.
+
+You will write a proc called Accum that behaves like a class of accumulator
+objects. When you call it, it returns a proc with an internal variable
+that has been set to 0 and three nested procs that we use like "methods".
+When the outer proc is called you must provide a method number: 1, 2, or 3.
+That proc then returns one of the three
+methods that can be applied to do something with the variable stored
+in the Accum procVal's closure.
+
+Method 1 takes an argument. It adds its argument's value to the internal
+         variable.
+
+Method 2 has no parameters. It clears the internal variable to 0.
+
+Method 3 returns the value of the internal variable.
+
+For readability and convenience, define "ADD" to be 1, "CLEAR" to be 2,
+and "GET" to be 3.
+
+Here is a sample session of use of this proc.
+
+$ rep accum.set 
+ADD set to 1
+CLEAR set to 2
+GET set to 3
+Accum set to λ(){return LetrecExp@119d7047}
+--> define a = .Accum()  
+a set to λ(action){return sub1(-(action,1)) ? add : sub1(-(action,2)) ? clear : sub1(-(action,3)) ? get : -(0,1)}
+--> ..a(GET)()
+0
+--> ..a(ADD)(14)
+14
+--> ..a(ADD)(16)
+30
+--> ..a(GET)()
+30
+--> ..a(CLEAR)()
+0
+--> ..a(ADD)(100)
+100
+--> ..a(ADD)(10)
+110
+--> ..a(ADD)(1)
+111
+--> ..a(GET)()
+111
+--> define b = .Accum()
+b set to λ(action){return sub1(-(action,1)) ? add : sub1(-(action,2)) ? clear : sub1(-(action,3)) ? get : -(0,1)}
+--> ..b(GET)()
+0
+--> ..b(ADD)(3)
+3
+--> ..b(GET)()
+3
+--> ..a(GET)()
+111
+--> ..a(10)(1)
+class IntVal is not a proc.
+--> .a(10)
+-1
+
+Design
+
+The following is a good way to go.
+
+The Accum proc body is a letrec expression.
+That expression defines the accumulator variable and the
+three method procs.
+The value of the letrec expression is a proc that takes one
+argument, the method number..
+That proc contains a nested if statement that chooses the
+correct method proc to return based on its own parameter value.
+
+Save your code in a file names accum.set.
+

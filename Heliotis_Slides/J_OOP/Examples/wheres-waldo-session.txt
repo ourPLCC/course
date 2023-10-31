@@ -1,0 +1,69 @@
+$ rep wheres-waldo.obj 
+Upper
+Lower
+--> define x = .<new Lower> init()
+x
+--> <x>waldo
+1
+--> <x>top
+1001
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Chain order follows object parts, but      %
+% each object part first checks its class    %
+% before searching up the object part chain. %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+--> <x>lower_field
+201
+--> <x>upper_field
+200
+--> <x>just_lower
+101
+--> <x>just_upper
+100
+--> <<x>super>waldo
+10
+--> <<x>super>top
+1001
+--> <<x>super>upper_field
+200
+--> <<x>super>just_upper
+100
+--> <<x>super>lower_field
+no binding for lower_field
+--> <<x>super>just_lower
+no binding for just_lower
+--> <<x>myclass>waldo
+1
+--> <<x>myclass>just_lower
+101
+--> <<x>myclass>top
+1000
+--> <<<x>myclass>superclass>waldo
+0
+--> <<<x>myclass>superclass>top
+1000
+--> <<<x>myclass>superclass>just_upper
+100
+--> <<<x>myclass>superclass>upper_field
+no binding for upper_field
+--> @@
+ [x->object] [Lower->class] [Upper->class]
+
+
+object
+--> <x>@@
+ [init->proc()]
+ [super->object] [lower_field->201] [self->object] [this->object]
+ [waldo->1] [just_lower->101] [myclass->class] [superclass->class]
+ [init->proc()]
+ [super->object] [upper_field->200] [waldo->10] [top->1001] [self->object] [this->object]
+ [top->1000] [waldo->0] [just_upper->100] [myclass->class] [superclass->class]
+ [self->object] [this->object]
+ [superclass->nil] [myclass->class]
+ [x->object] [Lower->class] [Upper->class]
+
+
+object
+
