@@ -9,7 +9,7 @@ Set 1a of the course notes serves as a reference manual for PLCC. It describes
 the format of a language 'grammar' file that PLCC translates into Java classes
 to implement a scanner, parser, and interpreter for the language.
 
-The course notes are organized as follows:
+In particular, `JNotes/` and `JNotes-src/` are organized as follows:
 
 
 Slide Set | Contents
@@ -23,8 +23,8 @@ Slide Set | Contents
 4         | Typed languages
 5         | Object-oriented languages
 6         | Infix expressions and arrays
-7         | Continuations, parallelism, exception handling, and concurrency
-(8)       | Logic languages -- not yet written
+7         | Logic languages
+8         | Continuations, parallelism, exception handling, and concurrency
 
 The ABC language (see the Code directory) is an implementation of ABCDatalog
 (see http://abcdatalog.seas.harvard.edu/), a Prolog-like language that
