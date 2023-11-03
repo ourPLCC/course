@@ -22,7 +22,7 @@ public class Nums {
             Token.Match match$ = t$.match;
             switch(match$) {
             case NUM:
-                numList.add(scn$.match(Token.Match.NUM, trace$));
+                numList.add(scn$.match(Token.Match.NUM));
                 continue;
             default:
                 return new Nums(numList);

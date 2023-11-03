@@ -2,9 +2,10 @@
 \slidenumber
 \LARGE
 {\bf PLCC -- Parsing (continued)}\exx
-The code samples shown above
-omit a \verb'Trace' parameter named \verb'trace$'
-that plays a role in calling the \verb'parse' methods.
+\Large
+While not shown in the examples above,
+PLCC adds a \verb'Trace' parameter named \verb'trace$'
+to the signature of all \verb'parse' methods.
 If this parameter is not \verb'null' --
 when the `\verb'-t'' command-line option is given
 to the \verb'Parse' or \verb'Rep' programs --
@@ -12,7 +13,6 @@ parsing the program
 will display a visual ``parse trace'' to standard error (by default).
 In Language \verb'LON', an example parse trace
 for the program `\verb'(1 3 5)'' looks like this:
-{\Large
 \begin{qv}
    1: <lon>
    1: | LPAREN "("
@@ -25,7 +25,6 @@ for the program `\verb'(1 3 5)'' looks like this:
    1: | | | | <nums>:NumsNull
    1: | RPAREN ")"
 \end{qv}
-}
 Each line in the parse trace displays
 either a nonterminal or a token.
 If it displays a nonterminal,
