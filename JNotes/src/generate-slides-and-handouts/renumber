@@ -1,0 +1,137 @@
+#! /usr/bin/perl -w
+
+use strict;
+use File::Basename;
+use Getopt::Long;
+use File::Temp (qw/ tempdir /);
+use File::Copy (qw/ copy move /);
+
+my $dir=".";
+my $prefix = "";
+my $suffix = ".tex"; # suffix defaults to '.tex'
+my $keep;
+my $tell;
+my $number;
+
+my $cmd = &basename($0);
+my $usage =
+    "usage: $cmd [-d <dir>] [-p <prefix>] [-s <suffix>] [-k(eep)] [-t(ell)] [-n(um)";
+
+GetOptions(
+           'dir=s'    => \$dir,
+	   'prefix=s' => \$prefix,
+           'suffix=s' => \$suffix,
+	   'tell'     => \$tell,    # tell what would happen if run for real
+	   'keep'     => \$keep,    # keep the temporary subdir & its contents
+	   'number'   => \$number   # number only; don't renumber
+           ) or
+    die "$usage\n";
+
+die "$usage\n" unless @ARGV == 0;
+die "$dir: no such directory\n" unless -d $dir;
+
+$prefix =~ m/[^\w.]/ and
+    die "$cmd: prefix must consist only of alphanumeric and '.' chars\n";
+$suffix =~ m/[^\w.]/ and
+    die "$cmd: suffix must consist only of alphanumeric and '.' chars\n";
+
+my $pfx = $prefix;
+my $sfx = $suffix;
+
+$pfx =~ s/\./\\\./g; # escape any lone dots
+$sfx =~ s/\./\\\./g; # escape any lone dots
+# print "pfx=$pfx sfx=$sfx\n";
+
+my $pat = qr/^($pfx)(\d\w*)($sfx)$/;
+
+opendir DIR,"$dir" or die "$dir: cannot open directory for reading\n";
+my @files = grep /$pat/, readdir DIR;
+closedir DIR;
+
+die "$cmd: no $suffix files to renumber\n" unless @files > 0;
+
+@files = sort byindex @files;
+
+if (defined $number) {
+    foreach (@files) {
+	print "$_\n";
+    }
+    exit 0;
+}
+
+my @oldFiles;
+my @newFiles;
+my $count;
+
+# see what files we need to move
+$count = 0;
+foreach (@files) {
+    $count++;
+    my $of = $_;
+    my $nf = "$prefix$count$suffix";
+    if ($of ne $nf) {
+	push @oldFiles, $of;
+	push @newFiles, $nf;
+    }
+}
+
+if (@oldFiles == 0) {
+    print STDERR "$cmd: files already numbered correctly\n";
+    exit 0;
+}
+
+if (defined $tell) {
+    print STDERR "The following files will be renumbered:\n";
+    while (my $of = shift @oldFiles) {
+	my $nf = shift @newFiles;
+	print STDERR "$of =>? $nf\n";
+    }
+    exit 0;
+}
+
+my $tmpdir;
+my $template = "Renumber-XXXXXX";
+$tmpdir = tempdir($template, DIR => $dir) or
+    die "$cmd: cannot create temporary directory\n";
+
+# print "tmpdir=$tmpdir\n";
+
+# move the old files into a temp directory
+foreach (@oldFiles) {
+    my $of = $_;
+    my $src = "$dir/$of";
+    my $dst = "$tmpdir/$of";
+    move ($src, $dst) or
+	die "$cmd: move of $src to $dst failed\n";
+}
+
+# then copy them back to the original directory
+# with their new names
+while (my $of = shift @oldFiles) {
+    my $nf = shift @newFiles;
+    my $src = "$tmpdir/$of";
+    my $dst = "$dir/$nf";
+    copy ($src, $dst) or
+	die "$cmd: copy of $src to $dst failed\n";
+    print "$of => $nf\n";
+}
+
+&cleanup unless defined $keep;
+
+sub cleanup {
+     system("/bin/rm -rf $tmpdir") == 0 or
+	die "$cmd: cannot remove $tmpdir or its contents\n";
+}
+
+sub byindex {
+    $a =~ m/$pat/;
+    $2 =~ m/^(\d+)(.*)/;
+    my ($a1, $a2) = ($1, $2);
+    $b =~ m/$pat/;
+    $2 =~ m/^(\d+)(.*)/;
+    my ($b1, $b2) = ($1, $2);
+    if ($a1 == $b1) {
+	return $a2 cmp $b2;
+    }
+    return $a1 <=> $b1;
+}

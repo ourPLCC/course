@@ -21,9 +21,7 @@ Slide Set | Contents
 7         | Logic languages
 8         | Continuations, parallelism, exception handling, and concurrency
 
-src/ contains the latex for these files.
 
-generate-slides-and-handouts/ contains a container for generating
-slides/ and handouts/ from src/. Assuming you have bash and Docker installed
-and Docker is running, run `./JNotes/generate-slides-and-handouts/run.bash`
-to regenerate slides/ and handouts/.
+## Developers
+
+See src/README.md.
