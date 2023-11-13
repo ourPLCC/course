@@ -7,7 +7,7 @@ SSET=$1
 if [ -f "$SSET/FILES" ]; then
 	cat $SSET/FILES
 elif [ -d "$SSET" ]; then
-	renumber --dir="$SSET" --suffix=".tex" --number | \
+	/usr/local/bin/renumber --dir="$SSET" --suffix=".tex" --number | \
 	sed "s/^/$SSET\//"
 fi 
 
