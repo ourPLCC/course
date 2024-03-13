@@ -28,13 +28,13 @@ VAR '[A-Za-z]\w*'
 # (Remember that use of toString is only mandated at the tree's
 #  root node.)
 
-include Add1Prim-i.java
-include AddPrim-i.java
-include LitExp-i.java
-include PrimAppExp-i.java
-include Program-i.java
-include Operands-i.java
-include Sub1Prim-i.java
-include SubPrim-i.java
-include VarExp-i.java
+#include Add1Prim-i.java
+#include AddPrim-i.java
+#include LitExp-i.java
+#include PrimAppExp-i.java
+#include Program-i.java
+#include Operands-i.java
+#include Sub1Prim-i.java
+#include SubPrim-i.java
+#include VarExp-i.java
 

@@ -1,7 +1,7 @@
 %!PS-Adobe-2.0
 %%Creator: dvips(k) 2023.1 (TeX Live 2023)  Copyright 2023 Radical Eye Software
 %%Title: slides-8.dvi
-%%CreationDate: Mon Nov 13 14:41:40 2023
+%%CreationDate: Wed Mar 13 17:06:58 2024
 %%Pages: 50
 %%PageOrder: Ascend
 %%BoundingBox: 0 0 792 612
@@ -11,7 +11,7 @@
 %DVIPSWebPage: (www.radicaleye.com)
 %DVIPSCommandLine: dvips -Ppdf -G0 -t landscape slides-8
 %DVIPSParameters: dpi=8000
-%DVIPSSource:  TeX output 2023.11.13:1441
+%DVIPSSource:  TeX output 2024.03.13:1706
 %%BeginProcSet: tex.pro 0 0
 %!
 /TeXDict 300 dict def TeXDict begin/N{def}def/B{bind def}N/S{exch}N/X{S
@@ -89,7 +89,7 @@ end
 %%
 %% l3backend-header.dtx  (with options: `header,dvips')
 %% 
-%% Copyright (C) 2019-2023 The LaTeX Project
+%% Copyright (C) 2019-2024 The LaTeX Project
 %% 
 %% It may be distributed and/or modified under the conditions of
 %% the LaTeX Project Public License (LPPL), either version 1.3c of
@@ -183,8 +183,8 @@ false setglobal
       pdf.dest.y pdf.tmpc mul add
       pdf.dev.x add
     pdf.dest.x pdf.tmpb mul
-     pdf.dest.y pdf.tmpd mul add
-     pdf.dev.y add
+      pdf.dest.y pdf.tmpd mul add
+      pdf.dev.y add
   }
     def
 /pdf.bordertracking false def
@@ -332,83 +332,83 @@ false setglobal
       {
         counttomark /pdf.count exch def
           {
-           pdf.count 0 eq { exit } if
-           counttomark 2 roll
-           1 index /Rect eq
-             {
-               dup 4 array copy
-               dup dup
-                 1 get
-                 pdf.outerbox pdf.rect.ht
-                 pdf.linkmargin 2 mul add sub
-                 3 exch put
-               dup
-                 pdf.outerbox 2 get
-                 pdf.linkmargin add
-                 2 exch put
-               dup dup
-                 3 get
-                 pdf.outerbox pdf.rect.ht
-                 pdf.linkmargin 2 mul add add
-                 1 exch put
-               /pdf.currentrect exch  def
-               pdf.breaklink.write
-                 {
-                   pdf.currentrect
-                   dup
-                     pdf.outerbox 0 get
-                     pdf.linkmargin sub
-                     0 exch put
-                   dup
-                     pdf.outerbox 2 get
-                     pdf.linkmargin add
-                     2 exch put
-                   dup dup
-                     1 get
-                     pdf.baselineskip add
-                     1 exch put
-                   dup dup
-                     3 get
-                     pdf.baselineskip add
-                     3 exch put
-                   /pdf.currentrect exch def
-                   pdf.breaklink.write
+            pdf.count 0 eq { exit } if
+            counttomark 2 roll
+            1 index /Rect eq
+              {
+                dup 4 array copy
+                dup dup
+                  1 get
+                  pdf.outerbox pdf.rect.ht
+                  pdf.linkmargin 2 mul add sub
+                  3 exch put
+                dup
+                  pdf.outerbox 2 get
+                  pdf.linkmargin add
+                  2 exch put
+                dup dup
+                  3 get
+                  pdf.outerbox pdf.rect.ht
+                  pdf.linkmargin 2 mul add add
+                  1 exch put
+                /pdf.currentrect exch def
+                pdf.breaklink.write
+                  {
+                    pdf.currentrect
+                    dup
+                      pdf.outerbox 0 get
+                      pdf.linkmargin sub
+                      0 exch put
+                    dup
+                      pdf.outerbox 2 get
+                      pdf.linkmargin add
+                      2 exch put
+                    dup dup
+                      1 get
+                      pdf.baselineskip add
+                      1 exch put
+                    dup dup
+                      3 get
+                      pdf.baselineskip add
+                      3 exch put
+                    /pdf.currentrect exch def
+                    pdf.breaklink.write
                   }
                 1 index 3 get
                 pdf.linkmargin 2 mul add
                 pdf.outerbox pdf.rect.ht add
                 2 index 1 get sub
                 pdf.baselineskip div round cvi 1 sub
-                exch
-              repeat
-              pdf.currentrect
-              dup
-                pdf.outerbox 0 get
-                pdf.linkmargin sub
-                0 exch put
-              dup dup
-                1 get
-                pdf.baselineskip add
-                1 exch put
-              dup dup
-                3 get
-                pdf.baselineskip add
-                3 exch put
-              dup 2 index 2 get  2 exch put
-              /pdf.currentrect exch def
-              pdf.breaklink.write
-              SDict /pdf.pdfmark.good false put
-              exit
-            }
-            { pdf.count 2 sub /pdf.count exch def }
-          ifelse
-        }
-      loop
-    }
-  if
-  /ANN
-}
-  def
+                  exch
+                repeat
+                pdf.currentrect
+                dup
+                  pdf.outerbox 0 get
+                  pdf.linkmargin sub
+                  0 exch put
+                dup dup
+                  1 get
+                  pdf.baselineskip add
+                  1 exch put
+                dup dup
+                  3 get
+                  pdf.baselineskip add
+                  3 exch put
+                dup 2 index 2 get  2 exch put
+                /pdf.currentrect exch def
+                pdf.breaklink.write
+                SDict /pdf.pdfmark.good false put
+                exit
+              }
+              { pdf.count 2 sub /pdf.count exch def }
+            ifelse
+          }
+        loop
+      }
+    if
+    /ANN
+  }
+    def
 /pdf.breaklink.write
   {
     counttomark 1 sub
@@ -3417,15 +3417,14 @@ TeXDict begin 27 26 bop -6000 -5956 a Fi(')p -6000 55764
 45 59528 v -6000 58000 a(&)77956 -5956 y($)p 77956 55764
 V 77956 58000 a(\045)p -3764 58000 79528 45 v -3764 -5956
 V 69675 -2281 a Fg(8.26)-4000 -1770 y Ff(Continuations)575
-b Fh(\(continued\))-4000 3063 y(In)674 b(the)i Fe(apply\(Val)p
-14580 3522 115 460 v 14695 3522 919 115 v 15613 3522
-115 460 v 1378 w(val\))668 b Fh(method)675 b(in)g(the)g(AppCont)g
-(class,)701 b Fe(val)674 b Fh(must)h(e)-57 b(v)g(aluate)676
-b(to)f(a)-4000 5831 y Fe(ProcVal)p Fh(.)730 b(Notice)582
-b(that)f(the)h Fe(evalRandsRef)575 b Fh(method)582 b(produces)f(a)g
-(list)h(of)f(references,)-4000 8598 y(not)679 b(v)-57
-b(alues.)1027 b(Once)679 b(the)h(list)f(of)g(references)g(to)g(actual)h
-(parameters)g(is)f(b)-46 b(uilt,)706 b(it)679 b(is)g(passed)h(to)-4000
+b Fh(\(continued\))-4000 3063 y(In)674 b(the)i Fe(apply\(Val)1373
+b(val\))673 b Fh(method)i(in)g(the)g(AppCont)g(class,)701
+b Fe(val)674 b Fh(must)h(e)-57 b(v)g(aluate)676 b(to)f(a)-4000
+5831 y Fe(ProcVal)p Fh(.)730 b(Notice)582 b(that)f(the)h
+Fe(evalRandsRef)575 b Fh(method)582 b(produces)f(a)g(list)h(of)f
+(references,)-4000 8598 y(not)679 b(v)-57 b(alues.)1027
+b(Once)679 b(the)h(list)f(of)g(references)g(to)g(actual)h(parameters)g
+(is)f(b)-46 b(uilt,)706 b(it)679 b(is)g(passed)h(to)-4000
 11366 y(the)810 b Fe(apply)d Fh(method)j(of)f(the)h Fe(procVal)c
 Fh(object,)870 b(along)810 b(with)f(the)h Fe(vcont)d
 Fh(continution.)-4000 14133 y(This)886 b Fe(apply)e Fh(method)j(binds)f
@@ -3590,80 +3589,46 @@ V 69675 -2281 a Fg(8.32)-4000 -1770 y Ff(Exception)575
 b(Handling)h Fh(\(continued\))-4000 3063 y(Here)e(are)g(the)g(ne)-57
 b(w)574 b(grammar)g(rules)g(that)g(support)g(our)f(e)-34
 b(xception)575 b(handling:)-1609 7132 y Fa(<exp>:CatchExp)1334
-b(::=)p 16058 7451 80 319 v 16138 7451 638 80 v 16775
-7451 80 319 v 956 w(CATCH)p 21797 7451 V 21877 7451 638
-80 v 22514 7451 80 319 v 956 w(<handlerDecls>)p 36143
-7451 V 36223 7451 638 80 v 36860 7451 80 319 v 956 w(IN)p
-39012 7451 V 39092 7451 638 80 v 39729 7451 80 319 v
-956 w(<exp>)p 13109 7774 42835 45 v 13109 9776 45 2003
-v 13486 9126 a(CatchExp\(HandlerDecls)p 33650 9444 80
-319 v 33730 9444 638 80 v 34367 9444 80 319 v 956 w(handlerDecls,)p
-47040 9444 V 47120 9444 638 80 v 47757 9444 80 319 v
-956 w(Exp)p 50865 9444 V 50945 9444 638 80 v 51583 9444
-80 319 v 956 w(exp\))p 55900 9776 45 2003 v 13109 9820
-42835 45 v -1609 11215 a(<exp>:ThrowExp)g(::=)p 16058
-11534 80 319 v 16138 11534 638 80 v 16775 11534 80 319
-v 956 w(THROW)p 21797 11534 V 21877 11534 638 80 v 22514
-11534 80 319 v 956 w(<VAR>)p 27535 11534 V 27615 11534
-638 80 v 28252 11534 80 319 v 956 w(LPAREN)p 34230 11534
-V 34310 11534 638 80 v 34947 11534 80 319 v 956 w(<rands>)p
-41881 11534 V 41961 11534 638 80 v 42599 11534 80 319
-v 956 w(RPAREN)p 13109 11858 31358 45 v 13109 13860 45
-2003 v 13486 13209 a(ThrowExp\(Token)p 26955 13528 80
-319 v 27035 13528 638 80 v 27672 13528 80 319 v 956 w(var,)p
-31737 13528 V 31817 13528 638 80 v 32454 13528 80 319
-v 956 w(Rands)p 37476 13528 V 37556 13528 638 80 v 38193
-13528 80 319 v 956 w(rands\))p 44423 13860 45 2003 v
-13109 13904 31358 45 v -1609 15299 a(<handler>)6114 b(::=)p
-16058 15618 80 319 v 16138 15618 638 80 v 16775 15618
-80 319 v 956 w(HANDLER)p 23709 15618 V 23789 15618 638
-80 v 24427 15618 80 319 v 956 w(LPAREN)p 30404 15618
-V 30484 15618 638 80 v 31122 15618 80 319 v 956 w(<formals>)p
-39968 15618 V 40048 15618 638 80 v 40686 15618 80 319
-v 956 w(RPAREN)p 46663 15618 V 46743 15618 638 80 v 47381
-15618 80 319 v 956 w(<exp>)p 13109 15941 32315 45 v 13109
-17943 45 2003 v 13486 17292 a(Handler\(Formals)p 27911
-17611 80 319 v 27991 17611 638 80 v 28629 17611 80 319
-v 956 w(formals,)p 36519 17611 V 36599 17611 638 80 v
-37236 17611 80 319 v 956 w(Exp)p 40345 17611 V 40425
-17611 638 80 v 41062 17611 80 319 v 956 w(exp\))p 45379
-17943 45 2003 v 13109 17987 32315 45 v -1609 19382 a(<handlerDecls>)
-13109 19661 y(**)15021 19382 y(=)p 16058 19701 80 319
-v 16138 19701 638 80 v 16775 19701 80 319 v 956 w(<VAR>)p
-21797 19701 V 21877 19701 638 80 v 22514 19701 80 319
-v 956 w(EQUALS)p 28491 19701 V 28571 19701 638 80 v 29209
-19701 80 319 v 956 w(<handler>)p 13109 20024 62920 45
-v 13109 22027 45 2003 v 13486 21376 a(HandlerDecls\(List<Token>)p
-36519 21695 80 319 v 36599 21695 638 80 v 37236 21695
-80 319 v 956 w(varList)p 44170 21695 V 44250 21695 638
-80 v 44888 21695 80 319 v 956 w(prim,)p 49909 21695 V
-49989 21695 638 80 v 50626 21695 80 319 v 956 w(List<Handler>)p
-63299 21695 V 63379 21695 638 80 v 64016 21695 80 319
-v 956 w(handlerList\))p 75984 22027 45 2003 v 13109 22071
-62920 45 v -4000 25173 a Fh(The)574 b Fe(CATCH)p Fh(,)d
-Fe(THROW)p Fh(,)h(and)i Fe(HANDLER)c Fh(tok)-23 b(ens)575
-b(are)f(de\002ned)h(in)f(the)g(ob)-34 b(vious)574 b(w)-23
-b(ay)-149 b(.)-4000 30007 y(One)749 b(dif)-57 b(ference)749
-b(between)i(e)-34 b(xception)750 b(handlers)g(and)f(ordinary)g
-(procedures)g(is)h(that)g(when)-4000 32774 y(an)602 b(e)-34
-b(xception)602 b(is)g(thro)-57 b(wn,)607 b(the)602 b(e)-34
-b(xception)603 b(handler)f(is)f(found)g(and)h(e)-57 b(v)g(aluated)602
-b(in)g(the)g(current)-4000 35541 y(e)-34 b(xception)1047
-b(en)-92 b(vironment)1047 b(rather)g(than)g(in)g(the)g(current)f(e)-57
-b(v)g(aluation)1047 b(en)-92 b(vironment.)2131 b(F)-34
-b(or)-4000 38309 y(e)g(xample,)669 b(the)650 b(body)e(of)h(a)h(top-le)
--57 b(v)-34 b(el)649 b(procedure)g(can)g(thro)-57 b(w)648
-b(an)i(e)-34 b(xception)650 b(whose)f(handler)-4000 41076
-y(is)547 b(not)f(visible)h(at)g(the)f(top)h(le)-57 b(v)-34
-b(el)546 b(b)-46 b(ut)546 b(which)h(is)f(de\002ned)h(and)g(in)-92
-b(v)-46 b(ok)-23 b(ed)546 b(in)h(a)f(nested)h(e)-34 b(xception)-4000
-43844 y(en)-92 b(vironment)1026 b(when)f(the)i(top-le)-57
-b(v)-34 b(el)1025 b(procedure)g(is)h(applied.)2068 b(T)-184
-b(o)1025 b(thro)-57 b(w)1024 b(an)i(e)-34 b(xception,)-4000
-46611 y(all)887 b(that)f(is)h(required)e(is)i(that)f(the)h(handler)f
-(must)g(be)h(visible)g(in)f(the)g(chain)h(of)e(e)-34
-b(xception)-4000 49378 y(en)-92 b(vironments)575 b(when)e(the)i(e)-34
-b(xception)574 b(is)h(thro)-57 b(wn.)p eop end
+b(::=)958 b(CATCH)g(<handlerDecls>)963 b(IN)957 b(<exp>)p
+13109 7774 42835 45 v 13109 9703 45 1930 v 13486 9126
+a(CatchExp\(HandlerDecls)965 b(handlerDecls,)c(Exp)d(exp\))p
+55900 9703 V 13109 9747 42835 45 v -1609 11142 a(<exp>:ThrowExp)1334
+b(::=)958 b(THROW)g(<VAR>)h(LPAREN)g(<rands>)g(RPAREN)p
+13109 11784 31358 45 v 13109 13713 45 1930 v 13486 13136
+a(ThrowExp\(Token)j(var,)c(Rands)g(rands\))p 44423 13713
+V 13109 13757 31358 45 v -1609 15152 a(<handler>)6114
+b(::=)958 b(HANDLER)h(LPAREN)g(<formals>)h(RPAREN)f(<exp>)p
+13109 15794 32315 45 v 13109 17723 45 1930 v 13486 17146
+a(Handler\(Formals)j(formals,)e(Exp)e(exp\))p 45379 17723
+V 13109 17767 32315 45 v -1609 19162 a(<handlerDecls>)13109
+19441 y(**)15021 19162 y(=)g(<VAR>)g(EQUALS)h(<handler>)p
+13109 19804 62920 45 v 13109 21733 45 1930 v 13486 21156
+a(HandlerDecls\(List<Token>)966 b(varList)959 b(prim,)g(List<Handler>)i
+(handlerList\))p 75984 21733 V 13109 21777 62920 45 v
+-4000 24880 a Fh(The)574 b Fe(CATCH)p Fh(,)d Fe(THROW)p
+Fh(,)h(and)i Fe(HANDLER)c Fh(tok)-23 b(ens)575 b(are)f(de\002ned)h(in)f
+(the)g(ob)-34 b(vious)574 b(w)-23 b(ay)-149 b(.)-4000
+29713 y(One)749 b(dif)-57 b(ference)749 b(between)i(e)-34
+b(xception)750 b(handlers)g(and)f(ordinary)g(procedures)g(is)h(that)g
+(when)-4000 32481 y(an)602 b(e)-34 b(xception)602 b(is)g(thro)-57
+b(wn,)607 b(the)602 b(e)-34 b(xception)603 b(handler)f(is)f(found)g
+(and)h(e)-57 b(v)g(aluated)602 b(in)g(the)g(current)-4000
+35248 y(e)-34 b(xception)1047 b(en)-92 b(vironment)1047
+b(rather)g(than)g(in)g(the)g(current)f(e)-57 b(v)g(aluation)1047
+b(en)-92 b(vironment.)2131 b(F)-34 b(or)-4000 38015 y(e)g(xample,)669
+b(the)650 b(body)e(of)h(a)h(top-le)-57 b(v)-34 b(el)649
+b(procedure)g(can)g(thro)-57 b(w)648 b(an)i(e)-34 b(xception)650
+b(whose)f(handler)-4000 40783 y(is)547 b(not)f(visible)h(at)g(the)f
+(top)h(le)-57 b(v)-34 b(el)546 b(b)-46 b(ut)546 b(which)h(is)f
+(de\002ned)h(and)g(in)-92 b(v)-46 b(ok)-23 b(ed)546 b(in)h(a)f(nested)h
+(e)-34 b(xception)-4000 43550 y(en)-92 b(vironment)1026
+b(when)f(the)i(top-le)-57 b(v)-34 b(el)1025 b(procedure)g(is)h
+(applied.)2068 b(T)-184 b(o)1025 b(thro)-57 b(w)1024
+b(an)i(e)-34 b(xception,)-4000 46318 y(all)887 b(that)f(is)h(required)e
+(is)i(that)f(the)h(handler)f(must)g(be)h(visible)g(in)f(the)g(chain)h
+(of)e(e)-34 b(xception)-4000 49085 y(en)-92 b(vironments)575
+b(when)e(the)i(e)-34 b(xception)574 b(is)h(thro)-57 b(wn.)p
+eop end
 %%Page: 34 34
 TeXDict begin 34 33 bop -6000 -5956 a Fi(')p -6000 55764
 45 59528 v -6000 58000 a(&)77956 -5956 y($)p 77956 55764
@@ -3696,17 +3661,16 @@ b(handler)e(identi\002er)i Fe(eee)c Fh(is)j(bound)f(to)h(a)f(handler)h
 46198 y(of)566 b(the)h Fe(catch)d Fh(e)-34 b(xpression,)568
 b(so)e(when)h(the)g Fe(p)f Fh(procedure)g(is)h(called)h(in)f(this)g
 Fe(catch)d Fh(e)-34 b(xpres-)-4000 48965 y(sion,)633
-b(the)622 b Fe(throw)p 11463 49424 115 460 v 11578 49424
-919 115 v 12497 49424 115 460 v 1378 w(eee\(5\))616 b
-Fh(can)621 b(see)i(the)e(binding)h(for)e(the)i(identi\002er)h
-Fe(eee)c Fh(and)j(can)g(thus)-4000 51733 y(apply)498
-b(the)g(handler)g(with)f(an)h(actual)h(parameter)g(v)-57
-b(alue)498 b(of)f(5.)686 b(A)497 b Fe(throw)e Fh(identi\002er)k(is)f
-(look)-23 b(ed)-4000 54500 y(up)657 b(using)g(dyanmic)g(scope)h(rules)f
-(instead)h(of)e(static)i(scope)g(rules;)699 b(this)657
-b(beha)-46 b(vior)657 b(is)g(almost)-4000 57267 y(identical)576
-b(to)e(macro)g(in)-92 b(v)-46 b(ocation)575 b(as)f(compared)h(to)f
-(procedure)g(in)-92 b(v)-46 b(ocation.)p eop end
+b(the)622 b Fe(throw)1375 b(eee\(5\))619 b Fh(can)i(see)i(the)e
+(binding)h(for)e(the)i(identi\002er)h Fe(eee)c Fh(and)j(can)g(thus)
+-4000 51733 y(apply)498 b(the)g(handler)g(with)f(an)h(actual)h
+(parameter)g(v)-57 b(alue)498 b(of)f(5.)686 b(A)497 b
+Fe(throw)e Fh(identi\002er)k(is)f(look)-23 b(ed)-4000
+54500 y(up)657 b(using)g(dyanmic)g(scope)h(rules)f(instead)h(of)e
+(static)i(scope)g(rules;)699 b(this)657 b(beha)-46 b(vior)657
+b(is)g(almost)-4000 57267 y(identical)576 b(to)e(macro)g(in)-92
+b(v)-46 b(ocation)575 b(as)f(compared)h(to)f(procedure)g(in)-92
+b(v)-46 b(ocation.)p eop end
 %%Page: 35 35
 TeXDict begin 35 34 bop -6000 -5956 a Fi(')p -6000 55764
 45 59528 v -6000 58000 a(&)77956 -5956 y($)p 77956 55764
@@ -4106,18 +4070,16 @@ b(ency)576 b Fh(\(continued\))-4000 2731 y(The)582 b(problem)g(here)f
 (is)h(an)g(e)-34 b(xample)583 b(of)e(the)i(\223simultaneous)g(update)f
 (problem\224,)i(also)f(called)-4000 5167 y(a)744 b(\223race)g
 (condition\224.)1221 b(Ev)-57 b(aluating)744 b(an)g(e)-34
-b(xpression)743 b(lik)-23 b(e)744 b Fe(set)p 47320 5626
-115 460 v 47435 5626 919 115 v 48353 5626 115 460 v 1377
-w(count=add1\(count\))-4000 7602 y Fh(can)730 b(result)f(in)h(the)f
-(creation)h(of)f(multiple)h(continuations)g(\226)g(se)-57
-b(v)-34 b(eral,)767 b(for)729 b(e)-34 b(xample,)768 b(just)730
-b(to)-4000 10037 y(e)-57 b(v)g(aluate)734 b Fe(add1\(count\))729
-b Fh(\226)k(and)h(when)f Fe(count)f Fh(is)h(in)h(the)g(process)g(of)f
-(being)h(modi\002ed)-4000 12472 y(in)750 b(one)f(thread,)794
-b(there)750 b(may)f(be)h(other)f(threads)h(that)g(are)g(in)g(the)f
-(process)h(of)f(attempting)i(to)-4000 14908 y(modify)574
-b(it)g(as)g(well,)h(with)f(unpredictable)h(results.)-4000
-19409 y(When)710 b(concurrent)g(e)-34 b(xpressions)709
+b(xpression)743 b(lik)-23 b(e)744 b Fe(set)1376 b(count=add1\(count\))
+-4000 7602 y Fh(can)730 b(result)f(in)h(the)f(creation)h(of)f(multiple)
+h(continuations)g(\226)g(se)-57 b(v)-34 b(eral,)767 b(for)729
+b(e)-34 b(xample,)768 b(just)730 b(to)-4000 10037 y(e)-57
+b(v)g(aluate)734 b Fe(add1\(count\))729 b Fh(\226)k(and)h(when)f
+Fe(count)f Fh(is)h(in)h(the)g(process)g(of)f(being)h(modi\002ed)-4000
+12472 y(in)750 b(one)f(thread,)794 b(there)750 b(may)f(be)h(other)f
+(threads)h(that)g(are)g(in)g(the)f(process)h(of)f(attempting)i(to)-4000
+14908 y(modify)574 b(it)g(as)g(well,)h(with)f(unpredictable)h(results.)
+-4000 19409 y(When)710 b(concurrent)g(e)-34 b(xpressions)709
 b(use)h(side-ef)-57 b(fects)710 b(to)g(do)g(their)g(w)-23
 b(ork,)742 b(we)710 b(need)g(a)g(w)-23 b(ay)710 b(to)-4000
 21845 y(guard)814 b(ag)-11 b(ainst)815 b(race)g(conditions.)1434
@@ -4125,14 +4087,10 @@ b(W)-184 b(e)816 b(do)e(this)h(through)f(an)g Fe(atomic)e
 Fh(e)-34 b(xpression.)1433 b(The)-4000 24280 y(concrete)575
 b(and)f(abstract)h(syntax)f(of)g(such)g(an)g(e)-34 b(xpression)574
 b(is)g(gi)-57 b(v)-34 b(en)573 b(here:)-1131 28659 y
-Fc(<exp>:AtomicExp)1324 b(::=)p 20952 29041 96 383 v
-21048 29041 766 96 v 21813 29041 96 383 v 1148 w(ATOMIC)p
-28986 29041 V 29082 29041 766 96 v 29846 29041 96 383
-v 1148 w(<exp>)p 17413 29539 21412 45 v 17413 31809 45
-2270 v 17789 31094 a(AtomicExp\(Exp)p 32805 31477 96
-383 v 32901 31477 766 96 v 33666 31477 96 383 v 1148
-w(exp\))p 38780 31809 45 2270 v 17413 31853 21412 45
-v eop end
+Fc(<exp>:AtomicExp)1324 b(::=)1147 b(ATOMIC)f(<exp>)p
+17413 29539 21412 45 v 17413 31721 45 2182 v 17789 31094
+a(AtomicExp\(Exp)e(exp\))p 38780 31721 V 17413 31765
+21412 45 v eop end
 %%Page: 48 48
 TeXDict begin 48 47 bop -6000 -5956 a Fi(')p -6000 55764
 45 59528 v -6000 58000 a(&)77956 -5956 y($)p 77956 55764

@@ -1,7 +1,7 @@
 %!PS-Adobe-2.0
 %%Creator: dvips(k) 2023.1 (TeX Live 2023)  Copyright 2023 Radical Eye Software
 %%Title: slides-1a.dvi
-%%CreationDate: Mon Nov 13 14:41:26 2023
+%%CreationDate: Wed Mar 13 17:06:43 2024
 %%Pages: 33
 %%PageOrder: Ascend
 %%BoundingBox: 0 0 792 612
@@ -11,7 +11,7 @@
 %DVIPSWebPage: (www.radicaleye.com)
 %DVIPSCommandLine: dvips -Ppdf -G0 -t landscape slides-1a
 %DVIPSParameters: dpi=8000
-%DVIPSSource:  TeX output 2023.11.13:1441
+%DVIPSSource:  TeX output 2024.03.13:1706
 %%BeginProcSet: tex.pro 0 0
 %!
 /TeXDict 300 dict def TeXDict begin/N{def}def/B{bind def}N/S{exch}N/X{S
@@ -89,7 +89,7 @@ end
 %%
 %% l3backend-header.dtx  (with options: `header,dvips')
 %% 
-%% Copyright (C) 2019-2023 The LaTeX Project
+%% Copyright (C) 2019-2024 The LaTeX Project
 %% 
 %% It may be distributed and/or modified under the conditions of
 %% the LaTeX Project Public License (LPPL), either version 1.3c of
@@ -183,8 +183,8 @@ false setglobal
       pdf.dest.y pdf.tmpc mul add
       pdf.dev.x add
     pdf.dest.x pdf.tmpb mul
-     pdf.dest.y pdf.tmpd mul add
-     pdf.dev.y add
+      pdf.dest.y pdf.tmpd mul add
+      pdf.dev.y add
   }
     def
 /pdf.bordertracking false def
@@ -332,83 +332,83 @@ false setglobal
       {
         counttomark /pdf.count exch def
           {
-           pdf.count 0 eq { exit } if
-           counttomark 2 roll
-           1 index /Rect eq
-             {
-               dup 4 array copy
-               dup dup
-                 1 get
-                 pdf.outerbox pdf.rect.ht
-                 pdf.linkmargin 2 mul add sub
-                 3 exch put
-               dup
-                 pdf.outerbox 2 get
-                 pdf.linkmargin add
-                 2 exch put
-               dup dup
-                 3 get
-                 pdf.outerbox pdf.rect.ht
-                 pdf.linkmargin 2 mul add add
-                 1 exch put
-               /pdf.currentrect exch  def
-               pdf.breaklink.write
-                 {
-                   pdf.currentrect
-                   dup
-                     pdf.outerbox 0 get
-                     pdf.linkmargin sub
-                     0 exch put
-                   dup
-                     pdf.outerbox 2 get
-                     pdf.linkmargin add
-                     2 exch put
-                   dup dup
-                     1 get
-                     pdf.baselineskip add
-                     1 exch put
-                   dup dup
-                     3 get
-                     pdf.baselineskip add
-                     3 exch put
-                   /pdf.currentrect exch def
-                   pdf.breaklink.write
+            pdf.count 0 eq { exit } if
+            counttomark 2 roll
+            1 index /Rect eq
+              {
+                dup 4 array copy
+                dup dup
+                  1 get
+                  pdf.outerbox pdf.rect.ht
+                  pdf.linkmargin 2 mul add sub
+                  3 exch put
+                dup
+                  pdf.outerbox 2 get
+                  pdf.linkmargin add
+                  2 exch put
+                dup dup
+                  3 get
+                  pdf.outerbox pdf.rect.ht
+                  pdf.linkmargin 2 mul add add
+                  1 exch put
+                /pdf.currentrect exch def
+                pdf.breaklink.write
+                  {
+                    pdf.currentrect
+                    dup
+                      pdf.outerbox 0 get
+                      pdf.linkmargin sub
+                      0 exch put
+                    dup
+                      pdf.outerbox 2 get
+                      pdf.linkmargin add
+                      2 exch put
+                    dup dup
+                      1 get
+                      pdf.baselineskip add
+                      1 exch put
+                    dup dup
+                      3 get
+                      pdf.baselineskip add
+                      3 exch put
+                    /pdf.currentrect exch def
+                    pdf.breaklink.write
                   }
                 1 index 3 get
                 pdf.linkmargin 2 mul add
                 pdf.outerbox pdf.rect.ht add
                 2 index 1 get sub
                 pdf.baselineskip div round cvi 1 sub
-                exch
-              repeat
-              pdf.currentrect
-              dup
-                pdf.outerbox 0 get
-                pdf.linkmargin sub
-                0 exch put
-              dup dup
-                1 get
-                pdf.baselineskip add
-                1 exch put
-              dup dup
-                3 get
-                pdf.baselineskip add
-                3 exch put
-              dup 2 index 2 get  2 exch put
-              /pdf.currentrect exch def
-              pdf.breaklink.write
-              SDict /pdf.pdfmark.good false put
-              exit
-            }
-            { pdf.count 2 sub /pdf.count exch def }
-          ifelse
-        }
-      loop
-    }
-  if
-  /ANN
-}
-  def
+                  exch
+                repeat
+                pdf.currentrect
+                dup
+                  pdf.outerbox 0 get
+                  pdf.linkmargin sub
+                  0 exch put
+                dup dup
+                  1 get
+                  pdf.baselineskip add
+                  1 exch put
+                dup dup
+                  3 get
+                  pdf.baselineskip add
+                  3 exch put
+                dup 2 index 2 get  2 exch put
+                /pdf.currentrect exch def
+                pdf.breaklink.write
+                SDict /pdf.pdfmark.good false put
+                exit
+              }
+              { pdf.count 2 sub /pdf.count exch def }
+            ifelse
+          }
+        loop
+      }
+    if
+    /ANN
+  }
+    def
 /pdf.breaklink.write
   {
     counttomark 1 sub
@@ -2932,9 +2932,8 @@ Fg(skip)e Fh(speci\002ca-)-4000 12128 y(tion)479 b(or)f(a)h
 Fg(token)d Fh(speci\002cation.)595 b(These)479 b(speci\002cations)g(ha)
 -38 b(v)-29 b(e)480 b(the)e(follo)-48 b(wing)480 b(form:)p
 Black Black -748 15670 a Fg({skip|token})474 b Fe(N)-52
-b(AME)p 19231 16053 96 383 v 19327 16053 766 96 v 20092
-16053 96 383 v 1627 w Fg(')p Fe(r)-71 b(e)p Fg(')-4000
-19212 y Fh(where)572 b Fe(N)-52 b(AME)571 b Fh(is)h(a)f(string)h(of)f
+b(AME)1626 b Fg(')p Fe(r)-71 b(e)p Fg(')-4000 19212 y
+Fh(where)572 b Fe(N)-52 b(AME)571 b Fh(is)h(a)f(string)h(of)f
 (uppercase)j(letters,)595 b(decimal)572 b(digits,)595
 b(and)572 b(underscores,)597 b(starting)572 b(with)f(an)h(up-)-4000
 21648 y(percase)480 b(letter)-76 b(,)477 b(and)j Fe(r)-71
@@ -3469,21 +3468,19 @@ V 69086 -2281 a Fj(1a.16)-4000 -1770 y Fi(PLCC)573 b(\226)h(P)-23
 b(arsing)575 b(\(continued\))-4000 2429 y Fk(The)494
 b Fb(parse)e Fk(method)j(for)e(a)i(repeating)g(grammar)f(rule)h(uses)f
 (a)h(loop.)685 b(F)-34 b(or)494 b(the)h(grammar)f(rule)-4000
-4593 y Fb(<nums>)p 4380 5053 115 460 v 4495 5053 919
-115 v 5413 5053 115 460 v 5646 4995 a(**)8402 4593 y(=)p
-9890 5053 V 10005 5053 919 115 v 10923 5053 115 460 v
-1378 w(<NUM>)p Fk(,)566 b(PLCC)575 b(generates)g(the)f(follo)-57
-b(wing)573 b(Ja)-46 b(v)-57 b(a)574 b(class)h Fb(Nums)p
-Fk(:)p Black Black Black Black -748 7693 a Ff(public)959
-b(class)f(Nums)g({)3077 11678 y(public)h(List<Token>)i(numList;)3077
-15663 y(public)e(Nums)f(\(List<Token>)k(numList\))d({)6903
-17656 y(this.numList)i(=)c(numList;)3077 19648 y(})3077
-23633 y(public)i(static)g(Nums)f(parse\(Scan)j(scn$\))d({)6903
-25626 y(List<Token>)j(numList)e(=)e(new)h(ArrayList<Token>\(\);)6903
-27618 y(while)g(\(true\))h({)10729 29611 y(Token)f(t$)f(=)g
-(scn$.cur\(\);)10729 31603 y(Token.Match)k(match$)d(=)f(t$.match;)10729
-33596 y(switch\(match$\))962 b({)10729 35588 y(case)c(NUM:)14554
-37581 y(numList.add\(scn$.match\(Token.Match.NUM\)\);)14554
+4593 y Fb(<nums>)5643 4995 y(**)8399 4593 y(=)1376 b(<NUM>)p
+Fk(,)571 b(PLCC)k(generates)g(the)f(follo)-57 b(wing)573
+b(Ja)-46 b(v)-57 b(a)574 b(class)h Fb(Nums)p Fk(:)p Black
+Black Black Black -748 7693 a Ff(public)959 b(class)f(Nums)g({)3077
+11678 y(public)h(List<Token>)i(numList;)3077 15663 y(public)e(Nums)f
+(\(List<Token>)k(numList\))d({)6903 17656 y(this.numList)i(=)c
+(numList;)3077 19648 y(})3077 23633 y(public)i(static)g(Nums)f
+(parse\(Scan)j(scn$\))d({)6903 25626 y(List<Token>)j(numList)e(=)e(new)
+h(ArrayList<Token>\(\);)6903 27618 y(while)g(\(true\))h({)10729
+29611 y(Token)f(t$)f(=)g(scn$.cur\(\);)10729 31603 y(Token.Match)k
+(match$)d(=)f(t$.match;)10729 33596 y(switch\(match$\))962
+b({)10729 35588 y(case)c(NUM:)14554 37581 y
+(numList.add\(scn$.match\(Token.Match.NUM\)\);)14554
 39573 y(continue;)10729 41566 y(default:)14554 43558
 y(return)h(new)f(Nums\(numList\);)10729 45551 y(})6903
 47544 y(})3077 49536 y(})-748 51529 y(})-4000 55403 y
@@ -3507,31 +3504,29 @@ Fh(or)j Fg(Rep)e Fh(programs)j(\226)e(parsing)i(the)e(program)i(will)d
 b(to)g(standard)h(error)f(\(by)g(def)-19 b(ault\).)1192
 b(In)678 b(Language)i Fg(LON)p Fh(,)c(an)j(e)-29 b(xample)679
 b(parse)g(trace)f(for)f(the)h(program)-4000 12472 y(`)p
-Fg(\(1)p -972 12855 96 383 v -876 12855 766 96 v -111
-12855 96 383 v 1148 w(3)p 1323 12855 V 1419 12855 766
-96 v 2184 12855 96 383 v 1147 w(5\))p Fh(')477 b(looks)i(lik)-19
-b(e)479 b(this:)p Black Black Black Black 2695 16015
-a Fg(1:)1147 b(<lon>)2695 18450 y(1:)g(|)g(LPAREN)f("\(")2695
-20885 y(1:)h(|)g(<nums>:NumsNode)2695 23321 y(1:)g(|)g(|)h(NUM)e("1")
-2695 25756 y(1:)h(|)g(|)h(<nums>:NumsNode)2695 28191
-y(1:)f(|)g(|)h(|)f(NUM)g("3")2695 30627 y(1:)g(|)g(|)h(|)f
-(<nums>:NumsNode)2695 33062 y(1:)g(|)g(|)h(|)f(|)g(NUM)g("5")2695
-35497 y(1:)g(|)g(|)h(|)f(|)g(<nums>:NumsNull)2695 37933
-y(1:)g(|)g(RPAREN)f("\)")-4000 41475 y Fh(Each)432 b(line)f(in)g(the)h
-(parse)g(trace)f(displays)h(either)g(a)f(nonterminal)i(or)e(a)g(tok)-19
-b(en.)579 b(If)431 b(it)f(displays)i(a)g(nonterminal,)442
-b(this)-4000 43910 y(sho)-48 b(ws)482 b(that)g(the)f(parser)h(calls)g
-(the)f Fg(parse)f Fh(method)j(for)e(that)g(nonterminal)i(\(possibly)g
-(in)e(the)h(gi)-48 b(v)-29 b(en)482 b(subclass\).)-4000
-46345 y(If)498 b(it)g(displays)h(a)f(tok)-19 b(en,)505
-b(then)499 b(the)f(scanner)i(also)f(displays)g(the)f(tok)-19
-b(en')-105 b(s)499 b(le)-29 b(x)g(eme.)655 b(The)499
-b(decimal)g(number)g(at)g(the)-4000 48781 y(be)-29 b(ginning)455
-b(of)d(each)h(line)g(is)f(the)g(line)g(number)i(in)e(the)h(source)g
-(\002le)f(where)h(the)g(parse)g(found)g(the)g(nonterminal)h(or)-4000
-51216 y(tok)-19 b(en;)479 b(the)g(number)h(of)e(v)-29
-b(ertical)479 b(bars)g(indicates)g(the)g(recursi)-48
-b(v)-29 b(e)480 b(depth)g(of)e(the)h(parse.)p eop end
+Fg(\(1)1147 b(3)g(5\))p Fh(')478 b(looks)h(lik)-19 b(e)479
+b(this:)p Black Black Black Black 2695 16015 a Fg(1:)1147
+b(<lon>)2695 18450 y(1:)g(|)g(LPAREN)f("\(")2695 20885
+y(1:)h(|)g(<nums>:NumsNode)2695 23321 y(1:)g(|)g(|)h(NUM)e("1")2695
+25756 y(1:)h(|)g(|)h(<nums>:NumsNode)2695 28191 y(1:)f(|)g(|)h(|)f(NUM)
+g("3")2695 30627 y(1:)g(|)g(|)h(|)f(<nums>:NumsNode)2695
+33062 y(1:)g(|)g(|)h(|)f(|)g(NUM)g("5")2695 35497 y(1:)g(|)g(|)h(|)f(|)
+g(<nums>:NumsNull)2695 37933 y(1:)g(|)g(RPAREN)f("\)")-4000
+41475 y Fh(Each)432 b(line)f(in)g(the)h(parse)g(trace)f(displays)h
+(either)g(a)f(nonterminal)i(or)e(a)g(tok)-19 b(en.)579
+b(If)431 b(it)f(displays)i(a)g(nonterminal,)442 b(this)-4000
+43910 y(sho)-48 b(ws)482 b(that)g(the)f(parser)h(calls)g(the)f
+Fg(parse)f Fh(method)j(for)e(that)g(nonterminal)i(\(possibly)g(in)e
+(the)h(gi)-48 b(v)-29 b(en)482 b(subclass\).)-4000 46345
+y(If)498 b(it)g(displays)h(a)f(tok)-19 b(en,)505 b(then)499
+b(the)f(scanner)i(also)f(displays)g(the)f(tok)-19 b(en')-105
+b(s)499 b(le)-29 b(x)g(eme.)655 b(The)499 b(decimal)g(number)g(at)g
+(the)-4000 48781 y(be)-29 b(ginning)455 b(of)d(each)h(line)g(is)f(the)g
+(line)g(number)i(in)e(the)h(source)g(\002le)f(where)h(the)g(parse)g
+(found)g(the)g(nonterminal)h(or)-4000 51216 y(tok)-19
+b(en;)479 b(the)g(number)h(of)e(v)-29 b(ertical)479 b(bars)g(indicates)
+g(the)g(recursi)-48 b(v)-29 b(e)480 b(depth)g(of)e(the)h(parse.)p
+eop end
 %%Page: 19 19
 TeXDict begin 19 18 bop -6000 -5956 a Fl(')p -6000 55764
 45 59528 v -6000 58000 a(&)77956 -5956 y($)p 77956 55764
@@ -3558,10 +3553,9 @@ b(we)541 b(use)h(the)g(term)g(\223parse)g(tree\224)g(to)-4000
 24428 y(refer)573 b(to)h(the)h(root)e(of)h(the)g(parse)g(tree\).)-4000
 28929 y Fi(The)925 b(runtime)g(semantics)g(of)e(any)h(PLCC)e(pr)-41
 b(ogram)924 b(is)g(the)g(beha)-57 b(vior)925 b(obtained)g(by)-4000
-31365 y(calling)667 b(the)g Fb(void)p 12524 31824 115
-460 v 12639 31824 919 115 v 13557 31824 115 460 v 1378
-w($run\(\))660 b Fi(method)668 b(on)e(the)g(parse)i(tr)-41
-b(ee.)988 b Fk(F)-34 b(or)665 b(an)-34 b(y)666 b(PLCC)h(language,)-4000
+31365 y(calling)667 b(the)g Fb(void)1375 b($run\(\))663
+b Fi(method)668 b(on)e(the)g(parse)i(tr)-41 b(ee.)988
+b Fk(F)-34 b(or)665 b(an)-34 b(y)666 b(PLCC)h(language,)-4000
 33800 y(the)655 b(start)f(symbol)h(class)g(e)-34 b(xtends)655
 b(a)f(special)i Fb(_Start)651 b Fk(class)k(generated)h(automatically)g
 (by)-4000 36235 y Fb(PLCC)p Fk(,)554 b(so)h(the)h(parse)g(tree)g(is)g
@@ -3712,31 +3706,31 @@ TeXDict begin 24 23 bop -6000 -5956 a Fl(')p -6000 55764
 45 59528 v -6000 58000 a(&)77956 -5956 y($)p 77956 55764
 V 77956 58000 a(\045)p -3764 58000 79528 45 v -3764 -5956
 V 69086 -2281 a Fj(1a.23)-4000 -1770 y Fi(PLCC)573 b(\226)h(Semantics)i
-(\(continued\))-4000 3063 y Fk(An)518 b Fb(include)d
-Fk(feature)k(allo)-57 b(ws)519 b(a)g(PLCC)g(language)g(speci\002cation)
-i(\002le)f(to)f(include)g(the)g(con-)-4000 5831 y(tents)789
-b(of)e(other)h(\002les,)843 b(making)788 b(them)h(part)f(of)g(a)g
-(single)h(speci\002cation.)1356 b(In)787 b(this)i(w)-23
-b(ay)-149 b(,)841 b(sep-)-4000 8598 y(arately)798 b(created)g(\002les)g
-(can)g(be)g(combined)g(together)f(to)g(form)g(a)g(single)h(language)g
-(speci\002-)-4000 11366 y(cation.)1312 b(The)774 b(names)h(of)e
-(include)h(\002les)h(must)f(be)h(gi)-57 b(v)-34 b(en)773
-b(in)h(the)g(semantics)h(section)g(of)f(the)-4000 14133
-y(speci\002cation)739 b(\002le,)778 b(and)736 b(generally)h(appear)g
-(at)g(the)g(end)f(of)g(the)h(speci\002cation.)1201 b(Here)736
-b(is)h(an)-4000 16900 y(e)-34 b(xample)575 b(from)e(a)h
-Fb(grammar)d Fk(\002le:)p Black Black Black Black -748
-20775 a Fb(...)-748 23542 y(include)1374 b(code)-748
-26309 y(include)g(env)-748 29077 y(include)g(prim)-748
-31844 y(include)g(val)-4000 35719 y Fk(In)781 b(this)i(e)-34
+(\(continued\))-4000 3063 y Fk(An)811 b Fb(#include)c
+Fk(feature)812 b(allo)-57 b(ws)811 b(a)h(PLCC)g(language)g
+(speci\002cation)i(\002le)f(to)e(include)i(the)-4000
+5831 y(contents)878 b(of)e(other)g(\002les,)954 b(making)877
+b(them)g(part)g(of)f(a)h(single)g(speci\002cation.)1622
+b(In)876 b(this)h(w)-23 b(ay)-149 b(,)-4000 8598 y(separately)650
+b(created)f(\002les)h(can)f(be)g(combined)g(together)g(to)g(form)e(a)i
+(single)g(language)h(speci-)-4000 11366 y(\002cation.)858
+b(The)622 b(names)h(of)f(included)h(\002les)h(must)e(be)h(gi)-57
+b(v)-34 b(en)621 b(in)i(the)g(semantics)h(section)f(of)f(the)-4000
+14133 y(speci\002cation)739 b(\002le,)778 b(and)736 b(generally)h
+(appear)g(at)g(the)g(end)f(of)g(the)h(speci\002cation.)1201
+b(Here)736 b(is)h(an)-4000 16900 y(e)-34 b(xample)575
+b(from)e(a)h Fb(grammar)d Fk(\002le:)p Black Black Black
+Black -748 20775 a Fb(...)-748 23542 y(#include)1373
+b(code)-748 26309 y(#include)g(env)-748 29077 y(#include)g(prim)-748
+31844 y(#include)g(val)-4000 35719 y Fk(In)781 b(this)i(e)-34
 b(xample,)834 b(the)783 b(entire)f(contents)h(of)e(the)i
 Fb(code)d Fk(\002le)i(will)h(be)f(read)g(by)f(PLCC)i(as)f(if)-4000
 38486 y(appended)676 b(to)f(the)g Fb(grammar)c Fk(\002le,)702
 b(then)675 b(the)g Fb(env)f Fk(\002le,)701 b(and)675
 b(so)g(forth.)1014 b(The)674 b(names)i(of)f(the)-4000
-41253 y Fb(include)666 b Fk(\002les)k(will)g(normally)g(be)f
-(representati)-57 b(v)-34 b(e)670 b(of)f(their)h(purposes,)692
-b(b)-46 b(ut)670 b(these)g(names)-4000 44021 y(do)574
+41253 y Fb(#include)542 b Fk(\002les)547 b(will)f(normally)g(be)g
+(representati)-57 b(v)-34 b(e)546 b(of)f(their)h(purposes,)552
+b(b)-46 b(ut)546 b(these)g(names)-4000 44021 y(do)574
 b(not)g(otherwise)g(play)g(a)h(role)e(in)i(the)f(generated)h(Ja)-46
 b(v)-57 b(a)574 b(\002les.)p eop end
 %%Page: 25 25
@@ -3872,13 +3866,11 @@ b(before)g(attemtping)i(to)f(process)g(the)g(remaining)g(characters)
 -4000 11366 y(in)893 b(the)g(tok)-23 b(en)893 b(or)f(skip)h
 (speci\002cation)h(line.)1669 b(This)892 b(means)i(that)f(a)g(skip)g
 (or)f(tok)-23 b(en)893 b(re)-34 b(gular)-4000 14133 y(e)g(xpression)811
-b(containing)h(a)g(substring)f(lik)-23 b(e)812 b(`)p
-33272 14592 115 460 v 33387 14592 919 115 v 34305 14592
-115 460 v 1377 w Fb(#)p Fk(')e(will)h(mistak)-23 b(enly)813
-b(be)e(considered)h(as)g(the)-4000 16900 y(start)574
-b(of)g(a)g(PLCC)h(comment.)712 b(In)574 b(this)g(case,)h(use)f(`)p
-Fb([)p 38121 17359 V 38236 17359 919 115 v 39154 17359
-115 460 v 1377 w(]#)p Fk(')e(instead.)p eop end
+b(containing)h(a)g(substring)f(lik)-23 b(e)812 b(`)1377
+b Fb(#)p Fk(')810 b(will)h(mistak)-23 b(enly)813 b(be)e(considered)h
+(as)g(the)-4000 16900 y(start)574 b(of)g(a)g(PLCC)h(comment.)712
+b(In)574 b(this)g(case,)h(use)f(`)p Fb([)1377 b(]#)p
+Fk(')572 b(instead.)p eop end
 %%Page: 30 30
 TeXDict begin 30 29 bop -6000 -5956 a Fl(')p -6000 55764
 45 59528 v -6000 58000 a(&)77956 -5956 y($)p 77956 55764

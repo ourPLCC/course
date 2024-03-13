@@ -1,7 +1,7 @@
 %!PS-Adobe-2.0
 %%Creator: dvips(k) 2023.1 (TeX Live 2023)  Copyright 2023 Radical Eye Software
 %%Title: slides-5.dvi
-%%CreationDate: Mon Nov 13 14:41:35 2023
+%%CreationDate: Wed Mar 13 17:06:52 2024
 %%DocumentMedia: plain 595 841 0 () ()
 %%BoundingBox: 0 0 595 841
 %%Pages: 30 0
@@ -43,7 +43,7 @@ end
 %DVIPSWebPage: (www.radicaleye.com)
 %DVIPSCommandLine: dvips -Ppdf -G0 -t landscape slides-5
 %DVIPSParameters: dpi=8000
-%DVIPSSource:  TeX output 2023.11.13:1441
+%DVIPSSource:  TeX output 2024.03.13:1706
 %%BeginProcSet: tex.pro 0 0
 %!
 /TeXDict 300 dict def TeXDict begin/N{def}def/B{bind def}N/S{exch}N/X{S
@@ -121,7 +121,7 @@ end
 %%
 %% l3backend-header.dtx  (with options: `header,dvips')
 %% 
-%% Copyright (C) 2019-2023 The LaTeX Project
+%% Copyright (C) 2019-2024 The LaTeX Project
 %% 
 %% It may be distributed and/or modified under the conditions of
 %% the LaTeX Project Public License (LPPL), either version 1.3c of
@@ -215,8 +215,8 @@ false setglobal
       pdf.dest.y pdf.tmpc mul add
       pdf.dev.x add
     pdf.dest.x pdf.tmpb mul
-     pdf.dest.y pdf.tmpd mul add
-     pdf.dev.y add
+      pdf.dest.y pdf.tmpd mul add
+      pdf.dev.y add
   }
     def
 /pdf.bordertracking false def
@@ -364,83 +364,83 @@ false setglobal
       {
         counttomark /pdf.count exch def
           {
-           pdf.count 0 eq { exit } if
-           counttomark 2 roll
-           1 index /Rect eq
-             {
-               dup 4 array copy
-               dup dup
-                 1 get
-                 pdf.outerbox pdf.rect.ht
-                 pdf.linkmargin 2 mul add sub
-                 3 exch put
-               dup
-                 pdf.outerbox 2 get
-                 pdf.linkmargin add
-                 2 exch put
-               dup dup
-                 3 get
-                 pdf.outerbox pdf.rect.ht
-                 pdf.linkmargin 2 mul add add
-                 1 exch put
-               /pdf.currentrect exch  def
-               pdf.breaklink.write
-                 {
-                   pdf.currentrect
-                   dup
-                     pdf.outerbox 0 get
-                     pdf.linkmargin sub
-                     0 exch put
-                   dup
-                     pdf.outerbox 2 get
-                     pdf.linkmargin add
-                     2 exch put
-                   dup dup
-                     1 get
-                     pdf.baselineskip add
-                     1 exch put
-                   dup dup
-                     3 get
-                     pdf.baselineskip add
-                     3 exch put
-                   /pdf.currentrect exch def
-                   pdf.breaklink.write
+            pdf.count 0 eq { exit } if
+            counttomark 2 roll
+            1 index /Rect eq
+              {
+                dup 4 array copy
+                dup dup
+                  1 get
+                  pdf.outerbox pdf.rect.ht
+                  pdf.linkmargin 2 mul add sub
+                  3 exch put
+                dup
+                  pdf.outerbox 2 get
+                  pdf.linkmargin add
+                  2 exch put
+                dup dup
+                  3 get
+                  pdf.outerbox pdf.rect.ht
+                  pdf.linkmargin 2 mul add add
+                  1 exch put
+                /pdf.currentrect exch def
+                pdf.breaklink.write
+                  {
+                    pdf.currentrect
+                    dup
+                      pdf.outerbox 0 get
+                      pdf.linkmargin sub
+                      0 exch put
+                    dup
+                      pdf.outerbox 2 get
+                      pdf.linkmargin add
+                      2 exch put
+                    dup dup
+                      1 get
+                      pdf.baselineskip add
+                      1 exch put
+                    dup dup
+                      3 get
+                      pdf.baselineskip add
+                      3 exch put
+                    /pdf.currentrect exch def
+                    pdf.breaklink.write
                   }
                 1 index 3 get
                 pdf.linkmargin 2 mul add
                 pdf.outerbox pdf.rect.ht add
                 2 index 1 get sub
                 pdf.baselineskip div round cvi 1 sub
-                exch
-              repeat
-              pdf.currentrect
-              dup
-                pdf.outerbox 0 get
-                pdf.linkmargin sub
-                0 exch put
-              dup dup
-                1 get
-                pdf.baselineskip add
-                1 exch put
-              dup dup
-                3 get
-                pdf.baselineskip add
-                3 exch put
-              dup 2 index 2 get  2 exch put
-              /pdf.currentrect exch def
-              pdf.breaklink.write
-              SDict /pdf.pdfmark.good false put
-              exit
-            }
-            { pdf.count 2 sub /pdf.count exch def }
-          ifelse
-        }
-      loop
-    }
-  if
-  /ANN
-}
-  def
+                  exch
+                repeat
+                pdf.currentrect
+                dup
+                  pdf.outerbox 0 get
+                  pdf.linkmargin sub
+                  0 exch put
+                dup dup
+                  1 get
+                  pdf.baselineskip add
+                  1 exch put
+                dup dup
+                  3 get
+                  pdf.baselineskip add
+                  3 exch put
+                dup 2 index 2 get  2 exch put
+                /pdf.currentrect exch def
+                pdf.breaklink.write
+                SDict /pdf.pdfmark.good false put
+                exit
+              }
+              { pdf.count 2 sub /pdf.count exch def }
+            ifelse
+          }
+        loop
+      }
+    if
+    /ANN
+  }
+    def
 /pdf.breaklink.write
   {
     counttomark 1 sub
@@ -3002,92 +3002,39 @@ b(other)g(data)h(type.)1925 b(When)979 b(used)f(in)h(conditional)-4000
 8922 y(e)-34 b(xpressions,)566 b Fd(nil)d Fh(is)h(considered)h(f)-23
 b(alse.)709 b(\(The)564 b(only)g(other)g(such)g(v)-57
 b(alue)565 b(is)g(the)f Fd(IntVal)e Fh(of)-4000 11086
-y(zero.\))-945 15069 y Fb(<exp>:NilExp)3246 b(::=)p 16722
-15388 80 319 v 16802 15388 638 80 v 17440 15388 80 319
-v 956 w(NIL)p 13773 15711 8405 45 v 13773 17640 45 1930
-v 14150 17062 a(NilExp\(\))p 22133 17640 V 13773 17684
-8405 45 v -945 19079 a(<exp>:ClassExp)1334 b(::=)p 16722
-19398 80 319 v 16802 19398 638 80 v 17440 19398 80 319
-v 956 w(CLASS)p 22461 19398 V 22541 19398 638 80 v 23178
-19398 80 319 v 956 w(<ext>)p 28199 19398 V 28279 19398
-638 80 v 28917 19398 80 319 v 956 w(<statics>)p 37763
-19398 V 37843 19398 638 80 v 38481 19398 80 319 v 956
-w(<fields>)p 46371 19398 V 46451 19398 638 80 v 47088
-19398 80 319 v 956 w(<methods>)p 55935 19398 V 56015
-19398 638 80 v 56653 19398 80 319 v 956 w(END)p 13773
-19721 63877 45 v 13773 21723 45 2003 v 14150 21073 a(ClassExp\(Ext)p
-25706 21391 80 319 v 25786 21391 638 80 v 26424 21391
-80 319 v 956 w(ext,)p 30488 21391 V 30568 21391 638 80
-v 31206 21391 80 319 v 956 w(Statics)p 38140 21391 V
-38220 21391 638 80 v 38857 21391 80 319 v 956 w(statics,)p
-46747 21391 V 46827 21391 638 80 v 47465 21391 80 319
-v 956 w(Fields)p 53442 21391 V 53522 21391 638 80 v 54160
-21391 80 319 v 956 w(fields,)p 61094 21391 V 61174 21391
-638 80 v 61811 21391 80 319 v 956 w(Methods)p 68745 21391
-V 68825 21391 638 80 v 69462 21391 80 319 v 956 w(methods)q(\))p
-77605 21723 45 2003 v 13773 21767 63877 45 v -945 23162
-a(<ext>:Ext0)5158 b(::=)p 16722 23481 80 319 v 16802
-23481 638 80 v 17440 23481 80 319 v 13773 23805 6492
-45 v 13773 25663 45 1859 v 14150 25156 a(Ext0\(\))p 20220
-25663 V 13773 25707 6492 45 v -945 27149 a(<ext>:Ext1)g(::=)p
-16722 27467 80 319 v 16802 27467 638 80 v 17440 27467
-80 319 v 956 w(EXTENDS)p 24374 27467 V 24454 27467 638
-80 v 25091 27467 80 319 v 956 w(<exp>)p 13773 27791 13187
-45 v 13773 29793 45 2003 v 14150 29142 a(Ext1\(Exp)p
-21881 29461 80 319 v 21961 29461 638 80 v 22598 29461
-80 319 v 956 w(exp\))p 26915 29793 45 2003 v 13773 29837
-13187 45 v -945 31232 a(<statics>)13773 31511 y(**)15685
-31232 y(=)p 16722 31551 80 319 v 16802 31551 638 80 v
-17440 31551 80 319 v 956 w(STATIC)p 23417 31551 V 23497
-31551 638 80 v 24134 31551 80 319 v 956 w(<VAR>)p 29156
-31551 V 29236 31551 638 80 v 29873 31551 80 319 v 956
-w(EQUALS)p 35851 31551 V 35931 31551 638 80 v 36568 31551
-80 319 v 956 w(<exp>)p 13773 31874 45705 45 v 13773 33876
-45 2003 v 14150 33225 a(Statics\(List<Token>)p 32401
-33544 80 319 v 32481 33544 638 80 v 33119 33544 80 319
-v 956 w(varList,)p 41009 33544 V 41089 33544 638 80 v
-41726 33544 80 319 v 956 w(List<Exp>)p 50573 33544 V
-50653 33544 638 80 v 51290 33544 80 319 v 956 w(expList\))p
-59433 33876 45 2003 v 13773 33920 45705 45 v -945 35315
-a(<fields>)13773 35594 y(**)15685 35315 y(=)p 16722 35634
-80 319 v 16802 35634 638 80 v 17440 35634 80 319 v 956
-w(FIELD)p 22461 35634 V 22541 35634 638 80 v 23178 35634
-80 319 v 956 w(<VAR>)p 13773 35957 26576 45 v 13773 37960
-45 2003 v 14150 37309 a(Fields\(List<Token>)p 31445 37628
-80 319 v 31525 37628 638 80 v 32162 37628 80 319 v 956
-w(varList\))p 40305 37960 45 2003 v 13773 38004 26576
-45 v -945 39399 a(<methods>)13773 39678 y(**)15685 39399
-y(=)p 16722 39718 80 319 v 16802 39718 638 80 v 17440
-39718 80 319 v 956 w(METHOD)p 23417 39718 V 23497 39718
-638 80 v 24134 39718 80 319 v 956 w(<VAR>)p 29156 39718
-V 29236 39718 638 80 v 29873 39718 80 319 v 956 w(EQUALS)p
-35851 39718 V 35931 39718 638 80 v 36568 39718 80 319
-v 956 w(<proc>)p 13773 40041 47617 45 v 13773 42043 45
-2003 v 14150 41392 a(Methods\(List<Token>)p 32401 41711
-80 319 v 32481 41711 638 80 v 33119 41711 80 319 v 956
-w(varList,)p 41009 41711 V 41089 41711 638 80 v 41726
-41711 80 319 v 956 w(List<Proc>)p 51530 41711 V 51610
-41711 638 80 v 52247 41711 80 319 v 956 w(procList\))p
-61346 42043 45 2003 v 13773 42087 47617 45 v -945 43482
-a(<exp>:NewExp)3246 b(::=)p 16722 43801 80 319 v 16802
-43801 638 80 v 17440 43801 80 319 v 956 w(NEW)p 20548
-43801 V 20628 43801 638 80 v 21265 43801 80 319 v 956
-w(<exp>)p 13773 44124 15099 45 v 13773 46127 45 2003
-v 14150 45476 a(NewExp\(Exp)p 23794 45795 80 319 v 23874
-45795 638 80 v 24511 45795 80 319 v 956 w(exp\))p 28828
-46127 45 2003 v 13773 46171 15099 45 v -945 47566 a(<exp>:EnvExp)g(::=)
-p 16722 47884 80 319 v 16802 47884 638 80 v 17440 47884
-80 319 v 956 w(LANGLE)p 23417 47884 V 23497 47884 638
-80 v 24134 47884 80 319 v 956 w(<exp>vExp)p 32981 47884
-V 33061 47884 638 80 v 33699 47884 80 319 v 956 w(RANGLE)p
-39676 47884 V 39756 47884 638 80 v 40394 47884 80 319
-v 956 w(<exp>eExp)p 13773 48208 25620 45 v 13773 50210
-45 2003 v 14150 49559 a(EnvExp\(Exp)p 23794 49878 80
-319 v 23874 49878 638 80 v 24511 49878 80 319 v 956 w(vExp,)p
-29532 49878 V 29612 49878 638 80 v 30249 49878 80 319
-v 956 w(Exp)p 33358 49878 V 33438 49878 638 80 v 34075
-49878 80 319 v 956 w(eExp\))p 39349 50210 45 2003 v 13773
-50254 25620 45 v eop end
+y(zero.\))-945 15069 y Fb(<exp>:NilExp)3246 b(::=)958
+b(NIL)p 13773 15711 8405 45 v 13773 17640 45 1930 v 14150
+17062 a(NilExp\(\))p 22133 17640 V 13773 17684 8405 45
+v -945 19079 a(<exp>:ClassExp)1334 b(::=)958 b(CLASS)g(<ext>)h
+(<statics>)h(<fields>)g(<methods>)g(END)p 13773 19721
+63877 45 v 13773 21650 45 1930 v 14150 21073 a(ClassExp\(Ext)h(ext,)d
+(Statics)h(statics,)h(Fields)f(fields,)g(Methods)h(methods\))p
+77605 21650 V 13773 21694 63877 45 v -945 23089 a(<ext>:Ext0)5158
+b(::=)p 13773 23731 6492 45 v 13773 25590 45 1859 v 14150
+25083 a(Ext0\(\))p 20220 25590 V 13773 25634 6492 45
+v -945 27075 a(<ext>:Ext1)g(::=)958 b(EXTENDS)h(<exp>)p
+13773 27717 13187 45 v 13773 29646 45 1930 v 14150 29069
+a(Ext1\(Exp)g(exp\))p 26915 29646 V 13773 29690 13187
+45 v -945 31085 a(<statics>)13773 31364 y(**)15685 31085
+y(=)f(STATIC)h(<VAR>)f(EQUALS)h(<exp>)p 13773 31727 45705
+45 v 13773 33656 45 1930 v 14150 33079 a(Statics\(List<Token>)964
+b(varList,)c(List<Exp>)g(expList\))p 59433 33656 V 13773
+33700 45705 45 v -945 35095 a(<fields>)13773 35374 y(**)15685
+35095 y(=)e(FIELD)g(<VAR>)p 13773 35737 26576 45 v 13773
+37596 45 1859 v 14150 37089 a(Fields\(List<Token>)964
+b(varList\))p 40305 37596 V 13773 37640 26576 45 v -945
+39081 a(<methods>)13773 39360 y(**)15685 39081 y(=)958
+b(METHOD)h(<VAR>)f(EQUALS)h(<proc>)p 13773 39723 47617
+45 v 13773 41652 45 1930 v 14150 41075 a(Methods\(List<Token>)964
+b(varList,)c(List<Proc>)g(procList\))p 61346 41652 V
+13773 41696 47617 45 v -945 43091 a(<exp>:NewExp)3246
+b(::=)958 b(NEW)g(<exp>)p 13773 43734 15099 45 v 13773
+45663 45 1930 v 14150 45085 a(NewExp\(Exp)i(exp\))p 28828
+45663 V 13773 45707 15099 45 v -945 47102 a(<exp>:EnvExp)3246
+b(::=)958 b(LANGLE)h(<exp>vExp)h(RANGLE)f(<exp>eExp)p
+13773 47744 25620 45 v 13773 49673 45 1930 v 14150 49095
+a(EnvExp\(Exp)h(vExp,)f(Exp)e(eExp\))p 39349 49673 V
+13773 49717 25620 45 v eop end
 PStoPSsaved restore
 userdict/PStoPSsaved save put
 PStoPSmatrix setmatrix
@@ -12443,9 +12390,8 @@ Black Black Black Black -748 11144 a Fc(define)1146 b(c)h(=)g(class)f
 16015 y(<class)f(extends)f(c)i(static)f(y=x)h(end>y)-4000
 19557 y Fh(In)540 b(the)h(class)g(that)g(e)-34 b(xtends)541
 b Fd(c)p Fh(,)546 b(the)541 b(v)-57 b(alue)541 b(of)e
-Fd(x)h Fh(on)g(the)h(RHS)g(of)f(the)g Fd(static)p 59342
-20016 115 460 v 59457 20016 919 115 v 60375 20016 115
-460 v 1378 w(y=x)c Fh(e)-34 b(xpres-)-4000 21992 y(sion)675
+Fd(x)h Fh(on)g(the)h(RHS)g(of)f(the)g Fd(static)1375
+b(y=x)539 b Fh(e)-34 b(xpres-)-4000 21992 y(sion)675
 b(can)h(be)f(found)f(in)h(the)g(static)i(en)-92 b(vironment)675
 b(of)f(the)i(superclass)g Fd(c)p Fh(,)699 b(where)675
 b Fd(x)f Fh(is)h(bound)-4000 24428 y(to)574 b(5.)712
@@ -12458,14 +12404,14 @@ b(c)h(=)g(class)f(static)g(xx=5)h(end)-748 34907 y(define)f(x)h(=)g(3)
 -748 37342 y(<class)f(extends)f(c)i(static)f(y=x)h(end>y)-4000
 41216 y Fh(In)540 b(the)h(class)g(that)g(e)-34 b(xtends)541
 b Fd(c)p Fh(,)546 b(the)541 b(v)-57 b(alue)541 b(of)e
-Fd(x)h Fh(on)g(the)h(RHS)g(of)f(the)g Fd(static)p 59342
-41676 V 59457 41676 919 115 v 60375 41676 115 460 v 1378
-w(y=x)c Fh(e)-34 b(xpres-)-4000 43984 y(sion)634 b(can)g(be)g(found)f
-(in)h(the)g(static)h(en)-92 b(vironment)635 b(of)e(superclass)h
-Fd(c)p Fh(.)891 b(But)634 b Fd(c)f Fh(does)h(not)g(de\002ne)-4000
-46751 y(a)584 b(v)-57 b(ariable)584 b Fd(x)p Fh(,)i(so)e(the)g(v)-57
-b(alue)584 b(of)f Fd(x)h Fh(must)g(be)g(found)f(in)h(the)g(static)h(en)
--92 b(vironment)584 b(of)f Fe(its)i Fh(super)-46 b(-)-4000
+Fd(x)h Fh(on)g(the)h(RHS)g(of)f(the)g Fd(static)1375
+b(y=x)539 b Fh(e)-34 b(xpres-)-4000 43984 y(sion)634
+b(can)g(be)g(found)f(in)h(the)g(static)h(en)-92 b(vironment)635
+b(of)e(superclass)h Fd(c)p Fh(.)891 b(But)634 b Fd(c)f
+Fh(does)h(not)g(de\002ne)-4000 46751 y(a)584 b(v)-57
+b(ariable)584 b Fd(x)p Fh(,)i(so)e(the)g(v)-57 b(alue)584
+b(of)f Fd(x)h Fh(must)g(be)g(found)f(in)h(the)g(static)h(en)-92
+b(vironment)584 b(of)f Fe(its)i Fh(super)-46 b(-)-4000
 49519 y(class,)571 b(the)e(singleton)g Fd(EnvClass)c
 Fh(that)k(captures)h(the)f(top-le)-57 b(v)-34 b(el)568
 b(en)-92 b(vironment.)711 b(Since)570 b Fd(x)e Fh(in)-4000
@@ -12837,29 +12783,16 @@ y(o)g(=)h(.<new)e(c>init\(3,4\))3842 33062 y(in)6138
 35497 y(<o>+\(x,y\))f(\045)i(=>)g(7)-4000 39372 y Fh(Since)2065
 b(the)g Fd(init)d Fh(method)i(returns)g Fd(self)p Fh(,)2434
 b(the)2065 b(v)-57 b(alue)2064 b(of)g(the)g(e)-34 b(xpression)-4000
-42139 y Fd(.<new)p 3002 42598 115 460 v 3117 42598 919
-115 v 4035 42598 115 460 v 1378 w(c>init\(3,4\))752 b
-Fh(is)762 b(the)f Fe(same)g Fh(object)h(as)f(the)g(one)g(created)h(by)f
-(the)g(e)-34 b(xpression)-4000 44906 y Fd(new)p 247 45366
-V 362 45366 919 115 v 1280 45366 115 460 v 1378 w(c)p
-Fh(,)571 b(e)-34 b(xcept)575 b(that)g(its)f(\002elds)h
-Fd(x)f Fh(and)g Fd(y)f Fh(are)h(set)h(to)f(v)-57 b(alues)574
+42139 y Fd(.<new)1375 b(c>init\(3,4\))755 b Fh(is)762
+b(the)f Fe(same)g Fh(object)h(as)f(the)g(one)g(created)h(by)f(the)g(e)
+-34 b(xpression)-4000 44906 y Fd(new)1376 b(c)p Fh(,)573
+b(e)-34 b(xcept)575 b(that)g(its)f(\002elds)h Fd(x)f
+Fh(and)g Fd(y)f Fh(are)h(set)h(to)f(v)-57 b(alues)574
 b(3)g(and)g(4,)g(respecti)-57 b(v)-34 b(ely)-149 b(.)-4000
 49740 y(Y)-253 b(ou)1186 b(might)g(be)f(inclined)i(to)f(think)g(that)g
-Fd(.<new)p 39875 50199 V 39990 50199 919 115 v 40908
-50199 115 460 v 1378 w(c>init\(a,b\))1177 b Fh(is)1186
-b(the)g(same)h(as)-4000 52507 y Fd(<new)p 1625 52967
-V 1740 52967 919 115 v 2658 52967 115 460 v 1378 w(c>{)p
-7135 52967 V 7250 52967 919 115 v 8168 52967 115 460
-v 1378 w(set)p 12645 52967 V 12760 52967 919 115 v 13678
-52967 115 460 v 1378 w(x=a)p 18155 52967 V 18270 52967
-919 115 v 19188 52967 115 460 v 1378 w(;)p 20910 52967
-V 21025 52967 919 115 v 21943 52967 115 460 v 1378 w(set)p
-26420 52967 V 26535 52967 919 115 v 27453 52967 115 460
-v 1378 w(y=b)p 31930 52967 V 32045 52967 919 115 v 32963
-52967 115 460 v 1378 w(;)p 34685 52967 V 34800 52967
-919 115 v 35718 52967 115 460 v 1378 w(self})p Fh(,)1042
-b(b)-46 b(ut)962 b(the)g(bindings)g(for)e(a)i(and)g(b)-4000
+Fd(.<new)1375 b(c>init\(a,b\))1180 b Fh(is)1186 b(the)g(same)h(as)-4000
+52507 y Fd(<new)1376 b(c>{)g(set)g(x=a)g(;)h(set)f(y=b)g(;)h(self})p
+Fh(,)1056 b(b)-46 b(ut)962 b(the)g(bindings)g(for)e(a)i(and)g(b)-4000
 55275 y(may)574 b(be)h(dif)-57 b(ferent)573 b(in)h(these)h(tw)-23
 b(o)573 b(e)-34 b(xpresions.)p eop end
 PStoPSsaved restore
@@ -12922,44 +12855,35 @@ V 69675 -2281 a Fg(5.38)-4000 -1770 y Ff(Language)575
 b(OBJ)g Fh(\(continued\))-4000 3063 y(The)783 b Fd(OBJ)e
 Fh(language)i(has)g(three)g(additional)h(e)-34 b(xpressions,)835
 b(with)782 b(the)h(follo)-57 b(wing)782 b(grammar)-4000
-5831 y(rules:)108 9968 y Fd(<exp>:DisplayExp)2698 b(::=)p
-29101 10427 115 460 v 29216 10427 919 115 v 30134 10427
-115 460 v 1378 w(DISPLAY)p 40121 10427 V 40236 10427
-919 115 v 41154 10427 115 460 v 1378 w(<exp>)p 24854
-10935 26926 45 v 24854 13526 45 2592 v 25231 12735 a(DisplayExp\(Exp)p
-44630 13194 115 460 v 44745 13194 919 115 v 45663 13194
-115 460 v 1378 w(exp\))p 51735 13526 45 2592 v 24854
-13570 26926 45 v 108 15508 a(<exp>:Display1Exp)1320 b(::=)p
-29101 15967 115 460 v 29216 15967 919 115 v 30134 15967
-115 460 v 1378 w(DISPLAY1)p 41499 15967 V 41614 15967
-919 115 v 42532 15967 115 460 v 1378 w(<exp>)p 24854
-16475 28303 45 v 24854 19067 45 2592 v 25231 18275 a(Display1Exp\(Exp)p
-46007 18734 115 460 v 46122 18734 919 115 v 47041 18734
-115 460 v 1378 w(exp\))p 53112 19067 45 2592 v 24854
-19111 28303 45 v 108 21048 a(<exp>:NewlineExp)2698 b(::=)p
-29101 21507 115 460 v 29216 21507 919 115 v 30134 21507
-115 460 v 1378 w(NEWLINE)p 24854 22015 17283 45 v 24854
-24501 45 2486 v 25231 23815 a(NewlineExp\(\))p 42092
-24501 V 24854 24545 17283 45 v -4000 28379 a Fh(The)574
-b Fd(DISPLAY)p Fh(,)c Fd(DISPLAY1)p Fh(,)g(and)k Fd(NEWLINE)d
-Fh(tok)-23 b(ens)574 b(are)g(de\002ned)h(by)p Black Black
-Black Black -748 32253 a Fd(DISPLAY)1374 b('display')-748
-35021 y(DISPLAY1)f('display#')-748 37788 y(NEWLINE)h('newline')-4000
-41663 y Fh(Ev)-57 b(aluating)976 b(a)h Fd(DisplayExp)971
+5831 y(rules:)108 9968 y Fd(<exp>:DisplayExp)2698 b(::=)1376
+b(DISPLAY)e(<exp>)p 24854 10935 26926 45 v 24854 13421
+45 2486 v 25231 12735 a(DisplayExp\(Exp)c(exp\))p 51735
+13421 V 24854 13465 26926 45 v 108 15503 a(<exp>:Display1Exp)1320
+b(::=)1376 b(DISPLAY1)d(<exp>)p 24854 16470 28303 45
+v 24854 18956 45 2486 v 25231 18270 a(Display1Exp\(Exp)c(exp\))p
+53112 18956 V 24854 19000 28303 45 v 108 21037 a(<exp>:NewlineExp)2698
+b(::=)1376 b(NEWLINE)p 24854 22004 17283 45 v 24854 24490
+45 2486 v 25231 23805 a(NewlineExp\(\))p 42092 24490
+V 24854 24534 17283 45 v -4000 28368 a Fh(The)574 b Fd(DISPLAY)p
+Fh(,)c Fd(DISPLAY1)p Fh(,)g(and)k Fd(NEWLINE)d Fh(tok)-23
+b(ens)574 b(are)g(de\002ned)h(by)p Black Black Black
+Black -748 32243 a Fd(DISPLAY)1374 b('display')-748 35010
+y(DISPLAY1)f('display#')-748 37778 y(NEWLINE)h('newline')-4000
+41652 y Fh(Ev)-57 b(aluating)976 b(a)h Fd(DisplayExp)971
 b Fh(e)-34 b(xpression)976 b(results)g(in)h(e)-57 b(v)g(aluation)976
-b(of)g(its)g Fd(<exp>)e Fh(part)-4000 44430 y(in)1159
+b(of)g(its)g Fd(<exp>)e Fh(part)-4000 44419 y(in)1159
 b(the)h(current)f(en)-92 b(vironment;)1453 b(this)1159
 b(v)-57 b(alue')-126 b(s)1159 b Fd(toString\(\))1154
-b Fh(representation)1160 b(is)g(then)-4000 47197 y(displayed)1228
+b Fh(representation)1160 b(is)g(then)-4000 47187 y(displayed)1228
 b(on)f(standard)g(output,)1391 b(and)1227 b(the)h(v)-57
 b(alue)1227 b(is)h(returned)e(as)i(the)g(v)-57 b(alue)1227
-b(of)g(the)-4000 49965 y Fd(DisplayExp)674 b Fh(e)-34
+b(of)g(the)-4000 49954 y Fd(DisplayExp)674 b Fh(e)-34
 b(xpression.)1027 b Fd(Display1Exp)673 b Fh(is)679 b(lik)-23
 b(e)680 b Fd(DisplayExp)674 b Fh(e)-34 b(xcept)680 b(that)g(the)-4000
-52732 y(displayed)741 b(v)-57 b(alue)740 b(is)g(follo)-57
+52722 y(displayed)741 b(v)-57 b(alue)740 b(is)g(follo)-57
 b(wed)739 b(by)h(a)g(single)g(space.)1210 b(The)740 b(v)-57
 b(alue)740 b(of)g(a)g Fd(NewlineExp)735 b Fh(e)-34 b(x-)-4000
-55500 y(pression)574 b(is)g Fd(nil)p Fh(,)f(and)h(a)g(ne)-57
+55489 y(pression)574 b(is)g Fd(nil)p Fh(,)f(and)h(a)g(ne)-57
 b(wline)574 b(is)g(displayed)h(on)f(standard)g(output.)p
 eop end
 PStoPSsaved restore
@@ -13100,35 +13024,17 @@ TeXDict begin 43 42 bop -6000 -5956 a Fi(')p -6000 55764
 V 77956 58000 a(\045)p -3764 58000 79528 45 v -3764 -5956
 V 69675 -2281 a Fg(5.42)-4000 -1770 y Ff(Language)575
 b(OBJ)g Fh(\(continued\))-4000 3063 y(Here)f(are)g(the)g(associated)i
-(grammar)e(rules:)-467 7442 y Fc(<exp>:EenvExp)1325 b(::=)p
-19321 7825 96 383 v 19417 7825 766 96 v 20181 7825 96
-383 v 1147 w(LLANGLE)p 28502 7825 V 28598 7825 766 96
-v 29363 7825 96 383 v 1148 w(<exp>)p 35388 7825 V 35484
-7825 766 96 v 36249 7825 96 383 v 1148 w(<mangle>)p 45718
-7825 V 45814 7825 766 96 v 46578 7825 96 383 v 1148 w(RRANGLE)p
-15782 8322 36332 45 v 15782 10592 45 2270 v 16158 9877
-a(EenvExp\(Exp)p 28878 10260 96 383 v 28974 10260 766
-96 v 29739 10260 96 383 v 1148 w(exp,)p 34617 10260 V
-34713 10260 766 96 v 35478 10260 96 383 v 1148 w(Mangle)p
-42651 10260 V 42747 10260 766 96 v 43512 10260 96 383
-v 1148 w(mangle\))p 52069 10592 45 2270 v 15782 10636
-36332 45 v -467 12341 a(<mangle>)15782 12676 y(**)18078
-12341 y(=)p 19321 12724 96 383 v 19417 12724 766 96 v
-20181 12724 96 383 v 1147 w(RANGLE)p 27354 12724 V 27450
-12724 766 96 v 28215 12724 96 383 v 1148 w(<exp>)p 34241
-12724 V 34337 12724 766 96 v 35101 12724 96 383 v 1148
-w(LPAREN)p 42274 12724 V 42370 12724 766 96 v 43135 12724
-96 383 v 1148 w(<rands>)p 51456 12724 V 51552 12724 766
-96 v 52317 12724 96 383 v 1148 w(RPAREN)p 15782 13221
-55843 45 v 15782 15491 45 2270 v 16158 14776 a(Mangle\(List<Exp>)p
-34617 15159 96 383 v 34713 15159 766 96 v 35478 15159
-96 383 v 1148 w(expList,)p 44946 15159 V 45042 15159
-766 96 v 45807 15159 96 383 v 1148 w(List<Rands>)p 58719
-15159 V 58815 15159 766 96 v 59579 15159 96 383 v 1148
-w(randsList\))p 71580 15491 45 2270 v 15782 15535 55843
-45 v -4000 18924 a Fh(The)558 b(BNF)g(identi\002er)h
+(grammar)e(rules:)-467 7442 y Fc(<exp>:EenvExp)1325 b(::=)1147
+b(LLANGLE)e(<exp>)h(<mangle>)g(RRANGLE)p 15782 8322 36332
+45 v 15782 10504 45 2182 v 16158 9877 a(EenvExp\(Exp)f(exp,)h(Mangle)g
+(mangle\))p 52069 10504 V 15782 10548 36332 45 v -467
+12313 a(<mangle>)15782 12647 y(**)18078 12313 y(=)h(RANGLE)e(<exp>)i
+(LPAREN)f(<rands>)f(RPAREN)p 15782 13193 55843 45 v 15782
+15375 45 2182 v 16158 14748 a(Mangle\(List<Exp>)e(expList,)i
+(List<Rands>)g(randsList\))p 71580 15375 V 15782 15419
+55843 45 v -4000 18867 a Fh(The)558 b(BNF)g(identi\002er)h
 Fd(mangle)c Fh(should)j(suggest)h(\223multiple)g(angle)g(\(brack)-23
-b(ets\)\224,)561 b(b)-46 b(ut)558 b(it)g(also)-4000 21691
+b(ets\)\224,)561 b(b)-46 b(ut)558 b(it)g(also)-4000 21635
 y(could)574 b(also)h(appropriately)f(be)g(interpreted)h(as)f(a)g
 (twisted)h(mess.)p eop end
 PStoPSsaved restore
@@ -13147,46 +13053,29 @@ TeXDict begin 44 43 bop -6000 -5956 a Fi(')p -6000 55764
 V 77956 58000 a(\045)p -3764 58000 79528 45 v -3764 -5956
 V 69675 -2281 a Fg(5.43)-4000 -1770 y Ff(Language)575
 b(OBJ)g Fh(\(continued\))-467 2577 y Fc(<exp>:EenvExp)3620
-b(::=)p 21616 2960 96 383 v 21712 2960 766 96 v 22477
-2960 96 383 v 1148 w(LLANGLE)p 30798 2960 V 30894 2960
-766 96 v 31658 2960 96 383 v 1148 w(<exp>)p 37684 2960
-V 37780 2960 766 96 v 38544 2960 96 383 v 1148 w(<mangle>)p
-48013 2960 V 48109 2960 766 96 v 48874 2960 96 383 v
-1148 w(RRANGLE)p 18077 3457 36332 45 v 18077 5727 45
-2270 v 18454 5013 a(EenvExp\(Exp)p 31174 5395 96 383
-v 31270 5395 766 96 v 32035 5395 96 383 v 1148 w(exp,)p
-36912 5395 V 37008 5395 766 96 v 37773 5395 96 383 v
-1148 w(Mangle)p 44946 5395 V 45042 5395 766 96 v 45807
-5395 96 383 v 1148 w(mangle\))p 54364 5727 45 2270 v
-18077 5771 36332 45 v -467 7476 a(<mangle>:Mangle)18077
-7811 y(**)20373 7476 y(=)p 21616 7859 96 383 v 21712
-7859 766 96 v 22477 7859 96 383 v 1148 w(RANGLE)p 29650
-7859 V 29746 7859 766 96 v 30511 7859 96 383 v 1148 w(<exp>)p
-36536 7859 V 36632 7859 766 96 v 37397 7859 96 383 v
-1148 w(LPAREN)p 44570 7859 V 44666 7859 766 96 v 45431
-7859 96 383 v 1148 w(<rands>)p 53751 7859 V 53847 7859
-766 96 v 54612 7859 96 383 v 1148 w(RPAREN)p 18077 8356
-55843 45 v 18077 10626 45 2270 v 18454 9912 a(Mangle\(List<Exp>)p
-36912 10294 96 383 v 37008 10294 766 96 v 37773 10294
-96 383 v 1148 w(expList,)p 47242 10294 V 47338 10294
-766 96 v 48102 10294 96 383 v 1148 w(List<Rands>)p 61014
-10294 V 61110 10294 766 96 v 61875 10294 96 383 v 1148
-w(randsList\))p 73875 10626 45 2270 v 18077 10670 55843
-45 v -4000 14059 a Fh(Here)574 b(is)g(the)g(implementation)i(of)e(ho)
--57 b(w)573 b(to)h(e)-57 b(v)g(aluate)575 b(an)f Fd(EenvExp)c
-Fh(e)-34 b(xpression.)p Black Black Black Black -748
-17602 a Fc(EenvExp)-748 20037 y(\045\045\045)3842 22472
-y(public)1146 b(Val)h(eval\(Env)e(env\))i({)8433 24908
-y(Val)g(v)g(=)h(exp.eval\(env\);)6882 b(//)1147 b(the)g(environment)d
-(object)8433 27343 y(return)i(mangle.eval\(v,)e(env\);)3842
-29778 y(})-748 32213 y(\045\045\045)-4000 36088 y Fh(The)506
-b(e)-34 b(xpression)505 b Fd(exp)g Fh(is)h(e)-57 b(v)g(aluated)506
-b(in)g(the)g(current)g(en)-92 b(vironment.)689 b(Its)506
-b(v)-57 b(alue)506 b Fd(v)p Fh(,)519 b(along)506 b(with)-4000
-38855 y(the)593 b(current)e(en)-92 b(vironment,)598 b(is)592
-b(passed)h(to)f(the)g Fd(mangle)d Fh(object,)598 b(which)592
-b(then)h(e)-57 b(v)g(aluates)593 b(the)-4000 41623 y(subsequent)575
-b(procedure)e(applications.)p eop end
+b(::=)1147 b(LLANGLE)f(<exp>)g(<mangle>)f(RRANGLE)p 18077
+3457 36332 45 v 18077 5639 45 2182 v 18454 5013 a(EenvExp\(Exp)f(exp,)i
+(Mangle)g(mangle\))p 54364 5639 V 18077 5683 36332 45
+v -467 7448 a(<mangle>:Mangle)18077 7783 y(**)20373 7448
+y(=)h(RANGLE)f(<exp>)g(LPAREN)g(<rands>)f(RPAREN)p 18077
+8328 55843 45 v 18077 10510 45 2182 v 18454 9883 a(Mangle\(List<Exp>)d
+(expList,)k(List<Rands>)e(randsList\))p 73875 10510 V
+18077 10554 55843 45 v -4000 14003 a Fh(Here)574 b(is)g(the)g
+(implementation)i(of)e(ho)-57 b(w)573 b(to)h(e)-57 b(v)g(aluate)575
+b(an)f Fd(EenvExp)c Fh(e)-34 b(xpression.)p Black Black
+Black Black -748 17545 a Fc(EenvExp)-748 19980 y(\045\045\045)3842
+22416 y(public)1146 b(Val)h(eval\(Env)e(env\))i({)8433
+24851 y(Val)g(v)g(=)h(exp.eval\(env\);)6882 b(//)1147
+b(the)g(environment)d(object)8433 27286 y(return)i(mangle.eval\(v,)e
+(env\);)3842 29722 y(})-748 32157 y(\045\045\045)-4000
+36031 y Fh(The)506 b(e)-34 b(xpression)505 b Fd(exp)g
+Fh(is)h(e)-57 b(v)g(aluated)506 b(in)g(the)g(current)g(en)-92
+b(vironment.)689 b(Its)506 b(v)-57 b(alue)506 b Fd(v)p
+Fh(,)519 b(along)506 b(with)-4000 38799 y(the)593 b(current)e(en)-92
+b(vironment,)598 b(is)592 b(passed)h(to)f(the)g Fd(mangle)d
+Fh(object,)598 b(which)592 b(then)h(e)-57 b(v)g(aluates)593
+b(the)-4000 41566 y(subsequent)575 b(procedure)e(applications.)p
+eop end
 PStoPSsaved restore
 %%Page: (44,45) 23
 userdict/PStoPSsaved save put
@@ -13205,34 +13094,17 @@ TeXDict begin 45 44 bop -6000 -5956 a Fi(')p -6000 55764
 V 77956 58000 a(\045)p -3764 58000 79528 45 v -3764 -5956
 V 69675 -2281 a Fg(5.44)-4000 -1770 y Ff(Language)575
 b(OBJ)g Fh(\(continued\))-467 2577 y Fc(<exp>:EenvExp)3620
-b(::=)p 21616 2960 96 383 v 21712 2960 766 96 v 22477
-2960 96 383 v 1148 w(LLANGLE)p 30798 2960 V 30894 2960
-766 96 v 31658 2960 96 383 v 1148 w(<exp>)p 37684 2960
-V 37780 2960 766 96 v 38544 2960 96 383 v 1148 w(<mangle>)p
-48013 2960 V 48109 2960 766 96 v 48874 2960 96 383 v
-1148 w(RRANGLE)p 18077 3457 36332 45 v 18077 5727 45
-2270 v 18454 5013 a(EenvExp\(Exp)p 31174 5395 96 383
-v 31270 5395 766 96 v 32035 5395 96 383 v 1148 w(exp,)p
-36912 5395 V 37008 5395 766 96 v 37773 5395 96 383 v
-1148 w(Mangle)p 44946 5395 V 45042 5395 766 96 v 45807
-5395 96 383 v 1148 w(mangle\))p 54364 5727 45 2270 v
-18077 5771 36332 45 v -467 7476 a(<mangle>:Mangle)18077
-7811 y(**)20373 7476 y(=)p 21616 7859 96 383 v 21712
-7859 766 96 v 22477 7859 96 383 v 1148 w(RANGLE)p 29650
-7859 V 29746 7859 766 96 v 30511 7859 96 383 v 1148 w(<exp>)p
-36536 7859 V 36632 7859 766 96 v 37397 7859 96 383 v
-1148 w(LPAREN)p 44570 7859 V 44666 7859 766 96 v 45431
-7859 96 383 v 1148 w(<rands>)p 53751 7859 V 53847 7859
-766 96 v 54612 7859 96 383 v 1148 w(RPAREN)p 18077 8356
-55843 45 v 18077 10626 45 2270 v 18454 9912 a(Mangle\(List<Exp>)p
-36912 10294 96 383 v 37008 10294 766 96 v 37773 10294
-96 383 v 1148 w(expList,)p 47242 10294 V 47338 10294
-766 96 v 48102 10294 96 383 v 1148 w(List<Rands>)p 61014
-10294 V 61110 10294 766 96 v 61875 10294 96 383 v 1148
-w(randsList\))p 73875 10626 45 2270 v 18077 10670 55843
-45 v -4000 14059 a Fh(A)574 b Fd(mangle)d Fh(object)j(consists)h(of)f
-(a)g(list)h(of)e Fd(Exp)f Fh(objects)j(and)f(a)h(list)f(of)g
-Fd(Rands)d Fh(objects.)p eop end
+b(::=)1147 b(LLANGLE)f(<exp>)g(<mangle>)f(RRANGLE)p 18077
+3457 36332 45 v 18077 5639 45 2182 v 18454 5013 a(EenvExp\(Exp)f(exp,)i
+(Mangle)g(mangle\))p 54364 5639 V 18077 5683 36332 45
+v -467 7448 a(<mangle>:Mangle)18077 7783 y(**)20373 7448
+y(=)h(RANGLE)f(<exp>)g(LPAREN)g(<rands>)f(RPAREN)p 18077
+8328 55843 45 v 18077 10510 45 2182 v 18454 9883 a(Mangle\(List<Exp>)d
+(expList,)k(List<Rands>)e(randsList\))p 73875 10510 V
+18077 10554 55843 45 v -4000 14003 a Fh(A)574 b Fd(mangle)d
+Fh(object)j(consists)h(of)f(a)g(list)h(of)e Fd(Exp)f
+Fh(objects)j(and)f(a)h(list)f(of)g Fd(Rands)d Fh(objects.)p
+eop end
 PStoPSsaved restore
 userdict/PStoPSsaved save put
 PStoPSmatrix setmatrix
@@ -13249,18 +13121,15 @@ TeXDict begin 46 45 bop -6000 -5956 a Fi(')p -6000 55764
 V 77956 58000 a(\045)p -3764 58000 79528 45 v -3764 -5956
 V 69675 -2281 a Fg(5.45)-4000 -1770 y Ff(Language)575
 b(OBJ)g Fh(\(continued\))-4000 2731 y(Here)f(is)g(the)g(code)h(for)e
-Fd(eval\(Val)p 25814 3190 115 460 v 25929 3190 919 115
-v 26847 3190 115 460 v 1378 w(v,)p 29946 3190 V 30061
-3190 919 115 v 30979 3190 115 460 v 1378 w(Env)p 35456
-3190 V 35571 3190 919 115 v 36489 3190 115 460 v 1378
-w(env\))564 b Fh(in)574 b(the)g Fd(Mangle)d Fh(class:)p
-Black Black Black Black -748 6273 a Fc(public)1146 b(Val)g(eval\(Val)g
-(v,)h(Env)f(env\))h({)3842 8709 y(Iterator<Exp>)d(expIter)i(=)h
-(expList.iterator\(\);)3842 11144 y(Iterator<Rands>)d(randsIter)h(=)i
-(randsList.iterator\(\);)3842 13579 y(while)g(\(expIter.hasNext\(\)\))
-1142 b({)8433 16015 y(//)1147 b(expIter.next\(\))d(ProcExp)h(to)i
-(apply)8433 18450 y(//)g(v.env\(\))f(is)h(the)g(environment)d(in)j
-(which)f(to)h(build)g(the)f(ProcVal)8433 20885 y(Val)h(p)g(=)h
+Fd(eval\(Val)1373 b(v,)k(Env)f(env\))572 b Fh(in)i(the)g
+Fd(Mangle)d Fh(class:)p Black Black Black Black -748
+6273 a Fc(public)1146 b(Val)g(eval\(Val)g(v,)h(Env)f(env\))h({)3842
+8709 y(Iterator<Exp>)d(expIter)i(=)h(expList.iterator\(\);)3842
+11144 y(Iterator<Rands>)d(randsIter)h(=)i(randsList.iterator\(\);)3842
+13579 y(while)g(\(expIter.hasNext\(\)\))1142 b({)8433
+16015 y(//)1147 b(expIter.next\(\))d(ProcExp)h(to)i(apply)8433
+18450 y(//)g(v.env\(\))f(is)h(the)g(environment)d(in)j(which)f(to)h
+(build)g(the)f(ProcVal)8433 20885 y(Val)h(p)g(=)h
 (expIter.next\(\).eval\(v.env\(\)\);)8433 23321 y(//)f(evaluate)f(this)
 g(method's)f(rands)h(in)i(env)8433 25756 y(List<Val>)d(valList)h(=)h
 (randsIter.next\(\).evalRands\(env\);)8433 28191 y(v)h(=)f
@@ -13499,13 +13368,9 @@ b(The)-4000 51511 y(\002rst)753 b(is)g(that)g(e)-57 b(v)-34
 b(ery)752 b(pri)-57 b(v)g(ate)752 b(\002eld)i(we)e(w)-23
 b(ant)753 b(to)g(access)h(needs)f(a)g(getter)g(and)g(a)g(setter)-126
 b(.)1248 b(The)-4000 54279 y(second)543 b(is)f(that)h(code)g(such)g(as)
-f Fd(<cc>set)p 30817 54738 115 460 v 30932 54738 919
-115 v 31850 54738 115 460 v 1378 w(x)p 33572 54738 V
-33687 54738 919 115 v 34605 54738 115 460 v 1378 w(=)p
-36327 54738 V 36442 54738 919 115 v 37360 54738 115 460
-v 1378 w(5)536 b Fh(does)543 b(not)f(w)-23 b(ork,)548
-b(b)-46 b(ut)542 b(is)h(easier)g(to)f(write)-4000 57046
-y(and)574 b(understand)g(than)g Fd(.<cc>set_x\(5\))p
+f Fd(<cc>set)1374 b(x)j(=)g(5)542 b Fh(does)h(not)f(w)-23
+b(ork,)548 b(b)-46 b(ut)542 b(is)h(easier)g(to)f(write)-4000
+57046 y(and)574 b(understand)g(than)g Fd(.<cc>set_x\(5\))p
 Fh(.)p eop end
 PStoPSsaved restore
 %%Page: (52,53) 27
@@ -13572,49 +13437,33 @@ V 69675 -2281 a Fg(5.53)-4000 -1770 y Ff(Language)575
 b(PR)-69 b(OP)574 b Fh(\(continued\))-4000 3063 y(Here)g(are)g(the)g
 (grammar)g(rules)g(for)f(de\002ning)i(properties)f(in)g(a)g(class)h
 (de\002ntion:)-467 7442 y Fc(<props>)8896 7777 y(**)11192
-7442 y(=)p 12434 7825 96 383 v 12530 7825 766 96 v 13295
-7825 96 383 v 1147 w(PROPERTY)p 22764 7825 V 22860 7825
-766 96 v 23624 7825 96 383 v 1148 w(<VAR>)p 29650 7825
-V 29746 7825 766 96 v 30511 7825 96 383 v 1148 w(EQUALS)p
-37684 7825 V 37780 7825 766 96 v 38544 7825 96 383 v
-1148 w(<prop>)p 8896 8322 54695 45 v 8896 10592 45 2270
-v 9272 9877 a(Props\(List<Token>)p 28878 10260 96 383
-v 28974 10260 766 96 v 29739 10260 96 383 v 1148 w(varList,)p
-39208 10260 V 39304 10260 766 96 v 40069 10260 96 383
-v 1148 w(List<Prop>)p 51832 10260 V 51928 10260 766 96
-v 52693 10260 96 383 v 1148 w(propList\))p 63546 10592
-45 2270 v 8896 10636 54695 45 v -467 12341 a(<prop>)2475
-b(::=)p 12434 12724 96 383 v 12530 12724 766 96 v 13295
-12724 96 383 v 1147 w(PROP)p 18173 12724 V 18269 12724
-766 96 v 19034 12724 96 383 v 1147 w(<exp>getExp)p 31945
-12724 V 32041 12724 766 96 v 32806 12724 96 383 v 1148
-w(COLON)p 38831 12724 V 38927 12724 766 96 v 39692 12724
-96 383 v 1148 w(<exp>setExp)p 8896 13221 32889 45 v 8896
-15491 45 2270 v 9272 14776 a(Prop\(Exp)p 18549 15159
-96 383 v 18645 15159 766 96 v 19410 15159 96 383 v 1148
-w(getExp,)p 27731 15159 V 27827 15159 766 96 v 28592
-15159 96 383 v 1148 w(Exp)p 32322 15159 V 32418 15159
-766 96 v 33182 15159 96 383 v 1148 w(setExp\))p 41740
-15491 45 2270 v 8896 15535 32889 45 v -4000 18924 a Fh(When)816
-b(a)f(v)-57 b(ariable)816 b(bound)f(to)g(a)h(property)e(is)i(e)-57
+7442 y(=)1146 b(PROPERTY)g(<VAR>)g(EQUALS)g(<prop>)p
+8896 8322 54695 45 v 8896 10504 45 2182 v 9272 9877 a
+(Props\(List<Token>)d(varList,)i(List<Prop>)f(propList\))p
+63546 10504 V 8896 10548 54695 45 v -467 12313 a(<prop>)2475
+b(::=)1146 b(PROP)h(<exp>getExp)d(COLON)i(<exp>setExp)p
+8896 13193 32889 45 v 8896 15375 45 2182 v 9272 14748
+a(Prop\(Exp)f(getExp,)h(Exp)h(setExp\))p 41740 15375
+V 8896 15419 32889 45 v -4000 18867 a Fh(When)816 b(a)f(v)-57
+b(ariable)816 b(bound)f(to)g(a)h(property)e(is)i(e)-57
 b(v)g(aluated,)876 b(its)816 b Fd(getExp)c Fh(code)k(is)g(e)-34
-b(x)g(ecuted)-4000 21691 y(using)778 b(the)g(en)-92 b(vironment)778
+b(x)g(ecuted)-4000 21635 y(using)778 b(the)g(en)-92 b(vironment)778
 b(captured)h(where)e(the)h(property)f(is)h(de\002ned,)830
-b(and)778 b(the)g(e)-34 b(xpressed)-4000 24459 y(v)-57
+b(and)778 b(the)g(e)-34 b(xpressed)-4000 24402 y(v)-57
 b(alue)574 b(of)g(the)g(v)-57 b(ariable)574 b(is)h(the)f(result)g(of)g
 (e)-57 b(v)g(aluating)574 b(the)h Fd(getExp)c Fh(e)-34
-b(xpression.)-4000 29292 y(When)508 b(a)g(v)-57 b(ariable)508
+b(xpression.)-4000 29236 y(When)508 b(a)g(v)-57 b(ariable)508
 b(bound)f(to)g(a)h(property)f(is)h(assigned)g(to)g(in)f(a)h
 Fd(set)e Fh(e)-34 b(xpression,)521 b(the)508 b(RHS)g(of)-4000
-32060 y(the)580 b(e)-34 b(xpression)578 b(is)i(e)-57
+32003 y(the)580 b(e)-34 b(xpression)578 b(is)i(e)-57
 b(v)g(aluated)579 b(in)h(the)f(current)g(en)-92 b(vironment.)727
 b(The)579 b(en)-92 b(vironment)580 b(where)f(the)-4000
-34827 y(property)608 b(is)i(de\002ned)f(is)h(then)f(e)-34
+34771 y(property)608 b(is)i(de\002ned)f(is)h(then)f(e)-34
 b(xtended)610 b(by)e(binding)h(the)h(special)g(symbol)g(`)p
-Fd($)p Fh(')d(to)i(the)h(v)-57 b(alue)-4000 37595 y(of)649
+Fd($)p Fh(')d(to)i(the)h(v)-57 b(alue)-4000 37538 y(of)649
 b(the)g(RHS.)g(The)h(property')-126 b(s)647 b Fd(setExp)f
 Fh(e)-34 b(xpression)649 b(is)g(then)h(e)-57 b(v)g(aluated)650
-b(in)f(this)h(e)-34 b(xtended)-4000 40362 y(en)-92 b(vironment,)574
+b(in)f(this)h(e)-34 b(xtended)-4000 40305 y(en)-92 b(vironment,)574
 b(and)h(the)f(resulting)g(v)-57 b(alue)575 b(is)f(the)g(v)-57
 b(alue)575 b(of)e(the)h Fd(setExp)d Fh(e)-34 b(xpression.)p
 eop end
@@ -13640,17 +13489,13 @@ b(a)h(v)-57 b(ariable)653 b Fd(z)g Fh([for)e(e)-34 b(xample])653
 b(is)g(bound)g(to)g(a)g(property)f(whose)h Fd(set)e Fh(e)-34
 b(xpression)653 b(has)g(no)-4000 5167 y(side-ef)-57 b(fects)556
 b([such)g(as)g Fd(nil)p Fh(],)i(an)e(e)-34 b(xpression)556
-b(such)g(as)h Fd(set)p 45652 5626 115 460 v 45767 5626
-919 115 v 46685 5626 115 460 v 1378 w(z)p 48407 5626
-V 48522 5626 919 115 v 49440 5626 115 460 v 1378 w(=)p
-51162 5626 V 51277 5626 919 115 v 52195 5626 115 460
-v 1378 w(...)550 b Fh(does)556 b(not)g(modify)-4000 7602
-y(an)-34 b(ything)574 b(\226)g(including)g Fd(z)p Fh(.)p
-Black Black Black Black -748 11144 a Fc(define)1146 b(c)h(=)1547
-13579 y(class)3842 16015 y(field)g(x)3842 18450 y(method)f(init)h(=)g
-(proc\(x\))f({set)g(<this>x)g(=)h(x)h(;)f(self})3842
-20885 y(property)f(y)h(=)g(prop)g(x:set)f(x=$)3842 23321
-y(property)g(z)h(=)g(prop)g(x:nil)1547 25756 y(end)-748
+b(such)g(as)h Fd(set)1376 b(z)h(=)g(...)554 b Fh(does)i(not)g(modify)
+-4000 7602 y(an)-34 b(ything)574 b(\226)g(including)g
+Fd(z)p Fh(.)p Black Black Black Black -748 11144 a Fc(define)1146
+b(c)h(=)1547 13579 y(class)3842 16015 y(field)g(x)3842
+18450 y(method)f(init)h(=)g(proc\(x\))f({set)g(<this>x)g(=)h(x)h(;)f
+(self})3842 20885 y(property)f(y)h(=)g(prop)g(x:set)f(x=$)3842
+23321 y(property)g(z)h(=)g(prop)g(x:nil)1547 25756 y(end)-748
 28191 y(define)f(o)h(=)g(.<new)f(c>init\(3\))-748 30627
 y(<o>[x,y,z])3440 b(\045)1147 b([3,3,3])-748 33062 y(<o>set)f(x)h(=)g
 (5)-748 35497 y(<o>[x,y,z])3440 b(\045)1147 b([5,5,5])-748
@@ -13736,9 +13581,8 @@ Fd(x)p Fh(.)1125 b(Since)713 b(we)f(are)g(using)g(call-by-)-4000
 44021 y(reference)872 b(parameter)h(passing)g(semantics,)948
 b(the)873 b(v)-57 b(ariable)873 b Fd(t)f Fh(is)g(bound)g(to)g(this)h
 (property)-149 b(,)-4000 46788 y(and)639 b(the)g(e)-34
-b(xpression)639 b Fd(set)p 18069 47247 115 460 v 18184
-47247 919 115 v 19102 47247 115 460 v 1378 w(t=add1\(t\))632
-b Fh(is)639 b(e)-57 b(v)g(aluated)640 b(using)f(this)g(binding.)906
+b(xpression)639 b Fd(set)1376 b(t=add1\(t\))634 b Fh(is)639
+b(e)-57 b(v)g(aluated)640 b(using)f(this)g(binding.)906
 b(Remember)-4000 49556 y(that)624 b(the)g(RHS)g(parts)g(of)f(property)f
 (de\002nitions)j(are)f(all)g(e)-57 b(v)g(aluated)625
 b(in)e(the)h(en)-92 b(vironment)624 b(that)-4000 52323
@@ -13772,37 +13616,23 @@ Fd(let)f Fh(e)-34 b(xpression.)690 b(T)-184 b(o)511 b(mak)-23
 b(e)512 b(this)f(e)-34 b(xplicit,)524 b(we)511 b(create)h(a)f
 Fd(letprop)-4000 12472 y Fh(construct)574 b(that)h(has)f(the)h(follo)
 -57 b(wing)573 b(concrete)i(syntax)f(and)g(abstract)h(class)g
-(structure:)-945 16541 y Fb(<exp>:LetpropExp)1335 b(::=)p
-18635 16860 80 319 v 18715 16860 638 80 v 19352 16860
-80 319 v 956 w(LETPROP)p 26286 16860 V 26366 16860 638
-80 v 27004 16860 80 319 v 956 w(<letpropDecls>)p 40633
-16860 V 40713 16860 638 80 v 41350 16860 80 319 v 956
-w(IN)p 43502 16860 V 43582 16860 638 80 v 44219 16860
-80 319 v 956 w(<exp>)p 15686 17183 44748 45 v 15686 19186
-45 2003 v 16063 18535 a(LetpropExp\(LetpropDecls)p 38140
-18854 80 319 v 38220 18854 638 80 v 38857 18854 80 319
-v 956 w(letpropDecls,)p 51530 18854 V 51610 18854 638
-80 v 52247 18854 80 319 v 956 w(Exp)p 55355 18854 V 55435
-18854 638 80 v 56073 18854 80 319 v 956 w(exp\))p 60390
-19186 45 2003 v 15686 19230 44748 45 v -945 20625 a(<letpropDecls>)
-15686 20904 y(**)17598 20625 y(=)p 18635 20943 80 319
-v 18715 20943 638 80 v 19352 20943 80 319 v 956 w(<VAR>)p
-24374 20943 V 24454 20943 638 80 v 25091 20943 80 319
-v 956 w(EQUALS)p 31068 20943 V 31148 20943 638 80 v 31786
-20943 80 319 v 956 w(<prop>)p 15686 21267 52400 45 v
-15686 23269 45 2003 v 16063 22618 a(LetpropDecls\(List<Token>)p
-39096 22937 80 319 v 39176 22937 638 80 v 39813 22937
-80 319 v 956 w(varList,)p 47704 22937 V 47784 22937 638
-80 v 48421 22937 80 319 v 956 w(List<Prop>)p 58224 22937
-V 58304 22937 638 80 v 58942 22937 80 319 v 956 w(propList\))p
-68041 23269 45 2003 v 15686 23313 52400 45 v -4000 26415
-a Fh(Consider)574 b(this)h(\(some)-57 b(what)573 b(strange\))h(e)-34
-b(xample:)p Black Black Black Black -748 29957 a Fc(let)1547
-32393 y(x)1147 b(=)h(3)-748 34828 y(in)1547 37263 y(letprop)3842
-39699 y(x)g(=)f(prop)g(x)g(:)g(set)g(x)h(=)f(5)1547 42134
-y(in)3842 44569 y({set)g(x)g(=)h(42)f(;)g(x})g(\045)h(=>)f(5)-4000
-48444 y Fh(This)574 b(e)-34 b(xpression)574 b(e)-57 b(v)g(aluates)574
-b(to)h(5.)p eop end
+(structure:)-945 16541 y Fb(<exp>:LetpropExp)1335 b(::=)958
+b(LETPROP)h(<letpropDecls>)j(IN)c(<exp>)p 15686 17183
+44748 45 v 15686 19112 45 1930 v 16063 18535 a
+(LetpropExp\(LetpropDecls)965 b(letpropDecls,)d(Exp)c(exp\))p
+60390 19112 V 15686 19156 44748 45 v -945 20551 a(<letpropDecls>)15686
+20830 y(**)17598 20551 y(=)g(<VAR>)g(EQUALS)h(<prop>)p
+15686 21193 52400 45 v 15686 23122 45 1930 v 16063 22545
+a(LetpropDecls\(List<Token>)966 b(varList,)960 b(List<Prop>)g
+(propList\))p 68041 23122 V 15686 23166 52400 45 v -4000
+26268 a Fh(Consider)574 b(this)h(\(some)-57 b(what)573
+b(strange\))h(e)-34 b(xample:)p Black Black Black Black
+-748 29811 a Fc(let)1547 32246 y(x)1147 b(=)h(3)-748
+34681 y(in)1547 37117 y(letprop)3842 39552 y(x)g(=)f(prop)g(x)g(:)g
+(set)g(x)h(=)f(5)1547 41987 y(in)3842 44423 y({set)g(x)g(=)h(42)f(;)g
+(x})g(\045)h(=>)f(5)-4000 48297 y Fh(This)574 b(e)-34
+b(xpression)574 b(e)-57 b(v)g(aluates)574 b(to)h(5.)p
+eop end
 PStoPSsaved restore
 %%Page: (58,59) 30
 userdict/PStoPSsaved save put

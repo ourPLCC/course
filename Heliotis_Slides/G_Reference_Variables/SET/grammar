@@ -57,8 +57,8 @@ VAR '[A-Za-z][\w?]*'
 <prim>:Sub1Prim ::= SUB1OP
 <prim>:ZeropPrim ::= ZEROP
 %
-include code.txt
-include prim.txt
-include env.txt
-include val.txt
-include ref.txt
+#include code.txt
+#include prim.txt
+#include env.txt
+#include val.txt
+#include ref.txt

@@ -149,10 +149,10 @@ VAR '[A-Za-z\&\?\$][\w\?\&\$]*'
 <prim>:RestPrim  ::= RESTOP
 <prim>:AddFirstPrim  ::= ADDFIRSTOP
 %
-include Code-i.java
-include Prim-i.java
-include Env-i.java
-include Val-i.java
-include List-i.java
-include Class-i.java
-include Ref-i.java
+#include Code-i.java
+#include Prim-i.java
+#include Env-i.java
+#include Val-i.java
+#include List-i.java
+#include Class-i.java
+#include Ref-i.java

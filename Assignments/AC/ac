@@ -375,7 +375,7 @@ define makeLeaf = <binTree>makeLeaf  % [Val => BTNode]
         ac-obj1-grammar
         ac-obj1-code
 
-    Your grammar file should *not* change any of its original 'include'
+    Your grammar file should *not* change any of its original '#include'
     lines.
 
     Submit your 'ac-obj1-grammar' and 'ac-obj1-code' files following the
