@@ -51,27 +51,27 @@ VAR '[A-Za-z]\w*'
 # (Remember that use of toString is only mandated at the tree's
 #  root node.)
 
-include Add1Prim-i.java
-include AddPrim-i.java
-include AppExp-i.java
-include DivPrim-i.java
-include Exp-i.java
-include Formals-i.java
-include IfExp-i.java
-include LetDecls-i.java
-include LetExp-i.java
-include LitExp-i.java
-include MulPrim-i.java
-include Operands-i.java
-include Prim-i.java
-include PrimAppExp-i.java
+#include Add1Prim-i.java
+#include AddPrim-i.java
+#include AppExp-i.java
+#include DivPrim-i.java
+#include Exp-i.java
+#include Formals-i.java
+#include IfExp-i.java
+#include LetDecls-i.java
+#include LetExp-i.java
+#include LitExp-i.java
+#include MulPrim-i.java
+#include Operands-i.java
+#include Prim-i.java
+#include PrimAppExp-i.java
 # include Proc-i.java
-include ProcExp-i.java
-include Program-i.java
-include Sub1Prim-i.java
-include SubPrim-i.java
-include VarExp-i.java
-include ZeropPrim-i.java
+#include ProcExp-i.java
+#include Program-i.java
+#include Sub1Prim-i.java
+#include SubPrim-i.java
+#include VarExp-i.java
+#include ZeropPrim-i.java
 
 include EnvSource/Binding-i.java
 include EnvSource/Bindings-i.java

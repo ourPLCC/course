@@ -148,10 +148,10 @@ VAR '[A-Za-z\&\?\$][\w\?\&\$]*'
 <prim>:SameClasspPrim ::= SAMECLASSP
 
 %
-include code
-include prim
-include env
-include val
-include list
-include class
-include ref
+#include code
+#include prim
+#include env
+#include val
+#include list
+#include class
+#include ref
